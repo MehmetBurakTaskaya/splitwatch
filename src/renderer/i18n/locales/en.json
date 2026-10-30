@@ -3,20 +3,107 @@
     "name": "Splitwatch",
     "tagline": "Watch several live sports streams side by side."
   },
-  "welcome": {
-    "title": "Splitwatch is on its way",
-    "body": "This first version sets up the app, its updates and its languages. Watching streams comes in the next versions.",
-    "version": "Version {version}",
-    "languages": "{count, plural, one {Available in # language for now.} other {Available in # languages for now.}}"
+  "add": {
+    "label": "YouTube link or video ID",
+    "placeholder": "Paste a YouTube link or video ID",
+    "button": "Add",
+    "invalid": "That is not a YouTube video link or ID.",
+    "duplicate": "This stream is already in the grid.",
+    "full": "The grid is full: nine streams at most."
+  },
+  "empty": {
+    "title": "Add your first stream",
+    "body": "Paste a YouTube link or video ID in the box at the top. Each stream gets its own lane, and the one you pick is the one you hear.",
+    "slot": "Add a stream"
+  },
+  "clipboard": {
+    "prompt": "Add the YouTube video from your clipboard?",
+    "add": "Add",
+    "dismiss": "Not now"
+  },
+  "layout": {
+    "label": "Layout",
+    "1": "One stream",
+    "2": "Two side by side",
+    "3": "Three side by side",
+    "4": "Two by two",
+    "6": "Three by two",
+    "9": "Three by three",
+    "featured": "One large with a side strip"
+  },
+  "master": {
+    "volume": "Main volume",
+    "mute": "Mute all",
+    "unmute": "Unmute"
+  },
+  "tile": {
+    "label": "Stream {index}: {title}",
+    "loading": "Loading…",
+    "untitled": "YouTube video",
+    "listen": "Listen to stream {index}",
+    "listening": "Stream {index} is the one you hear",
+    "volume": "Volume of stream {index}",
+    "play": "Play",
+    "pause": "Pause",
+    "back": "Back 10 seconds",
+    "forward": "Forward 10 seconds",
+    "enlarge": "Enlarge",
+    "restore": "Back to the grid",
+    "remove": "Remove stream {index}",
+    "openOnYouTube": "Open on YouTube",
+    "move": "Drag to move stream {index}"
+  },
+  "error": {
+    "embedDisabled": "The owner does not allow this video to be played outside YouTube.",
+    "notFound": "This video is unavailable: it was removed or made private.",
+    "invalid": "YouTube did not accept this video ID.",
+    "playback": "The player could not play this video.",
+    "identification": "YouTube refused the app's identification (error 153). Please report this.",
+    "offline": "The YouTube player could not load. Check the internet connection.",
+    "code": "Error {code}"
+  },
+  "shortcuts": {
+    "open": "Keyboard shortcuts",
+    "title": "Keyboard shortcuts",
+    "digits": "Pick stream 1 to 9 (you hear it)",
+    "escape": "Leave the large view and fullscreen",
+    "change": "Change",
+    "press": "Press a key…",
+    "reserved": "{key} is reserved.",
+    "taken": "{key} is already used for: {action}",
+    "reset": "Reset all",
+    "close": "Close",
+    "actions": {
+      "toggleMute": "Mute or unmute",
+      "enlarge": "Enlarge the picked stream, fullscreen",
+      "playPause": "Play or pause the picked stream",
+      "seekBack": "Back 10 seconds",
+      "seekForward": "Forward 10 seconds",
+      "nextLayout": "Next layout",
+      "moveEarlier": "Move the picked stream earlier",
+      "moveLater": "Move the picked stream later",
+      "help": "Show this list"
+    },
+    "keys": {
+      "space": "Space",
+      "escape": "Esc"
+    }
+  },
+  "settings": {
+    "open": "Settings",
+    "title": "Settings",
+    "audioFocus": "Sound follows",
+    "audioFocusClick": "the stream I click",
+    "audioFocusHover": "the stream under the pointer",
+    "clipboard": "Offer to add YouTube links I copy",
+    "version": "Splitwatch {version}",
+    "close": "Close"
   },
   "update": {
-    "checking": "Checking for updates…",
-    "none": "Splitwatch is up to date.",
     "available": "Version {version} is available.",
     "downloading": "Downloading the update: {progress, number, percent}",
     "ready": "Version {version} is ready to install.",
     "restart": "Restart and update",
-    "download": "Download",
-    "error": "Could not check for updates."
+    "download": "Download"
   }
 }

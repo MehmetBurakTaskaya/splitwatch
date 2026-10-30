@@ -19,23 +19,119 @@ body {
   font-size: var(--font-size-2);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  overflow: hidden;
 }
 
-button {
-  font: inherit;
-  color: var(--color-on-accent);
-  background: var(--color-accent-strong);
-  border: 0;
-  border-radius: var(--radius-1);
-  padding-block: var(--space-1);
-  padding-inline: var(--space-3);
-  cursor: pointer;
-}
-button:focus-visible {
+:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
 
+/* Buttons */
+.button,
+button.button,
+a.button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font: inherit;
+  font-size: var(--font-size-1);
+  font-weight: 600;
+  color: var(--color-on-accent);
+  background: var(--color-accent-strong);
+  border: 1px solid transparent;
+  border-radius: var(--radius-1);
+  padding-block: 5px;
+  padding-inline: var(--space-3);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.button-quiet,
+button.button-quiet {
+  color: var(--color-text);
+  background: transparent;
+  border-color: var(--color-border);
+}
+
+.icon-button {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  inline-size: 30px;
+  block-size: 30px;
+  padding: 0;
+  color: var(--color-text-muted);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-1);
+  cursor: pointer;
+}
+.icon-button:hover {
+  color: var(--color-text);
+  background: var(--color-hover);
+}
+.icon-button[aria-pressed='true'] {
+  color: var(--color-accent-strong);
+  border-color: var(--color-accent);
+}
+.icon-button:disabled {
+  opacity: 0.35;
+  cursor: default;
+  background: transparent;
+}
+
+.icon {
+  inline-size: 20px;
+  block-size: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.icon .fill {
+  fill: currentColor;
+  stroke: none;
+}
+.icon .dots {
+  stroke-width: 2.6;
+}
+.layout-glyph rect {
+  fill: currentColor;
+  stroke: none;
+  opacity: 0.75;
+}
+
+input[type='text'] {
+  font: inherit;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-1);
+  padding-block: 4px;
+  padding-inline: var(--space-2);
+}
+input[type='text'][aria-invalid='true'] {
+  border-color: var(--color-danger);
+}
+input[type='range'] {
+  accent-color: var(--color-accent-strong);
+}
+
+kbd {
+  font: inherit;
+  font-size: var(--font-size-1);
+  padding-block: 1px;
+  padding-inline: 6px;
+  border: 1px solid var(--color-border);
+  border-block-end-width: 2px;
+  border-radius: var(--radius-1);
+  background: var(--color-surface);
+  white-space: nowrap;
+}
+
+/* Shell */
 .shell {
   display: flex;
   flex-direction: column;
@@ -45,25 +141,96 @@ button:focus-visible {
 .topbar {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  padding-block: var(--space-2);
-  padding-inline: var(--space-4);
+  gap: var(--space-3);
+  min-block-size: 48px;
+  padding-block: var(--space-1);
+  padding-inline: var(--space-3);
   border-block-end: 1px solid var(--color-border);
   background: var(--color-surface);
 }
-.topbar-mark {
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: none;
+}
+.brand-mark {
   inline-size: 22px;
   block-size: 22px;
 }
 .lane-accent {
   fill: var(--color-accent);
 }
-.topbar-name {
+.brand-name {
   font-weight: 600;
   letter-spacing: 0.01em;
 }
 
-.welcome {
+.add {
+  position: relative;
+  display: flex;
+  gap: var(--space-1);
+  flex: 1 1 18rem;
+  min-inline-size: 10rem;
+  max-inline-size: 32rem;
+}
+.add input {
+  flex: 1;
+  min-inline-size: 0;
+}
+.add-message {
+  position: absolute;
+  inset-block-start: calc(100% + 6px);
+  inset-inline-start: 0;
+  z-index: 2;
+  padding-block: var(--space-1);
+  padding-inline: var(--space-2);
+  font-size: var(--font-size-1);
+  color: var(--color-on-danger);
+  background: var(--color-danger);
+  border-radius: var(--radius-1);
+  white-space: nowrap;
+}
+
+.layouts,
+.master {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: none;
+}
+.master input {
+  inline-size: 84px;
+}
+
+/* Banners under the top bar or at the bottom */
+.banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  padding-block: var(--space-2);
+  padding-inline: var(--space-3);
+  background: var(--color-accent-soft);
+  border-block-end: 1px solid var(--color-border);
+  font-size: var(--font-size-1);
+}
+.banner-quiet {
+  background: var(--color-surface);
+  border-block-start: 1px solid var(--color-border);
+  border-block-end: 0;
+  color: var(--color-text-muted);
+}
+.banner-detail {
+  font-weight: 600;
+  max-inline-size: 40ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Empty state */
+.empty {
   position: relative;
   flex: 1;
   display: grid;
@@ -71,8 +238,6 @@ button:focus-visible {
   padding: var(--space-6) var(--space-4);
   overflow: hidden;
 }
-
-/* The lane motif: faint lane lines across the background. */
 .lanes {
   position: absolute;
   inset: 0;
@@ -84,8 +249,7 @@ button:focus-visible {
     var(--color-lane) 121px
   );
 }
-
-.welcome-card {
+.empty-card {
   position: relative;
   max-inline-size: 36rem;
   padding: var(--space-5);
@@ -94,12 +258,12 @@ button:focus-visible {
   border-inline-start: 4px solid var(--color-accent);
   border-radius: var(--radius-2);
 }
-.welcome-card h1 {
+.empty-card h1 {
   margin-block: 0 var(--space-2);
   font-size: var(--font-size-4);
   line-height: 1.2;
 }
-.welcome-card p {
+.empty-card p {
   margin-block: 0 var(--space-3);
 }
 .lead {
@@ -107,25 +271,73 @@ button:focus-visible {
   color: var(--color-text-muted);
 }
 
-.meta {
+/* Dialogs */
+.dialog {
+  inline-size: min(36rem, calc(100vw - 32px));
+  max-block-size: calc(100vh - 32px);
+  padding: var(--space-5);
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2);
+}
+.dialog::backdrop {
+  background: rgb(0 0 0 / 0.45);
+}
+.dialog h2 {
+  margin-block: 0 var(--space-4);
+  font-size: var(--font-size-3);
+}
+.dialog-actions {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-1) var(--space-4);
+  justify-content: flex-end;
+  gap: var(--space-2);
+  margin-block-start: var(--space-5);
+}
+.dialog-meta {
   margin-block: var(--space-4) 0;
-  padding: 0;
-  list-style: none;
   font-size: var(--font-size-1);
   color: var(--color-text-muted);
 }
-
-.update {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-3);
-  margin-block: var(--space-4) 0;
-  padding-block-start: var(--space-3);
-  border-block-start: 1px solid var(--color-border);
+.dialog-problem {
+  margin-block: var(--space-3) 0;
+  color: var(--color-danger);
   font-size: var(--font-size-1);
-  color: var(--color-text-muted);
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-block: 0 var(--space-4);
+  padding: 0;
+  border: 0;
+}
+label.field {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-2);
+}
+.field legend {
+  font-weight: 600;
+  margin-block-end: var(--space-1);
+}
+.field label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.shortcuts {
+  inline-size: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-1);
+}
+.shortcuts td {
+  padding-block: 6px;
+  padding-inline: 0 var(--space-3);
+  border-block-end: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+.shortcuts td:last-child {
+  text-align: end;
+  padding-inline-end: 0;
 }

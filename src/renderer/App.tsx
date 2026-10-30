@@ -1,13 +1,20 @@
 import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { LaneMark } from './components/LaneMark';
+import { ClipboardSuggestion } from './components/ClipboardSuggestion';
+import { EmptyState } from './components/EmptyState';
+import { Grid } from './components/Grid';
+import { SettingsDialog } from './components/SettingsDialog';
+import { ShortcutsDialog } from './components/ShortcutsDialog';
+import { TopBar } from './components/TopBar';
 import { UpdateNotice } from './components/UpdateNotice';
-import { SUPPORTED_LOCALES } from './i18n/locale';
-import { useAppStore } from './store';
+import { useIframeFocus, useShortcuts } from './hooks/useShortcuts';
+import { useAppStore } from './state/app';
+import { useSession } from './state/session';
 
 export function App() {
-  const { t } = useTranslation();
-  const info = useAppStore((s) => s.info);
+  const hasStreams = useSession((s) => s.streams.length > 0);
+  const dialog = useAppStore((s) => s.dialog);
+  useShortcuts();
+  useIframeFocus();
 
   useEffect(() => {
     window.splitwatch.rendererReady();
@@ -15,23 +22,12 @@ export function App() {
 
   return (
     <div className="shell">
-      <header className="topbar">
-        <LaneMark className="topbar-mark" />
-        <span className="topbar-name">{t('app.name')}</span>
-      </header>
-      <main className="welcome">
-        <div className="lanes" aria-hidden="true" />
-        <section className="welcome-card">
-          <h1>{t('welcome.title')}</h1>
-          <p className="lead">{t('app.tagline')}</p>
-          <p>{t('welcome.body')}</p>
-          <ul className="meta">
-            {info && <li>{t('welcome.version', { version: info.version })}</li>}
-            <li>{t('welcome.languages', { count: SUPPORTED_LOCALES.length })}</li>
-          </ul>
-          <UpdateNotice />
-        </section>
-      </main>
+      <TopBar />
+      <ClipboardSuggestion />
+      {hasStreams ? <Grid /> : <EmptyState />}
+      <UpdateNotice />
+      {dialog === 'shortcuts' && <ShortcutsDialog />}
+      {dialog === 'settings' && <SettingsDialog />}
     </div>
   );
 }

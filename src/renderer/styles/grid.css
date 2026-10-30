@@ -1,0 +1,197 @@
+/* The stream grid. Sizes match src/shared/layouts.ts (gap 4, padding 4, tile bar 36, players at least
+   200 x 200). Nothing is ever drawn over a player. */
+.grid {
+  flex: 1;
+  min-block-size: 0;
+  display: grid;
+  gap: 4px;
+  padding: 4px;
+  grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+  grid-template-rows: repeat(var(--rows), minmax(0, 1fr));
+}
+
+.grid.layout-featured {
+  grid-template-columns: minmax(0, 3fr) minmax(202px, 1fr);
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+}
+.grid.layout-featured > [data-slot='0'] {
+  grid-column: 1;
+  grid-row: 1 / -1;
+}
+.grid.layout-featured > :not([data-slot='0']) {
+  grid-column: 2;
+}
+
+.grid.maximized {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+}
+.grid.maximized > :not(.is-maximized) {
+  display: none;
+}
+.grid.maximized > .is-maximized {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+/* While a tile is dragged, the players must not swallow the drag events. */
+.grid.dragging iframe {
+  pointer-events: none;
+}
+
+.tile {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+  min-block-size: 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-1);
+  overflow: hidden;
+}
+.tile:focus {
+  outline: none;
+}
+.tile.is-selected {
+  border-color: var(--color-text-muted);
+}
+.tile.is-audible {
+  border-color: var(--color-accent);
+  box-shadow: inset 0 0 0 1px var(--color-accent);
+}
+.tile.is-drop-target {
+  border-color: var(--color-accent-strong);
+  border-style: dashed;
+}
+
+.tile-player {
+  position: relative;
+  flex: 1;
+  min-block-size: 200px;
+  background: #000;
+}
+.tile-frame,
+.tile-frame > iframe {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  border: 0;
+}
+.tile-frame[hidden] {
+  display: none;
+}
+
+.tile-error {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  text-align: center;
+  color: #e8ebef;
+  background: #15191f;
+  font-size: var(--font-size-1);
+}
+.tile-error p {
+  margin: 0;
+  max-inline-size: 34ch;
+}
+.tile-error-code {
+  color: #98a2b1;
+}
+
+.tile-bar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  block-size: 36px;
+  flex: none;
+  padding-inline: 2px var(--space-1);
+  border-block-start: 1px solid var(--color-border);
+}
+.tile-bar .icon-button {
+  inline-size: 28px;
+  block-size: 28px;
+}
+.tile-grip {
+  cursor: grab;
+}
+.tile-number {
+  flex: none;
+  min-inline-size: 1.2em;
+  text-align: center;
+  font-size: var(--font-size-1);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+.tile.is-audible .tile-number {
+  color: var(--color-accent-strong);
+}
+.tile-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-inline-size: 0;
+  line-height: 1.2;
+  cursor: pointer;
+}
+.tile-name,
+.tile-channel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tile-name {
+  font-size: var(--font-size-1);
+  font-weight: 600;
+}
+.tile-channel {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+.tile-volume {
+  inline-size: 64px;
+  flex: none;
+}
+
+/* Narrow tiles keep the essentials: sound, play, enlarge, remove. Seeking stays on the keyboard. */
+@container (max-width: 420px) {
+  .tile-bar .optional {
+    display: none;
+  }
+}
+@container (max-width: 260px) {
+  .tile-title {
+    display: none;
+  }
+  .tile-bar {
+    justify-content: space-between;
+  }
+}
+
+.slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-inline-size: 0;
+  min-block-size: 0;
+  font: inherit;
+  font-size: var(--font-size-1);
+  color: var(--color-text-muted);
+  background: transparent;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-1);
+  cursor: pointer;
+}
+.slot:hover {
+  color: var(--color-text);
+  border-color: var(--color-text-muted);
+}

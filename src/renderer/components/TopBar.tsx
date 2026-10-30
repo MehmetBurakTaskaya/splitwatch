@@ -1,0 +1,125 @@
+import { type FormEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { LAYOUTS } from '../../shared/layouts';
+import { parseVideoId } from '../../shared/youtube';
+import { openDialog } from '../state/app';
+import { type AddResult, useSession } from '../state/session';
+import { ADD_INPUT_ID } from './Grid';
+import { IconKeyboard, IconMuted, IconSettings, IconSound, LayoutGlyph } from './icons';
+import { LaneMark } from './LaneMark';
+
+export function TopBar() {
+  const { t } = useTranslation();
+  const [text, setText] = useState('');
+  const [message, setMessage] = useState<'invalid' | Exclude<AddResult, 'added'> | null>(null);
+  const streams = useSession((s) => s.streams);
+  const layout = useSession((s) => s.layout);
+  const muted = useSession((s) => s.muted);
+  const masterVolume = useSession((s) => s.masterVolume);
+
+  const submit = (e: FormEvent) => {
+    e.preventDefault();
+    const id = parseVideoId(text);
+    if (!id) return setMessage('invalid');
+    const result = useSession.getState().add(id);
+    if (result === 'added') {
+      setText('');
+      setMessage(null);
+    } else {
+      setMessage(result);
+    }
+  };
+
+  return (
+    <header className="topbar">
+      <div className="brand">
+        <LaneMark className="brand-mark" />
+        <span className="brand-name">{t('app.name')}</span>
+      </div>
+
+      <form className="add" onSubmit={submit}>
+        <input
+          id={ADD_INPUT_ID}
+          type="text"
+          value={text}
+          onChange={(e) => {
+            setText(e.target.value);
+            setMessage(null);
+          }}
+          placeholder={t('add.placeholder')}
+          aria-label={t('add.label')}
+          aria-invalid={message === 'invalid'}
+          aria-describedby={message ? 'add-message' : undefined}
+          spellCheck={false}
+          autoComplete="off"
+          dir="ltr"
+        />
+        <button type="submit" className="button">
+          {t('add.button')}
+        </button>
+        {message && (
+          <span id="add-message" className="add-message" role="alert">
+            {t(`add.${message}`)}
+          </span>
+        )}
+      </form>
+
+      <div className="layouts" role="group" aria-label={t('layout.label')}>
+        {LAYOUTS.map((l) => (
+          <button
+            key={l.id}
+            type="button"
+            className="icon-button"
+            aria-pressed={layout === l.id}
+            aria-label={t(`layout.${l.id}`)}
+            title={t(`layout.${l.id}`)}
+            disabled={l.capacity < streams.length}
+            onClick={() => useSession.getState().setLayout(l.id)}
+          >
+            <LayoutGlyph columns={l.columns} rows={l.rows} featured={l.id === 'featured'} />
+          </button>
+        ))}
+      </div>
+
+      <div className="master">
+        <button
+          type="button"
+          className="icon-button"
+          aria-pressed={muted}
+          aria-label={muted ? t('master.unmute') : t('master.mute')}
+          title={muted ? t('master.unmute') : t('master.mute')}
+          onClick={() => useSession.getState().toggleMute()}
+        >
+          {muted ? <IconMuted /> : <IconSound />}
+        </button>
+        <input
+          type="range"
+          min={0}
+          max={100}
+          value={Math.round(masterVolume * 100)}
+          aria-label={t('master.volume')}
+          onChange={(e) => useSession.getState().setMasterVolume(Number(e.target.value) / 100)}
+        />
+      </div>
+
+      <button
+        type="button"
+        className="icon-button"
+        aria-label={t('shortcuts.open')}
+        title={t('shortcuts.open')}
+        onClick={() => openDialog('shortcuts')}
+      >
+        <IconKeyboard />
+      </button>
+      <button
+        type="button"
+        className="icon-button"
+        aria-label={t('settings.open')}
+        title={t('settings.open')}
+        onClick={() => openDialog('settings')}
+      >
+        <IconSettings />
+      </button>
+    </header>
+  );
+}
