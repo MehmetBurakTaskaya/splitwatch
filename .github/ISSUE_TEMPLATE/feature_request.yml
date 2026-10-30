@@ -1,0 +1,17 @@
+name: Idea or feature request
+description: Suggest something new. Check the roadmap first; it may already be planned.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: What would you like to do?
+      description: The situation and what is missing, for example "follow two parallel finals and hear only one".
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: How could Splitwatch help?
+    validations:
+      required: false

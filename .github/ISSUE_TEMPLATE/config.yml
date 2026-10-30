@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Roadmap
+    url: https://github.com/MehmetBurakTaskaya/splitwatch/blob/main/docs/ROADMAP.md
+    about: What is planned, phase by phase.
+  - name: Security problem
+    url: https://github.com/MehmetBurakTaskaya/splitwatch/security
+    about: Report vulnerabilities privately, not as an issue.
