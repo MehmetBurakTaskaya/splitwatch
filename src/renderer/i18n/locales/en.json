@@ -232,7 +232,6 @@
   "sport": {
     "title": "Sport of stream {index}",
     "note": "The sport gives the stream its color, and when all streams share one, the whole window takes its theme.",
-    "auto": "Find it automatically",
     "autoFound": "Find it automatically (now: {sport})",
     "autoMissing": "Find it automatically (not found)",
     "none": "No sport",

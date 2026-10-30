@@ -1,4 +1,4 @@
-import { BrowserWindow, type IpcMainEvent, clipboard, ipcMain, screen } from 'electron';
+import { BrowserWindow, type IpcMainEvent, clipboard, ipcMain, nativeTheme, screen } from 'electron';
 import { IPC } from '../shared/ipc';
 import { parseVideoId } from '../shared/youtube';
 import { getSettings, saveSettings } from './settings-store';
@@ -6,9 +6,18 @@ import { getVideoInfo } from './video-info';
 
 const windowOf = (e: IpcMainEvent) => BrowserWindow.fromWebContents(e.sender);
 
+// Light or dark for the whole app, including the window frame and the page's prefers-color-scheme.
+export function applyColorScheme(): void {
+  const scheme = getSettings().colorScheme;
+  if (nativeTheme.themeSource !== scheme) nativeTheme.themeSource = scheme;
+}
+
 export function registerAppIpc(): void {
   ipcMain.handle(IPC.settingsGet, () => getSettings());
-  ipcMain.on(IPC.settingsSave, (_e, patch: unknown) => saveSettings(patch));
+  ipcMain.on(IPC.settingsSave, (_e, patch: unknown) => {
+    saveSettings(patch);
+    applyColorScheme();
+  });
   ipcMain.handle(IPC.videoInfo, (_e, videoId: unknown) => getVideoInfo(videoId));
 
   // The clipboard is read only when the renderer asks (when the window gains focus), only if the

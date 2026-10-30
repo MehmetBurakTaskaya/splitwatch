@@ -43,8 +43,10 @@ export function Grid() {
           data-slot={streams.length + i}
           onClick={() => document.getElementById(ADD_INPUT_ID)?.focus()}
         >
-          <IconAdd />
-          <span>{t('empty.slot')}</span>
+          <span className="slot-label">
+            <IconAdd />
+            {t('empty.slot')}
+          </span>
         </button>
       ))}
     </div>

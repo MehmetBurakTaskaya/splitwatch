@@ -1,12 +1,14 @@
-import { type DragEvent, useEffect, useRef, useState } from 'react';
+import { type CSSProperties, type DragEvent, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { themeForSport } from '../../shared/themes';
 import { watchUrl } from '../../shared/youtube';
 import { loadIframeApi } from '../player/iframe-api';
 import { registerPlayer, seekBy, togglePlay, unregisterPlayer } from '../player/players';
-import { useAppStore } from '../state/app';
+import { openDialog, useAppStore } from '../state/app';
 import { usePrefs } from '../state/prefs';
 import { type PlayerState, useSession } from '../state/session';
 import { useYouTube } from '../state/youtube';
+import { THEMES, useTheme } from '../theme/engine';
 import {
   IconBack,
   IconClose,
@@ -20,6 +22,7 @@ import {
   IconRestore,
   IconSound,
 } from './icons';
+import { SportIcon } from './sport-icons';
 
 const STATES: Record<number, PlayerState> = {
   [-1]: 'unstarted',
@@ -64,6 +67,11 @@ export function Tile({
   const layout = useSession((s) => s.layout);
   const audioFocus = usePrefs((s) => s.audioFocus);
   const live = useYouTube((s) => s.liveStates[videoId]);
+  const ownSport = useSession((s) => s.sports[videoId]);
+  const foundSport = useYouTube((s) => s.streamSports[videoId]);
+  const scheme = useTheme((s) => s.scheme);
+  const sport = ownSport ? (ownSport === 'none' ? null : ownSport) : (foundSport ?? null);
+  const sportTheme = themeForSport(THEMES, sport);
 
   // One YouTube player per tile, created once and kept while the tile lives.
   useEffect(() => {
@@ -114,6 +122,8 @@ export function Tile({
   const playing = status?.state === 'playing' || status?.state === 'buffering';
   const isMax = maximized === videoId;
   const n = index + 1;
+  const sportName = sport ? t(`sports.${sport}`, sport) : null;
+  const sportLabel = sportName ? t('tile.sport', { index: n, sport: sportName }) : t('tile.sportUnknown', { index: n });
 
   const toggleEnlarge = () => {
     const enlarge = !isMax;
@@ -142,8 +152,9 @@ export function Tile({
       ]
         .filter(Boolean)
         .join(' ')}
-      style={{ order: index }}
+      style={{ order: index, ...(sportTheme && { '--tile-accent': sportTheme[scheme].ui.accent }) } as CSSProperties}
       data-stream={videoId}
+      data-sport={sport ?? undefined}
       data-slot={index}
       data-layout={layout}
       data-state={status?.state ?? 'loading'}
@@ -193,6 +204,15 @@ export function Tile({
         <span className="tile-number" aria-hidden="true" onClick={pick}>
           {n}
         </span>
+        <button
+          type="button"
+          className={sport ? 'icon-button tile-sport' : 'icon-button tile-sport is-unknown optional'}
+          aria-label={sportLabel}
+          title={sportLabel}
+          onClick={() => openDialog('sport', videoId)}
+        >
+          <SportIcon sport={sport} />
+        </button>
         <span className="tile-title" onClick={pick}>
           <span className="tile-name" dir="auto" title={title}>
             {live === 'live' && <span className="badge badge-live">{t('live.badge')}</span>}

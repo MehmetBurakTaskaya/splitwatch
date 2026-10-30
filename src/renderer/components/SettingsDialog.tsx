@@ -1,9 +1,13 @@
-import { type FormEvent, useEffect, useMemo, useState } from 'react';
+import { type CSSProperties, type FormEvent, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import type { ColorScheme } from '../../shared/settings';
+import type { Palette } from '../../shared/themes';
 import { openDialog, useAppStore } from '../state/app';
 import { setPrefs, usePrefs } from '../state/prefs';
 import { refreshLiveNow, useYouTube } from '../state/youtube';
+import { THEMES, useTheme } from '../theme/engine';
 import { Dialog } from './Dialog';
+import { SportIcon } from './sport-icons';
 
 const CONSOLE_URL = 'https://console.cloud.google.com/apis/library/youtube.googleapis.com';
 
@@ -15,6 +19,7 @@ export function SettingsDialog() {
 
   return (
     <Dialog title={t('settings.title')} onClose={() => openDialog(null)} wide>
+      <AppearanceSection />
       <section className="settings-section">
         <h3>{t('settings.sound')}</h3>
         <fieldset className="field">
@@ -59,6 +64,99 @@ export function SettingsDialog() {
         </button>
       </div>
     </Dialog>
+  );
+}
+
+const SCHEMES: ColorScheme[] = ['system', 'light', 'dark'];
+const AUTO_THEME = 'auto';
+const SCHEME_LABELS = { system: 'settings.schemeSystem', light: 'settings.schemeLight', dark: 'settings.schemeDark' };
+
+function AppearanceSection() {
+  const { t } = useTranslation();
+  const choice = usePrefs((s) => s.theme);
+  const colorScheme = usePrefs((s) => s.colorScheme);
+  const animate = usePrefs((s) => s.animate);
+  const performance = usePrefs((s) => s.performance);
+  const scheme = useTheme((s) => s.scheme);
+  const active = useTheme((s) => s.theme);
+
+  const option = (value: string, name: string, note: string, palette: Palette, sport: string | null) => (
+    <label key={value} className="theme-option">
+      <input type="radio" name="theme" checked={choice === value} onChange={() => setPrefs({ theme: value })} />
+      <span
+        className="theme-swatch"
+        aria-hidden="true"
+        style={
+          {
+            '--swatch-base': palette.scene.base,
+            '--swatch-line': palette.scene.line,
+            '--swatch-accent': palette.ui.accent,
+          } as CSSProperties
+        }
+      >
+        <SportIcon sport={sport} />
+      </span>
+      <span className="theme-name">{name}</span>
+      <span className="theme-note">{note}</span>
+    </label>
+  );
+
+  return (
+    <section className="settings-section">
+      <h3>{t('settings.appearance')}</h3>
+      <fieldset className="field">
+        <legend>{t('settings.theme')}</legend>
+        <div className="theme-grid">
+          {option(
+            AUTO_THEME,
+            t('settings.themeAuto'),
+            t('settings.themeAutoNote'),
+            active[scheme],
+            active.sports[0] ?? null,
+          )}
+          {THEMES.map((theme) =>
+            option(
+              theme.id,
+              t(`themes.${theme.id}`, theme.id),
+              theme.sports.length
+                ? theme.sports.map((s) => t(`sports.${s}`, s)).join(', ')
+                : t('settings.themeNeutralNote'),
+              theme[scheme],
+              theme.sports[0] ?? null,
+            ),
+          )}
+        </div>
+      </fieldset>
+      <fieldset className="field">
+        <legend>{t('settings.scheme')}</legend>
+        {SCHEMES.map((value) => (
+          <label key={value}>
+            <input
+              type="radio"
+              name="color-scheme"
+              checked={colorScheme === value}
+              onChange={() => setPrefs({ colorScheme: value })}
+            />
+            {t(SCHEME_LABELS[value])}
+          </label>
+        ))}
+      </fieldset>
+      <label className="field field-tight">
+        <input
+          type="checkbox"
+          checked={animate && !performance}
+          disabled={performance}
+          onChange={(e) => setPrefs({ animate: e.target.checked })}
+        />
+        {t('settings.animate')}
+      </label>
+      <p className="note field-note">{t('settings.animateNote')}</p>
+      <label className="field field-tight">
+        <input type="checkbox" checked={performance} onChange={(e) => setPrefs({ performance: e.target.checked })} />
+        {t('settings.performance')}
+      </label>
+      <p className="note field-note">{t('settings.performanceNote')}</p>
+    </section>
   );
 }
 
@@ -161,21 +259,16 @@ function QuotaSection() {
 function SportsSection() {
   const { t } = useTranslation();
   const presets = useYouTube((s) => s.presets);
-  const [chosen, setChosen] = useState<string[]>([]);
+  const chosen = usePrefs((s) => s.sports);
   const sports = useMemo(
     () =>
       [...new Set(presets.map((p) => p.sport))].sort((a, b) => t(`sports.${a}`, a).localeCompare(t(`sports.${b}`, b))),
     [presets, t],
   );
-  useEffect(() => {
-    void window.splitwatch.getSettings().then((s) => setChosen(s.sports));
-  }, []);
   if (!sports.length) return null;
 
   const toggle = (sport: string, on: boolean) => {
-    const next = on ? [...chosen, sport] : chosen.filter((s) => s !== sport);
-    setChosen(next);
-    window.splitwatch.saveSettings({ sports: next });
+    setPrefs({ sports: on ? [...chosen, sport] : chosen.filter((s) => s !== sport) });
     setTimeout(() => void refreshLiveNow(), 100);
   };
 

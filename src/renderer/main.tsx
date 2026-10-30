@@ -5,6 +5,7 @@ import { initI18n } from './i18n';
 import { connectHost } from './state/app';
 import { loadState } from './state/init';
 import { connectYouTube } from './state/youtube';
+import { connectTheme } from './theme/engine';
 import './styles/tokens.css';
 import './styles/base.css';
 import './styles/grid.css';
@@ -15,6 +16,7 @@ const requested = new URLSearchParams(location.search).get('locale');
 void Promise.all([initI18n(requested), loadState()]).then(() => {
   connectHost();
   connectYouTube();
+  connectTheme();
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
       <App />

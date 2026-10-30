@@ -94,7 +94,8 @@ button.button-quiet {
   fill: currentColor;
   stroke: none;
 }
-.icon .dots {
+.icon .dots,
+.icon .thick {
   stroke-width: 2.6;
 }
 .layout-glyph rect {
@@ -131,11 +132,43 @@ kbd {
   white-space: nowrap;
 }
 
-/* Shell */
+/* Shell. The backdrop sits behind everything else in it. */
 .shell {
+  position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   block-size: 100%;
+}
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.backdrop-layer {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+/* Headings in the theme's display font */
+.brand-name,
+.empty-card h1,
+.live-now h2,
+.dialog h2 {
+  font-family: var(--font-display);
+}
+
+/* Theme changes fade, unless the system asks for less motion or performance mode is on. */
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-performance]) :is(body, .topbar, .empty-card, .empty-live) {
+    transition:
+      background-color 400ms ease,
+      border-color 400ms ease,
+      color 400ms ease;
+  }
 }
 
 .topbar {
@@ -237,17 +270,6 @@ kbd {
   place-items: center;
   padding: var(--space-6) var(--space-4);
   overflow: hidden;
-}
-.lanes {
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    90deg,
-    transparent 0,
-    transparent 119px,
-    var(--color-lane) 119px,
-    var(--color-lane) 121px
-  );
 }
 .empty-card {
   position: relative;

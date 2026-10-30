@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
+import { Backdrop } from './components/Backdrop';
 import { ClipboardSuggestion } from './components/ClipboardSuggestion';
 import { EmptyState } from './components/EmptyState';
 import { Grid } from './components/Grid';
 import { SearchPalette } from './components/SearchPalette';
 import { SettingsDialog } from './components/SettingsDialog';
 import { ShortcutsDialog } from './components/ShortcutsDialog';
+import { SportDialog } from './components/SportDialog';
 import { TopBar } from './components/TopBar';
 import { UpdateNotice } from './components/UpdateNotice';
 import { useIframeFocus, useShortcuts } from './hooks/useShortcuts';
@@ -23,6 +25,7 @@ export function App() {
 
   return (
     <div className="shell">
+      <Backdrop />
       <TopBar />
       <ClipboardSuggestion />
       {hasStreams ? <Grid /> : <EmptyState />}
@@ -30,6 +33,7 @@ export function App() {
       {dialog === 'search' && <SearchPalette />}
       {dialog === 'shortcuts' && <ShortcutsDialog />}
       {dialog === 'settings' && <SettingsDialog />}
+      {dialog === 'sport' && <SportDialog />}
     </div>
   );
 }

@@ -4,11 +4,8 @@ import { sessionSnapshot, useSession } from './session';
 // Restores the settings and the last session, then saves the session whenever it changes.
 export async function loadState(): Promise<void> {
   const settings = await window.splitwatch.getSettings();
-  usePrefs.setState({
-    audioFocus: settings.audioFocus,
-    clipboardSuggestions: settings.clipboardSuggestions,
-    shortcuts: settings.shortcuts,
-  });
+  const { audioFocus, clipboardSuggestions, shortcuts, sports, theme, colorScheme, animate, performance } = settings;
+  usePrefs.setState({ audioFocus, clipboardSuggestions, shortcuts, sports, theme, colorScheme, animate, performance });
   useSession.setState(settings.session);
 
   let timer: ReturnType<typeof setTimeout> | undefined;
