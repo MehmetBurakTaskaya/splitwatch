@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "presets": [
+    "volleyball",
+    "beach-volleyball",
+    "triathlon",
+    "athletics",
+    "road-cycling",
+    "mountain-bike",
+    "swimming",
+    "alpine-skiing",
+    "snowboard",
+    "ice-hockey",
+    "table-tennis",
+    "badminton",
+    "wrestling",
+    "rowing",
+    "canoe",
+    "surfing",
+    "basketball"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "./schema.json",
+  "id": "swimming",
+  "sport": "swimming",
+  "channels": [
+    {
+      "id": "UCZko_COpTM4_d2kPrxZfzFg",
+      "name": "World Aquatics",
+      "checked": "2026-10-30"
+    }
+  ],
+  "keywords": ["swimming live"]
+}

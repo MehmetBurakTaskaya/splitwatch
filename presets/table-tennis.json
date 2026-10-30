@@ -1,0 +1,13 @@
+{
+  "$schema": "./schema.json",
+  "id": "table-tennis",
+  "sport": "table-tennis",
+  "channels": [
+    {
+      "id": "UC9ckyA_A3MfXUa0ttxMoIZw",
+      "name": "World Table Tennis",
+      "checked": "2026-10-30"
+    }
+  ],
+  "keywords": ["table tennis live"]
+}

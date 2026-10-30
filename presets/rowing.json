@@ -1,0 +1,13 @@
+{
+  "$schema": "./schema.json",
+  "id": "rowing",
+  "sport": "rowing",
+  "channels": [
+    {
+      "id": "UCUtND8H4BQaFsQlWxakWX1Q",
+      "name": "World Rowing",
+      "checked": "2026-10-30"
+    }
+  ],
+  "keywords": ["rowing live"]
+}

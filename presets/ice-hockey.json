@@ -1,0 +1,13 @@
+{
+  "$schema": "./schema.json",
+  "id": "ice-hockey",
+  "sport": "ice-hockey",
+  "channels": [
+    {
+      "id": "UCtmgna7qB0oQF2oOcVgndbw",
+      "name": "IIHF",
+      "checked": "2026-10-30"
+    }
+  ],
+  "keywords": ["ice hockey live"]
+}

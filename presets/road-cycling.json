@@ -1,0 +1,13 @@
+{
+  "$schema": "./schema.json",
+  "id": "road-cycling",
+  "sport": "road-cycling",
+  "channels": [
+    {
+      "id": "UCloqTh1nPpW13LCntQglS-Q",
+      "name": "UCI",
+      "checked": "2026-10-30"
+    }
+  ],
+  "keywords": ["road cycling live"]
+}

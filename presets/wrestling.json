@@ -1,0 +1,13 @@
+{
+  "$schema": "./schema.json",
+  "id": "wrestling",
+  "sport": "wrestling",
+  "channels": [
+    {
+      "id": "UCi8PYovluicFUUD_YxJIcMA",
+      "name": "United World Wrestling",
+      "checked": "2026-10-30"
+    }
+  ],
+  "keywords": ["wrestling live"]
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "./schema.json",
+  "id": "mountain-bike",
+  "sport": "mountain-bike",
+  "channels": [
+    {
+      "id": "UCloqTh1nPpW13LCntQglS-Q",
+      "name": "UCI",
+      "checked": "2026-10-30"
+    }
+  ],
+  "keywords": ["mountain bike live"]
+}

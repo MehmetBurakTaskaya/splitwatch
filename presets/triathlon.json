@@ -1,0 +1,13 @@
+{
+  "$schema": "./schema.json",
+  "id": "triathlon",
+  "sport": "triathlon",
+  "channels": [
+    {
+      "id": "UCXRVKD6l-LrX5TmGJqQFFoQ",
+      "name": "World Triathlon",
+      "checked": "2026-10-30"
+    }
+  ],
+  "keywords": ["triathlon live"]
+}

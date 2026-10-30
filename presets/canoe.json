@@ -1,0 +1,13 @@
+{
+  "$schema": "./schema.json",
+  "id": "canoe",
+  "sport": "canoe",
+  "channels": [
+    {
+      "id": "UCVagCjubko2x50KpYhnLsCQ",
+      "name": "Planet Canoe",
+      "checked": "2026-10-30"
+    }
+  ],
+  "keywords": ["canoe live", "kayak live"]
+}

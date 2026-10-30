@@ -1,0 +1,13 @@
+{
+  "$schema": "./schema.json",
+  "id": "volleyball",
+  "sport": "volleyball",
+  "channels": [
+    {
+      "id": "UCNMg6XDhRZI2QzL4pWOvP_w",
+      "name": "Volleyball World",
+      "checked": "2026-10-30"
+    }
+  ],
+  "keywords": ["volleyball live"]
+}

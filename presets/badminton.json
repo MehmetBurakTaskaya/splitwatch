@@ -1,0 +1,13 @@
+{
+  "$schema": "./schema.json",
+  "id": "badminton",
+  "sport": "badminton",
+  "channels": [
+    {
+      "id": "UChh-akEbUM8_6ghGVnJd6cQ",
+      "name": "BWF TV",
+      "checked": "2026-10-30"
+    }
+  ],
+  "keywords": ["badminton live"]
+}

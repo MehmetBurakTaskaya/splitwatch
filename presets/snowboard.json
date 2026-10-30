@@ -1,0 +1,14 @@
+{
+  "$schema": "./schema.json",
+  "id": "snowboard",
+  "sport": "snowboard",
+  "channels": [
+    {
+      "id": "UCYH4lDJKbTq2YTGQC76mkcQ",
+      "name": "Ski & Snowboard World Cup",
+      "checked": "2026-10-30",
+      "review": "Active channel for the World Cup; that it belongs to FIS is not confirmed yet."
+    }
+  ],
+  "keywords": ["snowboard live"]
+}

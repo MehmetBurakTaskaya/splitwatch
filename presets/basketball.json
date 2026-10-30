@@ -1,0 +1,13 @@
+{
+  "$schema": "./schema.json",
+  "id": "basketball",
+  "sport": "basketball",
+  "channels": [
+    {
+      "id": "UCtInrnU3QbWqFGsdKT1GZtg",
+      "name": "FIBA Basketball",
+      "checked": "2026-10-30"
+    }
+  ],
+  "keywords": ["basketball live"]
+}

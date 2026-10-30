@@ -1,0 +1,13 @@
+{
+  "$schema": "./schema.json",
+  "id": "surfing",
+  "sport": "surfing",
+  "channels": [
+    {
+      "id": "UChuLeaTGRcfzo0UjL-2qSbQ",
+      "name": "World Surf League",
+      "checked": "2026-10-30"
+    }
+  ],
+  "keywords": ["surfing live"]
+}

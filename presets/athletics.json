@@ -1,0 +1,13 @@
+{
+  "$schema": "./schema.json",
+  "id": "athletics",
+  "sport": "athletics",
+  "channels": [
+    {
+      "id": "UCQk7fWv15ChjMJLCRVmtApw",
+      "name": "World Athletics",
+      "checked": "2026-10-30"
+    }
+  ],
+  "keywords": ["athletics live", "marathon live"]
+}
