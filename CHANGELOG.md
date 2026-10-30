@@ -5,6 +5,11 @@ and versions follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-30
+
+Splitwatch now finds live sports: Live now from official channels, and live-stream search with your own
+YouTube API key.
+
 ### Added
 
 - "Live now": live and upcoming streams from the official YouTube channels of 17 sports, ready to add
@@ -60,7 +65,8 @@ The first version: the app's foundation and its release pipeline, without stream
 - Security baseline: sandboxed, isolated renderer without Node.js, strict Content Security Policy,
   hardened Electron fuses.
 
-[Unreleased]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/MehmetBurakTaskaya/splitwatch/releases/tag/v0.1.0
