@@ -11,30 +11,44 @@ function messages(tree: unknown, prefix = ''): [string, string][] {
   );
 }
 
-const values = { version: '1.2.3', count: 2, progress: 0.42 };
+// A value for every argument the messages use.
+const values = {
+  version: '1.2.3',
+  count: 2,
+  progress: 0.42,
+  index: 3,
+  title: 'Final',
+  code: 150,
+  key: 'M',
+  action: 'Mute or unmute',
+};
 
 describe('English messages', () => {
   it.each(messages(en))('%s is valid ICU MessageFormat', (_key, message) => {
     expect(() => new IntlMessageFormat(message, 'en').format(values)).not.toThrow();
   });
 
-  it('formats plurals and percentages through Intl', () => {
-    expect(new IntlMessageFormat(en.welcome.languages, 'en').format({ count: 1 })).toBe(
-      'Available in 1 language for now.',
-    );
+  it('formats arguments and percentages through Intl', () => {
+    expect(new IntlMessageFormat(en.tile.label, 'en').format({ index: 2, title: 'Final' })).toBe('Stream 2: Final');
     expect(new IntlMessageFormat(en.update.downloading, 'en').format({ progress: 0.42 })).toBe(
       'Downloading the update: 42%',
     );
+  });
+
+  it('formats plurals with each language rule', () => {
+    const message = '{count, plural, one {# stream} other {# streams}}';
+    expect(new IntlMessageFormat(message, 'en').format({ count: 1 })).toBe('1 stream');
+    expect(new IntlMessageFormat(message, 'en').format({ count: 4 })).toBe('4 streams');
   });
 });
 
 describe('pseudo-locales', () => {
   it('lengthens and accents the text but keeps the ICU syntax', () => {
-    const pseudo = pseudoMessage(en.welcome.languages, 'en-XA');
+    const pseudo = pseudoMessage('{count, plural, one {# stream ready} other {# streams ready}}', 'en-XA');
     expect(pseudo).toMatch(/^\[.*~+\]$/);
     expect(pseudo).toContain('{count, plural, one {');
     expect(new IntlMessageFormat(pseudo, 'en').format({ count: 3 })).toContain('3');
-    expect(pseudo).not.toContain('Available');
+    expect(pseudo).not.toContain('ready');
   });
 
   it('keeps simple arguments and number styles', () => {
