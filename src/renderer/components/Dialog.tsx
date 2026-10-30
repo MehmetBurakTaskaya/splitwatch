@@ -1,33 +1,84 @@
-import { type ReactNode, useEffect, useRef } from 'react';
+import { type KeyboardEvent, type MouseEvent, type ReactNode, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import { IconClose } from './icons';
 
-// A modal built on <dialog>: focus is trapped and Escape closes it, natively.
+// A modal built on <dialog>, so focus is trapped natively. onClose is a request: Escape, the close
+// button in the corner, a click outside the box and Enter on a checkbox or radio button (their
+// changes apply at once) all ask the owner, which closes the dialog by no longer rendering it.
 export function Dialog({
   title,
   onClose,
   wide,
+  footer,
   children,
 }: {
   title: string;
   onClose: () => void;
   wide?: boolean;
+  // Shown under the scrolling content, always in view.
+  footer?: ReactNode;
   children: ReactNode;
 }) {
+  const { t } = useTranslation();
   const ref = useRef<HTMLDialogElement>(null);
+  const pressedOutside = useRef(false);
 
   useEffect(() => {
     const dialog = ref.current;
     if (dialog && !dialog.open) dialog.showModal();
   }, []);
 
+  // A click on the backdrop reaches the dialog element itself, outside its box.
+  const outside = (e: MouseEvent) => {
+    const dialog = ref.current;
+    if (!dialog || e.target !== dialog) return false;
+    const r = dialog.getBoundingClientRect();
+    return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+  };
+
+  const onKeyDown = (e: KeyboardEvent) => {
+    const target = e.target;
+    if (e.key === 'Enter' && target instanceof HTMLInputElement && ['checkbox', 'radio'].includes(target.type)) {
+      e.preventDefault();
+      onClose();
+    }
+  };
+
   return (
     <dialog
       ref={ref}
       className={wide ? 'dialog dialog-wide' : 'dialog'}
       aria-labelledby="dialog-title"
-      onClose={onClose}
+      onCancel={(e) => {
+        e.preventDefault();
+        onClose();
+      }}
+      // The browser may close it anyway (a second Escape); it stays open until its owner closes it.
+      onClose={() => {
+        const dialog = ref.current;
+        if (dialog?.isConnected && !dialog.open) dialog.showModal();
+      }}
+      onPointerDown={(e) => (pressedOutside.current = outside(e))}
+      onClick={(e) => {
+        if (pressedOutside.current && outside(e)) onClose();
+        pressedOutside.current = false;
+      }}
+      onKeyDown={onKeyDown}
     >
-      <h2 id="dialog-title">{title}</h2>
-      {children}
+      <div className="dialog-head">
+        <h2 id="dialog-title">{title}</h2>
+        <button
+          type="button"
+          className="icon-button"
+          aria-label={t('dialog.close')}
+          title={t('dialog.close')}
+          onClick={onClose}
+        >
+          <IconClose />
+        </button>
+      </div>
+      <div className="dialog-body">{children}</div>
+      {footer && <div className="dialog-footer">{footer}</div>}
     </dialog>
   );
 }

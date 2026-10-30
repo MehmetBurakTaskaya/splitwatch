@@ -3,6 +3,9 @@
     "name": "Splitwatch",
     "tagline": "Watch several live sports streams side by side."
   },
+  "dialog": {
+    "close": "Close"
+  },
   "add": {
     "label": "YouTube link or video ID",
     "placeholder": "Paste a YouTube link or video ID",
@@ -98,6 +101,7 @@
   "settings": {
     "open": "Settings",
     "title": "Settings",
+    "savedNote": "Changes are saved as soon as you make them.",
     "audioFocus": "Sound follows",
     "audioFocusClick": "the stream I click",
     "audioFocusHover": "the stream under the pointer",
@@ -111,6 +115,8 @@
     "keySave": "Save key",
     "keyChecking": "Checking the key…",
     "keyRemove": "Remove key",
+    "keyUnsaved": "Save the API key you typed?",
+    "keyDiscard": "Don't save",
     "keyState": {
       "none": "No key yet.",
       "valid": "The key works.",

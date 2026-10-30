@@ -200,3 +200,35 @@ test('the long pseudo-locale still fits the window', async () => {
   expect(overflow).toBe(false);
   await app.close();
 });
+
+test('dialogs close from outside the box and from Enter on a choice, and keep a typed key', async () => {
+  const { app, page } = await launch(freshUserData());
+  const dialog = page.getByRole('dialog');
+  const openSettings = () => page.locator('.topbar').getByRole('button', { name: en.settings.open }).click();
+
+  await openSettings();
+  await expect(dialog).toBeVisible();
+  await page.mouse.click(5, 300);
+  await expect(dialog).toBeHidden();
+
+  // Settings apply at once, so Enter on a checkbox closes the dialog.
+  await openSettings();
+  await page.getByRole('checkbox', { name: en.settings.performance }).focus();
+  await page.keyboard.press('Enter');
+  await expect(dialog).toBeHidden();
+
+  // A typed key that was not saved: closing asks first, with Save focused.
+  await openSettings();
+  await page.getByLabel(en.settings.keyLabel).fill('not-a-real-key-but-long-enough-0000');
+  await page.keyboard.press('Escape');
+  await expect(page.getByText(en.settings.keyUnsaved)).toBeVisible();
+  await expect(dialog.locator('.dialog-footer').getByRole('button', { name: en.settings.keySave })).toBeFocused();
+  await dialog.getByRole('button', { name: en.settings.keyDiscard }).click();
+  await expect(dialog).toBeHidden();
+
+  // The close button in the corner.
+  await openSettings();
+  await dialog.locator('.dialog-head').getByRole('button', { name: en.dialog.close }).click();
+  await expect(dialog).toBeHidden();
+  await app.close();
+});

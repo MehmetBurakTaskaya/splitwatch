@@ -1,4 +1,4 @@
-import { type CSSProperties, type FormEvent, useMemo, useState } from 'react';
+import { type CSSProperties, type FormEvent, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { ColorScheme } from '../../shared/settings';
 import type { Palette } from '../../shared/themes';
@@ -16,9 +16,39 @@ export function SettingsDialog() {
   const audioFocus = usePrefs((s) => s.audioFocus);
   const clipboard = usePrefs((s) => s.clipboardSuggestions);
   const version = useAppStore((s) => s.info?.version);
+  // Every setting applies at once, except an API key, which is saved only once YouTube accepts it:
+  // closing with a key typed but not saved asks first.
+  const keyForm = useKeyForm();
+  const [askKey, setAskKey] = useState(false);
+
+  const requestClose = () => {
+    if (askKey) setAskKey(false);
+    else if (keyForm.key.trim() && !keyForm.busy) setAskKey(true);
+    else openDialog(null);
+  };
+
+  const saveAndClose = async () => {
+    setAskKey(false);
+    if (await keyForm.save()) openDialog(null);
+    else keyForm.focus();
+  };
+
+  const footer = askKey && (
+    <>
+      <p role="alert">{t('settings.keyUnsaved')}</p>
+      {/* Enter saves: the focus starts on this button. */}
+      <button type="button" className="button" autoFocus onClick={() => void saveAndClose()}>
+        {t('settings.keySave')}
+      </button>
+      <button type="button" className="button button-quiet" onClick={() => openDialog(null)}>
+        {t('settings.keyDiscard')}
+      </button>
+    </>
+  );
 
   return (
-    <Dialog title={t('settings.title')} onClose={() => openDialog(null)} wide>
+    <Dialog title={t('settings.title')} onClose={requestClose} footer={footer} wide>
+      <p className="note settings-saved">{t('settings.savedNote')}</p>
       <AppearanceSection />
       <section className="settings-section">
         <h3>{t('settings.sound')}</h3>
@@ -53,13 +83,13 @@ export function SettingsDialog() {
         </label>
       </section>
 
-      <ApiKeySection />
+      <ApiKeySection form={keyForm} />
       <QuotaSection />
       <SportsSection />
 
       {version && <p className="dialog-meta">{t('settings.version', { version })}</p>}
       <div className="dialog-actions">
-        <button type="button" className="button" onClick={() => openDialog(null)}>
+        <button type="button" className="button" onClick={requestClose}>
           {t('settings.close')}
         </button>
       </div>
@@ -160,26 +190,45 @@ function AppearanceSection() {
   );
 }
 
-function ApiKeySection() {
+type KeyForm = ReturnType<typeof useKeyForm>;
+
+function useKeyForm() {
   const { t } = useTranslation();
-  const status = useYouTube((s) => s.status);
   const [key, setKey] = useState('');
   const [busy, setBusy] = useState(false);
   const [problem, setProblem] = useState<string | null>(null);
-  const state = status?.key ?? 'none';
+  const input = useRef<HTMLInputElement>(null);
 
-  const save = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!key.trim()) return setProblem(t('settings.keyFailed.no-key'));
+  // true once YouTube accepted the key and it is stored.
+  const save = async (): Promise<boolean> => {
+    if (!key.trim()) {
+      setProblem(t('settings.keyFailed.no-key'));
+      return false;
+    }
     setBusy(true);
     setProblem(null);
     try {
       const result = await window.splitwatch.setApiKey(key);
       if (result.ok) setKey('');
       else setProblem(t(`settings.keyFailed.${result.reason}`));
+      return result.ok;
     } finally {
       setBusy(false);
     }
+  };
+
+  return { key, setKey, busy, problem, save, input, focus: () => input.current?.focus() };
+}
+
+function ApiKeySection({ form }: { form: KeyForm }) {
+  const { t } = useTranslation();
+  const status = useYouTube((s) => s.status);
+  const { key, setKey, busy, problem, input } = form;
+  const state = status?.key ?? 'none';
+
+  const save = (e: FormEvent) => {
+    e.preventDefault();
+    void form.save();
   };
 
   return (
@@ -192,6 +241,7 @@ function ApiKeySection() {
       {state !== 'unavailable' && (
         <form className="key-form" onSubmit={save}>
           <input
+            ref={input}
             type="password"
             value={key}
             onChange={(e) => setKey(e.target.value)}
