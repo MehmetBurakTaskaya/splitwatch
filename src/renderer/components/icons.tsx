@@ -97,6 +97,11 @@ export const IconMini = () => (
     <rect className="fill" x="10" y="10" width="5.5" height="4" rx="0.5" />
   </Icon>
 );
+export const IconBell = () => (
+  <Icon>
+    <path d="M5.5 13.5V9a4.5 4.5 0 0 1 9 0v4.5l1.5 1.5H4zM8.5 17h3" />
+  </Icon>
+);
 export const IconLayouts = () => (
   <Icon>
     <path d="M6 3h8a1 1 0 0 1 1 1v13l-5-3.5L5 17V4a1 1 0 0 1 1-1z" />

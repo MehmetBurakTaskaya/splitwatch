@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import type { LiveNow, LiveState, StreamItem, YouTubeStatus } from '../../shared/ipc';
+import type { FollowedChannel } from '../../shared/notify';
 import type { Preset } from '../../shared/presets';
 import { useSession } from './session';
 
@@ -12,6 +13,8 @@ interface YouTubeState {
   history: StreamItem[];
   // The sport the app found for each stream in the grid, from the preset channels.
   streamSports: Record<string, string | null>;
+  // The channel of each stream in the grid (with a key), for following it.
+  streamChannels: Record<string, FollowedChannel | null>;
 }
 
 export const useYouTube = create<YouTubeState>(() => ({
@@ -22,6 +25,7 @@ export const useYouTube = create<YouTubeState>(() => ({
   liveStates: {},
   history: [],
   streamSports: {},
+  streamChannels: {},
 }));
 
 const LIVE_NOW_EVERY = 5 * 60_000;
@@ -54,7 +58,16 @@ async function refreshStreamSports(): Promise<void> {
   useYouTube.setState({ streamSports: { ...useYouTube.getState().streamSports, ...found } });
 }
 
-const refreshStreams = () => void refreshLiveStates().finally(() => void refreshStreamSports());
+// The channels come from the same cached videos.list answer, so they cost nothing extra either.
+async function refreshStreamChannels(): Promise<void> {
+  const ids = useSession.getState().streams.filter((id) => !useYouTube.getState().streamChannels[id]);
+  if (!ids.length || useYouTube.getState().status?.key !== 'valid') return;
+  const found = await window.splitwatch.getStreamChannels(ids);
+  useYouTube.setState({ streamChannels: { ...useYouTube.getState().streamChannels, ...found } });
+}
+
+const refreshStreams = () =>
+  void refreshLiveStates().finally(() => void refreshStreamSports().finally(() => void refreshStreamChannels()));
 
 export async function refreshHistory(): Promise<void> {
   useYouTube.setState({ history: await window.splitwatch.getHistory() });

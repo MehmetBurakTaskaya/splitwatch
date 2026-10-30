@@ -5,6 +5,7 @@ import { type AppInfo, IPC } from '../shared/ipc';
 import { initI18n } from './i18n';
 import { registerLoginIpc, startedHidden } from './login';
 import { registerMainWindowIpc, setPageLocale, showMainWindow } from './main-window';
+import { setupNotifications } from './notify';
 import { registerAppScheme, serveApp } from './protocol';
 import { hardenSession, hardenWebContents } from './security';
 import { flushSettings, getSettings } from './settings-store';
@@ -64,6 +65,7 @@ if (!app.requestSingleInstanceLock()) {
     setMenu();
     setupUpdates();
     setupTray();
+    setupNotifications();
     if (!startedHidden()) showMainWindow();
   });
 

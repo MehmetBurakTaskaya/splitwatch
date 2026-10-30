@@ -82,9 +82,14 @@ async function startFake(): Promise<Fake> {
   };
 }
 
-async function launch(fake: Fake, withKey: boolean): Promise<{ app: ElectronApplication; page: Page }> {
+async function launch(
+  fake: Fake,
+  withKey: boolean,
+  settings: object = {},
+  beforeWindow?: (app: ElectronApplication) => Promise<void>,
+): Promise<{ app: ElectronApplication; page: Page }> {
   const userData = mkdtempSync(path.join(tmpdir(), 'splitwatch-api-'));
-  writeFileSync(path.join(userData, 'settings.json'), JSON.stringify({ clipboardSuggestions: false }));
+  writeFileSync(path.join(userData, 'settings.json'), JSON.stringify({ clipboardSuggestions: false, ...settings }));
   const app = await electron.launch({
     args: ['.'],
     env: {
@@ -95,8 +100,10 @@ async function launch(fake: Fake, withKey: boolean): Promise<{ app: ElectronAppl
       SPLITWATCH_YOUTUBE_API_BASE: `${fake.base}/youtube/v3`,
       SPLITWATCH_FEEDS_BASE: fake.base,
       ...(withKey ? { SPLITWATCH_TEST_API_KEY: KEY } : {}),
+      SPLITWATCH_NOTIFY_EVERY: '4000',
     },
   });
+  await beforeWindow?.(app);
   const page = await app.firstWindow();
   await page.waitForSelector('.topbar');
   return { app, page };
@@ -148,5 +155,32 @@ test('with a key: Live now, search with its cost, LIVE badges and the quota coun
   await page.getByRole('button', { name: en.settings.open }).click();
   await expect(page.getByText(en.settings.keyState.valid)).toBeVisible();
   await expect(page.getByText('Searches: 1 of 100')).toBeVisible();
+  await app.close();
+});
+
+test('tells once when a watched channel goes live, and the notification adds the stream', async () => {
+  // The notifications are recorded instead of shown.
+  const record = (app: ElectronApplication) =>
+    app.evaluate(({ Notification }) => {
+      const g = globalThis as unknown as { shown: { title: string; body: string }[]; last: Electron.Notification };
+      g.shown = [];
+      Notification.prototype.show = function (this: Electron.Notification) {
+        g.shown.push({ title: this.title, body: this.body });
+        g.last = this;
+        this.emit('show');
+      };
+    });
+  const { app, page } = await launch(fake, true, { notify: { on: true, sports: ['swimming'], channels: [] } }, record);
+  const shown = () => app.evaluate(() => (globalThis as unknown as { shown: { title: string; body: string }[] }).shown);
+  await expect
+    .poll(shown, { timeout: 20_000 })
+    .toEqual([{ title: en.notify.title.replace('{channel}', 'Fake federation'), body: 'Fake live final' }]);
+
+  // Later checks do not tell again.
+  await page.waitForTimeout(5000);
+  expect(await shown()).toHaveLength(1);
+
+  await app.evaluate(() => (globalThis as unknown as { last: Electron.Notification }).last.emit('click'));
+  await expect(page.locator(`[data-stream="${LIVE}"]`)).toHaveAttribute('data-sport', 'swimming');
   await app.close();
 });

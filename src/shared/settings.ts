@@ -1,4 +1,5 @@
 import { type LayoutId, MAX_STREAMS, MINI_MIN, isLayoutId, layoutFor, layoutById } from './layouts';
+import { DEFAULT_NOTIFY, type NotifySettings, sanitizeNotify } from './notify';
 import { DEFAULT_LIMITS, type QuotaLimits, sanitizeLimits } from './quota';
 import { SHORTCUT_ACTIONS, type ShortcutAction, isReservedKey } from './shortcuts';
 import { isVideoId } from './youtube';
@@ -62,6 +63,7 @@ export interface Settings {
   background: boolean;
   // When the system starts the app at sign-in, it stays in the tray (needs background).
   startHidden: boolean;
+  notify: NotifySettings;
   session: Session;
 }
 
@@ -80,6 +82,7 @@ export const DEFAULT_SETTINGS: Settings = {
   miniBounds: null,
   background: false,
   startHidden: false,
+  notify: DEFAULT_NOTIFY,
   session: { layout: '1', streams: [], selected: null, muted: false, masterVolume: 1, volumes: {}, sports: {} },
 };
 
@@ -154,7 +157,16 @@ export function sanitizeBounds(raw: unknown): Bounds | null {
 
 export function sanitizeSettings(raw: unknown): Settings {
   const d = DEFAULT_SETTINGS;
-  if (!isRecord(raw)) return { ...d, shortcuts: {}, sports: [], layouts: [], session: sanitizeSession(null) };
+  if (!isRecord(raw)) {
+    return {
+      ...d,
+      shortcuts: {},
+      sports: [],
+      layouts: [],
+      notify: sanitizeNotify(null),
+      session: sanitizeSession(null),
+    };
+  }
   const scheme = raw.colorScheme;
   const shortcuts: Partial<Record<ShortcutAction, string>> = {};
   const used = new Set<string>();
@@ -184,6 +196,7 @@ export function sanitizeSettings(raw: unknown): Settings {
     miniBounds: sanitizeBounds(raw.miniBounds),
     background: raw.background === true,
     startHidden: raw.background === true && raw.startHidden === true,
+    notify: sanitizeNotify(raw.notify),
     session: sanitizeSession(raw.session),
   };
 }

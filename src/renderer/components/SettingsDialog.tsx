@@ -4,10 +4,12 @@ import type { ColorScheme } from '../../shared/settings';
 import type { LoginState } from '../../shared/ipc';
 import type { Palette } from '../../shared/themes';
 import { openDialog, useAppStore } from '../state/app';
+import { setFollowing } from '../state/notify';
 import { setPrefs, usePrefs } from '../state/prefs';
 import { refreshLiveNow, useYouTube } from '../state/youtube';
 import { THEMES, useTheme } from '../theme/engine';
 import { Dialog } from './Dialog';
+import { IconClose } from './icons';
 import { SportIcon } from './sport-icons';
 
 const CONSOLE_URL = 'https://console.cloud.google.com/apis/library/youtube.googleapis.com';
@@ -86,6 +88,7 @@ export function SettingsDialog() {
 
       <StartupSection />
       <ApiKeySection form={keyForm} />
+      <NotifySection />
       <QuotaSection />
       <SportsSection />
 
@@ -267,6 +270,98 @@ function StartupSection() {
         />
         {t('settings.startHidden', { platform })}
       </label>
+    </section>
+  );
+}
+
+function NotifySection() {
+  const { t } = useTranslation();
+  const platform = useAppStore((s) => s.info?.platform) ?? '';
+  const notify = usePrefs((s) => s.notify);
+  const hasKey = useYouTube((s) => s.status?.key === 'valid');
+  const presets = useYouTube((s) => s.presets);
+  const [failed, setFailed] = useState(false);
+  const sports = useMemo(
+    () =>
+      [...new Set(presets.map((p) => p.sport))].sort((a, b) => t(`sports.${a}`, a).localeCompare(t(`sports.${b}`, b))),
+    [presets, t],
+  );
+
+  const turn = (on: boolean) => {
+    setPrefs({ notify: { ...notify, on } });
+    setFailed(false);
+    if (on) void window.splitwatch.testNotification().then((shown) => setFailed(!shown));
+  };
+
+  return (
+    <section className="settings-section">
+      <h3>{t('settings.notify')}</h3>
+      <label className="field field-tight">
+        <input
+          type="checkbox"
+          checked={notify.on && hasKey}
+          disabled={!hasKey}
+          onChange={(e) => turn(e.target.checked)}
+        />
+        {t('settings.notifyOn')}
+      </label>
+      <p className="note field-note">
+        {hasKey ? t('settings.notifyNote', { platform }) : t('settings.notifyNeedsKey')}
+      </p>
+      {failed && (
+        <p className="dialog-problem" role="alert">
+          {t('settings.notifyFailed')}
+        </p>
+      )}
+      {notify.on && hasKey && (
+        <>
+          <fieldset className="field">
+            <legend>{t('settings.notifySports')}</legend>
+            <div className="sport-grid">
+              {sports.map((sport) => (
+                <label key={sport}>
+                  <input
+                    type="checkbox"
+                    checked={notify.sports.includes(sport)}
+                    onChange={(e) =>
+                      setPrefs({
+                        notify: {
+                          ...notify,
+                          sports: e.target.checked
+                            ? [...notify.sports, sport]
+                            : notify.sports.filter((s) => s !== sport),
+                        },
+                      })
+                    }
+                  />
+                  {t(`sports.${sport}`, sport)}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+          <h4 className="settings-subhead">{t('settings.notifyChannels')}</h4>
+          {notify.channels.length === 0 ? (
+            <p className="note">{t('settings.notifyNoChannels')}</p>
+          ) : (
+            <ul className="followed">
+              {notify.channels.map((c) => (
+                <li key={c.id}>
+                  <span dir="auto">{c.name}</span>
+                  <button
+                    type="button"
+                    className="icon-button"
+                    aria-label={t('settings.notifyUnfollow', { channel: c.name })}
+                    title={t('settings.notifyUnfollow', { channel: c.name })}
+                    onClick={() => setFollowing(c, false)}
+                  >
+                    <IconClose />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </>
+      )}
     </section>
   );
 }

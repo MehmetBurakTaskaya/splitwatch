@@ -2,7 +2,7 @@ import { BrowserWindow, ipcMain } from 'electron';
 import { IPC, type SearchResult, type SetKeyResult, type YouTubeStatus } from '../shared/ipc';
 import { getHistory, rememberStream } from './history';
 import { canStoreKey, deleteKey, loadKey, saveKey } from './key-store';
-import { liveNow, liveStates, streamSports } from './live';
+import { liveNow, liveStates, streamChannels, streamSports } from './live';
 import { getPresets, refreshPresets } from './presets-store';
 import { onQuotaChange, quotaSnapshot } from './quota-store';
 import { currentKeyState, onKeyStateChange, searchLive, setKeyState, testKey } from './youtube-api';
@@ -73,6 +73,7 @@ export function registerYouTubeIpc(): void {
     Array.isArray(raw) ? raw.filter((id): id is string => typeof id === 'string' && isVideoId(id)).slice(0, 50) : [];
   ipcMain.handle(IPC.youtubeLiveStates, (_e, raw: unknown) => liveStates(videoIds(raw)));
   ipcMain.handle(IPC.youtubeStreamSports, (_e, raw: unknown) => streamSports(videoIds(raw)));
+  ipcMain.handle(IPC.youtubeStreamChannels, (_e, raw: unknown) => streamChannels(videoIds(raw)));
 
   ipcMain.handle(IPC.presetsList, () => getPresets());
   ipcMain.handle(IPC.historyList, () => getHistory());

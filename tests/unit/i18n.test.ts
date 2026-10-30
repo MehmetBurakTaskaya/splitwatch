@@ -31,6 +31,7 @@ const values = {
   max: 20,
   layout: 'Two side by side',
   platform: 'win32',
+  channel: 'Fake federation',
 };
 
 describe('English messages', () => {

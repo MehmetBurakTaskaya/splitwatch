@@ -86,6 +86,7 @@
     "enlarge": "Enlarge",
     "mini": "Watch stream {index} in the mini player",
     "leaveMini": "Back to the grid",
+    "follow": "Tell me when {channel} goes live",
     "restore": "Back to the grid",
     "remove": "Remove stream {index}",
     "openOnYouTube": "Open on YouTube",
@@ -198,7 +199,16 @@
     "startAtLogin": "Start Splitwatch when I sign in",
     "startHidden": "Start in the {platform, select, darwin {menu bar} other {notification area}}, without a window",
     "startUnavailable": "Starting with the system works in the installed app.",
-    "startApproval": "macOS asks for your approval: System Settings, General, Login Items."
+    "startApproval": "macOS asks for your approval: System Settings, General, Login Items.",
+    "notify": "Live notifications",
+    "notifyOn": "Tell me when a stream goes live",
+    "notifyNeedsKey": "This needs your YouTube API key: without one, Splitwatch cannot tell whether a stream is live.",
+    "notifyNote": "Splitwatch looks every ten minutes while it runs, also from the {platform, select, darwin {menu bar} other {notification area}}, and uses a few units of your daily quota.",
+    "notifySports": "Channels of these sports",
+    "notifyChannels": "Channels you follow",
+    "notifyNoChannels": "None yet. Follow a channel with the bell on one of its streams.",
+    "notifyUnfollow": "Stop following {channel}",
+    "notifyFailed": "The system did not show the test notification. Check that notifications are allowed for Splitwatch."
   },
   "update": {
     "available": "Version {version} is available.",
@@ -216,6 +226,11 @@
     "liveNone": "Nothing is live on your channels right now",
     "liveNeedsKey": "Add your YouTube API key in Settings to see what is live",
     "quit": "Quit Splitwatch"
+  },
+  "notify": {
+    "title": "{channel} is live",
+    "testTitle": "Live notifications are on",
+    "testBody": "Splitwatch will tell you when a stream goes live on the channels you picked."
   },
   "search": {
     "open": "Find a stream",

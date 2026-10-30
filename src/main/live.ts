@@ -1,6 +1,7 @@
 import { app, net } from 'electron';
 import { type FeedEntry, feedUrl, parseFeed } from '../shared/feeds';
 import type { LiveNow, LiveState, StreamItem } from '../shared/ipc';
+import type { FollowedChannel } from '../shared/notify';
 import type { Preset } from '../shared/presets';
 import type { VideoFacts } from '../shared/youtube-data';
 import { loadKey } from './key-store';
@@ -24,7 +25,7 @@ let liveNowCache: { at: number; key: string; value: LiveNow } | null = null;
 
 const feedsBase = () => (!app.isPackaged && process.env.SPLITWATCH_FEEDS_BASE) || 'https://www.youtube.com';
 
-async function channelFeed(channelId: string): Promise<FeedEntry[]> {
+export async function channelFeed(channelId: string): Promise<FeedEntry[]> {
   const hit = feeds.get(channelId);
   if (hit && Date.now() - hit.at < FEED_TTL) return hit.entries;
   try {
@@ -42,7 +43,9 @@ function factsTtl(f: VideoFacts): number {
   return f.live === 'live' ? 2 * 60_000 : f.live === 'upcoming' ? 5 * 60_000 : 30 * 60_000;
 }
 
-async function factsFor(ids: string[]): Promise<Map<string, VideoFacts> | null> {
+// Facts of the videos from the cache or one videos.list call per 50 (background work: it stops at
+// the background share of the quota).
+export async function factsFor(ids: string[]): Promise<Map<string, VideoFacts> | null> {
   const now = Date.now();
   const stale = ids.filter((id) => {
     const hit = facts.get(id);
@@ -64,7 +67,7 @@ async function factsFor(ids: string[]): Promise<Map<string, VideoFacts> | null> 
 
 // The presets' channels, each with its sport when it serves one sport only: a channel that serves
 // several (road and mountain cycling, say) gets no sport label.
-function channelSports(presets: Preset[]): Map<string, string | null> {
+export function channelSports(presets: Preset[]): Map<string, string | null> {
   const sportsOf = new Map<string, Set<string>>();
   for (const p of presets)
     for (const c of p.channels) sportsOf.set(c.id, (sportsOf.get(c.id) ?? new Set()).add(p.sport));
@@ -152,6 +155,18 @@ export async function streamSports(ids: string[]): Promise<Record<string, string
     for (const [channelId, entries] of feedsByChannel) {
       for (const e of entries) if (unknown.includes(e.videoId)) out[e.videoId] = sportOf.get(channelId) ?? null;
     }
+  }
+  return out;
+}
+
+// The channel of each stream, for following it (needs a key: videos.list names the channel).
+export async function streamChannels(ids: string[]): Promise<Record<string, FollowedChannel | null>> {
+  const out: Record<string, FollowedChannel | null> = Object.fromEntries(ids.map((id) => [id, null]));
+  if (!ids.length || !(await loadKey())) return out;
+  const known = await factsFor(ids);
+  for (const id of ids) {
+    const f = known?.get(id);
+    if (f?.channelId) out[id] = { id: f.channelId, name: f.channel || f.channelId };
   }
   return out;
 }

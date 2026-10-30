@@ -6,12 +6,14 @@ import { loadIframeApi } from '../player/iframe-api';
 import { setMini } from '../hooks/useShortcuts';
 import { registerPlayer, seekBy, togglePlay, unregisterPlayer } from '../player/players';
 import { openDialog, useAppStore } from '../state/app';
+import { setFollowing } from '../state/notify';
 import { usePrefs } from '../state/prefs';
 import { type PlayerState, useSession } from '../state/session';
 import { useYouTube } from '../state/youtube';
 import { THEMES, useTheme } from '../theme/engine';
 import {
   IconBack,
+  IconBell,
   IconClose,
   IconEnlarge,
   IconExternal,
@@ -68,6 +70,9 @@ export function Tile({
   const maximized = useSession((s) => s.maximized);
   const layout = useSession((s) => s.layout);
   const mini = useAppStore((s) => s.mini);
+  const notifyOn = usePrefs((s) => s.notify.on);
+  const channel = useYouTube((s) => s.streamChannels[videoId]);
+  const following = usePrefs((s) => (channel ? s.notify.channels.some((c) => c.id === channel.id) : false));
   const audioFocus = usePrefs((s) => s.audioFocus);
   const live = useYouTube((s) => s.liveStates[videoId]);
   const ownSport = useSession((s) => s.sports[videoId]);
@@ -239,6 +244,18 @@ export function Tile({
             </span>
           )}
         </span>
+        {notifyOn && channel && (
+          <button
+            type="button"
+            className="icon-button optional"
+            aria-pressed={following}
+            aria-label={t('tile.follow', { channel: channel.name })}
+            title={t('tile.follow', { channel: channel.name })}
+            onClick={() => setFollowing(channel, !following)}
+          >
+            <IconBell />
+          </button>
+        )}
         <button
           type="button"
           className="icon-button"

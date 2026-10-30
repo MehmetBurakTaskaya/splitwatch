@@ -32,6 +32,11 @@ describe('sanitizeSettings', () => {
       miniBounds: { x: -1200, y: 40, width: 490, height: 316 },
       background: true,
       startHidden: true,
+      notify: {
+        on: true,
+        sports: ['swimming'],
+        channels: [{ id: 'UCNMg6XDhRZI2QzL4pWOvP_w', name: 'A federation' }],
+      },
       session: {
         layout: 'featured',
         streams: ['M7lc1UVf-VE', 'aqz-KE-bpKQ'],

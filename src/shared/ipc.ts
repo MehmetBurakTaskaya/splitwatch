@@ -1,4 +1,5 @@
 // Channel names and payloads shared by the main process, the preload script and the renderer.
+import type { FollowedChannel } from './notify';
 import type { Preset } from './presets';
 import type { QuotaBucket, QuotaLimits } from './quota';
 import type { Settings } from './settings';
@@ -30,6 +31,8 @@ export const IPC = {
   youtubeLiveNow: 'youtube:live-now',
   youtubeLiveStates: 'youtube:live-states',
   youtubeStreamSports: 'youtube:stream-sports',
+  youtubeStreamChannels: 'youtube:stream-channels',
+  notifyTest: 'notify:test',
   presetsList: 'presets:list',
   historyList: 'history:list',
   historyRemember: 'history:remember',
@@ -135,6 +138,10 @@ export interface SplitwatchApi {
   getLiveStates(videoIds: string[]): Promise<Record<string, LiveState>>;
   // The sport of each stream whose channel is a preset channel, or null.
   getStreamSports(videoIds: string[]): Promise<Record<string, string | null>>;
+  // The channel of each stream (needs a key), or null.
+  getStreamChannels(videoIds: string[]): Promise<Record<string, FollowedChannel | null>>;
+  // Shows a notification; false when the system did not show it.
+  testNotification(): Promise<boolean>;
   getPresets(): Promise<Preset[]>;
   getHistory(): Promise<StreamItem[]>;
   rememberStream(videoId: string): void;

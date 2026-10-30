@@ -14,6 +14,7 @@ export type Prefs = Pick<
   | 'layouts'
   | 'background'
   | 'startHidden'
+  | 'notify'
 >;
 
 export const usePrefs = create<Prefs>(() => ({
@@ -28,6 +29,7 @@ export const usePrefs = create<Prefs>(() => ({
   layouts: [],
   background: DEFAULT_SETTINGS.background,
   startHidden: DEFAULT_SETTINGS.startHidden,
+  notify: DEFAULT_SETTINGS.notify,
 }));
 
 export function setPrefs(patch: Partial<Prefs>): void {
