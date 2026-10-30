@@ -29,12 +29,12 @@ function setOpenAtLogin(on: boolean): void {
   );
 }
 
-// Started by the system at sign-in, to stay in the tray.
+// Started by the system at sign-in, to stay in the tray. --hidden also works on macOS, for tests.
 export function startedHidden(): boolean {
   const { background, startHidden } = getSettings();
   if (!background || !startHidden) return false;
-  if (process.platform === 'darwin') return supported() && app.getLoginItemSettings().wasOpenedAtLogin;
-  return process.argv.includes('--hidden');
+  if (process.argv.includes('--hidden')) return true;
+  return process.platform === 'darwin' && supported() && app.getLoginItemSettings().wasOpenedAtLogin;
 }
 
 export function registerLoginIpc(): void {
