@@ -10,7 +10,7 @@ Each phase ends with a release that is tested on Windows and, where possible, on
 | 3     | YouTube Data API layer (your own key, kept in the system credential store), quota manager, cache, channel feeds, search, sport presets, keyless mode | done   |
 | 4     | Theme engine, the first 12 sport themes, sport icons                                                                                                 | done   |
 | 5     | Saved layouts, mini mode, tray or menu bar, live notifications, start with the system                                                                | done   |
-| 6     | Summer Games and Winter Games event modes                                                                                                            |        |
+| 6     | Summer Games and Winter Games event modes                                                                                                            | done   |
 | 7     | Extra features (below)                                                                                                                               |        |
 | 8     | Languages: Spanish, Simplified Chinese, Japanese, German, French, Brazilian Portuguese, Arabic, Korean, Italian, Russian, Turkish                    |        |
 | 9     | Polish: accessibility, performance, onboarding, final icon, v1.0.0                                                                                   |        |

@@ -81,6 +81,25 @@ backgrounds the app can draw (`src/renderer/theme/backdrops/`) and an optional h
   multi-sport Games; their names stay out of themes too. Sport icons show objects (a ball, goggles,
   a paddle), never people.
 
+## Summer and Winter Games
+
+Each edition is a JSON file in [`events/`](events), described by [`events/schema.json`](events/schema.json)
+and listed in `events/index.json`. Like the presets, the app refreshes these files from GitHub once a
+day, so a schedule or a medal table page arrives without a new release.
+
+- Dates are the host's calendar days (opening and closing ceremonies), with the host's time zone.
+  Every file lists its sources and the day they were checked.
+- `node scripts/event-calendar.mjs <id>` fills the day-by-day calendar from the calendar table of
+  the Games' English Wikipedia article (add the article's page ID and the table's first day to the
+  script first). It warns when a row's days do not add up to the row's total; compare the result
+  with the organizers' schedule before you open a pull request. New sports need an English name in
+  `en.json` under `sports`.
+- `medalsPage` is the page ID of the English Wikipedia medal table, once that page exists. Page IDs
+  keep the Games' names out of the repository.
+- `node scripts/ioc-codes.mjs` refreshes `src/shared/ioc-codes.json` (team codes to country codes)
+  from Wikidata.
+- The names, marks and emblems of the Games and of their organizers stay out, as in the themes.
+
 ## Code of conduct
 
 Be kind and assume good intent. Harassment or discrimination is not tolerated; the maintainer may

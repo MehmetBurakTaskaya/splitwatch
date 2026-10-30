@@ -5,6 +5,24 @@ and versions follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-10-31
+
+Splitwatch now has modes for the Summer and Winter Games, with their look, a day-by-day schedule and
+the medal table.
+
+### Added
+
+- Summer Games and Winter Games modes, offered in the top bar from 30 days before an edition opens
+  and open to try at any time: floodlights or the northern lights and snow (also over each sport's
+  own background), a band of the event's colors in the top bar and a short opening animation.
+- A day-by-day schedule of sports and medal events, with the preset channels' live and upcoming
+  streams of each day, Remind me, a search for a sport's live streams, and Watch the finals.
+- The medal table from English Wikipedia, with your country highlighted (the system's region by
+  default).
+- Calendars for the 2026 Youth Summer Games in Dakar, the 2028 Summer Games in Los Angeles and the
+  2026 Winter Games, and the dates of the 2030 Winter Games; they update from GitHub without a new
+  release.
+
 ## [0.5.0] - 2026-10-31
 
 Splitwatch now keeps your layouts, shrinks to a mini player, waits in the notification area and tells

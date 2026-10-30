@@ -11,7 +11,8 @@ developer. Everything it stores stays on your computer.
 | YouTube oEmbed (`youtube.com/oembed`)       | When a stream is added, to show its title and channel                                                                                                                                                 | The video ID                                                                                                                                 |
 | YouTube channel feeds (`youtube.com/feeds`) | Every few minutes while the window is visible, for "Live now"; with live notifications or the tray on, also in the background                                                                         | The IDs of the preset channels and of the channels you follow                                                                                |
 | YouTube Data API v3 (`googleapis.com`)      | Only with your own API key: when you search, every few minutes while the window is visible to check which streams are live, and in the background for live notifications and the tray's Live now list | Your search words, video IDs and your API key                                                                                                |
-| GitHub (`raw.githubusercontent.com`)        | Once a day, to update the sport presets                                                                                                                                                               | A normal web request                                                                                                                         |
+| GitHub (`raw.githubusercontent.com`)        | Once a day, to update the sport presets and the Summer and Winter Games calendars                                                                                                                     | A normal web request                                                                                                                         |
+| English Wikipedia (`en.wikipedia.org`)      | When you open an event's medal table, at most every ten minutes                                                                                                                                       | The page ID of the medal table; nothing about you                                                                                            |
 | GitHub (`api.github.com`, `github.com`)     | At start, to check for a new version                                                                                                                                                                  | A normal web request with your IP address; nothing else                                                                                      |
 
 When the window is hidden, Splitwatch makes no requests for "Live now" or live states, unless you
@@ -45,13 +46,16 @@ In Splitwatch's app data folder:
 
 - `settings.json`: your settings, keyboard shortcuts, chosen sports, theme and quota limits, the
   streams in your grid (video IDs, layout, volumes, sports), so the grid comes back next time, your
-  saved layouts, where the mini player was, and the channels you follow (their IDs and names).
+  saved layouts, where the mini player was, the channels you follow (their IDs and names), and for
+  the Summer and Winter Games modes the mode you turned on, the country you follow and your
+  reminders (video IDs, titles and start times).
 - `youtube-api-key.bin`: your API key, if you add one, encrypted by your system (the macOS Keychain or,
   on Windows, the Data Protection API tied to your Windows account). It is never stored as plain text.
 - `quota.json`: how many API requests and searches were made today, to stay within your quota.
 - `history.json`: video IDs, titles and channels of streams you added, for search suggestions. Entries
   are deleted after 30 days.
 - `presets-cache.json`: the latest sport presets from GitHub.
+- `events-cache.json`: the latest Summer and Winter Games calendars from GitHub.
 - `notified.json`: the IDs of the live streams Splitwatch told you about, so it tells only once.
   Entries are deleted after two days.
 

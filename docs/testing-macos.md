@@ -67,6 +67,16 @@ If a tile shows a message instead of a video, note the message and the error cod
    are on" notification. If Settings says the system did not show it, note that (macOS may refuse
    notifications from an app without a developer signature).
 
+## Version 0.6 (about 5 more minutes)
+
+1. Click the chip in the top bar (or, if none shows, any later version's chip) and pick **Winter
+   Games 2026**. Click **Turn on the Winter Games mode**: a short animation plays, then the window
+   shows the northern lights and snow.
+2. Open the chip again, pick a day under **Schedule**, then open **Medals**: the medal table appears,
+   with a link to its Wikipedia page.
+3. Pick **Summer Games 2028** and turn its mode on: floodlights replace the northern lights.
+4. Click **Turn off the mode**.
+
 Send back: your Mac model, macOS version, and what happened at each step (a screenshot helps:
 **Shift + Cmd + 3**). For 0.4, also whether the background moves smoothly and how busy Activity
 Monitor shows Splitwatch on the start screen.

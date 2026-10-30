@@ -5,8 +5,8 @@ Windows and macOS.
 
 > **Early development.** Splitwatch plays a grid of streams, finds live sports on official channels,
 > searches YouTube, dresses itself in the sport you watch, keeps your layouts, shrinks to a mini
-> player and tells you when a channel goes live. More arrives version by version; see the
-> [roadmap](docs/ROADMAP.md).
+> player, tells you when a channel goes live and has modes for the Summer and Winter Games. More
+> arrives version by version; see the [roadmap](docs/ROADMAP.md).
 
 ## What it does
 
@@ -27,6 +27,31 @@ Windows and macOS.
   it when you sign in.
 - Live notifications, with your own API key: Splitwatch tells you when a channel you follow, or an
   official channel of a sport you pick, goes live, and a click adds the stream.
+- Summer Games and Winter Games modes (see below).
+
+## Summer and Winter Games
+
+When the Games are less than 30 days away, a chip in the top bar offers their mode; you can also try
+any edition's mode at any time from the same chip. The mode gives Splitwatch the event's look
+(floodlights for the Summer Games, the northern lights and snow for the Winter Games, also over each
+sport's own background), a short opening animation the first time, and a window with:
+
+- a day-by-day schedule: each day's sports and medal events, with the preset channels' live and
+  upcoming streams of that day, **Remind me** for upcoming ones, and **Watch the finals**, which
+  opens the day's live finals in one grid;
+- the medal table, with your country highlighted.
+
+The calendars come from the organizers' schedules, through the Games' articles on English Wikipedia;
+the medal table is read from English Wikipedia (CC BY-SA 4.0), which volunteers keep up to date
+during the Games, so it can lag behind. Splitwatch names its sources and does not use the names,
+emblems or other marks of the Games or of their organizers.
+
+| Edition                                   | Dates                         | Calendar | Medal table          |
+| ----------------------------------------- | ----------------------------- | -------- | -------------------- |
+| Youth Summer Games, Dakar                 | 31 October – 13 November 2026 | yes      | when its page exists |
+| Summer Games, Los Angeles                 | 14–30 July 2028               | yes      | when its page exists |
+| Winter Games, French Alps                 | 1–17 February 2030            | not yet  | when its page exists |
+| Winter Games, Milan and Cortina d'Ampezzo | 6–22 February 2026 (past)     | yes      | yes                  |
 
 ## Playing by YouTube's rules
 
@@ -90,7 +115,6 @@ much is left, and Splitwatch stops before the limit.
 
 ## What is coming
 
-- Special modes for the Summer and Winter Games.
 - Eleven more interface languages.
 - Extras such as spoiler protection, a calendar of upcoming streams and community themes.
 
@@ -180,6 +204,11 @@ yeniden açabilir (Ctrl + S), seçili yayını diğer pencerelerin üstünde dur
 oynatıcıda izleyebilir (I), Splitwatch'ı pencere kapanınca bildirim alanında tutabilir ve oturum
 açılınca başlatabilirsiniz. API anahtarınızla, takip ettiğiniz bir kanal canlı yayına başlayınca
 bildirim alırsınız.
+
+Summer Games ve Winter Games modları, oyunlara 30 günden az kalınca üst çubuktaki etiketle
+önerilir (her an denenebilir): etkinliğin görünümü, açılış animasyonu, gün gün program (o günün
+canlı ve yaklaşan yayınları, hatırlatma, günün finallerini tek ızgarada açma) ve ülkenizin
+vurgulandığı madalya tablosu (İngilizce Wikipedia'dan, CC BY-SA 4.0).
 
 YouTube kuralları gereği açılışta yalnız son seçtiğiniz yayın kendiliğinden başlar; diğerlerini üst
 çubuktaki **Play all** başlatır. Görünmeyen yayınlar (büyütülmüş yayının, mini oynatıcının arkasında
