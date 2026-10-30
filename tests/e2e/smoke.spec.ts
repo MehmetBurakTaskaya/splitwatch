@@ -71,8 +71,14 @@ test('adds streams, grows the layout, and handles shortcuts', async () => {
   await page.keyboard.press('2');
   await expect(page.locator(`[data-stream="${VIDEO_B}"]`)).toHaveClass(/is-audible/);
 
-  // Moving a stream must not reload any player: count iframe loads across the move.
-  await page.waitForSelector(`[data-stream="${VIDEO_B}"] iframe`);
+  // Moving a stream must not reload any player: once both players have answered (ready or error),
+  // count iframe loads across the move.
+  for (const id of [VIDEO_A, VIDEO_B]) {
+    await expect(page.locator(`[data-stream="${id}"]`)).not.toHaveAttribute('data-state', 'loading', {
+      timeout: 45_000,
+    });
+  }
+  await page.waitForTimeout(2000);
   await page.evaluate(() => {
     const w = window as unknown as { frameLoads: number };
     w.frameLoads = 0;
@@ -121,13 +127,16 @@ test('restores the last session after a restart', async () => {
   await app.close();
 });
 
-// YouTube must accept the app's identification. Error 153 means it did not. On CI runners YouTube's
-// bot check often answers 150 instead of playing; that is a network effect, not a failure here.
+// YouTube must accept the app's identification. Error 153 means it did not; it arrives right after
+// the player is ready. On CI runners YouTube's bot check often stops playback (error 150, or a player
+// that never starts); that is a network effect, not a failure here.
 test('YouTube accepts the app identification (no error 153)', async () => {
   const { app, page } = await launch(freshUserData());
   await addStream(page, VIDEO_A);
   const tile = page.locator(`[data-stream="${VIDEO_A}"]`);
-  await expect(tile).not.toHaveAttribute('data-state', /^(loading|unstarted)$/, { timeout: 45_000 });
+  await expect(tile).not.toHaveAttribute('data-state', 'loading', { timeout: 45_000 });
+  if (process.env.CI) await page.waitForTimeout(8000);
+  else await expect(tile).toHaveAttribute('data-state', /^(playing|buffering|error)$/, { timeout: 30_000 });
   const [state, error] = await Promise.all([tile.getAttribute('data-state'), tile.getAttribute('data-error')]);
   test.info().annotations.push({ type: 'player', description: `${state} ${error ?? ''}` });
   expect(error).not.toBe('153');
