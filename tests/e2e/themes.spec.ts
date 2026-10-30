@@ -4,8 +4,10 @@ import path from 'node:path';
 import { type ElectronApplication, type Page, _electron as electron, expect, test } from '@playwright/test';
 
 const en = JSON.parse(readFileSync('src/renderer/i18n/locales/en.json', 'utf8'));
+// The themes offered in Settings; the Summer and Winter Games themes come with their event modes.
 const themeIds = readdirSync('themes')
   .filter((f) => f.endsWith('.json') && f !== 'schema.json')
+  .filter((f) => !JSON.parse(readFileSync(`themes/${f}`, 'utf8')).event)
   .map((f) => f.replace(/\.json$/, ''));
 const accentOf = (id: string) => JSON.parse(readFileSync(`themes/${id}.json`, 'utf8')).light.ui.accent as string;
 const VIDEO_A = 'M7lc1UVf-VE';

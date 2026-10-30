@@ -1,7 +1,7 @@
 // Slalom (alpine skiing) and Halfpipe (snowboarding).
 import { type Backdrop, type Frame, darken, glowAt, lighten, mix, random, snowfall, vertical, withAlpha } from './kit';
 
-function mountains(f: Frame, seed: number, layers: { top: number; color: string; rough: number }[]): void {
+export function mountains(f: Frame, seed: number, layers: { top: number; color: string; rough: number }[]): void {
   const rnd = random(seed);
   const ctx = f.ctx;
   for (const layer of layers) {

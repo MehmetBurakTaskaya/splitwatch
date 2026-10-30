@@ -15,6 +15,8 @@ export interface Frame {
   dark: boolean;
   // Performance mode: skip textures and particles.
   low: boolean;
+  // Winter Games snow: 0 none to 3 heavy.
+  snow: number;
 }
 
 export interface Backdrop {
@@ -96,7 +98,8 @@ interface Flake {
 }
 
 // Falling snow; positions follow from the time alone, so nothing is kept between frames.
-export function snowfall(count: number, seed: number): (f: Frame, color: string) => void {
+// share: the part of the flakes that falls (1 = all).
+export function snowfall(count: number, seed: number): (f: Frame, color: string, share?: number) => void {
   const rnd = random(seed);
   const flakes: Flake[] = Array.from({ length: count }, () => ({
     x: rnd(),
@@ -105,11 +108,11 @@ export function snowfall(count: number, seed: number): (f: Frame, color: string)
     speed: 18 + rnd() * 40,
     sway: 6 + rnd() * 18,
   }));
-  return (f, color) => {
-    if (f.low) return;
+  return (f, color, share = 1) => {
+    if (f.low || share <= 0) return;
     f.ctx.fillStyle = color;
     f.ctx.beginPath();
-    for (const [i, s] of flakes.entries()) {
+    for (const [i, s] of flakes.slice(0, Math.round(flakes.length * share)).entries()) {
       const y = (s.y * (f.h + 20) + f.t * s.speed * (s.size / 2)) % (f.h + 20);
       const x = (s.x * f.w + Math.sin(f.t * 0.6 + i) * s.sway + f.w) % f.w;
       f.ctx.moveTo(x + s.size, y - 10);

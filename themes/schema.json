@@ -7,17 +7,26 @@
   "additionalProperties": false,
   "required": ["id", "sports", "backdrop", "font", "light", "dark"],
   "properties": {
-    "$schema": { "type": "string" },
+    "$schema": {
+      "type": "string"
+    },
     "id": {
       "description": "The file name without .json. The theme's name comes from the app's language files (themes.<id>).",
       "type": "string",
       "pattern": "^[a-z][a-z0-9-]{1,40}$"
     },
+    "event": {
+      "description": "Only for the Summer and Winter Games themes: the event mode that shows this theme in place of the neutral one. Such a theme has no sports and is not offered in Settings.",
+      "enum": ["summer", "winter"]
+    },
     "sports": {
       "description": "Sports (as in presets/) that show this theme. A sport belongs to one theme at most.",
       "type": "array",
       "maxItems": 10,
-      "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,40}$" }
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9-]{1,40}$"
+      }
     },
     "backdrop": {
       "description": "The background drawing (src/renderer/theme/backdrops/).",
@@ -34,18 +43,27 @@
         "swell",
         "rink",
         "slalom",
-        "halfpipe"
+        "halfpipe",
+        "stadium",
+        "aurora"
       ]
     },
     "font": {
       "description": "A display font for headings, or null for the system font. Body text always uses the system font.",
       "enum": ["oswald", "exo2", null]
     },
-    "light": { "$ref": "#/$defs/palette" },
-    "dark": { "$ref": "#/$defs/palette" }
+    "light": {
+      "$ref": "#/$defs/palette"
+    },
+    "dark": {
+      "$ref": "#/$defs/palette"
+    }
   },
   "$defs": {
-    "color": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+    "color": {
+      "type": "string",
+      "pattern": "^#[0-9a-fA-F]{6}$"
+    },
     "palette": {
       "type": "object",
       "additionalProperties": false,
@@ -57,15 +75,33 @@
           "additionalProperties": false,
           "required": ["bg", "surface", "text", "muted", "border", "accent", "accentStrong", "onAccent", "accentSoft"],
           "properties": {
-            "bg": { "$ref": "#/$defs/color" },
-            "surface": { "$ref": "#/$defs/color" },
-            "text": { "$ref": "#/$defs/color" },
-            "muted": { "$ref": "#/$defs/color" },
-            "border": { "$ref": "#/$defs/color" },
-            "accent": { "$ref": "#/$defs/color" },
-            "accentStrong": { "$ref": "#/$defs/color" },
-            "onAccent": { "$ref": "#/$defs/color" },
-            "accentSoft": { "$ref": "#/$defs/color" }
+            "bg": {
+              "$ref": "#/$defs/color"
+            },
+            "surface": {
+              "$ref": "#/$defs/color"
+            },
+            "text": {
+              "$ref": "#/$defs/color"
+            },
+            "muted": {
+              "$ref": "#/$defs/color"
+            },
+            "border": {
+              "$ref": "#/$defs/color"
+            },
+            "accent": {
+              "$ref": "#/$defs/color"
+            },
+            "accentStrong": {
+              "$ref": "#/$defs/color"
+            },
+            "onAccent": {
+              "$ref": "#/$defs/color"
+            },
+            "accentSoft": {
+              "$ref": "#/$defs/color"
+            }
           }
         },
         "scene": {
@@ -74,11 +110,21 @@
           "additionalProperties": false,
           "required": ["base", "line", "accent", "accent2", "glow"],
           "properties": {
-            "base": { "$ref": "#/$defs/color" },
-            "line": { "$ref": "#/$defs/color" },
-            "accent": { "$ref": "#/$defs/color" },
-            "accent2": { "$ref": "#/$defs/color" },
-            "glow": { "$ref": "#/$defs/color" }
+            "base": {
+              "$ref": "#/$defs/color"
+            },
+            "line": {
+              "$ref": "#/$defs/color"
+            },
+            "accent": {
+              "$ref": "#/$defs/color"
+            },
+            "accent2": {
+              "$ref": "#/$defs/color"
+            },
+            "glow": {
+              "$ref": "#/$defs/color"
+            }
           }
         }
       }

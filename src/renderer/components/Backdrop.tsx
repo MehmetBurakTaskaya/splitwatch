@@ -2,7 +2,8 @@ import { useEffect, useRef } from 'react';
 import { layoutById } from '../../shared/layouts';
 import { usePrefs } from '../state/prefs';
 import { useSession } from '../state/session';
-import { useTheme } from '../theme/engine';
+import { useActiveEvent } from '../state/events';
+import { eventTheme, useTheme } from '../theme/engine';
 import { type Motion, Painter } from '../theme/painter';
 
 // The theme's drawn background, behind the whole window. It shows on the start screen, in empty
@@ -19,6 +20,9 @@ export function Backdrop() {
   const low = usePrefs((s) => s.performance);
   const streams = useSession((s) => s.streams.length);
   const openSlots = useSession((s) => !s.maximized && layoutById(s.layout).capacity > s.streams.length);
+  const event = useActiveEvent();
+  const snow = usePrefs((s) => s.event.snow);
+  const frame = event ? eventTheme(event.kind) : undefined;
 
   const still = !animate || low || reducedMotion;
   const motion: Motion = still ? 'still' : streams === 0 ? 'full' : openSlots ? 'slow' : 'still';
@@ -32,8 +36,15 @@ export function Backdrop() {
   }, []);
 
   useEffect(() => {
-    painter.current?.update({ theme, scheme, low, motion, fade: !low && !reducedMotion });
-  }, [theme, scheme, low, motion, reducedMotion]);
+    painter.current?.update({
+      theme,
+      scheme,
+      low,
+      motion,
+      fade: !low && !reducedMotion,
+      event: frame ? { theme: frame, snow } : null,
+    });
+  }, [theme, scheme, low, motion, reducedMotion, frame, snow]);
 
   return <div ref={host} className="backdrop" aria-hidden="true" />;
 }

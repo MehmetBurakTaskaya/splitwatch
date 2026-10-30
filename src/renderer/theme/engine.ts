@@ -1,6 +1,15 @@
 import { create } from 'zustand';
 import { withAlpha } from '../../shared/color';
-import { NEUTRAL_THEME, type Scheme, type Theme, type UiRole, pickTheme, validateTheme } from '../../shared/themes';
+import {
+  type EventKind,
+  NEUTRAL_THEME,
+  type Scheme,
+  type Theme,
+  type UiRole,
+  pickTheme,
+  validateTheme,
+} from '../../shared/themes';
+import { activeEvent, useEvents } from '../state/events';
 import { usePrefs } from '../state/prefs';
 import { useSession } from '../state/session';
 import { useYouTube } from '../state/youtube';
@@ -65,10 +74,21 @@ function apply(): void {
   document.documentElement.dataset.theme = theme.id;
 }
 
+// The kind of the event whose mode is on, if any.
+export function activeEventKind(): EventKind | null {
+  return activeEvent(useEvents.getState().events, usePrefs.getState().event.active)?.kind ?? null;
+}
+
+// The theme of an event mode, drawn as a frame over a sport's backdrop.
+export const eventTheme = (kind: EventKind): Theme | undefined => THEMES.find((t) => t.event === kind);
+
 function choose(): void {
   const { theme: choice, sports: liveSports } = usePrefs.getState();
-  const id = pickTheme(THEMES, choice, useSession.getState().streams.map(streamSport), liveSports);
+  const event = activeEventKind();
+  const id = pickTheme(THEMES, choice, useSession.getState().streams.map(streamSport), liveSports, event);
   if (id !== useTheme.getState().theme.id) useTheme.setState({ theme: themeById(id) });
+  if (event) document.documentElement.dataset.event = event;
+  else delete document.documentElement.dataset.event;
 }
 
 // Picks the theme from the settings and the streams, follows the system's light or dark mode and
@@ -81,7 +101,7 @@ export function connectTheme(): void {
   });
   const root = document.documentElement;
   usePrefs.subscribe((s, prev) => {
-    if (s.theme !== prev.theme || s.sports !== prev.sports) choose();
+    if (s.theme !== prev.theme || s.sports !== prev.sports || s.event.active !== prev.event.active) choose();
     root.toggleAttribute('data-performance', s.performance);
   });
   root.toggleAttribute('data-performance', usePrefs.getState().performance);
@@ -90,6 +110,9 @@ export function connectTheme(): void {
   });
   useYouTube.subscribe((s, prev) => {
     if (s.streamSports !== prev.streamSports) choose();
+  });
+  useEvents.subscribe((s, prev) => {
+    if (s.events !== prev.events) choose();
   });
   choose();
   apply();

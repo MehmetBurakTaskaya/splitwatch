@@ -1,0 +1,48 @@
+{
+  "$schema": "./schema.json",
+  "id": "winter-games",
+  "event": "winter",
+  "sports": [],
+  "backdrop": "aurora",
+  "font": "exo2",
+  "light": {
+    "ui": {
+      "bg": "#f2f8f5",
+      "surface": "#fdfefe",
+      "text": "#12261e",
+      "muted": "#587468",
+      "border": "#d5e2dc",
+      "accent": "#279b6b",
+      "accentStrong": "#208158",
+      "onAccent": "#ffffff",
+      "accentSoft": "#e2f8ef"
+    },
+    "scene": {
+      "base": "#e4eff1",
+      "line": "#b9cdd4",
+      "accent": "#2fbf8a",
+      "accent2": "#8a7cf0",
+      "glow": "#ffffff"
+    }
+  },
+  "dark": {
+    "ui": {
+      "bg": "#0d1713",
+      "surface": "#14211c",
+      "text": "#e6f0eb",
+      "muted": "#729083",
+      "border": "#2c3f37",
+      "accent": "#29a370",
+      "accentStrong": "#2db67d",
+      "onAccent": "#081711",
+      "accentSoft": "#1d3a2e"
+    },
+    "scene": {
+      "base": "#070d16",
+      "line": "#16222f",
+      "accent": "#36e0a0",
+      "accent2": "#9b7cff",
+      "glow": "#e8f2ff"
+    }
+  }
+}

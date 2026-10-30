@@ -1,4 +1,5 @@
-import type { BackdropKind } from '../../../shared/themes';
+import type { BackdropKind, EventKind } from '../../../shared/themes';
+import { aurora, stadium, summerFrame, winterFrame } from './games';
 import { beach, court, hardwood, rink } from './courts';
 import { type Backdrop, fill } from './kit';
 import { halfpipe, slalom } from './snow';
@@ -32,4 +33,9 @@ export const BACKDROP_FACTORIES: Record<BackdropKind, () => Backdrop> = {
   rink,
   slalom,
   halfpipe,
+  stadium,
+  aurora,
 };
+
+// Drawn over a sport's backdrop while an event mode is on.
+export const EVENT_FRAMES: Record<EventKind, () => Backdrop> = { summer: summerFrame, winter: winterFrame };

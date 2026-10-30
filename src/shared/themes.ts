@@ -34,6 +34,8 @@ export const BACKDROPS = [
   'rink',
   'slalom',
   'halfpipe',
+  'stadium',
+  'aurora',
 ] as const;
 export type BackdropKind = (typeof BACKDROPS)[number];
 
@@ -45,8 +47,12 @@ export interface Palette {
   scene: Record<SceneRole, string>;
 }
 
+export type EventKind = 'summer' | 'winter';
+
 export interface Theme {
   id: string;
+  // The Summer or Winter Games theme, shown only while that event mode is on.
+  event?: EventKind;
   sports: string[];
   backdrop: BackdropKind;
   font: DisplayFont | null;
@@ -90,7 +96,16 @@ export function validateTheme(raw: unknown): Theme | null {
   const light = readPalette(raw.light);
   const dark = readPalette(raw.dark);
   if (!light || !dark) return null;
-  return { id: raw.id, sports: raw.sports as string[], backdrop: raw.backdrop, font: raw.font, light, dark };
+  if (raw.event !== undefined && raw.event !== 'summer' && raw.event !== 'winter') return null;
+  return {
+    id: raw.id,
+    ...(raw.event ? { event: raw.event } : {}),
+    sports: raw.sports as string[],
+    backdrop: raw.backdrop,
+    font: raw.font,
+    light,
+    dark,
+  };
 }
 
 // WCAG 2.1 AA: 4.5:1 for text, 3:1 for the accent where it marks a control or the focus.
@@ -123,15 +138,21 @@ export const themeForSport = (themes: readonly Theme[], sport: string | null | u
 
 // The theme the app shows. "auto" follows the streams: when every stream with a known sport points to
 // the same theme, that theme; mixed or unknown sports stay neutral (each tile then shows its own
-// sport's color). With no streams, the sports picked for Live now decide in the same way.
+// sport's color). With no streams, the sports picked for Live now decide in the same way. While an
+// event mode is on, its theme takes the neutral theme's place.
 export function pickTheme(
   themes: readonly Theme[],
   choice: ThemeChoice,
   streamSports: readonly (string | null)[],
   liveSports: readonly string[],
+  event: EventKind | null = null,
 ): string {
-  if (choice !== 'auto') return themes.some((t) => t.id === choice) ? choice : NEUTRAL_THEME;
+  const neutral = (event && themes.find((t) => t.event === event)?.id) || NEUTRAL_THEME;
+  if (choice !== 'auto') {
+    const chosen = themes.find((t) => t.id === choice && !t.event);
+    return !chosen || chosen.id === NEUTRAL_THEME ? neutral : chosen.id;
+  }
   const sports = streamSports.length ? streamSports.filter((s): s is string => s !== null) : liveSports;
-  const ids = new Set(sports.map((s) => themeForSport(themes, s)?.id ?? NEUTRAL_THEME));
-  return ids.size === 1 ? [...ids][0]! : NEUTRAL_THEME;
+  const ids = new Set(sports.map((s) => themeForSport(themes, s)?.id ?? neutral));
+  return ids.size === 1 ? [...ids][0]! : neutral;
 }

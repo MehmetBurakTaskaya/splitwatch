@@ -1,0 +1,48 @@
+{
+  "$schema": "./schema.json",
+  "id": "summer-games",
+  "event": "summer",
+  "sports": [],
+  "backdrop": "stadium",
+  "font": "oswald",
+  "light": {
+    "ui": {
+      "bg": "#f8f5f2",
+      "surface": "#fefdfd",
+      "text": "#261c12",
+      "muted": "#7a6b5c",
+      "border": "#e2dbd5",
+      "accent": "#d66b00",
+      "accentStrong": "#b35900",
+      "onAccent": "#ffffff",
+      "accentSoft": "#faede1"
+    },
+    "scene": {
+      "base": "#f6e7d2",
+      "line": "#d9c7b2",
+      "accent": "#ff9a1f",
+      "accent2": "#ffd27a",
+      "glow": "#fff4dc"
+    }
+  },
+  "dark": {
+    "ui": {
+      "bg": "#17120d",
+      "surface": "#211b14",
+      "text": "#f0ebe6",
+      "muted": "#938576",
+      "border": "#3f362c",
+      "accent": "#cc6600",
+      "accentStrong": "#f77c00",
+      "onAccent": "#170f08",
+      "accentSoft": "#432b14"
+    },
+    "scene": {
+      "base": "#140f0b",
+      "line": "#2e241c",
+      "accent": "#ff8a1a",
+      "accent2": "#ffd27a",
+      "glow": "#3a2412"
+    }
+  }
+}
