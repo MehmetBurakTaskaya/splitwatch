@@ -7,6 +7,7 @@ import { hardenSession, hardenWebContents } from './security';
 import { flushSettings } from './settings-store';
 import { setupUpdates } from './updates';
 import { forwardFullscreenChanges, registerAppIpc } from './window-ipc';
+import { registerYouTubeIpc } from './youtube-ipc';
 
 const argValue = (name: string) => process.argv.find((a) => a.startsWith(`--${name}=`))?.slice(name.length + 3);
 // --locale=en-XA or --locale=ar-XB opens a pseudo-locale for layout tests.
@@ -83,6 +84,7 @@ if (!app.requestSingleInstanceLock()) {
       });
     }
     registerAppIpc();
+    registerYouTubeIpc();
     setMenu();
     setupUpdates();
     createMainWindow();

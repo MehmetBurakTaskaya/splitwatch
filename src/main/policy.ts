@@ -20,7 +20,14 @@ export const CONTENT_SECURITY_POLICY = [
 export const ALLOWED_PERMISSIONS: ReadonlySet<string> = new Set(['fullscreen']);
 
 // Hosts that links may open in the user's browser.
-const EXTERNAL_HOSTS = new Set(['www.youtube.com', 'youtube.com', 'm.youtube.com', 'youtu.be', 'github.com']);
+const EXTERNAL_HOSTS = new Set([
+  'www.youtube.com',
+  'youtube.com',
+  'm.youtube.com',
+  'youtu.be',
+  'github.com',
+  'console.cloud.google.com',
+]);
 
 export function isAllowedExternalUrl(url: string): boolean {
   try {

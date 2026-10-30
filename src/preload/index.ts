@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import { IPC, type SplitwatchApi, type UpdateState } from '../shared/ipc';
+import { IPC, type SplitwatchApi, type UpdateState, type YouTubeStatus } from '../shared/ipc';
 
 function subscribe<T>(channel: string, listener: (value: T) => void): () => void {
   const handler = (_event: Electron.IpcRendererEvent, value: T) => listener(value);
@@ -22,6 +22,16 @@ const api: SplitwatchApi = {
   setMinContentSize: (size) => ipcRenderer.send(IPC.windowMinSize, size),
   setFullscreen: (on) => ipcRenderer.send(IPC.windowFullscreen, on),
   onFullscreenChange: (listener) => subscribe<boolean>(IPC.fullscreenChanged, listener),
+  getYouTubeStatus: () => ipcRenderer.invoke(IPC.youtubeStatus),
+  onYouTubeStatus: (listener) => subscribe<YouTubeStatus>(IPC.youtubeStatusChanged, listener),
+  setApiKey: (key) => ipcRenderer.invoke(IPC.youtubeSetKey, key),
+  removeApiKey: () => ipcRenderer.invoke(IPC.youtubeRemoveKey),
+  search: (query, sport) => ipcRenderer.invoke(IPC.youtubeSearch, query, sport),
+  getLiveNow: () => ipcRenderer.invoke(IPC.youtubeLiveNow),
+  getLiveStates: (videoIds) => ipcRenderer.invoke(IPC.youtubeLiveStates, videoIds),
+  getPresets: () => ipcRenderer.invoke(IPC.presetsList),
+  getHistory: () => ipcRenderer.invoke(IPC.historyList),
+  rememberStream: (videoId) => ipcRenderer.send(IPC.historyRemember, videoId),
 };
 
 contextBridge.exposeInMainWorld('splitwatch', api);

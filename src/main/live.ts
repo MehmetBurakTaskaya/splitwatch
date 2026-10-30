@@ -1,0 +1,138 @@
+import { app, net } from 'electron';
+import { type FeedEntry, feedUrl, parseFeed } from '../shared/feeds';
+import type { LiveNow, LiveState, StreamItem } from '../shared/ipc';
+import type { VideoFacts } from '../shared/youtube-data';
+import { loadKey } from './key-store';
+import { getPresets } from './presets-store';
+import { getSettings } from './settings-store';
+import { videoFacts } from './youtube-api';
+
+// "Live now" from the preset channels, kind to the quota: channel feeds (free) list each channel's
+// latest videos, and one videos.list call per 50 of them (1 unit) tells which are live or coming up.
+// Everything is cached in memory only, for minutes; nothing is kept on disk.
+
+const FEED_TTL = 10 * 60_000;
+const LIVE_NOW_TTL = 2 * 60_000;
+const PER_CHANNEL = 5;
+const MAX_CHANNELS = 30;
+const UPCOMING_WINDOW = 7 * 24 * 60 * 60_000;
+
+const feeds = new Map<string, { at: number; entries: FeedEntry[] }>();
+const facts = new Map<string, { at: number; facts: VideoFacts }>();
+let liveNowCache: { at: number; key: string; value: LiveNow } | null = null;
+
+const feedsBase = () => (!app.isPackaged && process.env.SPLITWATCH_FEEDS_BASE) || 'https://www.youtube.com';
+
+async function channelFeed(channelId: string): Promise<FeedEntry[]> {
+  const hit = feeds.get(channelId);
+  if (hit && Date.now() - hit.at < FEED_TTL) return hit.entries;
+  try {
+    const res = await net.fetch(feedUrl(channelId, feedsBase()));
+    const entries = res.ok ? parseFeed(await res.text()) : [];
+    feeds.set(channelId, { at: Date.now(), entries });
+    return entries;
+  } catch {
+    return hit?.entries ?? [];
+  }
+}
+
+// Live and upcoming streams change state often; finished videos do not.
+function factsTtl(f: VideoFacts): number {
+  return f.live === 'live' ? 2 * 60_000 : f.live === 'upcoming' ? 5 * 60_000 : 30 * 60_000;
+}
+
+async function factsFor(ids: string[]): Promise<Map<string, VideoFacts> | null> {
+  const now = Date.now();
+  const stale = ids.filter((id) => {
+    const hit = facts.get(id);
+    return !hit || now - hit.at >= factsTtl(hit.facts);
+  });
+  if (stale.length) {
+    const result = await videoFacts(stale, true);
+    if (!result.ok) return null;
+    for (const f of result.data) facts.set(f.videoId, { at: now, facts: f });
+    // Videos the API did not return are gone or private.
+    for (const id of stale) {
+      if (!result.data.some((f) => f.videoId === id)) {
+        facts.set(id, { at: now, facts: { videoId: id, title: '', channel: '', live: 'none', embeddable: false } });
+      }
+    }
+  }
+  return new Map(ids.flatMap((id) => (facts.has(id) ? [[id, facts.get(id)!.facts] as const] : [])));
+}
+
+export async function liveNow(): Promise<LiveNow> {
+  const sports = getSettings().sports;
+  const presets = getPresets().filter((p) => sports.length === 0 || sports.includes(p.sport));
+  const sportOf = new Map<string, string>();
+  const sportsOf = new Map<string, Set<string>>();
+  for (const p of presets)
+    for (const c of p.channels) sportsOf.set(c.id, (sportsOf.get(c.id) ?? new Set()).add(p.sport));
+  // A channel that serves several sports (road and mountain cycling, say) gets no sport label.
+  for (const [id, set] of sportsOf) if (set.size === 1) sportOf.set(id, [...set][0]!);
+  const channels = [...sportsOf.keys()].slice(0, MAX_CHANNELS);
+  const cacheKey = channels.join(',');
+  if (liveNowCache && liveNowCache.key === cacheKey && Date.now() - liveNowCache.at < LIVE_NOW_TTL) {
+    return liveNowCache.value;
+  }
+
+  const entries = (await Promise.all(channels.map((id) => channelFeed(id)))).flatMap((list) =>
+    list.slice(0, PER_CHANNEL),
+  );
+  const byId = new Map(entries.map((e) => [e.videoId, e]));
+  const known = (await loadKey()) ? await factsFor([...byId.keys()]) : null;
+
+  let value: LiveNow;
+  if (known) {
+    const now = Date.now();
+    const items: StreamItem[] = [...known.values()]
+      .filter((f) => f.embeddable && (f.live === 'live' || f.live === 'upcoming'))
+      .filter((f) => f.live === 'live' || !f.scheduledStart || Date.parse(f.scheduledStart) - now < UPCOMING_WINDOW)
+      .map((f) => {
+        const entry = byId.get(f.videoId);
+        const sport = entry ? sportOf.get(entry.channelId) : undefined;
+        return { ...withoutEmbeddable(f), title: f.title || entry?.title || '', ...(sport ? { sport } : {}) };
+      })
+      .sort(
+        (a, b) =>
+          (a.live === 'live' ? 0 : 1) - (b.live === 'live' ? 0 : 1) ||
+          Date.parse(a.scheduledStart ?? '') - Date.parse(b.scheduledStart ?? ''),
+      );
+    value = { mode: 'live', items };
+  } else {
+    const items = [...entries]
+      .sort((a, b) => Date.parse(b.published) - Date.parse(a.published))
+      .slice(0, 24)
+      .map((e) => {
+        const sport = sportOf.get(e.channelId);
+        return {
+          videoId: e.videoId,
+          title: e.title,
+          channel: e.channel,
+          live: 'unknown' as const,
+          ...(sport ? { sport } : {}),
+        };
+      });
+    value = { mode: 'latest', items };
+  }
+  liveNowCache = { at: Date.now(), key: cacheKey, value };
+  return value;
+}
+
+export async function liveStates(ids: string[]): Promise<Record<string, LiveState>> {
+  const unknown = Object.fromEntries(ids.map((id) => [id, 'unknown' as LiveState]));
+  if (!ids.length || !(await loadKey())) return unknown;
+  const known = await factsFor(ids);
+  if (!known) return unknown;
+  return Object.fromEntries(ids.map((id) => [id, known.get(id)?.live ?? 'unknown']));
+}
+
+function withoutEmbeddable(f: VideoFacts): StreamItem {
+  return {
+    videoId: f.videoId,
+    title: f.title,
+    channel: f.channel,
+    live: f.live,
+    ...(f.scheduledStart ? { scheduledStart: f.scheduledStart } : {}),
+  };
+}

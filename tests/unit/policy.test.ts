@@ -38,9 +38,10 @@ describe('security policy', () => {
     expect(CONTENT_SECURITY_POLICY).not.toContain('unsafe-inline');
   });
 
-  it('opens only https links to YouTube and GitHub in the browser', () => {
+  it('opens only https links to YouTube, GitHub and the Google Cloud Console in the browser', () => {
     expect(isAllowedExternalUrl('https://www.youtube.com/watch?v=M7lc1UVf-VE')).toBe(true);
     expect(isAllowedExternalUrl('https://github.com/MehmetBurakTaskaya/splitwatch/releases')).toBe(true);
+    expect(isAllowedExternalUrl('https://console.cloud.google.com/apis/credentials')).toBe(true);
     expect(isAllowedExternalUrl('http://www.youtube.com/')).toBe(false);
     expect(isAllowedExternalUrl('https://example.com/')).toBe(false);
     expect(isAllowedExternalUrl('file:///C:/Windows')).toBe(false);
