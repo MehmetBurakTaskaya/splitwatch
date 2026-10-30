@@ -1,0 +1,47 @@
+{
+  "$schema": "./schema.json",
+  "id": "track",
+  "sports": ["athletics"],
+  "backdrop": "track",
+  "font": "oswald",
+  "light": {
+    "ui": {
+      "bg": "#f8f3f2",
+      "surface": "#fefdfd",
+      "text": "#261712",
+      "muted": "#7e675f",
+      "border": "#e2d8d5",
+      "accent": "#d76742",
+      "accentStrong": "#bf4e29",
+      "onAccent": "#ffffff",
+      "accentSoft": "#f9e7e2"
+    },
+    "scene": {
+      "base": "#d06a45",
+      "line": "#fbefe9",
+      "accent": "#b8512f",
+      "accent2": "#5d9a62",
+      "glow": "#ffd2bd"
+    }
+  },
+  "dark": {
+    "ui": {
+      "bg": "#170f0d",
+      "surface": "#211814",
+      "text": "#f0e8e6",
+      "muted": "#97817a",
+      "border": "#3f312c",
+      "accent": "#d2562d",
+      "accentStrong": "#df8568",
+      "onAccent": "#170b08",
+      "accentSoft": "#3b241c"
+    },
+    "scene": {
+      "base": "#5e2615",
+      "line": "#b77d66",
+      "accent": "#4a1d10",
+      "accent2": "#1e4a2a",
+      "glow": "#ff8a5c"
+    }
+  }
+}

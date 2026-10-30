@@ -1,0 +1,47 @@
+{
+  "$schema": "./schema.json",
+  "id": "neutral",
+  "sports": [],
+  "backdrop": "stripes",
+  "font": null,
+  "light": {
+    "ui": {
+      "bg": "#f5f6f8",
+      "surface": "#ffffff",
+      "text": "#15191f",
+      "muted": "#5a6473",
+      "border": "#d9dde3",
+      "accent": "#1f9c8e",
+      "accentStrong": "#137267",
+      "onAccent": "#ffffff",
+      "accentSoft": "#e2f4f1"
+    },
+    "scene": {
+      "base": "#f5f6f8",
+      "line": "#e8e9eb",
+      "accent": "#1f9c8e",
+      "accent2": "#137267",
+      "glow": "#ffffff"
+    }
+  },
+  "dark": {
+    "ui": {
+      "bg": "#101317",
+      "surface": "#171b21",
+      "text": "#e8ebef",
+      "muted": "#98a2b1",
+      "border": "#2a313b",
+      "accent": "#3fbfaf",
+      "accentStrong": "#6fd6c8",
+      "onAccent": "#071513",
+      "accentSoft": "#12302c"
+    },
+    "scene": {
+      "base": "#101317",
+      "line": "#1b1e22",
+      "accent": "#3fbfaf",
+      "accent2": "#6fd6c8",
+      "glow": "#171b21"
+    }
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/MehmetBurakTaskaya/splitwatch/blob/main/themes/schema.json",
+  "title": "Splitwatch theme",
+  "description": "Interface colors and a drawn background, for light and dark, and the sports the theme belongs to. Every picture is drawn by the app's own code: no logos, marks, pictograms, mascots or photos of any sports body, league, team or broadcaster.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "sports", "backdrop", "font", "light", "dark"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "id": {
+      "description": "The file name without .json. The theme's name comes from the app's language files (themes.<id>).",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{1,40}$"
+    },
+    "sports": {
+      "description": "Sports (as in presets/) that show this theme. A sport belongs to one theme at most.",
+      "type": "array",
+      "maxItems": 10,
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,40}$" }
+    },
+    "backdrop": {
+      "description": "The background drawing (src/renderer/theme/backdrops/).",
+      "enum": [
+        "stripes",
+        "pool",
+        "track",
+        "transition",
+        "ridges",
+        "contours",
+        "court",
+        "beach",
+        "hardwood",
+        "swell",
+        "rink",
+        "slalom",
+        "halfpipe"
+      ]
+    },
+    "font": {
+      "description": "A display font for headings, or null for the system font. Body text always uses the system font.",
+      "enum": ["oswald", "exo2", null]
+    },
+    "light": { "$ref": "#/$defs/palette" },
+    "dark": { "$ref": "#/$defs/palette" }
+  },
+  "$defs": {
+    "color": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+    "palette": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ui", "scene"],
+      "properties": {
+        "ui": {
+          "description": "Interface colors. They must pass the contrast checks in src/shared/themes.ts (WCAG 2.1 AA); scripts/theme-palette.mjs suggests a set that does.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["bg", "surface", "text", "muted", "border", "accent", "accentStrong", "onAccent", "accentSoft"],
+          "properties": {
+            "bg": { "$ref": "#/$defs/color" },
+            "surface": { "$ref": "#/$defs/color" },
+            "text": { "$ref": "#/$defs/color" },
+            "muted": { "$ref": "#/$defs/color" },
+            "border": { "$ref": "#/$defs/color" },
+            "accent": { "$ref": "#/$defs/color" },
+            "accentStrong": { "$ref": "#/$defs/color" },
+            "onAccent": { "$ref": "#/$defs/color" },
+            "accentSoft": { "$ref": "#/$defs/color" }
+          }
+        },
+        "scene": {
+          "description": "The background's colors; what each one paints depends on the backdrop.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["base", "line", "accent", "accent2", "glow"],
+          "properties": {
+            "base": { "$ref": "#/$defs/color" },
+            "line": { "$ref": "#/$defs/color" },
+            "accent": { "$ref": "#/$defs/color" },
+            "accent2": { "$ref": "#/$defs/color" },
+            "glow": { "$ref": "#/$defs/color" }
+          }
+        }
+      }
+    }
+  }
+}

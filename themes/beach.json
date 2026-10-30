@@ -1,0 +1,47 @@
+{
+  "$schema": "./schema.json",
+  "id": "beach",
+  "sports": ["beach-volleyball"],
+  "backdrop": "beach",
+  "font": "exo2",
+  "light": {
+    "ui": {
+      "bg": "#f8f2f3",
+      "surface": "#fefdfd",
+      "text": "#261216",
+      "muted": "#846469",
+      "border": "#e2d5d7",
+      "accent": "#e45870",
+      "accentStrong": "#db2442",
+      "onAccent": "#ffffff",
+      "accentSoft": "#fae1e5"
+    },
+    "scene": {
+      "base": "#f1dcb6",
+      "line": "#2a7f9a",
+      "accent": "#f39a6b",
+      "accent2": "#f8d38a",
+      "glow": "#fff3d9"
+    }
+  },
+  "dark": {
+    "ui": {
+      "bg": "#170d0f",
+      "surface": "#211416",
+      "text": "#f0e6e7",
+      "muted": "#987c80",
+      "border": "#3f2c2f",
+      "accent": "#e03e59",
+      "accentStrong": "#e9798c",
+      "onAccent": "#17080a",
+      "accentSoft": "#3d1a20"
+    },
+    "scene": {
+      "base": "#3b2a17",
+      "line": "#2a7f9a",
+      "accent": "#a3452e",
+      "accent2": "#57361c",
+      "glow": "#ff9a63"
+    }
+  }
+}

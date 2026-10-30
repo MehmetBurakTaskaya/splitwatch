@@ -1,0 +1,47 @@
+{
+  "$schema": "./schema.json",
+  "id": "swell",
+  "sports": ["surfing"],
+  "backdrop": "swell",
+  "font": "exo2",
+  "light": {
+    "ui": {
+      "bg": "#f2f7f8",
+      "surface": "#fdfefe",
+      "text": "#122526",
+      "muted": "#587374",
+      "border": "#d5e1e2",
+      "accent": "#16989c",
+      "accentStrong": "#127e81",
+      "onAccent": "#ffffff",
+      "accentSoft": "#e1f9fa"
+    },
+    "scene": {
+      "base": "#d5eff1",
+      "line": "#ffffff",
+      "accent": "#63c3cf",
+      "accent2": "#1d8fa0",
+      "glow": "#fff8e6"
+    }
+  },
+  "dark": {
+    "ui": {
+      "bg": "#0d1717",
+      "surface": "#142121",
+      "text": "#e6eff0",
+      "muted": "#728f90",
+      "border": "#2c3f3f",
+      "accent": "#19adb3",
+      "accentStrong": "#1ab2b7",
+      "onAccent": "#081617",
+      "accentSoft": "#193c3d"
+    },
+    "scene": {
+      "base": "#071a20",
+      "line": "#9fdde4",
+      "accent": "#0f5d6b",
+      "accent2": "#093842",
+      "glow": "#2fb5c4"
+    }
+  }
+}

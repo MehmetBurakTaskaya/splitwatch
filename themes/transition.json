@@ -1,0 +1,47 @@
+{
+  "$schema": "./schema.json",
+  "id": "transition",
+  "sports": ["triathlon"],
+  "backdrop": "transition",
+  "font": "exo2",
+  "light": {
+    "ui": {
+      "bg": "#f8f2f8",
+      "surface": "#fefdfe",
+      "text": "#261226",
+      "muted": "#816281",
+      "border": "#e2d5e2",
+      "accent": "#ce57ce",
+      "accentStrong": "#ba36ba",
+      "onAccent": "#ffffff",
+      "accentSoft": "#f7e3f7"
+    },
+    "scene": {
+      "base": "#eef0f4",
+      "line": "#ffffff",
+      "accent": "#4f9fd6",
+      "accent2": "#6b7480",
+      "glow": "#b95fb0"
+    }
+  },
+  "dark": {
+    "ui": {
+      "bg": "#170d17",
+      "surface": "#211421",
+      "text": "#f0e6f0",
+      "muted": "#987c98",
+      "border": "#3f2c3f",
+      "accent": "#c841c8",
+      "accentStrong": "#d879d8",
+      "onAccent": "#170817",
+      "accentSoft": "#381e38"
+    },
+    "scene": {
+      "base": "#10141a",
+      "line": "#2b3440",
+      "accent": "#1d5f8a",
+      "accent2": "#343c46",
+      "glow": "#8a3b85"
+    }
+  }
+}

@@ -16,7 +16,8 @@ interface SessionState extends Session {
   maximized: string | null;
   info: Record<string, VideoInfo | null>;
   status: Record<string, PlayerStatus>;
-  add(videoId: string): AddResult;
+  // sport: the stream's sport when it is known at adding time (from Live now or a sport search).
+  add(videoId: string, sport?: string): AddResult;
   remove(videoId: string): void;
   move(videoId: string, offset: number): void;
   swap(a: string, b: string): void;
@@ -30,6 +31,8 @@ interface SessionState extends Session {
   setMaximized(videoId: string | null): void;
   setStatus(videoId: string, status: PlayerStatus): void;
   setInfo(videoId: string, info: VideoInfo | null): void;
+  // A sport, "none", or null to let the app find it.
+  setSport(videoId: string, sport: string | null): void;
 }
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
@@ -46,8 +49,8 @@ export const useSession = create<SessionState>((set, get) => ({
   info: {},
   status: {},
 
-  add(videoId) {
-    const { streams, layout, selected } = get();
+  add(videoId, sport) {
+    const { streams, layout, selected, sports } = get();
     if (streams.includes(videoId)) return 'duplicate';
     if (streams.length >= MAX_STREAMS) return 'full';
     const next = [...streams, videoId];
@@ -55,12 +58,13 @@ export const useSession = create<SessionState>((set, get) => ({
       streams: next,
       layout: layoutById(layout).capacity < next.length ? layoutFor(next.length) : layout,
       selected: selected ?? videoId,
+      ...(sport ? { sports: { ...sports, [videoId]: sport } } : {}),
     });
     return 'added';
   },
 
   remove(videoId) {
-    const { streams, selected, maximized, volumes, status } = get();
+    const { streams, selected, maximized, volumes, status, sports } = get();
     const index = streams.indexOf(videoId);
     if (index < 0) return;
     const next = streams.filter((id) => id !== videoId);
@@ -70,6 +74,7 @@ export const useSession = create<SessionState>((set, get) => ({
       maximized: maximized === videoId ? null : maximized,
       volumes: without(volumes, videoId),
       status: without(status, videoId),
+      sports: without(sports, videoId),
     });
   },
 
@@ -119,6 +124,11 @@ export const useSession = create<SessionState>((set, get) => ({
 
   setStatus: (videoId, status) => set({ status: { ...get().status, [videoId]: status } }),
   setInfo: (videoId, info) => set({ info: { ...get().info, [videoId]: info } }),
+
+  setSport(videoId, sport) {
+    if (!get().streams.includes(videoId)) return;
+    set({ sports: sport ? { ...get().sports, [videoId]: sport } : without(get().sports, videoId) });
+  },
 }));
 
 export function sessionSnapshot(s: Session): Session {
@@ -129,5 +139,6 @@ export function sessionSnapshot(s: Session): Session {
     muted: s.muted,
     masterVolume: s.masterVolume,
     volumes: s.volumes,
+    sports: s.sports,
   };
 }

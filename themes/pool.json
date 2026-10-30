@@ -1,0 +1,47 @@
+{
+  "$schema": "./schema.json",
+  "id": "pool",
+  "sports": ["swimming"],
+  "backdrop": "pool",
+  "font": "exo2",
+  "light": {
+    "ui": {
+      "bg": "#f2f5f8",
+      "surface": "#fdfefe",
+      "text": "#121e26",
+      "muted": "#5d6f7c",
+      "border": "#d5dce2",
+      "accent": "#138de5",
+      "accentStrong": "#0f76bf",
+      "onAccent": "#ffffff",
+      "accentSoft": "#e1effa"
+    },
+    "scene": {
+      "base": "#cfe8f6",
+      "line": "#ffffff",
+      "accent": "#d94a4a",
+      "accent2": "#f0c33c",
+      "glow": "#ffffff"
+    }
+  },
+  "dark": {
+    "ui": {
+      "bg": "#0d1317",
+      "surface": "#141c21",
+      "text": "#e6ebf0",
+      "muted": "#778894",
+      "border": "#2c373f",
+      "accent": "#1182d2",
+      "accentStrong": "#3ba4ef",
+      "onAccent": "#081117",
+      "accentSoft": "#172f40"
+    },
+    "scene": {
+      "base": "#08263a",
+      "line": "#1b4a66",
+      "accent": "#a33b3b",
+      "accent2": "#a88a2c",
+      "glow": "#3fa9e0"
+    }
+  }
+}

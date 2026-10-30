@@ -1,0 +1,47 @@
+{
+  "$schema": "./schema.json",
+  "id": "rink",
+  "sports": ["ice-hockey"],
+  "backdrop": "rink",
+  "font": "oswald",
+  "light": {
+    "ui": {
+      "bg": "#f2f5f8",
+      "surface": "#fdfdfe",
+      "text": "#121b26",
+      "muted": "#606f80",
+      "border": "#d5dbe2",
+      "accent": "#628cbc",
+      "accentStrong": "#4773a6",
+      "onAccent": "#ffffff",
+      "accentSoft": "#e6edf4"
+    },
+    "scene": {
+      "base": "#eef4fa",
+      "line": "#c9303d",
+      "accent": "#2f64c8",
+      "accent2": "#d5e2ef",
+      "glow": "#ffffff"
+    }
+  },
+  "dark": {
+    "ui": {
+      "bg": "#0d1217",
+      "surface": "#141a21",
+      "text": "#e6eaf0",
+      "muted": "#798696",
+      "border": "#2c353f",
+      "accent": "#5280b5",
+      "accentStrong": "#7d9fc7",
+      "onAccent": "#080f17",
+      "accentSoft": "#222b35"
+    },
+    "scene": {
+      "base": "#0d1622",
+      "line": "#8a2a33",
+      "accent": "#2a4f8f",
+      "accent2": "#1a2635",
+      "glow": "#6fa8ff"
+    }
+  }
+}

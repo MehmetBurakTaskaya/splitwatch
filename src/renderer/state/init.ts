@@ -19,7 +19,8 @@ export async function loadState(): Promise<void> {
       s.selected !== prev.selected ||
       s.muted !== prev.muted ||
       s.masterVolume !== prev.masterVolume ||
-      s.volumes !== prev.volumes;
+      s.volumes !== prev.volumes ||
+      s.sports !== prev.sports;
     if (!changed) return;
     clearTimeout(timer);
     timer = setTimeout(() => window.splitwatch.saveSettings({ session: sessionSnapshot(useSession.getState()) }), 300);

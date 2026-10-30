@@ -1,0 +1,47 @@
+{
+  "$schema": "./schema.json",
+  "id": "halfpipe",
+  "sports": ["snowboard"],
+  "backdrop": "halfpipe",
+  "font": "exo2",
+  "light": {
+    "ui": {
+      "bg": "#f5f2f8",
+      "surface": "#fefdfe",
+      "text": "#1d1226",
+      "muted": "#766586",
+      "border": "#dcd5e2",
+      "accent": "#a264d8",
+      "accentStrong": "#9147d1",
+      "onAccent": "#ffffff",
+      "accentSoft": "#eee2f8"
+    },
+    "scene": {
+      "base": "#eef0f8",
+      "line": "#c5cbe0",
+      "accent": "#7b4fd6",
+      "accent2": "#d9dcec",
+      "glow": "#ffffff"
+    }
+  },
+  "dark": {
+    "ui": {
+      "bg": "#120d17",
+      "surface": "#1b1421",
+      "text": "#ebe6f0",
+      "muted": "#8c7d99",
+      "border": "#362c3f",
+      "accent": "#9d5cd6",
+      "accentStrong": "#b787e1",
+      "onAccent": "#100817",
+      "accentSoft": "#2c1d3a"
+    },
+    "scene": {
+      "base": "#0d0b1a",
+      "line": "#2e2a4a",
+      "accent": "#9a6cf0",
+      "accent2": "#171428",
+      "glow": "#e8e6ff"
+    }
+  }
+}

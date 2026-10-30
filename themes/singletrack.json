@@ -1,0 +1,47 @@
+{
+  "$schema": "./schema.json",
+  "id": "singletrack",
+  "sports": ["mountain-bike"],
+  "backdrop": "contours",
+  "font": "exo2",
+  "light": {
+    "ui": {
+      "bg": "#f4f8f2",
+      "surface": "#fdfefd",
+      "text": "#1a2612",
+      "muted": "#627357",
+      "border": "#dae2d5",
+      "accent": "#5e9933",
+      "accentStrong": "#4d7e2a",
+      "onAccent": "#ffffff",
+      "accentSoft": "#ecf6e4"
+    },
+    "scene": {
+      "base": "#eef1e8",
+      "line": "#b9c6a6",
+      "accent": "#b86a2c",
+      "accent2": "#d7dfc8",
+      "glow": "#ffffff"
+    }
+  },
+  "dark": {
+    "ui": {
+      "bg": "#11170d",
+      "surface": "#1a2114",
+      "text": "#eaf0e6",
+      "muted": "#7d8f70",
+      "border": "#343f2c",
+      "accent": "#5e9933",
+      "accentStrong": "#6db23b",
+      "onAccent": "#0e1708",
+      "accentSoft": "#29371f"
+    },
+    "scene": {
+      "base": "#0f150d",
+      "line": "#2e3d26",
+      "accent": "#d98a3d",
+      "accent2": "#172012",
+      "glow": "#6f9a45"
+    }
+  }
+}

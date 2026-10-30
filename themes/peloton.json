@@ -1,0 +1,47 @@
+{
+  "$schema": "./schema.json",
+  "id": "peloton",
+  "sports": ["road-cycling"],
+  "backdrop": "ridges",
+  "font": "oswald",
+  "light": {
+    "ui": {
+      "bg": "#f8f6f2",
+      "surface": "#fefefd",
+      "text": "#262012",
+      "muted": "#766d59",
+      "border": "#e2ded5",
+      "accent": "#b58005",
+      "accentStrong": "#956a04",
+      "onAccent": "#ffffff",
+      "accentSoft": "#faf2e1"
+    },
+    "scene": {
+      "base": "#f1efe9",
+      "line": "#3c3f44",
+      "accent": "#e8a800",
+      "accent2": "#dcd8cc",
+      "glow": "#fff7d6"
+    }
+  },
+  "dark": {
+    "ui": {
+      "bg": "#17140d",
+      "surface": "#211d14",
+      "text": "#f0ede6",
+      "muted": "#908772",
+      "border": "#3f392c",
+      "accent": "#c78d05",
+      "accentStrong": "#d19405",
+      "onAccent": "#171208",
+      "accentSoft": "#423415"
+    },
+    "scene": {
+      "base": "#121315",
+      "line": "#5c6068",
+      "accent": "#f2b705",
+      "accent2": "#1d1f23",
+      "glow": "#3a3000"
+    }
+  }
+}

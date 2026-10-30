@@ -25,6 +25,7 @@ const values = {
   limit: 100,
   left: 97,
   used: 3,
+  sport: 'Swimming',
   time: new Date('2026-10-31T07:00:00Z'),
 };
 

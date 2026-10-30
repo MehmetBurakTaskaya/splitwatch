@@ -1,0 +1,47 @@
+{
+  "$schema": "./schema.json",
+  "id": "hardwood",
+  "sports": ["basketball"],
+  "backdrop": "hardwood",
+  "font": "oswald",
+  "light": {
+    "ui": {
+      "bg": "#f8f5f2",
+      "surface": "#fefdfd",
+      "text": "#261b12",
+      "muted": "#7a6a5c",
+      "border": "#e2dbd5",
+      "accent": "#d46c11",
+      "accentStrong": "#b15a0e",
+      "onAccent": "#ffffff",
+      "accentSoft": "#faece1"
+    },
+    "scene": {
+      "base": "#e7c494",
+      "line": "#ffffff",
+      "accent": "#d0702e",
+      "accent2": "#c9a273",
+      "glow": "#fff3e0"
+    }
+  },
+  "dark": {
+    "ui": {
+      "bg": "#17120d",
+      "surface": "#211a14",
+      "text": "#f0eae6",
+      "muted": "#938476",
+      "border": "#3f352c",
+      "accent": "#c46410",
+      "accentStrong": "#ed8224",
+      "onAccent": "#170f08",
+      "accentSoft": "#402a17"
+    },
+    "scene": {
+      "base": "#3a2714",
+      "line": "#8a6a48",
+      "accent": "#6e3712",
+      "accent2": "#2b1c0d",
+      "glow": "#ff9447"
+    }
+  }
+}

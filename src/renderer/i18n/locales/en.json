@@ -51,7 +51,9 @@
     "restore": "Back to the grid",
     "remove": "Remove stream {index}",
     "openOnYouTube": "Open on YouTube",
-    "move": "Drag to move stream {index}"
+    "move": "Drag to move stream {index}",
+    "sport": "Sport of stream {index}: {sport}",
+    "sportUnknown": "Choose the sport of stream {index}"
   },
   "error": {
     "embedDisabled": "The owner does not allow this video to be played outside YouTube.",
@@ -132,7 +134,20 @@
     "quotaUnits": "Other requests: {used} of {limit} units",
     "quotaResets": "Resets at {time, time, short} (midnight Pacific Time).",
     "sports": "Sports for Live now",
-    "sportsNote": "None ticked means all."
+    "sportsNote": "None ticked means all.",
+    "appearance": "Appearance",
+    "theme": "Theme",
+    "themeAuto": "Automatic",
+    "themeAutoNote": "The sport you watch",
+    "themeNeutralNote": "No sport",
+    "scheme": "Light or dark",
+    "schemeSystem": "Like the system",
+    "schemeLight": "Light",
+    "schemeDark": "Dark",
+    "animate": "Animate the backgrounds",
+    "animateNote": "Only while they show: on the start screen and in empty places of the grid.",
+    "performance": "Performance mode",
+    "performanceNote": "Simpler, still backgrounds and no transitions, for slower computers."
   },
   "update": {
     "available": "Version {version} is available.",
@@ -198,5 +213,29 @@
     "canoe": "Canoe and kayak",
     "surfing": "Surfing",
     "basketball": "Basketball"
+  },
+  "themes": {
+    "neutral": "Neutral",
+    "pool": "Pool",
+    "track": "Track",
+    "transition": "Transition",
+    "peloton": "Peloton",
+    "singletrack": "Singletrack",
+    "court": "Court",
+    "beach": "Beach",
+    "hardwood": "Hardwood",
+    "swell": "Swell",
+    "rink": "Rink",
+    "slalom": "Slalom",
+    "halfpipe": "Halfpipe"
+  },
+  "sport": {
+    "title": "Sport of stream {index}",
+    "note": "The sport gives the stream its color, and when all streams share one, the whole window takes its theme.",
+    "auto": "Find it automatically",
+    "autoFound": "Find it automatically (now: {sport})",
+    "autoMissing": "Find it automatically (not found)",
+    "none": "No sport",
+    "close": "Close"
   }
 }

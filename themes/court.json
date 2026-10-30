@@ -1,0 +1,47 @@
+{
+  "$schema": "./schema.json",
+  "id": "court",
+  "sports": ["volleyball"],
+  "backdrop": "court",
+  "font": "oswald",
+  "light": {
+    "ui": {
+      "bg": "#f2f3f8",
+      "surface": "#fdfdfe",
+      "text": "#121626",
+      "muted": "#656b86",
+      "border": "#d5d7e2",
+      "accent": "#5a75e2",
+      "accentStrong": "#3c5cdd",
+      "onAccent": "#ffffff",
+      "accentSoft": "#e1e6fa"
+    },
+    "scene": {
+      "base": "#d6e3f2",
+      "line": "#ffffff",
+      "accent": "#f2b98a",
+      "accent2": "#1d3b5e",
+      "glow": "#fff6ea"
+    }
+  },
+  "dark": {
+    "ui": {
+      "bg": "#0d0f17",
+      "surface": "#141721",
+      "text": "#e6e8f0",
+      "muted": "#7d8399",
+      "border": "#2c303f",
+      "accent": "#5874e2",
+      "accentStrong": "#8398e9",
+      "onAccent": "#080b17",
+      "accentSoft": "#1b213c"
+    },
+    "scene": {
+      "base": "#0c2240",
+      "line": "#3a5a82",
+      "accent": "#7a3f18",
+      "accent2": "#050b14",
+      "glow": "#ff9a52"
+    }
+  }
+}

@@ -16,6 +16,10 @@ describe('sanitizeSettings', () => {
       shortcuts: { toggleMute: 'K' },
       sports: ['volleyball', 'triathlon'],
       quotaLimits: { units: 20000, searches: 50 },
+      theme: 'pool',
+      colorScheme: 'dark',
+      animate: false,
+      performance: true,
       session: {
         layout: 'featured',
         streams: ['M7lc1UVf-VE', 'aqz-KE-bpKQ'],
@@ -23,6 +27,7 @@ describe('sanitizeSettings', () => {
         muted: true,
         masterVolume: 0.5,
         volumes: { 'M7lc1UVf-VE': 0.25 },
+        sports: { 'M7lc1UVf-VE': 'swimming', 'aqz-KE-bpKQ': 'none' },
       },
     };
     expect(sanitizeSettings(raw)).toEqual(raw);
@@ -52,6 +57,18 @@ describe('sanitizeSettings', () => {
     expect(s.masterVolume).toBe(1);
     expect(s.volumes).toEqual({ 'M7lc1UVf-VE': 0 });
     expect(s.selected).toBeNull();
+  });
+
+  it('keeps stream sports only for streams in the grid, and checks the theme fields', () => {
+    const s = sanitizeSettings({
+      theme: '../x',
+      colorScheme: 'sepia',
+      animate: 'no',
+      performance: 1,
+      session: { streams: ['M7lc1UVf-VE'], sports: { 'M7lc1UVf-VE': 'Swimming!', 'aqz-KE-bpKQ': 'swimming' } },
+    });
+    expect(s.session.sports).toEqual({});
+    expect([s.theme, s.colorScheme, s.animate, s.performance]).toEqual(['auto', 'system', true, false]);
   });
 
   it('refuses reserved and duplicate shortcut keys', () => {

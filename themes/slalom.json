@@ -1,0 +1,47 @@
+{
+  "$schema": "./schema.json",
+  "id": "slalom",
+  "sports": ["alpine-skiing"],
+  "backdrop": "slalom",
+  "font": "exo2",
+  "light": {
+    "ui": {
+      "bg": "#f2f2f8",
+      "surface": "#fdfdfe",
+      "text": "#141226",
+      "muted": "#6b688a",
+      "border": "#d6d5e2",
+      "accent": "#6c62da",
+      "accentStrong": "#5145d3",
+      "onAccent": "#ffffff",
+      "accentSoft": "#e4e2f8"
+    },
+    "scene": {
+      "base": "#f4f8fc",
+      "line": "#c9d6e6",
+      "accent": "#d93a3a",
+      "accent2": "#2f5fc8",
+      "glow": "#dfe9f6"
+    }
+  },
+  "dark": {
+    "ui": {
+      "bg": "#0e0d17",
+      "surface": "#151421",
+      "text": "#e6e6f0",
+      "muted": "#82809b",
+      "border": "#2e2c3f",
+      "accent": "#766cdd",
+      "accentStrong": "#9992e5",
+      "onAccent": "#090817",
+      "accentSoft": "#1f1d3a"
+    },
+    "scene": {
+      "base": "#0e1424",
+      "line": "#2a3550",
+      "accent": "#b03838",
+      "accent2": "#3a63c0",
+      "glow": "#26324d"
+    }
+  }
+}
