@@ -1,0 +1,61 @@
+/* Design tokens. Themes (later phases) override these custom properties. */
+:root {
+  color-scheme: light dark;
+
+  --color-bg: #f5f6f8;
+  --color-surface: #ffffff;
+  --color-text: #15191f;
+  --color-text-muted: #5a6473;
+  --color-border: #d9dde3;
+  --color-accent: #1f9c8e;
+  --color-accent-strong: #137267;
+  --color-on-accent: #ffffff;
+  --color-lane: rgb(21 25 31 / 0.06);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 40px;
+  --radius-1: 4px;
+  --radius-2: 8px;
+
+  --font-size-1: 0.8125rem;
+  --font-size-2: 0.9375rem;
+  --font-size-3: 1.125rem;
+  --font-size-4: 1.75rem;
+
+  /* System UI fonts: Latin, Greek and Cyrillic come from the platform font; CJK and Arabic
+     pick the platform's font for the language through :lang() below. */
+  --font-ui:
+    'Segoe UI Variable Text', 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', 'Noto Sans', Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #101317;
+    --color-surface: #171b21;
+    --color-text: #e8ebef;
+    --color-text-muted: #98a2b1;
+    --color-border: #2a313b;
+    --color-accent: #3fbfaf;
+    --color-accent-strong: #6fd6c8;
+    --color-on-accent: #071513;
+    --color-lane: rgb(232 235 239 / 0.05);
+  }
+}
+
+:lang(zh) {
+  --font-ui: 'Microsoft YaHei UI', 'PingFang SC', 'Noto Sans CJK SC', 'Noto Sans SC', system-ui, sans-serif;
+}
+:lang(ja) {
+  --font-ui: 'Yu Gothic UI', 'Hiragino Sans', 'Noto Sans CJK JP', 'Noto Sans JP', system-ui, sans-serif;
+}
+:lang(ko) {
+  --font-ui: 'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Sans CJK KR', 'Noto Sans KR', system-ui, sans-serif;
+  word-break: keep-all;
+}
+:lang(ar) {
+  --font-ui: 'Segoe UI', 'SF Arabic', 'Geeza Pro', 'Noto Sans Arabic', system-ui, sans-serif;
+}

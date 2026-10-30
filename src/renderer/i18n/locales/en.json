@@ -1,0 +1,22 @@
+{
+  "app": {
+    "name": "Splitwatch",
+    "tagline": "Watch several live sports streams side by side."
+  },
+  "welcome": {
+    "title": "Splitwatch is on its way",
+    "body": "This first version sets up the app, its updates and its languages. Watching streams comes in the next versions.",
+    "version": "Version {version}",
+    "languages": "{count, plural, one {Available in # language for now.} other {Available in # languages for now.}}"
+  },
+  "update": {
+    "checking": "Checking for updates…",
+    "none": "Splitwatch is up to date.",
+    "available": "Version {version} is available.",
+    "downloading": "Downloading the update: {progress, number, percent}",
+    "ready": "Version {version} is ready to install.",
+    "restart": "Restart and update",
+    "download": "Download",
+    "error": "Could not check for updates."
+  }
+}
