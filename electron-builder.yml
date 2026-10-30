@@ -1,0 +1,54 @@
+# Packaging and publishing. Release artifacts go to a draft GitHub Release; see .github/workflows/release.yml.
+appId: com.mehmetburaktaskaya.splitwatch
+productName: Splitwatch
+copyright: Copyright © 2026 Mehmet Burak Taşkaya
+
+directories:
+  output: release
+  buildResources: build
+
+files:
+  - dist/**/*
+  - '!dist/**/*.map'
+  - package.json
+
+asar: true
+
+# Hardening flags baked into the Electron binary.
+electronFuses:
+  runAsNode: false
+  enableCookieEncryption: true
+  enableNodeOptionsEnvironmentVariable: false
+  enableNodeCliInspectArguments: false
+  enableEmbeddedAsarIntegrityValidation: true
+  onlyLoadAppFromAsar: true
+  grantFileProtocolExtraPrivileges: false
+
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+  artifactName: Splitwatch-Setup-${version}-x64.${ext}
+
+nsis:
+  oneClick: true
+  perMachine: false
+  deleteAppDataOnUninstall: false
+
+# Ad-hoc signed: no paid Apple certificate. Users clear the quarantine flag once (see README).
+mac:
+  target:
+    - target: dmg
+      arch: [universal]
+    - target: zip
+      arch: [universal]
+  identity: '-'
+  hardenedRuntime: false
+  category: public.app-category.sports
+  artifactName: Splitwatch-${version}-mac-universal.${ext}
+
+publish:
+  provider: github
+  owner: MehmetBurakTaskaya
+  repo: splitwatch
+  releaseType: draft
