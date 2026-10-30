@@ -4,8 +4,9 @@ Watch several YouTube sports live streams side by side, in one window. Free and 
 Windows and macOS.
 
 > **Early development.** Splitwatch plays a grid of streams, finds live sports on official channels,
-> searches YouTube and dresses itself in the sport you watch. Saved layouts and more arrive version
-> by version; see the [roadmap](docs/ROADMAP.md).
+> searches YouTube, dresses itself in the sport you watch, keeps your layouts, shrinks to a mini
+> player and tells you when a channel goes live. More arrives version by version; see the
+> [roadmap](docs/ROADMAP.md).
 
 ## What it does
 
@@ -18,7 +19,23 @@ Windows and macOS.
   LIVE badge on streams in the grid.
 - Search YouTube for live streams (Ctrl + K, or Cmd + K on macOS), filtered by sport, with the cost
   shown before each search.
-- Twelve sport themes, in light and dark, that follow the sport you watch (see below).
+- Twelve sport themes, in light and dark, that follow the sport you watch (see below), and a
+  light or dark button in the top bar.
+- Saved layouts: save the grid under a name (Ctrl + S, or Cmd + S) and open it again later.
+- A mini player: the picked stream in a small window that stays on top of other windows.
+- Keep Splitwatch in the notification area (the menu bar on macOS) when its window closes, and start
+  it when you sign in.
+- Live notifications, with your own API key: Splitwatch tells you when a channel you follow, or an
+  official channel of a sport you pick, goes live, and a click adds the stream.
+
+## Playing by YouTube's rules
+
+YouTube allows one player on a screen to start playing by itself, and no playback from a player you
+cannot see. So when Splitwatch opens, only the stream you picked last starts; **Play all** in the top
+bar starts the others. Streams you add start at once, since you asked for them. Streams pause while
+they are out of sight (behind the enlarged stream, behind the mini player, or while the window is
+minimized) and go on when they come back, live streams at their live edge. Closing the window stops
+them all, also when Splitwatch stays in the notification area.
 
 ## Themes
 
@@ -73,24 +90,26 @@ much is left, and Splitwatch stops before the limit.
 
 ## What is coming
 
-- Saved layouts, a small always-on-top mini mode, and notifications when followed channels go live.
 - Special modes for the Summer and Winter Games.
 - Eleven more interface languages.
+- Extras such as spoiler protection, a calendar of upcoming streams and community themes.
 
 ## Keyboard shortcuts
 
-| Key         | Action                                  |
-| ----------- | --------------------------------------- |
-| 1 – 9       | Pick a stream (you hear it)             |
-| M           | Mute or unmute                          |
-| F           | Enlarge the picked stream, fullscreen   |
-| Esc         | Back to the grid                        |
-| Space       | Play or pause the picked stream         |
-| ← / →       | Back or forward 10 seconds              |
-| Alt + ← / → | Move the picked stream earlier or later |
-| L           | Next layout                             |
-| ?           | Show the shortcuts (and change them)    |
-| Ctrl/Cmd+K  | Find a stream                           |
+| Key         | Action                                       |
+| ----------- | -------------------------------------------- |
+| 1 – 9       | Pick a stream (you hear it)                  |
+| M           | Mute or unmute                               |
+| F           | Enlarge the picked stream, fullscreen        |
+| Esc         | Back to the grid (also from the mini player) |
+| Space       | Play or pause the picked stream              |
+| ← / →       | Back or forward 10 seconds                   |
+| Alt + ← / → | Move the picked stream earlier or later      |
+| L           | Next layout                                  |
+| I           | Mini player                                  |
+| ?           | Show the shortcuts (and change them)         |
+| Ctrl/Cmd+K  | Find a stream                                |
+| Ctrl/Cmd+S  | Save or open a layout                        |
 
 ## Download
 
@@ -156,8 +175,15 @@ YouTube linki ya da video kimliği yapıştırarak en fazla dokuz yayını bir g
 seçtiğiniz yayının sesini duyarsınız. "Live now" 17 sporun resmî kanallarındaki yayınları gösterir;
 kendi ücretsiz YouTube API anahtarınızla (Ayarlar → YouTube API key) canlı yayın araması ve LIVE
 etiketleri de açılır. On iki spor teması, izlediğiniz sporun renklerini ve uygulamanın kendi çizdiği
-bir arka planı getirir; ayarlar Ayarlar → Appearance bölümündedir. Kayıtlı düzenler sonraki
-sürümlerde gelecek.
+bir arka planı getirir; ayarlar Ayarlar → Appearance bölümündedir. Düzenleri bir adla kaydedip
+yeniden açabilir (Ctrl + S), seçili yayını diğer pencerelerin üstünde duran küçük bir mini
+oynatıcıda izleyebilir (I), Splitwatch'ı pencere kapanınca bildirim alanında tutabilir ve oturum
+açılınca başlatabilirsiniz. API anahtarınızla, takip ettiğiniz bir kanal canlı yayına başlayınca
+bildirim alırsınız.
+
+YouTube kuralları gereği açılışta yalnız son seçtiğiniz yayın kendiliğinden başlar; diğerlerini üst
+çubuktaki **Play all** başlatır. Görünmeyen yayınlar (büyütülmüş yayının, mini oynatıcının arkasında
+ya da pencere simge durumundayken) duraklar ve göründüklerinde devam eder.
 
 İndirmek için [Releases](https://github.com/MehmetBurakTaskaya/splitwatch/releases/latest) sayfasına
 gidin. Uygulama henüz kod imzalı olmadığı için ilk açılışta uyarı çıkar:

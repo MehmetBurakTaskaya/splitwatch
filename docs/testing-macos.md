@@ -51,6 +51,22 @@ If a tile shows a message instead of a video, note the message and the error cod
    Hardwood theme.
 5. Turn on **Performance mode**: the background stops moving.
 
+## Version 0.5 (about 10 more minutes)
+
+1. With two streams in the grid, quit and reopen Splitwatch: only one stream plays, and **Play all**
+   in the top bar starts the other.
+2. Press **Cmd + S**, type a name and press **Return**. Remove a stream, press **Cmd + S** again and
+   click **Open**: the grid comes back.
+3. Press **I**: the window shrinks to the picked stream and stays above other windows (click another
+   app to check). Press **Escape**: the grid comes back where it was.
+4. In **Settings → In the background**, tick **Keep Splitwatch in the menu bar**. Close the window:
+   the Splitwatch icon stays in the menu bar; its menu reopens the window.
+5. Tick **Start Splitwatch when I sign in**. If Settings says macOS needs your approval, open
+   **System Settings → General → Login Items** and allow it. Log out and in again.
+6. With a key, turn on **Tell me when a stream goes live**: macOS should show a "Live notifications
+   are on" notification. If Settings says the system did not show it, note that (macOS may refuse
+   notifications from an app without a developer signature).
+
 Send back: your Mac model, macOS version, and what happened at each step (a screenshot helps:
 **Shift + Cmd + 3**). For 0.4, also whether the background moves smoothly and how busy Activity
 Monitor shows Splitwatch on the start screen.

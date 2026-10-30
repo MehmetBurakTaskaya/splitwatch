@@ -5,6 +5,35 @@ and versions follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-10-31
+
+Splitwatch now keeps your layouts, shrinks to a mini player, waits in the notification area and tells
+you when a channel goes live.
+
+### Added
+
+- Saved layouts: save the grid under a name (Ctrl + S, or Cmd + S, or the bookmark in the top bar),
+  then open, rename or delete it; up to twenty.
+- A mini player (I, or the button on a stream): the picked stream in a small window that stays on top
+  of other windows, where you last put it. Escape goes back to the grid.
+- Keep Splitwatch in the notification area (the menu bar on macOS) when its window closes. Its menu
+  opens the window or the mini player, mutes, and lists what is live.
+- Start Splitwatch when you sign in, optionally in the notification area only (installed app).
+- Live notifications, with your own API key: for the official channels of the sports you pick and for
+  channels you follow with the bell on a stream. A click adds the stream.
+- A light or dark button in the top bar.
+- Dialogs close with a click outside them or the close button in their corner, and Settings says that
+  its changes are saved at once.
+
+### Changed
+
+- Following YouTube's rules for embedded players, only the stream you picked last starts by itself
+  when Splitwatch opens; **Play all** starts the others. Streams pause while they are out of sight
+  (behind the enlarged stream or the mini player, or in a minimized window) and go on when they come
+  back, live streams at their live edge.
+- The settings button is a gear.
+- In narrow windows the top bar stays on one line.
+
 ## [0.4.0] - 2026-10-30
 
 Splitwatch now dresses in the sport you watch: twelve sport themes, with backgrounds drawn by the app.
