@@ -29,6 +29,7 @@ const api: SplitwatchApi = {
   search: (query, sport) => ipcRenderer.invoke(IPC.youtubeSearch, query, sport),
   getLiveNow: () => ipcRenderer.invoke(IPC.youtubeLiveNow),
   getLiveStates: (videoIds) => ipcRenderer.invoke(IPC.youtubeLiveStates, videoIds),
+  getStreamSports: (videoIds) => ipcRenderer.invoke(IPC.youtubeStreamSports, videoIds),
   getPresets: () => ipcRenderer.invoke(IPC.presetsList),
   getHistory: () => ipcRenderer.invoke(IPC.historyList),
   rememberStream: (videoId) => ipcRenderer.send(IPC.historyRemember, videoId),

@@ -23,6 +23,7 @@ export const IPC = {
   youtubeSearch: 'youtube:search',
   youtubeLiveNow: 'youtube:live-now',
   youtubeLiveStates: 'youtube:live-states',
+  youtubeStreamSports: 'youtube:stream-sports',
   presetsList: 'presets:list',
   historyList: 'history:list',
   historyRemember: 'history:remember',
@@ -107,6 +108,8 @@ export interface SplitwatchApi {
   search(query: string, sport: string | null): Promise<SearchResult>;
   getLiveNow(): Promise<LiveNow>;
   getLiveStates(videoIds: string[]): Promise<Record<string, LiveState>>;
+  // The sport of each stream whose channel is a preset channel, or null.
+  getStreamSports(videoIds: string[]): Promise<Record<string, string | null>>;
   getPresets(): Promise<Preset[]>;
   getHistory(): Promise<StreamItem[]>;
   rememberStream(videoId: string): void;

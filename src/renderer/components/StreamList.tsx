@@ -45,7 +45,7 @@ export function StreamList({ items, label }: { items: StreamItem[]; label: strin
               className={added ? 'button button-quiet' : 'button'}
               disabled={added}
               aria-label={added ? t('search.added') : t('live.add', { title: item.title })}
-              onClick={() => useSession.getState().add(item.videoId)}
+              onClick={() => useSession.getState().add(item.videoId, item.sport)}
             >
               {added ? t('search.added') : t('search.add')}
             </button>

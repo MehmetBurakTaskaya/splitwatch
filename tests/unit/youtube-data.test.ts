@@ -18,12 +18,17 @@ describe('YouTube Data API responses', () => {
     expect(readSearch(null)).toEqual([]);
   });
 
-  it('reads live state, schedule and embeddability', () => {
+  it('reads live state, schedule, embeddability and the channel', () => {
     const data = {
       items: [
         {
           id: 'M7lc1UVf-VE',
-          snippet: { title: 'Soon', channelTitle: 'C', liveBroadcastContent: 'upcoming' },
+          snippet: {
+            title: 'Soon',
+            channelTitle: 'C',
+            channelId: 'UCXRVKD6l-LrX5TmGJqQFFoQ',
+            liveBroadcastContent: 'upcoming',
+          },
           liveStreamingDetails: { scheduledStartTime: '2026-10-31T10:00:00Z' },
           status: { embeddable: false },
         },
@@ -37,6 +42,7 @@ describe('YouTube Data API responses', () => {
         live: 'upcoming',
         scheduledStart: '2026-10-31T10:00:00Z',
         embeddable: false,
+        channelId: 'UCXRVKD6l-LrX5TmGJqQFFoQ',
       },
     ]);
   });

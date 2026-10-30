@@ -1,6 +1,7 @@
 import { app, net } from 'electron';
 import { type FeedEntry, feedUrl, parseFeed } from '../shared/feeds';
 import type { LiveNow, LiveState, StreamItem } from '../shared/ipc';
+import type { Preset } from '../shared/presets';
 import type { VideoFacts } from '../shared/youtube-data';
 import { loadKey } from './key-store';
 import { getPresets } from './presets-store';
@@ -61,16 +62,19 @@ async function factsFor(ids: string[]): Promise<Map<string, VideoFacts> | null> 
   return new Map(ids.flatMap((id) => (facts.has(id) ? [[id, facts.get(id)!.facts] as const] : [])));
 }
 
-export async function liveNow(): Promise<LiveNow> {
-  const sports = getSettings().sports;
-  const presets = getPresets().filter((p) => sports.length === 0 || sports.includes(p.sport));
-  const sportOf = new Map<string, string>();
+// The presets' channels, each with its sport when it serves one sport only: a channel that serves
+// several (road and mountain cycling, say) gets no sport label.
+function channelSports(presets: Preset[]): Map<string, string | null> {
   const sportsOf = new Map<string, Set<string>>();
   for (const p of presets)
     for (const c of p.channels) sportsOf.set(c.id, (sportsOf.get(c.id) ?? new Set()).add(p.sport));
-  // A channel that serves several sports (road and mountain cycling, say) gets no sport label.
-  for (const [id, set] of sportsOf) if (set.size === 1) sportOf.set(id, [...set][0]!);
-  const channels = [...sportsOf.keys()].slice(0, MAX_CHANNELS);
+  return new Map([...sportsOf].map(([id, set]) => [id, set.size === 1 ? [...set][0]! : null]));
+}
+
+export async function liveNow(): Promise<LiveNow> {
+  const sports = getSettings().sports;
+  const sportOf = channelSports(getPresets().filter((p) => sports.length === 0 || sports.includes(p.sport)));
+  const channels = [...sportOf.keys()].slice(0, MAX_CHANNELS);
   const cacheKey = channels.join(',');
   if (liveNowCache && liveNowCache.key === cacheKey && Date.now() - liveNowCache.at < LIVE_NOW_TTL) {
     return liveNowCache.value;
@@ -90,7 +94,7 @@ export async function liveNow(): Promise<LiveNow> {
       .filter((f) => f.live === 'live' || !f.scheduledStart || Date.parse(f.scheduledStart) - now < UPCOMING_WINDOW)
       .map((f) => {
         const entry = byId.get(f.videoId);
-        const sport = entry ? sportOf.get(entry.channelId) : undefined;
+        const sport = entry ? sportOf.get(entry.channelId) : null;
         return { ...withoutEmbeddable(f), title: f.title || entry?.title || '', ...(sport ? { sport } : {}) };
       })
       .sort(
@@ -125,6 +129,31 @@ export async function liveStates(ids: string[]): Promise<Record<string, LiveStat
   const known = await factsFor(ids);
   if (!known) return unknown;
   return Object.fromEntries(ids.map((id) => [id, known.get(id)?.live ?? 'unknown']));
+}
+
+// The sport of each stream whose channel is a preset channel of one sport. With a key, the channel
+// comes from videos.list (the same cached facts as the live states); without one, from the
+// channels' feeds, which list their latest 15 videos.
+export async function streamSports(ids: string[]): Promise<Record<string, string | null>> {
+  const out: Record<string, string | null> = Object.fromEntries(ids.map((id) => [id, null]));
+  if (!ids.length) return out;
+  const sportOf = channelSports(getPresets());
+  let unknown = ids;
+  if (await loadKey()) {
+    const known = await factsFor(ids);
+    if (known) {
+      for (const id of ids) out[id] = sportOf.get(known.get(id)?.channelId ?? '') ?? null;
+      unknown = ids.filter((id) => !known.get(id)?.channelId);
+    }
+  }
+  if (unknown.length) {
+    const channels = [...sportOf.keys()].slice(0, MAX_CHANNELS);
+    const feedsByChannel = await Promise.all(channels.map(async (id) => [id, await channelFeed(id)] as const));
+    for (const [channelId, entries] of feedsByChannel) {
+      for (const e of entries) if (unknown.includes(e.videoId)) out[e.videoId] = sportOf.get(channelId) ?? null;
+    }
+  }
+  return out;
 }
 
 function withoutEmbeddable(f: VideoFacts): StreamItem {

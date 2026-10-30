@@ -10,6 +10,8 @@ interface YouTubeState {
   liveLoading: boolean;
   liveStates: Record<string, LiveState>;
   history: StreamItem[];
+  // The sport the app found for each stream in the grid, from the preset channels.
+  streamSports: Record<string, string | null>;
 }
 
 export const useYouTube = create<YouTubeState>(() => ({
@@ -19,6 +21,7 @@ export const useYouTube = create<YouTubeState>(() => ({
   liveLoading: false,
   liveStates: {},
   history: [],
+  streamSports: {},
 }));
 
 const LIVE_NOW_EVERY = 5 * 60_000;
@@ -41,6 +44,18 @@ async function refreshLiveStates(): Promise<void> {
   useYouTube.setState({ liveStates: { ...useYouTube.getState().liveStates, ...states } });
 }
 
+// Looks up the sport of streams that did not come with one. Runs after the live states, whose
+// videos.list answer it reuses, so it costs no extra quota.
+async function refreshStreamSports(): Promise<void> {
+  const { streams, sports } = useSession.getState();
+  const ids = streams.filter((id) => !sports[id]);
+  if (!ids.length) return;
+  const found = await window.splitwatch.getStreamSports(ids);
+  useYouTube.setState({ streamSports: { ...useYouTube.getState().streamSports, ...found } });
+}
+
+const refreshStreams = () => void refreshLiveStates().finally(() => void refreshStreamSports());
+
 export async function refreshHistory(): Promise<void> {
   useYouTube.setState({ history: await window.splitwatch.getHistory() });
 }
@@ -54,12 +69,13 @@ export function connectYouTube(): void {
     useYouTube.setState({ status });
     if (before !== status.key) {
       void refreshLiveNow();
-      void refreshLiveStates();
+      refreshStreams();
     }
   });
   void window.splitwatch.getPresets().then((presets) => useYouTube.setState({ presets }));
   void refreshHistory();
   void refreshLiveNow();
+  refreshStreams();
 
   const visible = () => document.visibilityState === 'visible';
   setInterval(() => visible() && void refreshLiveNow(), LIVE_NOW_EVERY);
@@ -67,7 +83,7 @@ export function connectYouTube(): void {
   document.addEventListener('visibilitychange', () => visible() && void refreshLiveStates());
   useSession.subscribe((s, prev) => {
     if (s.streams === prev.streams) return;
-    void refreshLiveStates();
+    refreshStreams();
     // Newly added streams become local search suggestions (titles kept 30 days at most).
     const added = s.streams.filter((id) => !prev.streams.includes(id));
     for (const id of added) window.splitwatch.rememberStream(id);

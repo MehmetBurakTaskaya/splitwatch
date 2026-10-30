@@ -29,6 +29,7 @@ export function readSearch(data: unknown): StreamItem[] {
 
 export interface VideoFacts extends StreamItem {
   embeddable: boolean;
+  channelId?: string;
 }
 
 // videos.list with part=snippet,liveStreamingDetails,status.
@@ -41,6 +42,7 @@ export function readVideos(data: unknown): VideoFacts[] {
     const details = isRecord(item.liveStreamingDetails) ? item.liveStreamingDetails : {};
     const status = isRecord(item.status) ? item.status : {};
     const scheduled = str(details.scheduledStartTime, 40);
+    const channelId = str(snippet.channelId, 40);
     out.push({
       videoId: item.id,
       title: str(snippet.title),
@@ -48,6 +50,7 @@ export function readVideos(data: unknown): VideoFacts[] {
       live: liveState(snippet.liveBroadcastContent),
       ...(scheduled ? { scheduledStart: scheduled } : {}),
       embeddable: status.embeddable !== false,
+      ...(channelId ? { channelId } : {}),
     });
   }
   return out;
