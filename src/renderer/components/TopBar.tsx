@@ -10,6 +10,7 @@ import { useTheme } from '../theme/engine';
 import { ADD_INPUT_ID } from './Grid';
 import {
   IconKeyboard,
+  IconLayouts,
   IconMoon,
   IconMuted,
   IconPlay,
@@ -101,6 +102,16 @@ export function TopBar() {
         onClick={() => openDialog('search')}
       >
         <IconSearch />
+      </button>
+
+      <button
+        type="button"
+        className="icon-button"
+        aria-label={t('layouts.title')}
+        title={t('layouts.title')}
+        onClick={() => openDialog('layouts')}
+      >
+        <IconLayouts />
       </button>
 
       <div className="layouts" role="group" aria-label={t('layout.label')}>

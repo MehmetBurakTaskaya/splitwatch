@@ -91,6 +91,21 @@ export const IconMoon = () => (
     <path d="M15.8 12.6A6.5 6.5 0 0 1 7.4 4.2a6.5 6.5 0 1 0 8.4 8.4z" />
   </Icon>
 );
+export const IconLayouts = () => (
+  <Icon>
+    <path d="M6 3h8a1 1 0 0 1 1 1v13l-5-3.5L5 17V4a1 1 0 0 1 1-1z" />
+  </Icon>
+);
+export const IconRename = () => (
+  <Icon>
+    <path d="M12.5 4.5l3 3L7 16H4v-3z" />
+  </Icon>
+);
+export const IconDelete = () => (
+  <Icon>
+    <path d="M4 6h12M8 6V4h4v2M5.5 6l.8 10.5h7.4L14.5 6M8.5 9v5M11.5 9v5" />
+  </Icon>
+);
 export const IconSearch = () => (
   <Icon>
     <circle cx="8.5" cy="8.5" r="5" />

@@ -237,3 +237,45 @@ test('dialogs close from outside the box and from Enter on a choice, and keep a 
   await expect(dialog).toBeHidden();
   await app.close();
 });
+
+test('saves, opens, renames and deletes layouts, and keeps them after a restart', async () => {
+  const userData = freshUserData();
+  let { app, page } = await launch(userData);
+  const dialog = page.getByRole('dialog');
+  await addStream(page, VIDEO_A);
+  await addStream(page, VIDEO_B);
+
+  // Ctrl + S opens the dialog with the name field ready; Enter saves.
+  await page.keyboard.press('Control+s');
+  await expect(dialog.getByLabel(en.layouts.nameLabel)).toBeFocused();
+  await page.keyboard.type('Finals');
+  await page.keyboard.press('Enter');
+  await expect(dialog.getByText('Saved as “Finals”.')).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(dialog).toBeHidden();
+
+  await page.getByRole('button', { name: new RegExp(en.tile.remove.replace('{index}', '2')) }).click();
+  await expect(page.locator('[data-stream]')).toHaveCount(1);
+  await page.locator('.topbar').getByRole('button', { name: en.layouts.title }).click();
+  await dialog.getByRole('button', { name: 'Open Finals' }).click();
+  await expect(dialog).toBeHidden();
+  await expect(page.locator('[data-stream]')).toHaveCount(2);
+  await expect(page.locator('.grid')).toHaveAttribute('data-layout', '2');
+
+  // Rename, then delete and undo.
+  await page.keyboard.press('Control+s');
+  await dialog.getByRole('button', { name: 'Rename Finals' }).click();
+  await dialog.getByLabel('New name for Finals').fill('Sunday');
+  await page.keyboard.press('Enter');
+  await dialog.getByRole('button', { name: 'Delete Sunday' }).click();
+  await expect(dialog.getByText(en.layouts.none)).toBeVisible();
+  await dialog.getByRole('button', { name: en.layouts.undo }).click();
+  await expect(dialog.getByRole('button', { name: 'Open Sunday' })).toBeVisible();
+  await page.waitForTimeout(800);
+  await app.close();
+
+  ({ app, page } = await launch(userData));
+  await page.keyboard.press('Control+s');
+  await expect(page.getByRole('dialog').getByRole('button', { name: 'Open Sunday' })).toBeVisible();
+  await app.close();
+});

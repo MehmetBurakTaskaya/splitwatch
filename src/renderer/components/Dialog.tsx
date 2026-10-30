@@ -23,9 +23,18 @@ export function Dialog({
   const ref = useRef<HTMLDialogElement>(null);
   const pressedOutside = useRef(false);
 
+  // showModal() would focus the close button, the first control. The focus goes to the control
+  // marked data-autofocus instead, or else to the first one in the content.
   useEffect(() => {
     const dialog = ref.current;
-    if (dialog && !dialog.open) dialog.showModal();
+    if (!dialog || dialog.open) return;
+    dialog.showModal();
+    const first =
+      dialog.querySelector<HTMLElement>('[data-autofocus]') ??
+      dialog.querySelector<HTMLElement>(
+        '.dialog-body :is(input:not([disabled]), button:not([disabled]), select, textarea, a[href], summary)',
+      );
+    first?.focus();
   }, []);
 
   // A click on the backdrop reaches the dialog element itself, outside its box.

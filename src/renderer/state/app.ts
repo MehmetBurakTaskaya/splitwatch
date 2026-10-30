@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import type { AppInfo, UpdateState } from '../../shared/ipc';
 
-export type DialogName = 'search' | 'shortcuts' | 'settings' | 'sport' | null;
+export type DialogName = 'search' | 'shortcuts' | 'settings' | 'sport' | 'layouts' | null;
 
 interface AppState {
   info: AppInfo | null;

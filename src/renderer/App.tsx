@@ -3,6 +3,7 @@ import { Backdrop } from './components/Backdrop';
 import { ClipboardSuggestion } from './components/ClipboardSuggestion';
 import { EmptyState } from './components/EmptyState';
 import { Grid } from './components/Grid';
+import { LayoutsDialog } from './components/LayoutsDialog';
 import { SearchPalette } from './components/SearchPalette';
 import { SettingsDialog } from './components/SettingsDialog';
 import { ShortcutsDialog } from './components/ShortcutsDialog';
@@ -34,6 +35,7 @@ export function App() {
       {dialog === 'shortcuts' && <ShortcutsDialog />}
       {dialog === 'settings' && <SettingsDialog />}
       {dialog === 'sport' && <SportDialog />}
+      {dialog === 'layouts' && <LayoutsDialog />}
     </div>
   );
 }

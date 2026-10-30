@@ -3,7 +3,15 @@ import { DEFAULT_SETTINGS, type Settings } from '../../shared/settings';
 
 export type Prefs = Pick<
   Settings,
-  'audioFocus' | 'clipboardSuggestions' | 'shortcuts' | 'sports' | 'theme' | 'colorScheme' | 'animate' | 'performance'
+  | 'audioFocus'
+  | 'clipboardSuggestions'
+  | 'shortcuts'
+  | 'sports'
+  | 'theme'
+  | 'colorScheme'
+  | 'animate'
+  | 'performance'
+  | 'layouts'
 >;
 
 export const usePrefs = create<Prefs>(() => ({
@@ -15,6 +23,7 @@ export const usePrefs = create<Prefs>(() => ({
   colorScheme: DEFAULT_SETTINGS.colorScheme,
   animate: DEFAULT_SETTINGS.animate,
   performance: DEFAULT_SETTINGS.performance,
+  layouts: [],
 }));
 
 export function setPrefs(patch: Partial<Prefs>): void {

@@ -237,6 +237,10 @@ kbd {
   .play-all-label {
     display: none;
   }
+  .topbar {
+    gap: var(--space-2);
+    padding-inline: var(--space-2);
+  }
 }
 
 .layouts,

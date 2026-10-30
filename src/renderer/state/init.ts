@@ -5,8 +5,19 @@ import { sessionSnapshot, useSession } from './session';
 // restored streams only the selected one starts by itself; the others wait (see SessionState.waiting).
 export async function loadState(): Promise<void> {
   const settings = await window.splitwatch.getSettings();
-  const { audioFocus, clipboardSuggestions, shortcuts, sports, theme, colorScheme, animate, performance } = settings;
-  usePrefs.setState({ audioFocus, clipboardSuggestions, shortcuts, sports, theme, colorScheme, animate, performance });
+  const { audioFocus, clipboardSuggestions, shortcuts, sports, theme, colorScheme, animate, performance, layouts } =
+    settings;
+  usePrefs.setState({
+    audioFocus,
+    clipboardSuggestions,
+    shortcuts,
+    sports,
+    theme,
+    colorScheme,
+    animate,
+    performance,
+    layouts,
+  });
   const { session } = settings;
   const starter = session.selected ?? session.streams[0] ?? null;
   useSession.setState({ ...session, waiting: session.streams.filter((id) => id !== starter) });

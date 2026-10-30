@@ -66,7 +66,7 @@ export function SearchPalette() {
       <form className="palette-form" onSubmit={run}>
         <input
           type="text"
-          autoFocus
+          data-autofocus
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           aria-label={t('search.label')}

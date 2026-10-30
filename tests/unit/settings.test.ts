@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { DEFAULT_SETTINGS, sanitizeSettings } from '../../src/shared/settings';
+import {
+  DEFAULT_SETTINGS,
+  MAX_LAYOUT_NAME,
+  MAX_SAVED_LAYOUTS,
+  layoutName,
+  sanitizeSavedLayouts,
+  sanitizeSettings,
+} from '../../src/shared/settings';
 
 describe('sanitizeSettings', () => {
   it('returns the defaults for missing or broken files', () => {
@@ -20,6 +27,7 @@ describe('sanitizeSettings', () => {
       colorScheme: 'dark',
       animate: false,
       performance: true,
+      layouts: [],
       session: {
         layout: 'featured',
         streams: ['M7lc1UVf-VE', 'aqz-KE-bpKQ'],
@@ -74,5 +82,57 @@ describe('sanitizeSettings', () => {
   it('refuses reserved and duplicate shortcut keys', () => {
     const s = sanitizeSettings({ shortcuts: { toggleMute: '1', enlarge: 'K', playPause: 'K', help: 'Escape' } });
     expect(s.shortcuts).toEqual({ enlarge: 'K' });
+  });
+});
+
+describe('saved layouts', () => {
+  const layout = {
+    id: 'a1b2c3d4e5f60718',
+    name: '  Saturday\n finals ',
+    layout: '2',
+    streams: ['M7lc1UVf-VE', 'aqz-KE-bpKQ', 'not an id'],
+    selected: 'aqz-KE-bpKQ',
+    volumes: { 'M7lc1UVf-VE': 0.5, gone: 1 },
+    sports: { 'aqz-KE-bpKQ': 'basketball' },
+    muted: true,
+  };
+
+  it('keeps valid layouts with a clean, single-line name and the session checks', () => {
+    expect(sanitizeSavedLayouts([layout])).toEqual([
+      {
+        id: 'a1b2c3d4e5f60718',
+        name: 'Saturday finals',
+        layout: '2',
+        streams: ['M7lc1UVf-VE', 'aqz-KE-bpKQ'],
+        selected: 'aqz-KE-bpKQ',
+        volumes: { 'M7lc1UVf-VE': 0.5 },
+        sports: { 'aqz-KE-bpKQ': 'basketball' },
+      },
+    ]);
+  });
+
+  it('drops layouts without an ID, a name or streams, and duplicates', () => {
+    expect(
+      sanitizeSavedLayouts([
+        { ...layout, id: '../x' },
+        { ...layout, name: '   ' },
+        { ...layout, id: 'ffffffffffffffff', streams: [] },
+        layout,
+        { ...layout, name: 'Copy' },
+        'nonsense',
+      ]),
+    ).toHaveLength(1);
+    expect(sanitizeSavedLayouts('nonsense')).toEqual([]);
+  });
+
+  it(`keeps ${MAX_SAVED_LAYOUTS} at most`, () => {
+    const many = Array.from({ length: 30 }, (_, i) => ({ ...layout, id: `layout${String(i).padStart(4, '0')}` }));
+    expect(sanitizeSavedLayouts(many)).toHaveLength(MAX_SAVED_LAYOUTS);
+  });
+
+  it('cuts long names', () => {
+    expect(layoutName('x'.repeat(100))).toHaveLength(MAX_LAYOUT_NAME);
+    expect(layoutName(42)).toBeNull();
+    expect(layoutName('a\u0000b')).toBe('a b');
   });
 });

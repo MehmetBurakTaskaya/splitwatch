@@ -18,6 +18,21 @@ export interface Session {
   sports: Record<string, string>;
 }
 
+// A grid saved under a name, to open again later. Sound on or off and the main volume stay as
+// they are when it opens.
+export interface SavedLayout {
+  id: string;
+  name: string;
+  layout: LayoutId;
+  streams: string[];
+  selected: string | null;
+  volumes: Record<string, number>;
+  sports: Record<string, string>;
+}
+
+export const MAX_SAVED_LAYOUTS = 20;
+export const MAX_LAYOUT_NAME = 60;
+
 export type ColorScheme = 'system' | 'light' | 'dark';
 
 export interface Settings {
@@ -33,6 +48,7 @@ export interface Settings {
   colorScheme: ColorScheme;
   animate: boolean;
   performance: boolean;
+  layouts: SavedLayout[];
   session: Session;
 }
 
@@ -47,10 +63,12 @@ export const DEFAULT_SETTINGS: Settings = {
   colorScheme: 'system',
   animate: true,
   performance: false,
+  layouts: [],
   session: { layout: '1', streams: [], selected: null, muted: false, masterVolume: 1, volumes: {}, sports: {} },
 };
 
 const SLUG = /^[a-z][a-z0-9-]{1,40}$/;
+const LAYOUT_ID = /^[a-z0-9]{8,32}$/;
 const isRecord = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
 const volume = (v: unknown, fallback: number) =>
   typeof v === 'number' && Number.isFinite(v) ? Math.min(1, Math.max(0, v)) : fallback;
@@ -86,9 +104,31 @@ export function sanitizeSession(raw: unknown): Session {
   };
 }
 
+// Names are trimmed, single-line and at most MAX_LAYOUT_NAME characters; empty means invalid.
+export function layoutName(raw: unknown): string | null {
+  if (typeof raw !== 'string') return null;
+  const name = [...raw.replace(/[\s\p{Cc}]+/gu, ' ').trim()].slice(0, MAX_LAYOUT_NAME).join('').trim();
+  return name || null;
+}
+
+export function sanitizeSavedLayouts(raw: unknown): SavedLayout[] {
+  if (!Array.isArray(raw)) return [];
+  const out: SavedLayout[] = [];
+  for (const item of raw) {
+    if (!isRecord(item) || typeof item.id !== 'string' || !LAYOUT_ID.test(item.id)) continue;
+    const name = layoutName(item.name);
+    if (!name || out.some((l) => l.id === item.id)) continue;
+    const { layout, streams, selected, volumes, sports } = sanitizeSession(item);
+    if (!streams.length) continue;
+    out.push({ id: item.id, name, layout, streams, selected, volumes, sports });
+    if (out.length === MAX_SAVED_LAYOUTS) break;
+  }
+  return out;
+}
+
 export function sanitizeSettings(raw: unknown): Settings {
   const d = DEFAULT_SETTINGS;
-  if (!isRecord(raw)) return { ...d, shortcuts: {}, sports: [], session: sanitizeSession(null) };
+  if (!isRecord(raw)) return { ...d, shortcuts: {}, sports: [], layouts: [], session: sanitizeSession(null) };
   const scheme = raw.colorScheme;
   const shortcuts: Partial<Record<ShortcutAction, string>> = {};
   const used = new Set<string>();
@@ -114,6 +154,7 @@ export function sanitizeSettings(raw: unknown): Settings {
     colorScheme: scheme === 'light' || scheme === 'dark' ? scheme : 'system',
     animate: raw.animate !== false,
     performance: raw.performance === true,
+    layouts: sanitizeSavedLayouts(raw.layouts),
     session: sanitizeSession(raw.session),
   };
 }

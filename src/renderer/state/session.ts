@@ -36,6 +36,9 @@ interface SessionState extends Session {
   setInfo(videoId: string, info: VideoInfo | null): void;
   // A sport, "none", or null to let the app find it.
   setSport(videoId: string, sport: string | null): void;
+  // Replaces the grid with a saved one. Streams in both keep playing; the new ones start, since
+  // the user asked for them.
+  open(saved: Pick<Session, 'layout' | 'streams' | 'selected' | 'volumes' | 'sports'>): void;
 }
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
@@ -135,6 +138,21 @@ export const useSession = create<SessionState>((set, get) => ({
   setSport(videoId, sport) {
     if (!get().streams.includes(videoId)) return;
     set({ sports: sport ? { ...get().sports, [videoId]: sport } : without(get().sports, videoId) });
+  },
+
+  open(saved) {
+    const keep = (record: Record<string, PlayerStatus>) =>
+      Object.fromEntries(Object.entries(record).filter(([id]) => saved.streams.includes(id)));
+    set({
+      layout: saved.layout,
+      streams: saved.streams,
+      selected: saved.selected ?? saved.streams[0] ?? null,
+      volumes: saved.volumes,
+      sports: saved.sports,
+      maximized: null,
+      waiting: [],
+      status: keep(get().status),
+    });
   },
 }));
 

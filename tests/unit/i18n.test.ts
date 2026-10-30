@@ -27,6 +27,9 @@ const values = {
   used: 3,
   sport: 'Swimming',
   time: new Date('2026-10-31T07:00:00Z'),
+  name: 'Saturday finals',
+  max: 20,
+  layout: 'Two side by side',
 };
 
 describe('English messages', () => {

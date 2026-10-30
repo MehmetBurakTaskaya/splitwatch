@@ -8,7 +8,7 @@ import {
   keyName,
   resolveShortcuts,
 } from '../../shared/shortcuts';
-import { openDialog } from '../state/app';
+import { openDialog, useAppStore } from '../state/app';
 import { setPrefs, usePrefs } from '../state/prefs';
 import { Dialog } from './Dialog';
 
@@ -32,6 +32,7 @@ export function ShortcutsDialog() {
   const shortcuts = resolveShortcuts(overrides);
   const [editing, setEditing] = useState<ShortcutAction | null>(null);
   const [problem, setProblem] = useState<string | null>(null);
+  const mod = useAppStore((s) => s.info?.platform) === 'darwin' ? '⌘' : 'Ctrl';
 
   const capture = (e: KeyboardEvent, action: ShortcutAction) => {
     if (e.key === 'Escape' || e.key === 'Tab') return;
@@ -64,6 +65,20 @@ export function ShortcutsDialog() {
             <td>{t('shortcuts.escape')}</td>
             <td>
               <kbd>{t('shortcuts.keys.escape')}</kbd>
+            </td>
+            <td />
+          </tr>
+          <tr>
+            <td>{t('shortcuts.search')}</td>
+            <td>
+              <kbd>{`${mod} + K`}</kbd>
+            </td>
+            <td />
+          </tr>
+          <tr>
+            <td>{t('shortcuts.layouts')}</td>
+            <td>
+              <kbd>{`${mod} + S`}</kbd>
             </td>
             <td />
           </tr>

@@ -288,3 +288,86 @@
 .sport-choices .icon {
   color: var(--color-text-muted);
 }
+
+/* Saved layouts */
+.layout-save {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-block-end: var(--space-5);
+}
+.layout-save label {
+  font-weight: 600;
+}
+.layout-save-row {
+  display: flex;
+  gap: var(--space-2);
+}
+.layout-save-row input {
+  flex: 1;
+  min-inline-size: 0;
+}
+.saved-layouts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.saved-layout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  padding-block: var(--space-2);
+  padding-inline: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-1);
+}
+.saved-layout-glyph {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  inline-size: 30px;
+  block-size: 30px;
+  color: var(--color-accent);
+}
+.saved-layout-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 10rem;
+  min-inline-size: 0;
+}
+.saved-layout-name {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.saved-layout-meta {
+  font-size: var(--font-size-1);
+  color: var(--color-text-muted);
+}
+.saved-layout-rename {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1 1 16rem;
+}
+.saved-layout-rename input {
+  flex: 1 1 10rem;
+  min-inline-size: 0;
+}
+.saved-layout-rename .dialog-problem {
+  flex-basis: 100%;
+  margin: 0;
+}
+.layout-removed {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-block: 0 var(--space-2);
+  font-size: var(--font-size-1);
+}
