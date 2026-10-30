@@ -2,18 +2,18 @@
 
 Each phase ends with a release that is tested on Windows and, where possible, on macOS.
 
-| Phase | Content                                                                                                                                              | Status      |
-| ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| 0     | Technical spike: Tauri 2 or Electron ([ADR 0001](adr/0001-desktop-framework.md))                                                                     | done        |
-| 1     | Project skeleton, languages system, CI on both platforms, installers, updates (v0.1.0)                                                               | in progress |
-| 2     | Stream grid, adding streams by link, player control, audio focus, keyboard shortcuts                                                                 |             |
-| 3     | YouTube Data API layer (your own key, kept in the system credential store), quota manager, cache, channel feeds, search, sport presets, keyless mode |             |
-| 4     | Theme engine, the first 12 sport themes, sport icons                                                                                                 |             |
-| 5     | Saved layouts, mini mode, tray or menu bar, live notifications, start with the system                                                                |             |
-| 6     | Summer Games and Winter Games event modes                                                                                                            |             |
-| 7     | Extra features (below)                                                                                                                               |             |
-| 8     | Languages: Spanish, Simplified Chinese, Japanese, German, French, Brazilian Portuguese, Arabic, Korean, Italian, Russian, Turkish                    |             |
-| 9     | Polish: accessibility, performance, onboarding, final icon, v1.0.0                                                                                   |             |
+| Phase | Content                                                                                                                                              | Status |
+| ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
+| 0     | Technical spike: Tauri 2 or Electron ([ADR 0001](adr/0001-desktop-framework.md))                                                                     | done   |
+| 1     | Project skeleton, languages system, CI on both platforms, installers, updates (v0.1.0)                                                               | done   |
+| 2     | Stream grid, adding streams by link, player control, audio focus, keyboard shortcuts                                                                 |        |
+| 3     | YouTube Data API layer (your own key, kept in the system credential store), quota manager, cache, channel feeds, search, sport presets, keyless mode |        |
+| 4     | Theme engine, the first 12 sport themes, sport icons                                                                                                 |        |
+| 5     | Saved layouts, mini mode, tray or menu bar, live notifications, start with the system                                                                |        |
+| 6     | Summer Games and Winter Games event modes                                                                                                            |        |
+| 7     | Extra features (below)                                                                                                                               |        |
+| 8     | Languages: Spanish, Simplified Chinese, Japanese, German, French, Brazilian Portuguese, Arabic, Korean, Italian, Russian, Turkish                    |        |
+| 9     | Polish: accessibility, performance, onboarding, final icon, v1.0.0                                                                                   |        |
 
 ## Phase 7 extra features
 
