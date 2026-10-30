@@ -43,6 +43,10 @@ jobs:
           check-latest: true
           cache: npm
       - run: npm ci
+      # Electron downloads its binary on first use; doing it once here keeps parallel test
+      # workers from racing to download it.
+      - name: Download the Electron binary
+        run: node -e "require('electron')"
       - run: npm run build
       - run: npm run test:e2e
       - uses: actions/upload-artifact@v7
