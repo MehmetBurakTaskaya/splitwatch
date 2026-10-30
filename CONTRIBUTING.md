@@ -64,7 +64,22 @@ archery, figure skating and more.
 
 ## Themes
 
-Sport themes arrive in a later version, also as data files; how to add one will be described here.
+A theme is a JSON file in [`themes/`](themes), described by [`themes/schema.json`](themes/schema.json):
+interface colors and background colors for light and dark, the sports that show it, one of the
+backgrounds the app can draw (`src/renderer/theme/backdrops/`) and an optional heading font.
+
+- `node scripts/theme-palette.mjs <hue> <saturation>` suggests interface colors that pass the
+  contrast checks; adjust them by eye. `npm test` checks every theme against WCAG 2.1 AA (4.5:1 for
+  text, 3:1 for the accent) and checks that each theme's accent stays visible on every other theme.
+- The theme's name goes in `src/renderer/i18n/locales/en.json` under `themes`.
+- A new background is a TypeScript module next to the others: a `still` part drawn once and cached,
+  and an optional `moving` part drawn on each frame. Keep the moving part light (the measurements in
+  the README come from `node scripts/measure-cpu.mjs`), skip textures and particles when `low` is set,
+  and draw it so that the time alone decides the picture.
+- Every picture is drawn in code and is your own. No logos, marks, pictograms, mascots, torches or
+  photos of any sports body, league, team or broadcaster, and no rings or other emblems of the
+  multi-sport Games; their names stay out of themes too. Sport icons show objects (a ball, goggles,
+  a paddle), never people.
 
 ## Code of conduct
 

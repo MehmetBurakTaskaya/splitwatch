@@ -5,6 +5,18 @@ and versions follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Twelve sport themes, each with its own colors in light and dark and a background drawn by the app:
+  Pool, Track, Transition, Peloton, Singletrack, Court, Beach, Hardwood, Swell, Rink, Slalom and
+  Halfpipe.
+- Automatic theme: the window takes the theme of the sport you watch. With mixed sports it stays
+  neutral and each stream shows its own sport's color.
+- A sport icon under each stream; click it to set the stream's sport. Streams from Live now, from a
+  sport search or from a preset channel know their sport by themselves.
+- Settings → Appearance: the theme, light or dark, animated backgrounds and performance mode.
+- Theme headings in the Oswald and Exo 2 fonts.
+
 ## [0.3.0] - 2026-10-30
 
 Splitwatch now finds live sports: Live now from official channels, and live-stream search with your own

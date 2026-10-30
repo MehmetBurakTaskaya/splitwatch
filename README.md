@@ -3,9 +3,9 @@
 Watch several YouTube sports live streams side by side, in one window. Free and open source, for
 Windows and macOS.
 
-> **Early development.** Splitwatch plays a grid of streams, finds live sports on official channels and
-> searches YouTube. Themes, saved layouts and more arrive version by version; see the
-> [roadmap](docs/ROADMAP.md).
+> **Early development.** Splitwatch plays a grid of streams, finds live sports on official channels,
+> searches YouTube and dresses itself in the sport you watch. Saved layouts and more arrive version
+> by version; see the [roadmap](docs/ROADMAP.md).
 
 ## What it does
 
@@ -18,6 +18,42 @@ Windows and macOS.
   LIVE badge on streams in the grid.
 - Search YouTube for live streams (Ctrl + K, or Cmd + K on macOS), filtered by sport, with the cost
   shown before each search.
+- Twelve sport themes, in light and dark, that follow the sport you watch (see below).
+
+## Themes
+
+Each theme has its own colors and a background drawn by the app: lane ropes for swimming, the bend
+of a running track for athletics, waves for surfing, a slope with gates for alpine skiing, and so on.
+
+| Theme       | Sport           | Theme    | Sport            |
+| ----------- | --------------- | -------- | ---------------- |
+| Pool        | Swimming        | Court    | Volleyball       |
+| Track       | Athletics       | Beach    | Beach volleyball |
+| Transition  | Triathlon       | Hardwood | Basketball       |
+| Peloton     | Road cycling    | Swell    | Surfing          |
+| Singletrack | Mountain biking | Rink     | Ice hockey       |
+| Slalom      | Alpine skiing   | Halfpipe | Snowboarding     |
+
+With **Automatic** (the default), the window takes the theme of the sport you watch. Streams added
+from Live now or from a sport search know their sport; for others, Splitwatch looks for their channel
+among the preset channels. When the streams show different sports, the window stays neutral and each
+stream shows its own sport's color and icon. Click the icon under a stream to set its sport by hand.
+
+The backgrounds show on the start screen, in empty places of the grid and in the thin gaps between
+streams, never over a player. They move only while enough of them shows, and stop when the window is
+hidden, when the system asks for reduced motion, or in **Performance mode** (Settings → Appearance).
+
+Measured with `node scripts/measure-cpu.mjs` on an AMD Ryzen 9 7940HS laptop with Windows 11: the
+CPU use of all of Splitwatch's processes, in percent of one core, averaged over 20 seconds.
+
+| Situation                                    | Neutral | Swell theme | Swell, performance mode |
+| -------------------------------------------- | ------- | ----------- | ----------------------- |
+| Start screen, nothing playing                | 0.0 %   | 1.7 %       | 0.0 %                   |
+| Four streams playing, two empty places shown | 2.2 %   | 2.8 %       | 2.1 %                   |
+
+Swell, with seven moving rows of waves, is the busiest background; Pool, Track and Slalom measured
+0.7 to 1.1 % on the start screen. When the players fill the grid, the background is drawn once and
+costs nothing more.
 
 ## Your own YouTube API key (optional)
 
@@ -38,7 +74,7 @@ much is left, and Splitwatch stops before the limit.
 ## What is coming
 
 - Saved layouts, a small always-on-top mini mode, and notifications when followed channels go live.
-- Hand-made visual themes per sport, and special modes for the Summer and Winter Games.
+- Special modes for the Summer and Winter Games.
 - Eleven more interface languages.
 
 ## Keyboard shortcuts
@@ -107,6 +143,11 @@ How the code is organized and why: [docs/adr](docs/adr). How to help, including 
 [MIT](LICENSE). Splitwatch plays videos only through YouTube's official embedded player and is not
 affiliated with or endorsed by YouTube or Google. YouTube is a trademark of Google LLC.
 
+Splitwatch is not affiliated with any sports body, league, team or broadcaster, and shows none of
+their logos or marks; every theme picture and icon is its own. The theme headings use
+[Oswald](https://github.com/googlefonts/OswaldFont) and [Exo 2](https://github.com/googlefonts/Exo-2.0),
+under the SIL Open Font License 1.1 (the licenses ship with the app in `licenses/`).
+
 ## Türkçe
 
 Splitwatch, birden çok YouTube spor canlı yayınını tek pencerede yan yana izlemeye yarayan ücretsiz
@@ -114,7 +155,9 @@ ve açık kaynaklı bir masaüstü uygulamasıdır (Windows ve macOS). Şu an er
 YouTube linki ya da video kimliği yapıştırarak en fazla dokuz yayını bir grid'de izleyebilirsiniz;
 seçtiğiniz yayının sesini duyarsınız. "Live now" 17 sporun resmî kanallarındaki yayınları gösterir;
 kendi ücretsiz YouTube API anahtarınızla (Ayarlar → YouTube API key) canlı yayın araması ve LIVE
-etiketleri de açılır. Temalar ve kayıtlı düzenler sonraki sürümlerde gelecek.
+etiketleri de açılır. On iki spor teması, izlediğiniz sporun renklerini ve uygulamanın kendi çizdiği
+bir arka planı getirir; ayarlar Ayarlar → Appearance bölümündedir. Kayıtlı düzenler sonraki
+sürümlerde gelecek.
 
 İndirmek için [Releases](https://github.com/MehmetBurakTaskaya/splitwatch/releases/latest) sayfasına
 gidin. Uygulama henüz kod imzalı olmadığı için ilk açılışta uyarı çıkar:

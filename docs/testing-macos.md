@@ -39,5 +39,18 @@ If a tile shows a message instead of a video, note the message and the error cod
    add a result. Settings now shows "Searches: 1 of 100".
 6. Quit and reopen: the key still works, without asking again.
 
+## Version 0.4 (about 5 more minutes)
+
+1. Open **Settings → Appearance** and click a few themes: the colors and the background change, with
+   a short fade.
+2. Under **Light or dark**, choose **Dark**: the window and its title bar turn dark. Then choose
+   **Like the system** again.
+3. Choose **Automatic**. Remove every stream, and under **Sports for Live now** tick only
+   **Swimming**: the start screen shows the Pool theme, with light moving on the water.
+4. Add two streams. Click the tag icon under each and pick **Basketball**: the window takes the
+   Hardwood theme.
+5. Turn on **Performance mode**: the background stops moving.
+
 Send back: your Mac model, macOS version, and what happened at each step (a screenshot helps:
-**Shift + Cmd + 3**).
+**Shift + Cmd + 3**). For 0.4, also whether the background moves smoothly and how busy Activity
+Monitor shows Splitwatch on the start screen.

@@ -8,7 +8,7 @@ Each phase ends with a release that is tested on Windows and, where possible, on
 | 1     | Project skeleton, languages system, CI on both platforms, installers, updates (v0.1.0)                                                               | done   |
 | 2     | Stream grid, adding streams by link, player control, audio focus, keyboard shortcuts (v0.2.0)                                                        | done   |
 | 3     | YouTube Data API layer (your own key, kept in the system credential store), quota manager, cache, channel feeds, search, sport presets, keyless mode | done   |
-| 4     | Theme engine, the first 12 sport themes, sport icons                                                                                                 |        |
+| 4     | Theme engine, the first 12 sport themes, sport icons                                                                                                 | done   |
 | 5     | Saved layouts, mini mode, tray or menu bar, live notifications, start with the system                                                                |        |
 | 6     | Summer Games and Winter Games event modes                                                                                                            |        |
 | 7     | Extra features (below)                                                                                                                               |        |

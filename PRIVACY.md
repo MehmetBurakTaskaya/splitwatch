@@ -35,8 +35,8 @@ Splitwatch in **Settings → YouTube API key → Remove key**.
 
 In Splitwatch's app data folder:
 
-- `settings.json`: your settings, keyboard shortcuts, chosen sports and quota limits, and the streams
-  in your grid (video IDs, layout, volumes), so the grid comes back next time.
+- `settings.json`: your settings, keyboard shortcuts, chosen sports, theme and quota limits, and the
+  streams in your grid (video IDs, layout, volumes, sports), so the grid comes back next time.
 - `youtube-api-key.bin`: your API key, if you add one, encrypted by your system (the macOS Keychain or,
   on Windows, the Data Protection API tied to your Windows account). It is never stored as plain text.
 - `quota.json`: how many API requests and searches were made today, to stay within your quota.
