@@ -27,6 +27,7 @@ const EXTERNAL_HOSTS = new Set([
   'youtu.be',
   'github.com',
   'console.cloud.google.com',
+  'en.wikipedia.org',
 ]);
 
 export function isAllowedExternalUrl(url: string): boolean {

@@ -1,0 +1,749 @@
+{
+  "id": "winter-2026",
+  "kind": "winter",
+  "youth": false,
+  "year": 2026,
+  "place": "Milan and Cortina d'Ampezzo",
+  "timezone": "Europe/Rome",
+  "start": "2026-02-06",
+  "end": "2026-02-22",
+  "calendar": [
+    {
+      "date": "2026-02-04",
+      "sport": "curling",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-05",
+      "sport": "curling",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-05",
+      "sport": "ice-hockey",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-05",
+      "sport": "snowboard",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-06",
+      "sport": "curling",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-06",
+      "sport": "figure-skating",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-06",
+      "sport": "ice-hockey",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-07",
+      "sport": "alpine-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-07",
+      "sport": "cross-country-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-07",
+      "sport": "curling",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-07",
+      "sport": "figure-skating",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-07",
+      "sport": "freestyle-skiing",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-07",
+      "sport": "ice-hockey",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-07",
+      "sport": "luge",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-07",
+      "sport": "ski-jumping",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-07",
+      "sport": "snowboard",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-07",
+      "sport": "speed-skating",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-08",
+      "sport": "alpine-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-08",
+      "sport": "biathlon",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-08",
+      "sport": "cross-country-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-08",
+      "sport": "curling",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-08",
+      "sport": "figure-skating",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-08",
+      "sport": "ice-hockey",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-08",
+      "sport": "luge",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-08",
+      "sport": "snowboard",
+      "medals": 2
+    },
+    {
+      "date": "2026-02-08",
+      "sport": "speed-skating",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-09",
+      "sport": "alpine-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-09",
+      "sport": "curling",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-09",
+      "sport": "figure-skating",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-09",
+      "sport": "freestyle-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-09",
+      "sport": "ice-hockey",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-09",
+      "sport": "luge",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-09",
+      "sport": "ski-jumping",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-09",
+      "sport": "snowboard",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-09",
+      "sport": "speed-skating",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-10",
+      "sport": "alpine-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-10",
+      "sport": "biathlon",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-10",
+      "sport": "cross-country-skiing",
+      "medals": 2
+    },
+    {
+      "date": "2026-02-10",
+      "sport": "curling",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-10",
+      "sport": "figure-skating",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-10",
+      "sport": "freestyle-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-10",
+      "sport": "ice-hockey",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-10",
+      "sport": "luge",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-10",
+      "sport": "short-track-speed-skating",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-10",
+      "sport": "ski-jumping",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-11",
+      "sport": "alpine-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-11",
+      "sport": "biathlon",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-11",
+      "sport": "curling",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-11",
+      "sport": "figure-skating",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-11",
+      "sport": "freestyle-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-11",
+      "sport": "ice-hockey",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-11",
+      "sport": "luge",
+      "medals": 2
+    },
+    {
+      "date": "2026-02-11",
+      "sport": "nordic-combined",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-11",
+      "sport": "snowboard",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-11",
+      "sport": "speed-skating",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-12",
+      "sport": "alpine-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-12",
+      "sport": "cross-country-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-12",
+      "sport": "curling",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-12",
+      "sport": "freestyle-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-12",
+      "sport": "ice-hockey",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-12",
+      "sport": "luge",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-12",
+      "sport": "short-track-speed-skating",
+      "medals": 2
+    },
+    {
+      "date": "2026-02-12",
+      "sport": "skeleton",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-12",
+      "sport": "snowboard",
+      "medals": 2
+    },
+    {
+      "date": "2026-02-12",
+      "sport": "speed-skating",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-13",
+      "sport": "biathlon",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-13",
+      "sport": "cross-country-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-13",
+      "sport": "curling",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-13",
+      "sport": "figure-skating",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-13",
+      "sport": "ice-hockey",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-13",
+      "sport": "skeleton",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-13",
+      "sport": "snowboard",
+      "medals": 2
+    },
+    {
+      "date": "2026-02-13",
+      "sport": "speed-skating",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-14",
+      "sport": "alpine-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-14",
+      "sport": "biathlon",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-14",
+      "sport": "cross-country-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-14",
+      "sport": "curling",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-14",
+      "sport": "freestyle-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-14",
+      "sport": "ice-hockey",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-14",
+      "sport": "short-track-speed-skating",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-14",
+      "sport": "skeleton",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-14",
+      "sport": "ski-jumping",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-14",
+      "sport": "speed-skating",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-15",
+      "sport": "alpine-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-15",
+      "sport": "biathlon",
+      "medals": 2
+    },
+    {
+      "date": "2026-02-15",
+      "sport": "bobsleigh",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-15",
+      "sport": "cross-country-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-15",
+      "sport": "curling",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-15",
+      "sport": "figure-skating",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-15",
+      "sport": "freestyle-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-15",
+      "sport": "ice-hockey",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-15",
+      "sport": "skeleton",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-15",
+      "sport": "ski-jumping",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-15",
+      "sport": "snowboard",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-15",
+      "sport": "speed-skating",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-16",
+      "sport": "alpine-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-16",
+      "sport": "bobsleigh",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-16",
+      "sport": "curling",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-16",
+      "sport": "figure-skating",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-16",
+      "sport": "freestyle-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-16",
+      "sport": "ice-hockey",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-16",
+      "sport": "short-track-speed-skating",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-16",
+      "sport": "ski-jumping",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-17",
+      "sport": "biathlon",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-17",
+      "sport": "bobsleigh",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-17",
+      "sport": "curling",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-17",
+      "sport": "figure-skating",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-17",
+      "sport": "freestyle-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-17",
+      "sport": "ice-hockey",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-17",
+      "sport": "nordic-combined",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-17",
+      "sport": "speed-skating",
+      "medals": 2
+    },
+    {
+      "date": "2026-02-18",
+      "sport": "alpine-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-18",
+      "sport": "biathlon",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-18",
+      "sport": "cross-country-skiing",
+      "medals": 2
+    },
+    {
+      "date": "2026-02-18",
+      "sport": "curling",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-18",
+      "sport": "freestyle-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-18",
+      "sport": "ice-hockey",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-18",
+      "sport": "short-track-speed-skating",
+      "medals": 2
+    },
+    {
+      "date": "2026-02-18",
+      "sport": "snowboard",
+      "medals": 2
+    },
+    {
+      "date": "2026-02-19",
+      "sport": "curling",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-19",
+      "sport": "figure-skating",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-19",
+      "sport": "freestyle-skiing",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-19",
+      "sport": "ice-hockey",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-19",
+      "sport": "nordic-combined",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-19",
+      "sport": "ski-mountaineering",
+      "medals": 2
+    },
+    {
+      "date": "2026-02-19",
+      "sport": "speed-skating",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-20",
+      "sport": "biathlon",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-20",
+      "sport": "bobsleigh",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-20",
+      "sport": "curling",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-20",
+      "sport": "freestyle-skiing",
+      "medals": 3
+    },
+    {
+      "date": "2026-02-20",
+      "sport": "ice-hockey",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-20",
+      "sport": "short-track-speed-skating",
+      "medals": 2
+    },
+    {
+      "date": "2026-02-20",
+      "sport": "speed-skating",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-21",
+      "sport": "biathlon",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-21",
+      "sport": "bobsleigh",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-21",
+      "sport": "cross-country-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-21",
+      "sport": "curling",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-21",
+      "sport": "freestyle-skiing",
+      "medals": 2
+    },
+    {
+      "date": "2026-02-21",
+      "sport": "ice-hockey",
+      "medals": 0
+    },
+    {
+      "date": "2026-02-21",
+      "sport": "ski-mountaineering",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-21",
+      "sport": "speed-skating",
+      "medals": 2
+    },
+    {
+      "date": "2026-02-22",
+      "sport": "bobsleigh",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-22",
+      "sport": "cross-country-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-22",
+      "sport": "curling",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-22",
+      "sport": "freestyle-skiing",
+      "medals": 1
+    },
+    {
+      "date": "2026-02-22",
+      "sport": "ice-hockey",
+      "medals": 1
+    }
+  ],
+  "medalsPage": 82241843,
+  "sources": [
+    {
+      "url": "https://en.wikipedia.org/?curid=38416091",
+      "checked": "2026-10-30"
+    }
+  ]
+}

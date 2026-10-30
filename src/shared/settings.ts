@@ -1,4 +1,5 @@
 import { type LayoutId, MAX_STREAMS, MINI_MIN, isLayoutId, layoutFor, layoutById } from './layouts';
+import { DEFAULT_EVENT_SETTINGS, type EventSettings, sanitizeEventSettings } from './events';
 import { DEFAULT_NOTIFY, type NotifySettings, sanitizeNotify } from './notify';
 import { DEFAULT_LIMITS, type QuotaLimits, sanitizeLimits } from './quota';
 import { SHORTCUT_ACTIONS, type ShortcutAction, isReservedKey } from './shortcuts';
@@ -64,6 +65,7 @@ export interface Settings {
   // When the system starts the app at sign-in, it stays in the tray (needs background).
   startHidden: boolean;
   notify: NotifySettings;
+  event: EventSettings;
   session: Session;
 }
 
@@ -83,6 +85,7 @@ export const DEFAULT_SETTINGS: Settings = {
   background: false,
   startHidden: false,
   notify: DEFAULT_NOTIFY,
+  event: DEFAULT_EVENT_SETTINGS,
   session: { layout: '1', streams: [], selected: null, muted: false, masterVolume: 1, volumes: {}, sports: {} },
 };
 
@@ -164,6 +167,7 @@ export function sanitizeSettings(raw: unknown): Settings {
       sports: [],
       layouts: [],
       notify: sanitizeNotify(null),
+      event: sanitizeEventSettings(null),
       session: sanitizeSession(null),
     };
   }
@@ -197,6 +201,7 @@ export function sanitizeSettings(raw: unknown): Settings {
     background: raw.background === true,
     startHidden: raw.background === true && raw.startHidden === true,
     notify: sanitizeNotify(raw.notify),
+    event: sanitizeEventSettings(raw.event),
     session: sanitizeSession(raw.session),
   };
 }

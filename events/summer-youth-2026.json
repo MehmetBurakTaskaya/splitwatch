@@ -1,0 +1,554 @@
+{
+  "id": "summer-youth-2026",
+  "kind": "summer",
+  "youth": true,
+  "year": 2026,
+  "place": "Dakar",
+  "timezone": "Africa/Dakar",
+  "start": "2026-10-31",
+  "end": "2026-11-13",
+  "calendar": [
+    {
+      "date": "2026-10-30",
+      "sport": "baseball",
+      "medals": 0
+    },
+    {
+      "date": "2026-10-31",
+      "sport": "baseball",
+      "medals": 0
+    },
+    {
+      "date": "2026-10-31",
+      "sport": "beach-volleyball",
+      "medals": 0
+    },
+    {
+      "date": "2026-10-31",
+      "sport": "coastal-rowing",
+      "medals": 0
+    },
+    {
+      "date": "2026-10-31",
+      "sport": "table-tennis",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-01",
+      "sport": "badminton",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-01",
+      "sport": "baseball",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-01",
+      "sport": "beach-volleyball",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-01",
+      "sport": "coastal-rowing",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-01",
+      "sport": "futsal",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-01",
+      "sport": "judo",
+      "medals": 3
+    },
+    {
+      "date": "2026-11-01",
+      "sport": "rugby-sevens",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-01",
+      "sport": "swimming",
+      "medals": 6
+    },
+    {
+      "date": "2026-11-01",
+      "sport": "table-tennis",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-01",
+      "sport": "wushu",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-02",
+      "sport": "badminton",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-02",
+      "sport": "baseball",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-02",
+      "sport": "beach-volleyball",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-02",
+      "sport": "coastal-rowing",
+      "medals": 1
+    },
+    {
+      "date": "2026-11-02",
+      "sport": "futsal",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-02",
+      "sport": "judo",
+      "medals": 3
+    },
+    {
+      "date": "2026-11-02",
+      "sport": "rugby-sevens",
+      "medals": 1
+    },
+    {
+      "date": "2026-11-02",
+      "sport": "swimming",
+      "medals": 4
+    },
+    {
+      "date": "2026-11-02",
+      "sport": "table-tennis",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-02",
+      "sport": "wushu",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-03",
+      "sport": "badminton",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-03",
+      "sport": "baseball",
+      "medals": 1
+    },
+    {
+      "date": "2026-11-03",
+      "sport": "beach-volleyball",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-03",
+      "sport": "coastal-rowing",
+      "medals": 2
+    },
+    {
+      "date": "2026-11-03",
+      "sport": "equestrian",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-03",
+      "sport": "futsal",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-03",
+      "sport": "judo",
+      "medals": 2
+    },
+    {
+      "date": "2026-11-03",
+      "sport": "rugby-sevens",
+      "medals": 1
+    },
+    {
+      "date": "2026-11-03",
+      "sport": "swimming",
+      "medals": 6
+    },
+    {
+      "date": "2026-11-03",
+      "sport": "table-tennis",
+      "medals": 1
+    },
+    {
+      "date": "2026-11-03",
+      "sport": "wushu",
+      "medals": 4
+    },
+    {
+      "date": "2026-11-04",
+      "sport": "badminton",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-04",
+      "sport": "beach-volleyball",
+      "medals": 2
+    },
+    {
+      "date": "2026-11-04",
+      "sport": "futsal",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-04",
+      "sport": "skateboarding",
+      "medals": 1
+    },
+    {
+      "date": "2026-11-04",
+      "sport": "swimming",
+      "medals": 6
+    },
+    {
+      "date": "2026-11-04",
+      "sport": "table-tennis",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-05",
+      "sport": "badminton",
+      "medals": 2
+    },
+    {
+      "date": "2026-11-05",
+      "sport": "equestrian",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-05",
+      "sport": "futsal",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-05",
+      "sport": "skateboarding",
+      "medals": 1
+    },
+    {
+      "date": "2026-11-05",
+      "sport": "swimming",
+      "medals": 4
+    },
+    {
+      "date": "2026-11-05",
+      "sport": "table-tennis",
+      "medals": 2
+    },
+    {
+      "date": "2026-11-05",
+      "sport": "triathlon",
+      "medals": 1
+    },
+    {
+      "date": "2026-11-06",
+      "sport": "archery",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-06",
+      "sport": "basketball-3x3",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-06",
+      "sport": "equestrian",
+      "medals": 1
+    },
+    {
+      "date": "2026-11-06",
+      "sport": "swimming",
+      "medals": 4
+    },
+    {
+      "date": "2026-11-06",
+      "sport": "triathlon",
+      "medals": 1
+    },
+    {
+      "date": "2026-11-07",
+      "sport": "archery",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-07",
+      "sport": "artistic-gymnastics",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-07",
+      "sport": "basketball-3x3",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-07",
+      "sport": "beach-wrestling",
+      "medals": 4
+    },
+    {
+      "date": "2026-11-07",
+      "sport": "boxing",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-07",
+      "sport": "futsal",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-08",
+      "sport": "archery",
+      "medals": 1
+    },
+    {
+      "date": "2026-11-08",
+      "sport": "artistic-gymnastics",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-08",
+      "sport": "athletics",
+      "medals": 10
+    },
+    {
+      "date": "2026-11-08",
+      "sport": "basketball-3x3",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-08",
+      "sport": "beach-wrestling",
+      "medals": 4
+    },
+    {
+      "date": "2026-11-08",
+      "sport": "boxing",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-08",
+      "sport": "fencing",
+      "medals": 1
+    },
+    {
+      "date": "2026-11-08",
+      "sport": "futsal",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-08",
+      "sport": "road-cycling",
+      "medals": 2
+    },
+    {
+      "date": "2026-11-08",
+      "sport": "sailing",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-08",
+      "sport": "taekwondo",
+      "medals": 2
+    },
+    {
+      "date": "2026-11-09",
+      "sport": "archery",
+      "medals": 1
+    },
+    {
+      "date": "2026-11-09",
+      "sport": "artistic-gymnastics",
+      "medals": 2
+    },
+    {
+      "date": "2026-11-09",
+      "sport": "athletics",
+      "medals": 12
+    },
+    {
+      "date": "2026-11-09",
+      "sport": "basketball-3x3",
+      "medals": 2
+    },
+    {
+      "date": "2026-11-09",
+      "sport": "beach-handball",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-09",
+      "sport": "boxing",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-09",
+      "sport": "fencing",
+      "medals": 1
+    },
+    {
+      "date": "2026-11-09",
+      "sport": "futsal",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-09",
+      "sport": "sailing",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-09",
+      "sport": "taekwondo",
+      "medals": 2
+    },
+    {
+      "date": "2026-11-10",
+      "sport": "archery",
+      "medals": 1
+    },
+    {
+      "date": "2026-11-10",
+      "sport": "artistic-gymnastics",
+      "medals": 2
+    },
+    {
+      "date": "2026-11-10",
+      "sport": "athletics",
+      "medals": 14
+    },
+    {
+      "date": "2026-11-10",
+      "sport": "beach-handball",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-10",
+      "sport": "boxing",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-10",
+      "sport": "fencing",
+      "medals": 1
+    },
+    {
+      "date": "2026-11-10",
+      "sport": "road-cycling",
+      "medals": 2
+    },
+    {
+      "date": "2026-11-10",
+      "sport": "sailing",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-10",
+      "sport": "taekwondo",
+      "medals": 3
+    },
+    {
+      "date": "2026-11-11",
+      "sport": "artistic-gymnastics",
+      "medals": 1
+    },
+    {
+      "date": "2026-11-11",
+      "sport": "beach-handball",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-11",
+      "sport": "boxing",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-11",
+      "sport": "fencing",
+      "medals": 1
+    },
+    {
+      "date": "2026-11-11",
+      "sport": "futsal",
+      "medals": 1
+    },
+    {
+      "date": "2026-11-11",
+      "sport": "sailing",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-11",
+      "sport": "taekwondo",
+      "medals": 3
+    },
+    {
+      "date": "2026-11-12",
+      "sport": "beach-handball",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-12",
+      "sport": "boxing",
+      "medals": 10
+    },
+    {
+      "date": "2026-11-12",
+      "sport": "breaking",
+      "medals": 0
+    },
+    {
+      "date": "2026-11-12",
+      "sport": "fencing",
+      "medals": 1
+    },
+    {
+      "date": "2026-11-12",
+      "sport": "futsal",
+      "medals": 1
+    },
+    {
+      "date": "2026-11-12",
+      "sport": "sailing",
+      "medals": 2
+    },
+    {
+      "date": "2026-11-12",
+      "sport": "taekwondo",
+      "medals": 1
+    },
+    {
+      "date": "2026-11-13",
+      "sport": "beach-handball",
+      "medals": 2
+    },
+    {
+      "date": "2026-11-13",
+      "sport": "breaking",
+      "medals": 2
+    },
+    {
+      "date": "2026-11-13",
+      "sport": "fencing",
+      "medals": 1
+    }
+  ],
+  "medalsPage": null,
+  "sources": [
+    {
+      "url": "https://en.wikipedia.org/?curid=64557687",
+      "checked": "2026-10-30"
+    }
+  ]
+}

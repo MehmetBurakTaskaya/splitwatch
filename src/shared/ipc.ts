@@ -1,4 +1,6 @@
 // Channel names and payloads shared by the main process, the preload script and the renderer.
+import type { GamesEvent } from './events';
+import type { MedalRow } from './medals';
 import type { FollowedChannel } from './notify';
 import type { Preset } from './presets';
 import type { QuotaBucket, QuotaLimits } from './quota';
@@ -33,6 +35,8 @@ export const IPC = {
   youtubeStreamSports: 'youtube:stream-sports',
   youtubeStreamChannels: 'youtube:stream-channels',
   notifyTest: 'notify:test',
+  eventsList: 'events:list',
+  eventMedals: 'events:medals',
   presetsList: 'presets:list',
   historyList: 'history:list',
   historyRemember: 'history:remember',
@@ -42,6 +46,15 @@ export interface AppInfo {
   version: string;
   platform: string;
   systemLocale: string;
+  // The system's region (ISO 3166-1 alpha-2), or an empty string.
+  country: string;
+}
+
+export interface MedalTable {
+  rows: MedalRow[];
+  // The Wikipedia page, for the attribution link.
+  url: string;
+  fetchedAt: string;
 }
 
 // Asks from the tray and the notifications, which the page carries out.
@@ -142,6 +155,9 @@ export interface SplitwatchApi {
   getStreamChannels(videoIds: string[]): Promise<Record<string, FollowedChannel | null>>;
   // Shows a notification; false when the system did not show it.
   testNotification(): Promise<boolean>;
+  getEvents(): Promise<GamesEvent[]>;
+  // null when the event has no medal table page yet, or it could not be read.
+  getMedalTable(eventId: string): Promise<MedalTable | null>;
   getPresets(): Promise<Preset[]>;
   getHistory(): Promise<StreamItem[]>;
   rememberStream(videoId: string): void;

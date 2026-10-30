@@ -49,7 +49,7 @@ function saveTold(told: Record<string, number>): void {
   }
 }
 
-function show(title: string, body: string, onClick: () => void): Promise<boolean> {
+export function showNotification(title: string, body: string, onClick: () => void): Promise<boolean> {
   if (!Notification.isSupported()) return Promise.resolve(false);
   return new Promise((resolve) => {
     const n = new Notification({ title, body });
@@ -91,7 +91,7 @@ async function check(): Promise<void> {
     const facts = known.get(id);
     const sport = entry ? sportOf.get(entry.channelId) : null;
     const channel = facts?.channel || entry?.channel || '';
-    void show(t('notify.title', { channel }), facts?.title || entry?.title || '', () =>
+    void showNotification(t('notify.title', { channel }), facts?.title || entry?.title || '', () =>
       sendCommand({ type: 'add', videoId: id, ...(sport ? { sport } : {}) }),
     );
   }
@@ -119,5 +119,5 @@ export function setupNotifications(): void {
     if (s.notify.on !== before.notify.on) sync();
   });
   // Shown when notifications are turned on, so the user sees whether the system lets them through.
-  ipcMain.handle(IPC.notifyTest, () => show(t('notify.testTitle'), t('notify.testBody'), () => undefined));
+  ipcMain.handle(IPC.notifyTest, () => showNotification(t('notify.testTitle'), t('notify.testBody'), () => undefined));
 }

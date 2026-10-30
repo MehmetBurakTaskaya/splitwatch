@@ -1,0 +1,18 @@
+{
+  "id": "winter-2030",
+  "kind": "winter",
+  "youth": false,
+  "year": 2030,
+  "place": "French Alps",
+  "timezone": "Europe/Paris",
+  "start": "2030-02-01",
+  "end": "2030-02-17",
+  "calendar": [],
+  "medalsPage": null,
+  "sources": [
+    {
+      "url": "https://en.wikipedia.org/?curid=57658858",
+      "checked": "2026-10-31"
+    }
+  ]
+}

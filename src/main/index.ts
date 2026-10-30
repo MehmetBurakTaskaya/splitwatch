@@ -2,10 +2,13 @@ import path from 'node:path';
 import { BrowserWindow, Menu, app, ipcMain, session } from 'electron';
 import { APP_ID } from '../shared/app';
 import { type AppInfo, IPC } from '../shared/ipc';
+import { getEvents, refreshEvents } from './events-store';
 import { initI18n } from './i18n';
 import { registerLoginIpc, startedHidden } from './login';
 import { registerMainWindowIpc, setPageLocale, showMainWindow } from './main-window';
+import { medalTable } from './medals';
 import { setupNotifications } from './notify';
+import { setupReminders } from './reminders';
 import { registerAppScheme, serveApp } from './protocol';
 import { hardenSession, hardenWebContents } from './security';
 import { flushSettings, getSettings } from './settings-store';
@@ -49,7 +52,11 @@ if (!app.requestSingleInstanceLock()) {
       version: app.getVersion(),
       platform: process.platform,
       systemLocale: app.getLocale(),
+      country: app.getLocaleCountryCode(),
     }));
+    ipcMain.handle(IPC.eventsList, () => getEvents());
+    ipcMain.handle(IPC.eventMedals, (_e, id: unknown) => medalTable(id));
+    void refreshEvents();
     if (smokeTest) {
       const timer = setTimeout(() => app.exit(1), 30_000);
       ipcMain.once(IPC.rendererReady, () => {
@@ -66,6 +73,7 @@ if (!app.requestSingleInstanceLock()) {
     setupUpdates();
     setupTray();
     setupNotifications();
+    setupReminders();
     if (!startedHidden()) showMainWindow();
   });
 

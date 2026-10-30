@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/MehmetBurakTaskaya/splitwatch/blob/main/events/schema.json",
+  "title": "Splitwatch event",
+  "description": "One edition of the Summer or Winter Games: its dates in the host's calendar, a day-by-day calendar of sports and medal events, and where its medal table is. Every fact comes from a listed source. No marks, names or emblems of the organizers.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "kind", "youth", "year", "place", "timezone", "start", "end", "calendar", "medalsPage", "sources"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "id": {
+      "description": "The file name without .json, such as summer-2028.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{1,40}$"
+    },
+    "kind": { "enum": ["summer", "winter"] },
+    "youth": { "description": "The Youth Games.", "type": "boolean" },
+    "year": { "type": "integer" },
+    "place": { "description": "The host city or region, in English.", "type": "string", "maxLength": 80 },
+    "timezone": { "description": "The host's IANA time zone, such as America/Los_Angeles.", "type": "string" },
+    "start": {
+      "description": "The opening ceremony day (YYYY-MM-DD, host's calendar).",
+      "type": "string",
+      "format": "date"
+    },
+    "end": { "description": "The closing ceremony day.", "type": "string", "format": "date" },
+    "calendar": {
+      "description": "One entry per sport and day with competition; filled by scripts/event-calendar.mjs.",
+      "type": "array",
+      "maxItems": 2000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["date", "sport", "medals"],
+        "properties": {
+          "date": { "type": "string", "format": "date" },
+          "sport": {
+            "description": "A sport as in presets/ where there is one, else a slug with a name in en.json (sports).",
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]{1,40}$"
+          },
+          "medals": {
+            "description": "Medal events (finals) that day; 0 for other competition.",
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 99
+          }
+        }
+      }
+    },
+    "medalsPage": {
+      "description": "The English Wikipedia page ID of the medal table, once the page exists; null before.",
+      "type": ["integer", "null"],
+      "minimum": 1
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["url", "checked"],
+        "properties": {
+          "url": { "type": "string", "pattern": "^https://" },
+          "checked": {
+            "description": "The day the facts were checked against this source.",
+            "type": "string",
+            "format": "date"
+          }
+        }
+      }
+    }
+  }
+}

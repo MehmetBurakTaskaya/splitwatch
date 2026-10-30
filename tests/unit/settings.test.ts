@@ -32,6 +32,22 @@ describe('sanitizeSettings', () => {
       miniBounds: { x: -1200, y: 40, width: 490, height: 316 },
       background: true,
       startHidden: true,
+      event: {
+        active: 'summer-2028',
+        dismissed: ['winter-2030'],
+        introSeen: ['summer-2028'],
+        country: 'SN',
+        snow: 3,
+        reminders: [
+          {
+            videoId: 'M7lc1UVf-VE',
+            title: 'Final',
+            channel: 'A federation',
+            at: '2028-07-20T18:00:00.000Z',
+            sport: 'swimming',
+          },
+        ],
+      },
       notify: {
         on: true,
         sports: ['swimming'],

@@ -32,6 +32,13 @@ const values = {
   layout: 'Two side by side',
   platform: 'win32',
   channel: 'Fake federation',
+  year: '2028',
+  days: 12,
+  day: 3,
+  total: 17,
+  place: 'Los Angeles',
+  dates: '14 to 30 July 2028',
+  country: 'Senegal',
 };
 
 describe('English messages', () => {
