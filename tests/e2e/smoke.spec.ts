@@ -70,8 +70,25 @@ test('adds streams, grows the layout, and handles shortcuts', async () => {
   await page.locator('.brand').click();
   await page.keyboard.press('2');
   await expect(page.locator(`[data-stream="${VIDEO_B}"]`)).toHaveClass(/is-audible/);
+
+  // Moving a stream must not reload any player: count iframe loads across the move.
+  await page.waitForSelector(`[data-stream="${VIDEO_B}"] iframe`);
+  await page.evaluate(() => {
+    const w = window as unknown as { frameLoads: number };
+    w.frameLoads = 0;
+    document.querySelectorAll('iframe').forEach((f) => f.addEventListener('load', () => w.frameLoads++));
+  });
   await page.keyboard.press('Alt+ArrowLeft');
   await expect(page.locator(`[data-stream="${VIDEO_B}"]`)).toHaveAttribute('data-slot', '0');
+  await page.waitForTimeout(1500);
+  expect(await page.evaluate(() => (window as unknown as { frameLoads: number }).frameLoads)).toBe(0);
+
+  // F enlarges the picked stream, Escape goes back to the grid.
+  await page.keyboard.press('f');
+  await expect(page.locator('.grid')).toHaveClass(/maximized/);
+  await expect(page.locator(`[data-stream="${VIDEO_A}"]`)).toBeHidden();
+  await page.keyboard.press('Escape');
+  await expect(page.locator('.grid')).not.toHaveClass(/maximized/);
   await page.keyboard.press('l');
   await expect(page.locator('.grid')).toHaveAttribute('data-layout', '3');
   await page.keyboard.press('m');
