@@ -79,6 +79,18 @@ export const IconSettings = () => (
     <circle cx="10" cy="10" r="2.5" />
   </Icon>
 );
+// The sun shows on dark windows (it switches to light), the moon on light ones.
+export const IconSun = () => (
+  <Icon>
+    <circle cx="10" cy="10" r="3" />
+    <path d="M10 2.5v1.5M10 16v1.5M2.5 10H4M16 10h1.5M4.7 4.7l1.06 1.06M14.24 14.24l1.06 1.06M4.7 15.3l1.06-1.06M14.24 5.76l1.06-1.06" />
+  </Icon>
+);
+export const IconMoon = () => (
+  <Icon>
+    <path d="M15.8 12.6A6.5 6.5 0 0 1 7.4 4.2a6.5 6.5 0 1 0 8.4 8.4z" />
+  </Icon>
+);
 export const IconSearch = () => (
   <Icon>
     <circle cx="8.5" cy="8.5" r="5" />

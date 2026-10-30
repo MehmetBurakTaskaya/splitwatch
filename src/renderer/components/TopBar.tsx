@@ -4,9 +4,21 @@ import { LAYOUTS } from '../../shared/layouts';
 import { parseVideoId } from '../../shared/youtube';
 import { playAll } from '../player/players';
 import { openDialog } from '../state/app';
+import { setPrefs } from '../state/prefs';
 import { type AddResult, useSession } from '../state/session';
+import { useTheme } from '../theme/engine';
 import { ADD_INPUT_ID } from './Grid';
-import { IconKeyboard, IconMuted, IconPlay, IconSearch, IconSettings, IconSound, LayoutGlyph } from './icons';
+import {
+  IconKeyboard,
+  IconMoon,
+  IconMuted,
+  IconPlay,
+  IconSearch,
+  IconSettings,
+  IconSound,
+  IconSun,
+  LayoutGlyph,
+} from './icons';
 import { LaneMark } from './LaneMark';
 
 export function TopBar() {
@@ -18,6 +30,8 @@ export function TopBar() {
   const muted = useSession((s) => s.muted);
   const masterVolume = useSession((s) => s.masterVolume);
   const waiting = useSession((s) => s.waiting.length);
+  const dark = useTheme((s) => s.scheme === 'dark');
+  const schemeLabel = dark ? t('scheme.toLight') : t('scheme.toDark');
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
@@ -70,11 +84,12 @@ export function TopBar() {
         <button
           type="button"
           className="button play-all"
+          aria-label={t('playAll.button')}
           title={t('playAll.title', { count: waiting })}
           onClick={playAll}
         >
           <IconPlay />
-          {t('playAll.button')}
+          <span className="play-all-label">{t('playAll.button')}</span>
         </button>
       )}
 
@@ -126,6 +141,15 @@ export function TopBar() {
         />
       </div>
 
+      <button
+        type="button"
+        className="icon-button optional"
+        aria-label={schemeLabel}
+        title={schemeLabel}
+        onClick={() => setPrefs({ colorScheme: dark ? 'light' : 'dark' })}
+      >
+        {dark ? <IconSun /> : <IconMoon />}
+      </button>
       <button
         type="button"
         className="icon-button"

@@ -132,6 +132,11 @@ test('restores the last session after a restart', async () => {
   expect(await src(VIDEO_B)).toContain('autoplay=0');
   const playAll = page.getByRole('button', { name: en.playAll.button });
   await expect(playAll).toBeVisible();
+
+  // The top bar stays on one line at the smallest window width.
+  await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0]!.setSize(720, 600));
+  await expect.poll(() => page.locator('.topbar').evaluate((el) => el.scrollWidth <= el.clientWidth)).toBe(true);
+  await expect(page.locator('.topbar').getByRole('button', { name: en.settings.open })).toBeInViewport();
   await playAll.click();
   await expect(playAll).toBeHidden();
   await app.close();

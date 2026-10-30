@@ -228,6 +228,16 @@ kbd {
 .play-all {
   flex: none;
 }
+/* Narrow windows keep the top bar on one line: the name, the main volume slider (each stream has
+   its own) and the light or dark button (also in Settings) step aside, and Play all keeps its icon. */
+@media (max-width: 899px) {
+  .topbar .optional,
+  .brand-name,
+  .master input,
+  .play-all-label {
+    display: none;
+  }
+}
 
 .layouts,
 .master {

@@ -43,6 +43,10 @@
     "mute": "Mute all",
     "unmute": "Unmute"
   },
+  "scheme": {
+    "toLight": "Switch to light",
+    "toDark": "Switch to dark"
+  },
   "tile": {
     "label": "Stream {index}: {title}",
     "loading": "Loading…",
