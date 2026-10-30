@@ -1,4 +1,5 @@
 import { type LayoutId, MAX_STREAMS, isLayoutId, layoutFor, layoutById } from './layouts';
+import { DEFAULT_LIMITS, type QuotaLimits, sanitizeLimits } from './quota';
 import { SHORTCUT_ACTIONS, type ShortcutAction, isReservedKey } from './shortcuts';
 import { isVideoId } from './youtube';
 
@@ -19,6 +20,9 @@ export interface Settings {
   audioFocus: 'click' | 'hover';
   clipboardSuggestions: boolean;
   shortcuts: Partial<Record<ShortcutAction, string>>;
+  // Sports whose presets feed "Live now"; empty means all.
+  sports: string[];
+  quotaLimits: QuotaLimits;
   session: Session;
 }
 
@@ -27,6 +31,8 @@ export const DEFAULT_SETTINGS: Settings = {
   audioFocus: 'click',
   clipboardSuggestions: true,
   shortcuts: {},
+  sports: [],
+  quotaLimits: DEFAULT_LIMITS,
   session: { layout: '1', streams: [], selected: null, muted: false, masterVolume: 1, volumes: {} },
 };
 
@@ -59,7 +65,7 @@ export function sanitizeSession(raw: unknown): Session {
 
 export function sanitizeSettings(raw: unknown): Settings {
   const d = DEFAULT_SETTINGS;
-  if (!isRecord(raw)) return { ...d, shortcuts: {}, session: sanitizeSession(null) };
+  if (!isRecord(raw)) return { ...d, shortcuts: {}, sports: [], session: sanitizeSession(null) };
   const shortcuts: Partial<Record<ShortcutAction, string>> = {};
   const used = new Set<string>();
   if (isRecord(raw.shortcuts)) {
@@ -76,6 +82,10 @@ export function sanitizeSettings(raw: unknown): Settings {
     audioFocus: raw.audioFocus === 'hover' ? 'hover' : 'click',
     clipboardSuggestions: raw.clipboardSuggestions !== false,
     shortcuts,
+    sports: Array.isArray(raw.sports)
+      ? [...new Set(raw.sports.filter((v): v is string => typeof v === 'string' && /^[a-z][a-z0-9-]{1,40}$/.test(v)))]
+      : [],
+    quotaLimits: sanitizeLimits(raw.quotaLimits),
     session: sanitizeSession(raw.session),
   };
 }

@@ -14,6 +14,8 @@ describe('sanitizeSettings', () => {
       audioFocus: 'hover',
       clipboardSuggestions: false,
       shortcuts: { toggleMute: 'K' },
+      sports: ['volleyball', 'triathlon'],
+      quotaLimits: { units: 20000, searches: 50 },
       session: {
         layout: 'featured',
         streams: ['M7lc1UVf-VE', 'aqz-KE-bpKQ'],
