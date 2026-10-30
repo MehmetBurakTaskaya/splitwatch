@@ -5,6 +5,10 @@ and versions follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-30
+
+Splitwatch now plays streams: a grid of YouTube streams added by link.
+
 ### Added
 
 - The stream grid: 1, 2, 3, 4, 6 or 9 streams, or one large stream with a side strip. The grid grows
@@ -42,6 +46,7 @@ The first version: the app's foundation and its release pipeline, without stream
 - Security baseline: sandboxed, isolated renderer without Node.js, strict Content Security Policy,
   hardened Electron fuses.
 
-[Unreleased]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/MehmetBurakTaskaya/splitwatch/releases/tag/v0.1.0
