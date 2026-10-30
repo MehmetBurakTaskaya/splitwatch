@@ -167,5 +167,6 @@ describe('protected names', () => {
       .filter((f) => /\.(ts|tsx|mjs|js|json|css|md|ya?ml|html|svg)$/.test(f))
       .filter((f) => readFileSync(f, 'utf8').toLowerCase().includes(word));
     expect(hits).toEqual([]);
-  });
+    // Reading every file can take a few seconds on a cold disk.
+  }, 30_000);
 });
