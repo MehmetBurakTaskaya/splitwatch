@@ -22,6 +22,7 @@ const api: SplitwatchApi = {
   setMinContentSize: (size) => ipcRenderer.send(IPC.windowMinSize, size),
   setFullscreen: (on) => ipcRenderer.send(IPC.windowFullscreen, on),
   onFullscreenChange: (listener) => subscribe<boolean>(IPC.fullscreenChanged, listener),
+  onShownChange: (listener) => subscribe<boolean>(IPC.shownChanged, listener),
   getYouTubeStatus: () => ipcRenderer.invoke(IPC.youtubeStatus),
   onYouTubeStatus: (listener) => subscribe<YouTubeStatus>(IPC.youtubeStatusChanged, listener),
   setApiKey: (key) => ipcRenderer.invoke(IPC.youtubeSetKey, key),

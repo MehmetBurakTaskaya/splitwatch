@@ -11,6 +11,10 @@
     "duplicate": "This stream is already in the grid.",
     "full": "The grid is full: nine streams at most."
   },
+  "playAll": {
+    "button": "Play all",
+    "title": "{count, plural, one {Start the stream that is waiting} other {Start the # streams that are waiting}}"
+  },
   "empty": {
     "title": "Add your first stream",
     "body": "Paste a YouTube link or video ID in the box at the top. Each stream gets its own lane, and the one you pick is the one you hear.",

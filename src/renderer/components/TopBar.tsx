@@ -2,10 +2,11 @@ import { type FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LAYOUTS } from '../../shared/layouts';
 import { parseVideoId } from '../../shared/youtube';
+import { playAll } from '../player/players';
 import { openDialog } from '../state/app';
 import { type AddResult, useSession } from '../state/session';
 import { ADD_INPUT_ID } from './Grid';
-import { IconKeyboard, IconMuted, IconSearch, IconSettings, IconSound, LayoutGlyph } from './icons';
+import { IconKeyboard, IconMuted, IconPlay, IconSearch, IconSettings, IconSound, LayoutGlyph } from './icons';
 import { LaneMark } from './LaneMark';
 
 export function TopBar() {
@@ -16,6 +17,7 @@ export function TopBar() {
   const layout = useSession((s) => s.layout);
   const muted = useSession((s) => s.muted);
   const masterVolume = useSession((s) => s.masterVolume);
+  const waiting = useSession((s) => s.waiting.length);
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
@@ -63,6 +65,18 @@ export function TopBar() {
           </span>
         )}
       </form>
+
+      {waiting > 0 && (
+        <button
+          type="button"
+          className="button play-all"
+          title={t('playAll.title', { count: waiting })}
+          onClick={playAll}
+        >
+          <IconPlay />
+          {t('playAll.button')}
+        </button>
+      )}
 
       <button
         type="button"

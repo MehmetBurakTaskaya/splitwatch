@@ -6,7 +6,7 @@ import { registerAppScheme, serveApp } from './protocol';
 import { hardenSession, hardenWebContents } from './security';
 import { flushSettings } from './settings-store';
 import { setupUpdates } from './updates';
-import { applyColorScheme, forwardFullscreenChanges, registerAppIpc } from './window-ipc';
+import { applyColorScheme, forwardWindowChanges, registerAppIpc } from './window-ipc';
 import { registerYouTubeIpc } from './youtube-ipc';
 
 const argValue = (name: string) => process.argv.find((a) => a.startsWith(`--${name}=`))?.slice(name.length + 3);
@@ -44,7 +44,7 @@ function createMainWindow(): void {
       autoplayPolicy: 'no-user-gesture-required',
     },
   });
-  forwardFullscreenChanges(mainWindow);
+  forwardWindowChanges(mainWindow);
   mainWindow.once('ready-to-show', () => mainWindow?.show());
   mainWindow.on('closed', () => (mainWindow = null));
   const query = locale ? `?locale=${encodeURIComponent(locale)}` : '';

@@ -124,6 +124,44 @@ test('restores the last session after a restart', async () => {
   ({ app, page } = await launch(userData));
   await expect(page.locator('[data-stream]')).toHaveCount(2);
   await expect(page.locator('.grid')).toHaveAttribute('data-layout', '3');
+
+  // YouTube allows one player to start by itself: the selected stream does, the other waits.
+  const src = (id: string) => page.locator(`[data-stream="${id}"] iframe`).getAttribute('src');
+  await expect(page.locator(`[data-stream="${VIDEO_B}"] iframe`)).toBeAttached({ timeout: 45_000 });
+  expect(await src(VIDEO_A)).toContain('autoplay=1');
+  expect(await src(VIDEO_B)).toContain('autoplay=0');
+  const playAll = page.getByRole('button', { name: en.playAll.button });
+  await expect(playAll).toBeVisible();
+  await playAll.click();
+  await expect(playAll).toBeHidden();
+  await app.close();
+});
+
+// Needs real playback, which YouTube's bot check often withholds from CI runners.
+test('pauses the streams that leave the screen and resumes them', async () => {
+  test.skip(!!process.env.CI, 'needs YouTube playback');
+  const { app, page } = await launch(freshUserData());
+  await addStream(page, VIDEO_A);
+  await addStream(page, VIDEO_B);
+  const tileA = page.locator(`[data-stream="${VIDEO_A}"]`);
+  const tileB = page.locator(`[data-stream="${VIDEO_B}"]`);
+  const running = /^(playing|buffering)$/;
+  for (const tile of [tileA, tileB]) await expect(tile).toHaveAttribute('data-state', 'playing', { timeout: 45_000 });
+
+  // The enlarged view hides stream B.
+  await page.locator('.brand').click();
+  await page.keyboard.press('1');
+  await page.keyboard.press('f');
+  await expect(tileB).not.toHaveAttribute('data-state', running);
+  await expect(tileA).toHaveAttribute('data-state', running);
+  await page.keyboard.press('Escape');
+  await expect(tileB).toHaveAttribute('data-state', running);
+
+  // A minimized window shows nothing.
+  await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0]!.minimize());
+  for (const tile of [tileA, tileB]) await expect(tile).not.toHaveAttribute('data-state', running);
+  await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0]!.restore());
+  for (const tile of [tileA, tileB]) await expect(tile).toHaveAttribute('data-state', running);
   await app.close();
 });
 

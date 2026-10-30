@@ -75,7 +75,9 @@ export function Tile({
 
   // One YouTube player per tile, created once and kept while the tile lives.
   useEffect(() => {
-    const { setStatus, setInfo, info: known } = useSession.getState();
+    const { setStatus, setInfo, info: known, waiting } = useSession.getState();
+    // A restored stream waits for the user unless it is the one allowed to start by itself.
+    const autoplay = waiting.includes(videoId) ? 0 : 1;
     let player: YT.Player | null = null;
     let cancelled = false;
     setStatus(videoId, { state: 'loading' });
@@ -89,13 +91,22 @@ export function Tile({
           videoId,
           width: '100%',
           height: '100%',
-          playerVars: { autoplay: 1, mute: 1, playsinline: 1, rel: 0, fs: 0, disablekb: 1, iv_load_policy: 3 },
+          playerVars: { autoplay, mute: 1, playsinline: 1, rel: 0, fs: 0, disablekb: 1, iv_load_policy: 3 },
           events: {
             onReady: (e) => {
               registerPlayer(videoId, e.target);
               useSession.getState().setStatus(videoId, { state: STATES[e.target.getPlayerState()] ?? 'unstarted' });
+              // Play all was pressed before this player was ready.
+              if (!autoplay && !useSession.getState().waiting.includes(videoId)) e.target.playVideo();
             },
-            onStateChange: (e) => useSession.getState().setStatus(videoId, { state: STATES[e.data] ?? 'unstarted' }),
+            onStateChange: (e) => {
+              const state = STATES[e.data] ?? 'unstarted';
+              const session = useSession.getState();
+              session.setStatus(videoId, { state });
+              if (state === 'playing' && session.waiting.includes(videoId)) {
+                useSession.setState({ waiting: session.waiting.filter((id) => id !== videoId) });
+              }
+            },
             onError: (e) => {
               useSession.getState().setStatus(videoId, { state: 'error', error: Number(e.data) });
               unregisterPlayer(videoId);

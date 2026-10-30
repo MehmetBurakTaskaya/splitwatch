@@ -46,9 +46,16 @@ export function registerAppIpc(): void {
   ipcMain.on(IPC.windowFullscreen, (e, on: unknown) => windowOf(e)?.setFullScreen(on === true));
 }
 
-export function forwardFullscreenChanges(win: BrowserWindow): void {
+export function forwardWindowChanges(win: BrowserWindow): void {
   win.on('enter-full-screen', () => win.webContents.send(IPC.fullscreenChanged, true));
   win.on('leave-full-screen', () => win.webContents.send(IPC.fullscreenChanged, false));
+  // The page pauses its players while the window is off screen (YouTube allows no playback from
+  // a player the user cannot see).
+  const shown = (on: boolean) => () => win.webContents.send(IPC.shownChanged, on);
+  win.on('minimize', shown(false));
+  win.on('hide', shown(false));
+  win.on('restore', shown(true));
+  win.on('show', shown(true));
 }
 
 function isSize(v: unknown): v is { width: number; height: number } {

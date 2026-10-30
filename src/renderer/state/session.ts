@@ -14,6 +14,9 @@ export type AddResult = 'added' | 'duplicate' | 'full';
 
 interface SessionState extends Session {
   maximized: string | null;
+  // Streams restored from the last session that have not played yet. YouTube lets one player on a
+  // screen start by itself, so the others wait for the user: Play all, or their own play button.
+  waiting: string[];
   info: Record<string, VideoInfo | null>;
   status: Record<string, PlayerStatus>;
   // sport: the stream's sport when it is known at adding time (from Live now or a sport search).
@@ -46,6 +49,7 @@ function without<T>(record: Record<string, T>, key: string): Record<string, T> {
 export const useSession = create<SessionState>((set, get) => ({
   ...DEFAULT_SETTINGS.session,
   maximized: null,
+  waiting: [],
   info: {},
   status: {},
 
@@ -58,18 +62,21 @@ export const useSession = create<SessionState>((set, get) => ({
       streams: next,
       layout: layoutById(layout).capacity < next.length ? layoutFor(next.length) : layout,
       selected: selected ?? videoId,
+      // The new stream starts playing, so it has to be on screen.
+      maximized: null,
       ...(sport ? { sports: { ...sports, [videoId]: sport } } : {}),
     });
     return 'added';
   },
 
   remove(videoId) {
-    const { streams, selected, maximized, volumes, status, sports } = get();
+    const { streams, selected, maximized, volumes, status, sports, waiting } = get();
     const index = streams.indexOf(videoId);
     if (index < 0) return;
     const next = streams.filter((id) => id !== videoId);
     set({
       streams: next,
+      waiting: waiting.filter((id) => id !== videoId),
       selected: selected === videoId ? (next[Math.min(index, next.length - 1)] ?? null) : selected,
       maximized: maximized === videoId ? null : maximized,
       volumes: without(volumes, videoId),

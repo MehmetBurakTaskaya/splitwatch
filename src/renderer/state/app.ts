@@ -7,6 +7,8 @@ interface AppState {
   info: AppInfo | null;
   update: UpdateState;
   fullscreen: boolean;
+  // false while the window is minimized or hidden.
+  shown: boolean;
   dialog: DialogName;
   // The stream the sport dialog is about.
   dialogStream: string | null;
@@ -16,6 +18,7 @@ export const useAppStore = create<AppState>(() => ({
   info: null,
   update: { status: 'idle' },
   fullscreen: false,
+  shown: true,
   dialog: null,
   dialogStream: null,
 }));
@@ -29,4 +32,5 @@ export function connectHost(): void {
   void window.splitwatch.getUpdateState().then((update) => useAppStore.setState({ update }));
   window.splitwatch.onUpdateState((update) => useAppStore.setState({ update }));
   window.splitwatch.onFullscreenChange((fullscreen) => useAppStore.setState({ fullscreen }));
+  window.splitwatch.onShownChange((shown) => useAppStore.setState({ shown }));
 }

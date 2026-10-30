@@ -89,12 +89,18 @@ export function useIframeFocus(): void {
     return () => window.removeEventListener('blur', onBlur);
   }, []);
 
-  // Leaving fullscreen from the system (macOS green button, a gesture) also leaves the large view.
-  useEffect(
-    () =>
-      useAppStore.subscribe((s, prev) => {
-        if (prev.fullscreen && !s.fullscreen) useSession.getState().setMaximized(null);
-      }),
-    [],
-  );
+  // Leaving fullscreen from the system (macOS green button, a gesture) also leaves the large view,
+  // and leaving the large view another way (adding a stream) also leaves fullscreen.
+  useEffect(() => {
+    const offApp = useAppStore.subscribe((s, prev) => {
+      if (prev.fullscreen && !s.fullscreen) useSession.getState().setMaximized(null);
+    });
+    const offSession = useSession.subscribe((s, prev) => {
+      if (prev.maximized && !s.maximized && useAppStore.getState().fullscreen) window.splitwatch.setFullscreen(false);
+    });
+    return () => {
+      offApp();
+      offSession();
+    };
+  }, []);
 }
