@@ -55,6 +55,11 @@ describe('the shipped themes', () => {
     expect(themes.find((t) => t.id === NEUTRAL_THEME)?.sports).toEqual([]);
   });
 
+  it('leave no preset sport without an icon', () => {
+    const icons = readFileSync('src/renderer/components/sport-icons.tsx', 'utf8');
+    for (const sport of presetSports) expect(icons, sport).toMatch(new RegExp(`^  '?${sport}'?: \\(`, 'm'));
+  });
+
   it('all have a name in the English messages', () => {
     const names = en.themes as Record<string, string>;
     for (const theme of themes) expect(names[theme.id], theme.id).toBeTruthy();
