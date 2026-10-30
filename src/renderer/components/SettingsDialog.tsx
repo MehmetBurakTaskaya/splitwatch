@@ -1,6 +1,7 @@
-import { type CSSProperties, type FormEvent, useMemo, useRef, useState } from 'react';
+import { type CSSProperties, type FormEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { ColorScheme } from '../../shared/settings';
+import type { LoginState } from '../../shared/ipc';
 import type { Palette } from '../../shared/themes';
 import { openDialog, useAppStore } from '../state/app';
 import { setPrefs, usePrefs } from '../state/prefs';
@@ -83,6 +84,7 @@ export function SettingsDialog() {
         </label>
       </section>
 
+      <StartupSection />
       <ApiKeySection form={keyForm} />
       <QuotaSection />
       <SportsSection />
@@ -218,6 +220,55 @@ function useKeyForm() {
   };
 
   return { key, setKey, busy, problem, save, input, focus: () => input.current?.focus() };
+}
+
+function StartupSection() {
+  const { t } = useTranslation();
+  const platform = useAppStore((s) => s.info?.platform) ?? '';
+  const background = usePrefs((s) => s.background);
+  const startHidden = usePrefs((s) => s.startHidden);
+  const [login, setLogin] = useState<LoginState | null>(null);
+
+  useEffect(() => {
+    void window.splitwatch.getLoginState().then(setLogin);
+  }, []);
+
+  return (
+    <section className="settings-section">
+      <h3>{t('settings.startup')}</h3>
+      <label className="field field-tight">
+        <input
+          type="checkbox"
+          checked={background}
+          onChange={(e) =>
+            setPrefs(e.target.checked ? { background: true } : { background: false, startHidden: false })
+          }
+        />
+        {t('settings.background', { platform })}
+      </label>
+      <p className="note field-note">{t('settings.backgroundNote')}</p>
+      <label className="field field-tight">
+        <input
+          type="checkbox"
+          checked={login?.openAtLogin ?? false}
+          disabled={!login?.supported}
+          onChange={(e) => void window.splitwatch.setOpenAtLogin(e.target.checked).then(setLogin)}
+        />
+        {t('settings.startAtLogin')}
+      </label>
+      {login && !login.supported && <p className="note field-note">{t('settings.startUnavailable')}</p>}
+      {login?.status === 'requires-approval' && <p className="note field-note">{t('settings.startApproval')}</p>}
+      <label className="field">
+        <input
+          type="checkbox"
+          checked={startHidden}
+          disabled={!background || !login?.openAtLogin}
+          onChange={(e) => setPrefs({ startHidden: e.target.checked })}
+        />
+        {t('settings.startHidden', { platform })}
+      </label>
+    </section>
+  );
 }
 
 function ApiKeySection({ form }: { form: KeyForm }) {

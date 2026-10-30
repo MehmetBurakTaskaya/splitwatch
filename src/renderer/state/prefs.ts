@@ -12,6 +12,8 @@ export type Prefs = Pick<
   | 'animate'
   | 'performance'
   | 'layouts'
+  | 'background'
+  | 'startHidden'
 >;
 
 export const usePrefs = create<Prefs>(() => ({
@@ -24,6 +26,8 @@ export const usePrefs = create<Prefs>(() => ({
   animate: DEFAULT_SETTINGS.animate,
   performance: DEFAULT_SETTINGS.performance,
   layouts: [],
+  background: DEFAULT_SETTINGS.background,
+  startHidden: DEFAULT_SETTINGS.startHidden,
 }));
 
 export function setPrefs(patch: Partial<Prefs>): void {

@@ -30,6 +30,7 @@ const values = {
   name: 'Saturday finals',
   max: 20,
   layout: 'Two side by side',
+  platform: 'win32',
 };
 
 describe('English messages', () => {

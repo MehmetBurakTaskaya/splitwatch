@@ -58,6 +58,10 @@ export interface Settings {
   performance: boolean;
   layouts: SavedLayout[];
   miniBounds: Bounds | null;
+  // Closing the window leaves the app in the tray (the menu bar on macOS).
+  background: boolean;
+  // When the system starts the app at sign-in, it stays in the tray (needs background).
+  startHidden: boolean;
   session: Session;
 }
 
@@ -74,6 +78,8 @@ export const DEFAULT_SETTINGS: Settings = {
   performance: false,
   layouts: [],
   miniBounds: null,
+  background: false,
+  startHidden: false,
   session: { layout: '1', streams: [], selected: null, muted: false, masterVolume: 1, volumes: {}, sports: {} },
 };
 
@@ -176,6 +182,8 @@ export function sanitizeSettings(raw: unknown): Settings {
     performance: raw.performance === true,
     layouts: sanitizeSavedLayouts(raw.layouts),
     miniBounds: sanitizeBounds(raw.miniBounds),
+    background: raw.background === true,
+    startHidden: raw.background === true && raw.startHidden === true,
     session: sanitizeSession(raw.session),
   };
 }

@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import { IPC, type SplitwatchApi, type UpdateState, type YouTubeStatus } from '../shared/ipc';
+import { type AppCommand, IPC, type SplitwatchApi, type UpdateState, type YouTubeStatus } from '../shared/ipc';
 
 function subscribe<T>(channel: string, listener: (value: T) => void): () => void {
   const handler = (_event: Electron.IpcRendererEvent, value: T) => listener(value);
@@ -25,6 +25,9 @@ const api: SplitwatchApi = {
   onShownChange: (listener) => subscribe<boolean>(IPC.shownChanged, listener),
   setMini: (on) => ipcRenderer.send(IPC.windowMini, on),
   onMiniChange: (listener) => subscribe<boolean>(IPC.miniChanged, listener),
+  onCommand: (listener) => subscribe<AppCommand>(IPC.command, listener),
+  getLoginState: () => ipcRenderer.invoke(IPC.loginGet),
+  setOpenAtLogin: (on) => ipcRenderer.invoke(IPC.loginSet, on),
   getYouTubeStatus: () => ipcRenderer.invoke(IPC.youtubeStatus),
   onYouTubeStatus: (listener) => subscribe<YouTubeStatus>(IPC.youtubeStatusChanged, listener),
   setApiKey: (key) => ipcRenderer.invoke(IPC.youtubeSetKey, key),

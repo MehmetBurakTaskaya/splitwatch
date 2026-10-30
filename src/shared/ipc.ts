@@ -19,6 +19,9 @@ export const IPC = {
   shownChanged: 'window:shown-changed',
   windowMini: 'window:mini',
   miniChanged: 'window:mini-changed',
+  command: 'app:command',
+  loginGet: 'login:get',
+  loginSet: 'login:set',
   youtubeStatus: 'youtube:status',
   youtubeStatusChanged: 'youtube:status-changed',
   youtubeSetKey: 'youtube:set-key',
@@ -36,6 +39,17 @@ export interface AppInfo {
   version: string;
   platform: string;
   systemLocale: string;
+}
+
+// Asks from the tray and the notifications, which the page carries out.
+export type AppCommand = { type: 'add'; videoId: string; sport?: string } | { type: 'toggleMute' } | { type: 'mini' };
+
+// Starting with the system works in the installed app on Windows and macOS. status is macOS's
+// answer (enabled, requires-approval, not-registered, not-found).
+export interface LoginState {
+  supported: boolean;
+  openAtLogin: boolean;
+  status?: string;
 }
 
 export interface VideoInfo {
@@ -109,6 +123,9 @@ export interface SplitwatchApi {
   // Mini mode: a small window on top of the others that shows the picked stream.
   setMini(on: boolean): void;
   onMiniChange(listener: (on: boolean) => void): () => void;
+  onCommand(listener: (command: AppCommand) => void): () => void;
+  getLoginState(): Promise<LoginState>;
+  setOpenAtLogin(on: boolean): Promise<LoginState>;
   getYouTubeStatus(): Promise<YouTubeStatus>;
   onYouTubeStatus(listener: (status: YouTubeStatus) => void): () => void;
   setApiKey(key: string): Promise<SetKeyResult>;

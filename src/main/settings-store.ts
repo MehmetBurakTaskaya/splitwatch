@@ -6,6 +6,7 @@ import { type Settings, sanitizeSettings } from '../shared/settings';
 // settings.json in the app data folder, written atomically and at most every 400 ms.
 let current: Settings | null = null;
 let timer: NodeJS.Timeout | null = null;
+const listeners = new Set<(settings: Settings, before: Settings) => void>();
 
 const file = () => path.join(app.getPath('userData'), 'settings.json');
 
@@ -26,7 +27,12 @@ export function saveSettings(patch: unknown): Settings {
   current = sanitizeSettings({ ...base, ...patch });
   if (timer) clearTimeout(timer);
   timer = setTimeout(flushSettings, 400);
+  for (const listener of listeners) listener(current, base);
   return current;
+}
+
+export function onSettingsChange(listener: (settings: Settings, before: Settings) => void): void {
+  listeners.add(listener);
 }
 
 export function flushSettings(): void {

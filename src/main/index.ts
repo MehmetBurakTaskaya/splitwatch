@@ -1,14 +1,16 @@
 import path from 'node:path';
-import { BrowserWindow, Menu, app, ipcMain, nativeTheme, session } from 'electron';
-import { APP_ID, APP_ORIGIN, PRODUCT_NAME } from '../shared/app';
+import { BrowserWindow, Menu, app, ipcMain, session } from 'electron';
+import { APP_ID } from '../shared/app';
 import { type AppInfo, IPC } from '../shared/ipc';
-import { WINDOW_MIN } from '../shared/layouts';
-import { forgetMini } from './mini';
+import { initI18n } from './i18n';
+import { registerLoginIpc, startedHidden } from './login';
+import { registerMainWindowIpc, setPageLocale, showMainWindow } from './main-window';
 import { registerAppScheme, serveApp } from './protocol';
 import { hardenSession, hardenWebContents } from './security';
-import { flushSettings } from './settings-store';
+import { flushSettings, getSettings } from './settings-store';
+import { setupTray } from './tray';
 import { setupUpdates } from './updates';
-import { applyColorScheme, forwardWindowChanges, registerAppIpc } from './window-ipc';
+import { applyColorScheme, registerAppIpc } from './window-ipc';
 import { registerYouTubeIpc } from './youtube-ipc';
 
 const argValue = (name: string) => process.argv.find((a) => a.startsWith(`--${name}=`))?.slice(name.length + 3);
@@ -23,39 +25,6 @@ registerAppScheme();
 app.setAppUserModelId(APP_ID);
 app.on('web-contents-created', (_event, contents) => hardenWebContents(contents));
 
-let mainWindow: BrowserWindow | null = null;
-
-function createMainWindow(): void {
-  mainWindow = new BrowserWindow({
-    width: 1280,
-    height: 800,
-    minWidth: WINDOW_MIN.width,
-    minHeight: WINDOW_MIN.height,
-    show: false,
-    title: PRODUCT_NAME,
-    backgroundColor: nativeTheme.shouldUseDarkColors ? '#101317' : '#f5f6f8',
-    autoHideMenuBar: true,
-    webPreferences: {
-      preload: path.join(__dirname, '../preload/index.cjs'),
-      contextIsolation: true,
-      sandbox: true,
-      nodeIntegration: false,
-      spellcheck: false,
-      // Electron's default, stated here because the grid relies on it: players start muted on
-      // their own, and the selected one is unmuted without waiting for a click inside it.
-      autoplayPolicy: 'no-user-gesture-required',
-    },
-  });
-  forwardWindowChanges(mainWindow);
-  mainWindow.once('ready-to-show', () => mainWindow?.show());
-  mainWindow.on('closed', () => {
-    mainWindow = null;
-    forgetMini();
-  });
-  const query = locale ? `?locale=${encodeURIComponent(locale)}` : '';
-  void mainWindow.loadURL(`${APP_ORIGIN}/index.html${query}`);
-}
-
 function setMenu(): void {
   // macOS needs an application menu for the standard shortcuts; Windows and Linux get none.
   if (process.platform !== 'darwin') return Menu.setApplicationMenu(null);
@@ -67,13 +36,12 @@ function setMenu(): void {
 if (!app.requestSingleInstanceLock()) {
   app.quit();
 } else {
-  app.on('second-instance', () => {
-    if (!mainWindow) return;
-    if (mainWindow.isMinimized()) mainWindow.restore();
-    mainWindow.focus();
-  });
+  // Starting Splitwatch again brings its window back, also from the tray.
+  app.on('second-instance', () => showMainWindow());
 
-  void app.whenReady().then(() => {
+  void app.whenReady().then(async () => {
+    await initI18n(locale);
+    setPageLocale(locale);
     hardenSession(session.defaultSession);
     serveApp(path.join(__dirname, '../renderer'));
     ipcMain.handle(IPC.appInfo, (): AppInfo => ({
@@ -89,18 +57,22 @@ if (!app.requestSingleInstanceLock()) {
       });
     }
     registerAppIpc();
+    registerMainWindowIpc();
+    registerLoginIpc();
     applyColorScheme();
     registerYouTubeIpc();
     setMenu();
     setupUpdates();
-    createMainWindow();
+    setupTray();
+    if (!startedHidden()) showMainWindow();
   });
 
   app.on('will-quit', flushSettings);
+  // With the tray on, closing the window leaves the app running there.
   app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') app.quit();
+    if (process.platform !== 'darwin' && !getSettings().background) app.quit();
   });
   app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) createMainWindow();
+    if (BrowserWindow.getAllWindows().length === 0) showMainWindow();
   });
 }

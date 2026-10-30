@@ -191,7 +191,14 @@
     "animate": "Animate the backgrounds",
     "animateNote": "Only while they show: on the start screen and in empty places of the grid.",
     "performance": "Performance mode",
-    "performanceNote": "Simpler, still backgrounds and no transitions, for slower computers."
+    "performanceNote": "Simpler, still backgrounds and no transitions, for slower computers.",
+    "startup": "In the background",
+    "background": "Keep Splitwatch in the {platform, select, darwin {menu bar} other {notification area}} when its window closes",
+    "backgroundNote": "The streams stop with the window. Splitwatch keeps an eye on what is live, and its icon opens the window again.",
+    "startAtLogin": "Start Splitwatch when I sign in",
+    "startHidden": "Start in the {platform, select, darwin {menu bar} other {notification area}}, without a window",
+    "startUnavailable": "Starting with the system works in the installed app.",
+    "startApproval": "macOS asks for your approval: System Settings, General, Login Items."
   },
   "update": {
     "available": "Version {version} is available.",
@@ -199,6 +206,16 @@
     "ready": "Version {version} is ready to install.",
     "restart": "Restart and update",
     "download": "Download"
+  },
+  "tray": {
+    "tooltip": "Splitwatch",
+    "open": "Open Splitwatch",
+    "mini": "Mini player",
+    "mute": "Mute all",
+    "liveNow": "Live now",
+    "liveNone": "Nothing is live on your channels right now",
+    "liveNeedsKey": "Add your YouTube API key in Settings to see what is live",
+    "quit": "Quit Splitwatch"
   },
   "search": {
     "open": "Find a stream",
