@@ -41,10 +41,30 @@ French, Brazilian Portuguese, Arabic, Korean, Italian, Russian and Turkish. The 
 marked "needs review"; native speakers reviewing them is one of the most useful contributions. The
 translation guide will be added here with them.
 
-## Sport presets and themes
+## Sport presets
 
-Presets (curated channels per sport) and themes arrive in later versions, as data files that can be
-changed without a new release. How to add one will be described here.
+A preset lists the official YouTube channels of one sport; "Live now" checks them for live and upcoming
+streams. Presets are JSON files in [`presets/`](presets), described by
+[`presets/schema.json`](presets/schema.json). The app downloads them from this repository once a day,
+so a merged change reaches everyone without a new release.
+
+Rules:
+
+- Only channels that belong to a sport's organizer, league or federation and that stream on YouTube.
+  No re-upload or fan channels, and no keyword-only presets (they surface unofficial streams).
+- Use the channel ID (`UC` followed by 22 characters), not the @handle. To find it, open the channel,
+  then **More about this channel → Share channel → Copy channel ID**.
+- Check that the ID is right and the channel is active, and put that day in `checked`.
+- If something is not certain (for example, who runs the channel), say so in `review`.
+- Add the file name to `presets/index.json`, and the sport's name to
+  `src/renderer/i18n/locales/en.json` under `sports`.
+
+`npm test` checks every preset against the rules. Wanted: verified official channels for climbing,
+archery, figure skating and more.
+
+## Themes
+
+Sport themes arrive in a later version, also as data files; how to add one will be described here.
 
 ## Code of conduct
 

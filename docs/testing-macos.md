@@ -27,5 +27,17 @@ needs a real Mac on a home or office network. This list grows with each phase.
 
 If a tile shows a message instead of a video, note the message and the error code.
 
+## Version 0.3 (about 10 more minutes)
+
+1. Remove every stream: the start screen shows "Latest from your sports" with videos and thumbnails.
+2. Press **Cmd + K**, type `final`: without a key, it asks for one.
+3. Open **Settings** (the gear), follow "How to get a free key", paste the key and click **Save key**.
+   macOS may ask whether Splitwatch may use the Keychain; allow it. Settings then says "The key works".
+4. The start screen now says "Live now" and shows live streams with a red **LIVE** badge (if any of the
+   preset channels is live). Add one: its tile shows **LIVE** under the player.
+5. **Cmd + K**, type a sport (for example `volleyball`), click "Search YouTube for live streams" and
+   add a result. Settings now shows "Searches: 1 of 100".
+6. Quit and reopen: the key still works, without asking again.
+
 Send back: your Mac model, macOS version, and what happened at each step (a screenshot helps:
 **Shift + Cmd + 3**).

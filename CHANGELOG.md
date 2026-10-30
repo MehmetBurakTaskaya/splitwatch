@@ -5,6 +5,20 @@ and versions follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- "Live now": live and upcoming streams from the official YouTube channels of 17 sports, ready to add
+  in one click. Without an API key it shows their newest videos instead.
+- Sport presets as data files in `presets/`, updated from GitHub once a day without a new release.
+- Search for live streams (Ctrl + K, or Cmd + K on macOS), with sport filters, suggestions from Live now
+  and recently added streams, and the cost shown before each search.
+- Your own YouTube Data API key, in Settings, with a step-by-step guide; it is tested before it is
+  saved and kept encrypted by the system.
+- A LIVE or Upcoming badge on streams in the grid.
+- Today's quota in Settings (searches and other requests, and when they reset); Splitwatch stops before
+  the limits and keeps the last tenth of the requests for what you do yourself.
+- Sports to show in Live now, in Settings.
+
 ## [0.2.0] - 2026-10-30
 
 Splitwatch now plays streams: a grid of YouTube streams added by link.
