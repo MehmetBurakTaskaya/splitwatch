@@ -1,7 +1,11 @@
+import { type FormEvent, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { openDialog, useAppStore } from '../state/app';
 import { setPrefs, usePrefs } from '../state/prefs';
+import { refreshLiveNow, useYouTube } from '../state/youtube';
 import { Dialog } from './Dialog';
+
+const CONSOLE_URL = 'https://console.cloud.google.com/apis/library/youtube.googleapis.com';
 
 export function SettingsDialog() {
   const { t } = useTranslation();
@@ -10,36 +14,44 @@ export function SettingsDialog() {
   const version = useAppStore((s) => s.info?.version);
 
   return (
-    <Dialog title={t('settings.title')} onClose={() => openDialog(null)}>
-      <fieldset className="field">
-        <legend>{t('settings.audioFocus')}</legend>
-        <label>
+    <Dialog title={t('settings.title')} onClose={() => openDialog(null)} wide>
+      <section className="settings-section">
+        <h3>{t('settings.sound')}</h3>
+        <fieldset className="field">
+          <legend>{t('settings.audioFocus')}</legend>
+          <label>
+            <input
+              type="radio"
+              name="audio-focus"
+              checked={audioFocus === 'click'}
+              onChange={() => setPrefs({ audioFocus: 'click' })}
+            />
+            {t('settings.audioFocusClick')}
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="audio-focus"
+              checked={audioFocus === 'hover'}
+              onChange={() => setPrefs({ audioFocus: 'hover' })}
+            />
+            {t('settings.audioFocusHover')}
+          </label>
+        </fieldset>
+        <label className="field">
           <input
-            type="radio"
-            name="audio-focus"
-            checked={audioFocus === 'click'}
-            onChange={() => setPrefs({ audioFocus: 'click' })}
+            type="checkbox"
+            checked={clipboard}
+            onChange={(e) => setPrefs({ clipboardSuggestions: e.target.checked })}
           />
-          {t('settings.audioFocusClick')}
+          {t('settings.clipboard')}
         </label>
-        <label>
-          <input
-            type="radio"
-            name="audio-focus"
-            checked={audioFocus === 'hover'}
-            onChange={() => setPrefs({ audioFocus: 'hover' })}
-          />
-          {t('settings.audioFocusHover')}
-        </label>
-      </fieldset>
-      <label className="field">
-        <input
-          type="checkbox"
-          checked={clipboard}
-          onChange={(e) => setPrefs({ clipboardSuggestions: e.target.checked })}
-        />
-        {t('settings.clipboard')}
-      </label>
+      </section>
+
+      <ApiKeySection />
+      <QuotaSection />
+      <SportsSection />
+
       {version && <p className="dialog-meta">{t('settings.version', { version })}</p>}
       <div className="dialog-actions">
         <button type="button" className="button" onClick={() => openDialog(null)}>
@@ -47,5 +59,138 @@ export function SettingsDialog() {
         </button>
       </div>
     </Dialog>
+  );
+}
+
+function ApiKeySection() {
+  const { t } = useTranslation();
+  const status = useYouTube((s) => s.status);
+  const [key, setKey] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [problem, setProblem] = useState<string | null>(null);
+  const state = status?.key ?? 'none';
+
+  const save = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!key.trim()) return setProblem(t('settings.keyFailed.no-key'));
+    setBusy(true);
+    setProblem(null);
+    try {
+      const result = await window.splitwatch.setApiKey(key);
+      if (result.ok) setKey('');
+      else setProblem(t(`settings.keyFailed.${result.reason}`));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <section className="settings-section">
+      <h3>{t('settings.youtube')}</h3>
+      <p className="note">{t('settings.keyIntro')}</p>
+      <p className={`key-state key-${state}`} role="status">
+        {t(`settings.keyState.${state}`)}
+      </p>
+      {state !== 'unavailable' && (
+        <form className="key-form" onSubmit={save}>
+          <input
+            type="password"
+            value={key}
+            onChange={(e) => setKey(e.target.value)}
+            aria-label={t('settings.keyLabel')}
+            placeholder={t('settings.keyLabel')}
+            autoComplete="off"
+            spellCheck={false}
+            dir="ltr"
+          />
+          <button type="submit" className="button" disabled={busy}>
+            {busy ? t('settings.keyChecking') : t('settings.keySave')}
+          </button>
+          {(state === 'valid' || state === 'invalid') && (
+            <button type="button" className="button button-quiet" onClick={() => void window.splitwatch.removeApiKey()}>
+              {t('settings.keyRemove')}
+            </button>
+          )}
+        </form>
+      )}
+      {problem && (
+        <p className="dialog-problem" role="alert">
+          {problem}
+        </p>
+      )}
+      <details className="guide">
+        <summary>{t('settings.guideTitle')}</summary>
+        <ol>
+          <li>{t('settings.guide1')}</li>
+          <li>{t('settings.guide2')}</li>
+          <li>{t('settings.guide3')}</li>
+          <li>{t('settings.guide4')}</li>
+          <li>{t('settings.guide5')}</li>
+        </ol>
+        <a className="button button-quiet" href={CONSOLE_URL} target="_blank" rel="noreferrer">
+          {t('settings.openConsole')}
+        </a>
+      </details>
+    </section>
+  );
+}
+
+function QuotaSection() {
+  const { t } = useTranslation();
+  const status = useYouTube((s) => s.status);
+  if (!status || status.key === 'none' || status.key === 'unavailable') return null;
+  const searchesUsed = status.exhausted.includes('searches') ? status.limits.searches : status.used.searches;
+  const unitsUsed = status.exhausted.includes('units') ? status.limits.units : status.used.units;
+
+  return (
+    <section className="settings-section">
+      <h3>{t('settings.quota')}</h3>
+      <div className="meter-row">
+        <span>{t('settings.quotaSearches', { used: searchesUsed, limit: status.limits.searches })}</span>
+        <meter min={0} max={status.limits.searches} value={searchesUsed} high={status.limits.searches * 0.8} />
+      </div>
+      <div className="meter-row">
+        <span>{t('settings.quotaUnits', { used: unitsUsed, limit: status.limits.units })}</span>
+        <meter min={0} max={status.limits.units} value={unitsUsed} high={status.limits.units * 0.8} />
+      </div>
+      <p className="note">{t('settings.quotaResets', { time: new Date(status.resetsAt) })}</p>
+    </section>
+  );
+}
+
+function SportsSection() {
+  const { t } = useTranslation();
+  const presets = useYouTube((s) => s.presets);
+  const [chosen, setChosen] = useState<string[]>([]);
+  const sports = useMemo(
+    () =>
+      [...new Set(presets.map((p) => p.sport))].sort((a, b) => t(`sports.${a}`, a).localeCompare(t(`sports.${b}`, b))),
+    [presets, t],
+  );
+  useEffect(() => {
+    void window.splitwatch.getSettings().then((s) => setChosen(s.sports));
+  }, []);
+  if (!sports.length) return null;
+
+  const toggle = (sport: string, on: boolean) => {
+    const next = on ? [...chosen, sport] : chosen.filter((s) => s !== sport);
+    setChosen(next);
+    window.splitwatch.saveSettings({ sports: next });
+    setTimeout(() => void refreshLiveNow(), 100);
+  };
+
+  return (
+    <section className="settings-section">
+      <h3>{t('settings.sports')}</h3>
+      <p className="note">{t('settings.sportsNote')}</p>
+      <div className="sport-grid">
+        {sports.map((sport) => (
+          <label key={sport}>
+            <input type="checkbox" checked={chosen.includes(sport)} onChange={(e) => toggle(sport, e.target.checked)} />
+            {t(`sports.${sport}`, sport)}
+          </label>
+        ))}
+      </div>
+    </section>
   );
 }

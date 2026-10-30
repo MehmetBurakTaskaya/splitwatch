@@ -5,7 +5,7 @@ import { parseVideoId } from '../../shared/youtube';
 import { openDialog } from '../state/app';
 import { type AddResult, useSession } from '../state/session';
 import { ADD_INPUT_ID } from './Grid';
-import { IconKeyboard, IconMuted, IconSettings, IconSound, LayoutGlyph } from './icons';
+import { IconKeyboard, IconMuted, IconSearch, IconSettings, IconSound, LayoutGlyph } from './icons';
 import { LaneMark } from './LaneMark';
 
 export function TopBar() {
@@ -63,6 +63,16 @@ export function TopBar() {
           </span>
         )}
       </form>
+
+      <button
+        type="button"
+        className="icon-button"
+        aria-label={t('search.open')}
+        title={t('search.open')}
+        onClick={() => openDialog('search')}
+      >
+        <IconSearch />
+      </button>
 
       <div className="layouts" role="group" aria-label={t('layout.label')}>
         {LAYOUTS.map((l) => (

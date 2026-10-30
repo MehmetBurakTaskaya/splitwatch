@@ -45,7 +45,13 @@ function isTyping(target: EventTarget | null): boolean {
 export function useShortcuts(): void {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.defaultPrevented || isTyping(e.target) || useAppStore.getState().dialog) return;
+      if (e.defaultPrevented || useAppStore.getState().dialog) return;
+      // Ctrl + K (Cmd + K on macOS) opens the search, even from a text box.
+      if ((e.ctrlKey || e.metaKey) && !e.altKey && !e.shiftKey && e.code === 'KeyK') {
+        e.preventDefault();
+        return openDialog('search');
+      }
+      if (isTyping(e.target)) return;
       if (e.key === 'Escape') {
         if (useSession.getState().maximized || useAppStore.getState().fullscreen) setEnlarged(false);
         return;

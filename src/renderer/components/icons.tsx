@@ -79,6 +79,12 @@ export const IconSettings = () => (
     <path d="M10 2.5v2.5M10 15v2.5M2.5 10H5M15 10h2.5M4.7 4.7l1.8 1.8M13.5 13.5l1.8 1.8M4.7 15.3l1.8-1.8M13.5 6.5l1.8-1.8" />
   </Icon>
 );
+export const IconSearch = () => (
+  <Icon>
+    <circle cx="8.5" cy="8.5" r="5" />
+    <path d="M12.5 12.5l4.5 4.5" />
+  </Icon>
+);
 export const IconAdd = () => (
   <Icon>
     <path d="M10 4.5v11M4.5 10h11" />

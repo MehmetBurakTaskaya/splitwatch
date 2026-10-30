@@ -21,6 +21,11 @@ const values = {
   code: 150,
   key: 'M',
   action: 'Mute or unmute',
+  query: 'final',
+  limit: 100,
+  left: 97,
+  used: 3,
+  time: new Date('2026-10-31T07:00:00Z'),
 };
 
 describe('English messages', () => {

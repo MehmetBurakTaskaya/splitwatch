@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { LiveNowPanel } from './LiveNowPanel';
 
 export function EmptyState() {
   const { t } = useTranslation();
@@ -10,6 +11,9 @@ export function EmptyState() {
         <p className="lead">{t('app.tagline')}</p>
         <p>{t('empty.body')}</p>
       </section>
+      <div className="empty-live">
+        <LiveNowPanel />
+      </div>
     </main>
   );
 }

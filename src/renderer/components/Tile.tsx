@@ -6,6 +6,7 @@ import { registerPlayer, seekBy, togglePlay, unregisterPlayer } from '../player/
 import { useAppStore } from '../state/app';
 import { usePrefs } from '../state/prefs';
 import { type PlayerState, useSession } from '../state/session';
+import { useYouTube } from '../state/youtube';
 import {
   IconBack,
   IconClose,
@@ -62,6 +63,7 @@ export function Tile({
   const maximized = useSession((s) => s.maximized);
   const layout = useSession((s) => s.layout);
   const audioFocus = usePrefs((s) => s.audioFocus);
+  const live = useYouTube((s) => s.liveStates[videoId]);
 
   // One YouTube player per tile, created once and kept while the tile lives.
   useEffect(() => {
@@ -193,6 +195,8 @@ export function Tile({
         </span>
         <span className="tile-title" onClick={pick}>
           <span className="tile-name" dir="auto" title={title}>
+            {live === 'live' && <span className="badge badge-live">{t('live.badge')}</span>}
+            {live === 'upcoming' && <span className="badge">{t('live.upcoming')}</span>}
             {title}
           </span>
           {info?.channel && (

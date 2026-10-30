@@ -13,6 +13,7 @@
   --color-accent-soft: #e2f4f1;
   --color-hover: rgb(21 25 31 / 0.06);
   --color-danger: #c4322b;
+  --color-live: #d9302b;
   --color-on-danger: #ffffff;
   --color-lane: rgb(21 25 31 / 0.06);
 
@@ -49,6 +50,7 @@
     --color-accent-soft: #12302c;
     --color-hover: rgb(232 235 239 / 0.07);
     --color-danger: #f0695f;
+    --color-live: #e0443e;
     --color-on-danger: #1a0705;
     --color-lane: rgb(232 235 239 / 0.05);
   }
