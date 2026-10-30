@@ -22,14 +22,17 @@
   grid-column: 2;
 }
 
-.grid.maximized {
+.grid.maximized,
+.grid.mini {
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr);
 }
-.grid.maximized > :not(.is-maximized) {
+.grid.maximized > :not(.is-maximized),
+.grid.mini > :not(.is-selected) {
   display: none;
 }
-.grid.maximized > .is-maximized {
+.grid.maximized > .is-maximized,
+.grid.mini > .is-selected {
   grid-column: 1;
   grid-row: 1;
 }

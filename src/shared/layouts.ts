@@ -53,6 +53,17 @@ export const GRID_PADDING = 4;
 export const TOP_BAR = 48;
 const TILE_BORDER = 2;
 
+// The main window's smallest outer size, enough for the top bar on one line.
+export const WINDOW_MIN = { width: 720, height: 520 };
+
+// Mini mode shows one tile: its smallest content keeps the player at 200 x 200 or more, and it
+// opens with a 480 x 270 player.
+export const MINI_MIN = { width: 380, height: 250 };
+export const MINI_DEFAULT = {
+  width: 480 + TILE_BORDER + 2 * GRID_PADDING,
+  height: 270 + TILE_BAR + TILE_BORDER + 2 * GRID_PADDING,
+};
+
 export function minContentSize(id: LayoutId): { width: number; height: number } {
   const { columns, rows } = layoutById(id);
   const tileWidth = PLAYER_MIN + TILE_BORDER;

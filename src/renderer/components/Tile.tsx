@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { themeForSport } from '../../shared/themes';
 import { watchUrl } from '../../shared/youtube';
 import { loadIframeApi } from '../player/iframe-api';
+import { setMini } from '../hooks/useShortcuts';
 import { registerPlayer, seekBy, togglePlay, unregisterPlayer } from '../player/players';
 import { openDialog, useAppStore } from '../state/app';
 import { usePrefs } from '../state/prefs';
@@ -16,6 +17,7 @@ import {
   IconExternal,
   IconForward,
   IconGrip,
+  IconMini,
   IconMuted,
   IconPause,
   IconPlay,
@@ -65,6 +67,7 @@ export function Tile({
   const volume = useSession((s) => s.volumes[videoId] ?? 1);
   const maximized = useSession((s) => s.maximized);
   const layout = useSession((s) => s.layout);
+  const mini = useAppStore((s) => s.mini);
   const audioFocus = usePrefs((s) => s.audioFocus);
   const live = useYouTube((s) => s.liveStates[videoId]);
   const ownSport = useSession((s) => s.sports[videoId]);
@@ -295,16 +298,42 @@ export function Tile({
         >
           <IconExternal />
         </a>
-        <button
-          type="button"
-          className="icon-button"
-          aria-pressed={isMax}
-          aria-label={isMax ? t('tile.restore') : t('tile.enlarge')}
-          title={isMax ? t('tile.restore') : t('tile.enlarge')}
-          onClick={toggleEnlarge}
-        >
-          {isMax ? <IconRestore /> : <IconEnlarge />}
-        </button>
+        {mini ? (
+          <button
+            type="button"
+            className="icon-button"
+            aria-label={t('tile.leaveMini')}
+            title={t('tile.leaveMini')}
+            onClick={() => setMini(false)}
+          >
+            <IconRestore />
+          </button>
+        ) : (
+          <>
+            <button
+              type="button"
+              className="icon-button optional"
+              aria-label={t('tile.mini', { index: n })}
+              title={t('tile.mini', { index: n })}
+              onClick={() => {
+                state().select(videoId, { unmute: true });
+                setMini(true);
+              }}
+            >
+              <IconMini />
+            </button>
+            <button
+              type="button"
+              className="icon-button"
+              aria-pressed={isMax}
+              aria-label={isMax ? t('tile.restore') : t('tile.enlarge')}
+              title={isMax ? t('tile.restore') : t('tile.enlarge')}
+              onClick={toggleEnlarge}
+            >
+              {isMax ? <IconRestore /> : <IconEnlarge />}
+            </button>
+          </>
+        )}
         <button
           type="button"
           className="icon-button"

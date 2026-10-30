@@ -17,6 +17,7 @@ import { useSession } from './state/session';
 export function App() {
   const hasStreams = useSession((s) => s.streams.length > 0);
   const dialog = useAppStore((s) => s.dialog);
+  const mini = useAppStore((s) => s.mini);
   useShortcuts();
   useIframeFocus();
 
@@ -27,10 +28,10 @@ export function App() {
   return (
     <div className="shell">
       <Backdrop />
-      <TopBar />
-      <ClipboardSuggestion />
+      {!mini && <TopBar />}
+      {!mini && <ClipboardSuggestion />}
       {hasStreams ? <Grid /> : <EmptyState />}
-      <UpdateNotice />
+      {!mini && <UpdateNotice />}
       {dialog === 'search' && <SearchPalette />}
       {dialog === 'shortcuts' && <ShortcutsDialog />}
       {dialog === 'settings' && <SettingsDialog />}

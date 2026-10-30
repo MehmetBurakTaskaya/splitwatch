@@ -11,6 +11,15 @@ export function setEnlarged(on: boolean): void {
   window.splitwatch.setFullscreen(on && selected !== null);
 }
 
+// Mini mode needs a picked stream; it replaces the large view.
+export function setMini(on: boolean): void {
+  if (on) {
+    if (!useSession.getState().selected) return;
+    setEnlarged(false);
+  }
+  window.splitwatch.setMini(on);
+}
+
 function run(action: ShortcutAction): void {
   const s = useSession.getState();
   switch (action) {
@@ -30,6 +39,8 @@ function run(action: ShortcutAction): void {
       return s.selected ? s.move(s.selected, -1) : undefined;
     case 'moveLater':
       return s.selected ? s.move(s.selected, 1) : undefined;
+    case 'miniPlayer':
+      return setMini(!useAppStore.getState().mini);
     case 'help':
       return openDialog('shortcuts');
   }
@@ -54,7 +65,8 @@ export function useShortcuts(): void {
       }
       if (isTyping(e.target)) return;
       if (e.key === 'Escape') {
-        if (useSession.getState().maximized || useAppStore.getState().fullscreen) setEnlarged(false);
+        if (useAppStore.getState().mini) setMini(false);
+        else if (useSession.getState().maximized || useAppStore.getState().fullscreen) setEnlarged(false);
         return;
       }
       if (/^[1-9]$/.test(e.key) && !e.ctrlKey && !e.metaKey && !e.altKey) {
@@ -98,6 +110,8 @@ export function useIframeFocus(): void {
     });
     const offSession = useSession.subscribe((s, prev) => {
       if (prev.maximized && !s.maximized && useAppStore.getState().fullscreen) window.splitwatch.setFullscreen(false);
+      // The mini player's stream was removed.
+      if (!s.selected && useAppStore.getState().mini) setMini(false);
     });
     return () => {
       offApp();

@@ -9,6 +9,7 @@ export const SHORTCUT_ACTIONS = [
   'nextLayout',
   'moveEarlier',
   'moveLater',
+  'miniPlayer',
   'help',
 ] as const;
 
@@ -23,6 +24,7 @@ export const DEFAULT_SHORTCUTS: Readonly<Record<ShortcutAction, string>> = {
   nextLayout: 'L',
   moveEarlier: 'Alt+ArrowLeft',
   moveLater: 'Alt+ArrowRight',
+  miniPlayer: 'I',
   help: 'Shift+?',
 };
 

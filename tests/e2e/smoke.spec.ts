@@ -279,3 +279,50 @@ test('saves, opens, renames and deletes layouts, and keeps them after a restart'
   await expect(page.getByRole('dialog').getByRole('button', { name: 'Open Sunday' })).toBeVisible();
   await app.close();
 });
+
+test('the mini player shows the picked stream on top of other windows, and goes back', async () => {
+  const { app, page } = await launch(
+    freshUserData({ session: { layout: '2', streams: [VIDEO_A, VIDEO_B], selected: VIDEO_B } }),
+  );
+  const tileA = page.locator(`[data-stream="${VIDEO_A}"]`);
+  const tileB = page.locator(`[data-stream="${VIDEO_B}"]`);
+  const win = () =>
+    app.evaluate(({ BrowserWindow }) => {
+      const w = BrowserWindow.getAllWindows()[0]!;
+      return { onTop: w.isAlwaysOnTop(), content: w.getContentBounds(), outer: w.getBounds() };
+    });
+  const before = await win();
+
+  await page.locator('.brand').click();
+  await page.keyboard.press('i');
+  await expect(page.locator('.topbar')).toBeHidden();
+  await expect(tileA).toBeHidden();
+  await expect(tileB).toBeVisible();
+  await expect.poll(async () => (await win()).onTop).toBe(true);
+  // Display scaling can round the window's size by a pixel or two.
+  type Box = Partial<Record<'x' | 'y' | 'width' | 'height', number>>;
+  const near = (a: Box, b: Box) => (Object.keys(b) as (keyof Box)[]).every((k) => Math.abs(a[k]! - b[k]!) <= 4);
+  expect(near((await win()).content, { width: 490, height: 316 })).toBe(true);
+  // YouTube's minimum player size holds in the mini player too.
+  const frame = await tileB.locator('.tile-player').boundingBox();
+  expect(frame!.width).toBeGreaterThanOrEqual(200);
+  expect(frame!.height).toBeGreaterThanOrEqual(200);
+
+  // A moved mini player opens in the same place next time.
+  await app.evaluate(({ BrowserWindow }) =>
+    BrowserWindow.getAllWindows()[0]!.setContentBounds({ x: 100, y: 120, width: 520, height: 330 }),
+  );
+  await page.getByRole('button', { name: en.tile.leaveMini }).click();
+  await expect(page.locator('.topbar')).toBeVisible();
+  await expect(tileA).toBeVisible();
+  await expect.poll(async () => (await win()).onTop).toBe(false);
+  expect(near((await win()).outer, before.outer)).toBe(true);
+
+  await page.getByRole('button', { name: en.tile.mini.replace('{index}', '1') }).click();
+  await expect(tileB).toBeHidden();
+  await expect(tileA).toBeVisible();
+  await expect.poll(async () => near((await win()).content, { x: 100, y: 120, width: 520, height: 330 })).toBe(true);
+  await page.keyboard.press('Escape');
+  await expect(page.locator('.topbar')).toBeVisible();
+  await app.close();
+});

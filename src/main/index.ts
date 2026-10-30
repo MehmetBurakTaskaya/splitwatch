@@ -2,6 +2,8 @@ import path from 'node:path';
 import { BrowserWindow, Menu, app, ipcMain, nativeTheme, session } from 'electron';
 import { APP_ID, APP_ORIGIN, PRODUCT_NAME } from '../shared/app';
 import { type AppInfo, IPC } from '../shared/ipc';
+import { WINDOW_MIN } from '../shared/layouts';
+import { forgetMini } from './mini';
 import { registerAppScheme, serveApp } from './protocol';
 import { hardenSession, hardenWebContents } from './security';
 import { flushSettings } from './settings-store';
@@ -27,8 +29,8 @@ function createMainWindow(): void {
   mainWindow = new BrowserWindow({
     width: 1280,
     height: 800,
-    minWidth: 720,
-    minHeight: 520,
+    minWidth: WINDOW_MIN.width,
+    minHeight: WINDOW_MIN.height,
     show: false,
     title: PRODUCT_NAME,
     backgroundColor: nativeTheme.shouldUseDarkColors ? '#101317' : '#f5f6f8',
@@ -46,7 +48,10 @@ function createMainWindow(): void {
   });
   forwardWindowChanges(mainWindow);
   mainWindow.once('ready-to-show', () => mainWindow?.show());
-  mainWindow.on('closed', () => (mainWindow = null));
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+    forgetMini();
+  });
   const query = locale ? `?locale=${encodeURIComponent(locale)}` : '';
   void mainWindow.loadURL(`${APP_ORIGIN}/index.html${query}`);
 }

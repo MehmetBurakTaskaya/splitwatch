@@ -1,4 +1,4 @@
-import { type LayoutId, MAX_STREAMS, isLayoutId, layoutFor, layoutById } from './layouts';
+import { type LayoutId, MAX_STREAMS, MINI_MIN, isLayoutId, layoutFor, layoutById } from './layouts';
 import { DEFAULT_LIMITS, type QuotaLimits, sanitizeLimits } from './quota';
 import { SHORTCUT_ACTIONS, type ShortcutAction, isReservedKey } from './shortcuts';
 import { isVideoId } from './youtube';
@@ -35,6 +35,14 @@ export const MAX_LAYOUT_NAME = 60;
 
 export type ColorScheme = 'system' | 'light' | 'dark';
 
+// Where the mini player was last, as content bounds in screen coordinates.
+export interface Bounds {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
 export interface Settings {
   version: 1;
   audioFocus: 'click' | 'hover';
@@ -49,6 +57,7 @@ export interface Settings {
   animate: boolean;
   performance: boolean;
   layouts: SavedLayout[];
+  miniBounds: Bounds | null;
   session: Session;
 }
 
@@ -64,6 +73,7 @@ export const DEFAULT_SETTINGS: Settings = {
   animate: true,
   performance: false,
   layouts: [],
+  miniBounds: null,
   session: { layout: '1', streams: [], selected: null, muted: false, masterVolume: 1, volumes: {}, sports: {} },
 };
 
@@ -126,6 +136,16 @@ export function sanitizeSavedLayouts(raw: unknown): SavedLayout[] {
   return out;
 }
 
+export function sanitizeBounds(raw: unknown): Bounds | null {
+  if (!isRecord(raw)) return null;
+  const { x, y, width, height } = raw;
+  const int = (v: unknown, min: number, max: number): v is number =>
+    typeof v === 'number' && Number.isInteger(v) && v >= min && v <= max;
+  if (!int(x, -100_000, 100_000) || !int(y, -100_000, 100_000)) return null;
+  if (!int(width, MINI_MIN.width, 10_000) || !int(height, MINI_MIN.height, 10_000)) return null;
+  return { x, y, width, height };
+}
+
 export function sanitizeSettings(raw: unknown): Settings {
   const d = DEFAULT_SETTINGS;
   if (!isRecord(raw)) return { ...d, shortcuts: {}, sports: [], layouts: [], session: sanitizeSession(null) };
@@ -155,6 +175,7 @@ export function sanitizeSettings(raw: unknown): Settings {
     animate: raw.animate !== false,
     performance: raw.performance === true,
     layouts: sanitizeSavedLayouts(raw.layouts),
+    miniBounds: sanitizeBounds(raw.miniBounds),
     session: sanitizeSession(raw.session),
   };
 }

@@ -9,6 +9,8 @@ interface AppState {
   fullscreen: boolean;
   // false while the window is minimized or hidden.
   shown: boolean;
+  // Mini mode: the window shows the picked stream only, on top of other windows.
+  mini: boolean;
   dialog: DialogName;
   // The stream the sport dialog is about.
   dialogStream: string | null;
@@ -19,6 +21,7 @@ export const useAppStore = create<AppState>(() => ({
   update: { status: 'idle' },
   fullscreen: false,
   shown: true,
+  mini: false,
   dialog: null,
   dialogStream: null,
 }));
@@ -33,4 +36,5 @@ export function connectHost(): void {
   window.splitwatch.onUpdateState((update) => useAppStore.setState({ update }));
   window.splitwatch.onFullscreenChange((fullscreen) => useAppStore.setState({ fullscreen }));
   window.splitwatch.onShownChange((shown) => useAppStore.setState({ shown }));
+  window.splitwatch.onMiniChange((mini) => useAppStore.setState({ mini, ...(mini ? { dialog: null } : {}) }));
 }

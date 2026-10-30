@@ -91,6 +91,12 @@ export const IconMoon = () => (
     <path d="M15.8 12.6A6.5 6.5 0 0 1 7.4 4.2a6.5 6.5 0 1 0 8.4 8.4z" />
   </Icon>
 );
+export const IconMini = () => (
+  <Icon>
+    <rect x="2.5" y="4" width="15" height="12" rx="1.5" />
+    <rect className="fill" x="10" y="10" width="5.5" height="4" rx="0.5" />
+  </Icon>
+);
 export const IconLayouts = () => (
   <Icon>
     <path d="M6 3h8a1 1 0 0 1 1 1v13l-5-3.5L5 17V4a1 1 0 0 1 1-1z" />

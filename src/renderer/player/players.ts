@@ -47,17 +47,19 @@ useSession.subscribe((s, prev) => {
   ) {
     applyAudio();
   }
-  if (s.maximized !== prev.maximized || s.status !== prev.status) syncPlayback();
+  if (s.maximized !== prev.maximized || s.selected !== prev.selected || s.status !== prev.status) syncPlayback();
 });
 useAppStore.subscribe((s, prev) => {
-  if (s.shown !== prev.shown) syncPlayback();
+  if (s.shown !== prev.shown || s.mini !== prev.mini) syncPlayback();
 });
 
-// The streams on screen: none while the window is minimized or hidden, the enlarged one in the
-// enlarged view, otherwise all (null).
+// The streams on screen: none while the window is minimized or hidden, the picked one in mini
+// mode, the enlarged one in the enlarged view, otherwise all (null).
 function visibleStreams(): Set<string> | null {
-  const { maximized } = useSession.getState();
-  if (!useAppStore.getState().shown) return new Set();
+  const { maximized, selected } = useSession.getState();
+  const { shown, mini } = useAppStore.getState();
+  if (!shown) return new Set();
+  if (mini) return new Set(selected ? [selected] : []);
   return maximized ? new Set([maximized]) : null;
 }
 

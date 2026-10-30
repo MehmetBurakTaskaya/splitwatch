@@ -84,6 +84,8 @@
     "back": "Back 10 seconds",
     "forward": "Forward 10 seconds",
     "enlarge": "Enlarge",
+    "mini": "Watch stream {index} in the mini player",
+    "leaveMini": "Back to the grid",
     "restore": "Back to the grid",
     "remove": "Remove stream {index}",
     "openOnYouTube": "Open on YouTube",
@@ -104,7 +106,7 @@
     "open": "Keyboard shortcuts",
     "title": "Keyboard shortcuts",
     "digits": "Pick stream 1 to 9 (you hear it)",
-    "escape": "Leave the large view and fullscreen",
+    "escape": "Leave the large view, fullscreen or the mini player",
     "search": "Find a stream",
     "layouts": "Save or open a layout",
     "change": "Change",
@@ -122,6 +124,7 @@
       "nextLayout": "Next layout",
       "moveEarlier": "Move the picked stream earlier",
       "moveLater": "Move the picked stream later",
+      "miniPlayer": "Mini player: the picked stream in a small window on top",
       "help": "Show this list"
     },
     "keys": {

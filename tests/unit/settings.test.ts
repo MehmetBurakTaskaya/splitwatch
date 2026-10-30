@@ -4,6 +4,7 @@ import {
   MAX_LAYOUT_NAME,
   MAX_SAVED_LAYOUTS,
   layoutName,
+  sanitizeBounds,
   sanitizeSavedLayouts,
   sanitizeSettings,
 } from '../../src/shared/settings';
@@ -28,6 +29,7 @@ describe('sanitizeSettings', () => {
       animate: false,
       performance: true,
       layouts: [],
+      miniBounds: { x: -1200, y: 40, width: 490, height: 316 },
       session: {
         layout: 'featured',
         streams: ['M7lc1UVf-VE', 'aqz-KE-bpKQ'],
@@ -134,5 +136,20 @@ describe('saved layouts', () => {
     expect(layoutName('x'.repeat(100))).toHaveLength(MAX_LAYOUT_NAME);
     expect(layoutName(42)).toBeNull();
     expect(layoutName('a\u0000b')).toBe('a b');
+  });
+});
+
+describe('mini bounds', () => {
+  it('keeps whole numbers within reach and at least the mini minimum', () => {
+    expect(sanitizeBounds({ x: 10, y: 20, width: 490, height: 316 })).toEqual({
+      x: 10,
+      y: 20,
+      width: 490,
+      height: 316,
+    });
+    expect(sanitizeBounds({ x: 10.5, y: 20, width: 490, height: 316 })).toBeNull();
+    expect(sanitizeBounds({ x: 10, y: 20, width: 100, height: 316 })).toBeNull();
+    expect(sanitizeBounds({ x: 10, y: 1e9, width: 490, height: 316 })).toBeNull();
+    expect(sanitizeBounds('nonsense')).toBeNull();
   });
 });

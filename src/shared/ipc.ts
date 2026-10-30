@@ -17,6 +17,8 @@ export const IPC = {
   windowFullscreen: 'window:fullscreen',
   fullscreenChanged: 'window:fullscreen-changed',
   shownChanged: 'window:shown-changed',
+  windowMini: 'window:mini',
+  miniChanged: 'window:mini-changed',
   youtubeStatus: 'youtube:status',
   youtubeStatusChanged: 'youtube:status-changed',
   youtubeSetKey: 'youtube:set-key',
@@ -104,6 +106,9 @@ export interface SplitwatchApi {
   onFullscreenChange(listener: (on: boolean) => void): () => void;
   // false while the window is minimized or hidden.
   onShownChange(listener: (shown: boolean) => void): () => void;
+  // Mini mode: a small window on top of the others that shows the picked stream.
+  setMini(on: boolean): void;
+  onMiniChange(listener: (on: boolean) => void): () => void;
   getYouTubeStatus(): Promise<YouTubeStatus>;
   onYouTubeStatus(listener: (status: YouTubeStatus) => void): () => void;
   setApiKey(key: string): Promise<SetKeyResult>;

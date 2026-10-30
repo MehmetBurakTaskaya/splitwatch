@@ -1,6 +1,8 @@
 import { BrowserWindow, type IpcMainEvent, clipboard, ipcMain, nativeTheme, screen } from 'electron';
 import { IPC } from '../shared/ipc';
+import { WINDOW_MIN } from '../shared/layouts';
 import { parseVideoId } from '../shared/youtube';
+import { isMini, rememberMiniBounds, setMini } from './mini';
 import { getSettings, saveSettings } from './settings-store';
 import { getVideoInfo } from './video-info';
 
@@ -26,17 +28,18 @@ export function registerAppIpc(): void {
     getSettings().clipboardSuggestions ? parseVideoId((await clipboard.readText()).slice(0, 2000)) : null,
   );
 
-  // Keeps every player at least 200 x 200 px (YouTube's minimum), within the screen's work area.
+  // Keeps every player at least 200 x 200 px (YouTube's minimum), within the screen's work area,
+  // and the window no smaller than WINDOW_MIN. Mini mode sets its own minimum.
   ipcMain.on(IPC.windowMinSize, (e, size: unknown) => {
     const win = windowOf(e);
-    if (!win || !isSize(size)) return;
+    if (!win || !isSize(size) || isMini()) return;
     const [outerW, outerH] = win.getSize();
     const [innerW, innerH] = win.getContentSize();
     const frameW = outerW! - innerW!;
     const frameH = outerH! - innerH!;
     const area = screen.getDisplayMatching(win.getBounds()).workAreaSize;
-    const width = Math.min(Math.ceil(size.width) + frameW, area.width);
-    const height = Math.min(Math.ceil(size.height) + frameH, area.height);
+    const width = Math.min(Math.max(Math.ceil(size.width) + frameW, WINDOW_MIN.width), area.width);
+    const height = Math.min(Math.max(Math.ceil(size.height) + frameH, WINDOW_MIN.height), area.height);
     win.setMinimumSize(width, height);
     if (!win.isFullScreen() && (outerW! < width || outerH! < height)) {
       win.setSize(Math.max(outerW!, width), Math.max(outerH!, height));
@@ -44,6 +47,10 @@ export function registerAppIpc(): void {
   });
 
   ipcMain.on(IPC.windowFullscreen, (e, on: unknown) => windowOf(e)?.setFullScreen(on === true));
+  ipcMain.on(IPC.windowMini, (e, on: unknown) => {
+    const win = windowOf(e);
+    if (win) setMini(win, on === true);
+  });
 }
 
 export function forwardWindowChanges(win: BrowserWindow): void {
@@ -56,6 +63,7 @@ export function forwardWindowChanges(win: BrowserWindow): void {
   win.on('hide', shown(false));
   win.on('restore', shown(true));
   win.on('show', shown(true));
+  win.on('close', () => rememberMiniBounds(win));
 }
 
 function isSize(v: unknown): v is { width: number; height: number } {
