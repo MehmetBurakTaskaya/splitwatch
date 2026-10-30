@@ -117,6 +117,11 @@ export const IconDelete = () => (
     <path d="M4 6h12M8 6V4h4v2M5.5 6l.8 10.5h7.4L14.5 6M8.5 9v5M11.5 9v5" />
   </Icon>
 );
+export const IconSnowflake = () => (
+  <Icon>
+    <path d="M10 2.5v15M3.5 6.25l13 7.5M3.5 13.75l13-7.5M8 3.5l2 2 2-2M8 16.5l2-2 2 2" />
+  </Icon>
+);
 export const IconSearch = () => (
   <Icon>
     <circle cx="8.5" cy="8.5" r="5" />

@@ -7,6 +7,7 @@ import { openDialog } from '../state/app';
 import { setPrefs } from '../state/prefs';
 import { type AddResult, useSession } from '../state/session';
 import { useTheme } from '../theme/engine';
+import { EventChip } from './EventChip';
 import { ADD_INPUT_ID } from './Grid';
 import {
   IconKeyboard,
@@ -93,6 +94,8 @@ export function TopBar() {
           <span className="play-all-label">{t('playAll.button')}</span>
         </button>
       )}
+
+      <EventChip />
 
       <button
         type="button"

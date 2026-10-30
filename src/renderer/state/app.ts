@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import type { AppInfo, UpdateState } from '../../shared/ipc';
 
-export type DialogName = 'search' | 'shortcuts' | 'settings' | 'sport' | 'layouts' | null;
+export type DialogName = 'search' | 'shortcuts' | 'settings' | 'sport' | 'layouts' | 'event' | null;
 
 interface AppState {
   info: AppInfo | null;
@@ -14,6 +14,8 @@ interface AppState {
   dialog: DialogName;
   // The stream the sport dialog is about.
   dialogStream: string | null;
+  // What the search opens with, when another view opens it.
+  searchSeed: { query: string; sport: string | null } | null;
 }
 
 export const useAppStore = create<AppState>(() => ({
@@ -24,10 +26,14 @@ export const useAppStore = create<AppState>(() => ({
   mini: false,
   dialog: null,
   dialogStream: null,
+  searchSeed: null,
 }));
 
 export const openDialog = (dialog: DialogName, stream: string | null = null) =>
   useAppStore.setState({ dialog, dialogStream: stream });
+
+export const openSearch = (query: string, sport: string | null) =>
+  useAppStore.setState({ dialog: 'search', dialogStream: null, searchSeed: { query, sport } });
 
 // Pulls the app info and the update state from the main process and follows later changes.
 export function connectHost(): void {

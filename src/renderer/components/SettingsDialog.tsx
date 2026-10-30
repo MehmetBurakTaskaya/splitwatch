@@ -149,7 +149,7 @@ function AppearanceSection() {
             active[scheme],
             active.sports[0] ?? null,
           )}
-          {THEMES.map((theme) =>
+          {THEMES.filter((theme) => !theme.event).map((theme) =>
             option(
               theme.id,
               t(`themes.${theme.id}`, theme.id),

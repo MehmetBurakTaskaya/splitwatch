@@ -2,7 +2,7 @@ import { type FormEvent, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { SearchResult, StreamItem } from '../../shared/ipc';
 import { parseVideoId } from '../../shared/youtube';
-import { openDialog } from '../state/app';
+import { openDialog, useAppStore } from '../state/app';
 import { useSession } from '../state/session';
 import { useYouTube } from '../state/youtube';
 import { Dialog } from './Dialog';
@@ -15,8 +15,13 @@ const matches = (item: StreamItem, words: string[]) =>
 // Ctrl/Cmd + K. Local suggestions first (no quota); Enter searches YouTube for live streams.
 export function SearchPalette() {
   const { t } = useTranslation();
-  const [query, setQuery] = useState('');
-  const [sport, setSport] = useState<string | null>(null);
+  const [seed] = useState(() => {
+    const value = useAppStore.getState().searchSeed;
+    useAppStore.setState({ searchSeed: null });
+    return value;
+  });
+  const [query, setQuery] = useState(seed?.query ?? '');
+  const [sport, setSport] = useState<string | null>(seed?.sport ?? null);
   const [result, setResult] = useState<{ query: string; value: SearchResult } | null>(null);
   const [busy, setBusy] = useState(false);
   const status = useYouTube((s) => s.status);

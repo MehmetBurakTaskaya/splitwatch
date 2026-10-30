@@ -1,4 +1,5 @@
 import { useAppStore } from '../state/app';
+import { useEvents } from '../state/events';
 import { useSession } from '../state/session';
 import { useYouTube } from '../state/youtube';
 
@@ -52,13 +53,17 @@ useSession.subscribe((s, prev) => {
 useAppStore.subscribe((s, prev) => {
   if (s.shown !== prev.shown || s.mini !== prev.mini) syncPlayback();
 });
+useEvents.subscribe((s, prev) => {
+  if (s.intro !== prev.intro) syncPlayback();
+});
 
 // The streams on screen: none while the window is minimized or hidden, the picked one in mini
 // mode, the enlarged one in the enlarged view, otherwise all (null).
 function visibleStreams(): Set<string> | null {
   const { maximized, selected } = useSession.getState();
   const { shown, mini } = useAppStore.getState();
-  if (!shown) return new Set();
+  // The opening animation hides the grid while it plays.
+  if (!shown || useEvents.getState().intro) return new Set();
   if (mini) return new Set(selected ? [selected] : []);
   return maximized ? new Set([maximized]) : null;
 }
