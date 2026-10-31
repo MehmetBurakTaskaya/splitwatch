@@ -50,14 +50,31 @@ function item(candidate: ReadyCandidate): StreamItem {
   return { videoId, title, channel, live, ...(sport ? { sport } : {}) };
 }
 
-// The candidates that fit the kind, best first: live streams, then videos, newest first. Upcoming
-// streams are left out, since nothing plays yet; without a key every candidate counts as a video.
+// The channels in turns, each one's newest first, so that a channel that posts many videos a day
+// does not fill the grid alone.
+function inTurns(newestFirst: readonly ReadyCandidate[]): ReadyCandidate[] {
+  const byChannel = new Map<string, ReadyCandidate[]>();
+  for (const c of newestFirst) byChannel.set(c.channel, [...(byChannel.get(c.channel) ?? []), c]);
+  const queues = [...byChannel.values()];
+  const out: ReadyCandidate[] = [];
+  for (let i = 0; out.length < newestFirst.length; i++) {
+    for (const queue of queues) {
+      const next = queue[i];
+      if (next) out.push(next);
+    }
+  }
+  return out;
+}
+
+// The candidates that fit the kind, best first: live streams, then videos, newest first and the
+// channels in turns. Upcoming streams are left out, since nothing plays yet; without a key every
+// candidate counts as a video.
 export function ranked(candidates: readonly ReadyCandidate[], kind: ReadyKind): ReadyCandidate[] {
   const seen = new Set<string>();
   const unique = candidates.filter((c) => !seen.has(c.videoId) && seen.add(c.videoId));
   const newest = (a: ReadyCandidate, b: ReadyCandidate) => time(b.published) - time(a.published);
-  const live = unique.filter((c) => c.live === 'live').sort(newest);
-  const videos = unique.filter((c) => c.live === 'none' || c.live === 'unknown').sort(newest);
+  const live = inTurns(unique.filter((c) => c.live === 'live').sort(newest));
+  const videos = inTurns(unique.filter((c) => c.live === 'none' || c.live === 'unknown').sort(newest));
   return kind === 'live' ? live : kind === 'videos' ? videos : [...live, ...videos];
 }
 
@@ -73,7 +90,8 @@ export function readyList(candidates: readonly ReadyCandidate[], kind: ReadyKind
 }
 
 // One stream from each of up to nine sports, the sports in a random order each time; a stream that
-// two sports share counts for the first only.
+// two sports share counts for the first only, and a channel already in the mix comes after the
+// others (still after no live stream).
 export function mixList(
   bySport: ReadonlyMap<string, readonly ReadyCandidate[]>,
   kind: ReadyKind,
@@ -81,6 +99,7 @@ export function mixList(
   random: () => number = Math.random,
 ): ReadyList {
   const used = new Set<string>();
+  const usedChannels = new Set<string>();
   const sports = [...bySport.keys()];
   for (let i = sports.length - 1; i > 0; i--) {
     const j = Math.floor(random() * (i + 1));
@@ -88,10 +107,14 @@ export function mixList(
   }
   const firsts: ReadyCandidate[] = [];
   const seconds: ReadyCandidate[] = [];
+  const rank = (c: ReadyCandidate) => (c.live === 'live' ? 0 : 2) + (usedChannels.has(c.channel) ? 1 : 0);
   for (const sport of sports) {
-    const [first, second] = ranked(bySport.get(sport) ?? [], kind).filter((c) => !used.has(c.videoId));
+    const [first, second] = ranked(bySport.get(sport) ?? [], kind)
+      .filter((c) => !used.has(c.videoId))
+      .sort((a, b) => rank(a) - rank(b));
     if (!first) continue;
     used.add(first.videoId);
+    usedChannels.add(first.channel);
     firsts.push(first);
     if (second) seconds.push(second);
   }

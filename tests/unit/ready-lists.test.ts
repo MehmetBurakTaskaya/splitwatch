@@ -50,6 +50,22 @@ describe('one sport', () => {
     expect(ranked(candidates, 'videos').map((c) => c.title)).toEqual(['new', 'mid', 'old']);
   });
 
+  it('takes the channels in turns, so a busy channel does not fill the grid alone', () => {
+    const busy = Array.from({ length: 4 }, (_, i) => ({ ...video(`busy${i}`, 'none', 20 - i), channel: 'Busy' }));
+    const quiet = [
+      { ...video('quiet0', 'none', 5), channel: 'Quiet' },
+      { ...video('quiet1', 'none', 3), channel: 'Quiet' },
+    ];
+    expect(ranked([...busy, ...quiet], 'videos').map((c) => c.title)).toEqual([
+      'busy0',
+      'quiet0',
+      'busy1',
+      'quiet1',
+      'busy2',
+      'busy3',
+    ]);
+  });
+
   it('opens the largest full grid and keeps the rest as spares', () => {
     const list = readyList(candidates, 'all', true);
     expect(list.layout).toBe('4');
@@ -119,5 +135,24 @@ describe('the mix', () => {
     ]);
     const list = mixList(two, 'all', true, () => 0.99);
     expect(list.items.map((i) => i.title).sort()).toEqual(['mtb', 'shared']);
+  });
+
+  it('takes another channel for the next sport when it has one, but not over a live stream', () => {
+    const shared = (id: string, live: LiveState, n: number, sport: string) => ({
+      ...video(id, live, n, sport),
+      channel: 'Shared',
+    });
+    const own = { ...video('own', 'none', 1, 'mountain-bike'), channel: 'Own' };
+    const order = () => 0.99; // road-cycling first, then mountain-bike
+    const videos = new Map([
+      ['road-cycling', [shared('road', 'none', 20, 'road-cycling')]],
+      ['mountain-bike', [shared('newer', 'none', 10, 'mountain-bike'), own]],
+    ]);
+    expect(mixList(videos, 'all', true, order).items.map((i) => i.title)).toEqual(['road', 'own']);
+    const live = new Map([
+      ['road-cycling', [shared('road', 'none', 20, 'road-cycling')]],
+      ['mountain-bike', [shared('on-air', 'live', 10, 'mountain-bike'), own]],
+    ]);
+    expect(mixList(live, 'all', true, order).items.map((i) => i.title)).toEqual(['road', 'on-air']);
   });
 });
