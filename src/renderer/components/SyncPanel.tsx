@@ -57,7 +57,8 @@ export function SyncPanel() {
                         key={step}
                         type="button"
                         className="button button-quiet"
-                        aria-label={
+                        // The visible text is the name (in the group of the stream); the title says more.
+                        title={
                           step > 0
                             ? t('sync.later', { index: n, seconds: step })
                             : t('sync.sooner', { index: n, seconds: -step })
@@ -71,7 +72,7 @@ export function SyncPanel() {
                     <button
                       type="button"
                       className="button button-quiet"
-                      aria-label={t('sync.resetLabel', { index: n })}
+                      title={t('sync.resetLabel', { index: n })}
                       disabled={delay === 0}
                       onClick={() => delayBy(id, -delay)}
                     >
