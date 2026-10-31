@@ -22,6 +22,8 @@ interface AppState {
   shared: SharedLayout | null;
   // Where the sound comes from: "grid" or a popped-out stream's window.
   audioOwner: string;
+  // The stream whose live chat shows beside the grid.
+  chat: string | null;
 }
 
 export const useAppStore = create<AppState>(() => ({
@@ -35,6 +37,7 @@ export const useAppStore = create<AppState>(() => ({
   searchSeed: null,
   shared: null,
   audioOwner: 'grid',
+  chat: null,
 }));
 
 export const openDialog = (dialog: DialogName, stream: string | null = null) =>

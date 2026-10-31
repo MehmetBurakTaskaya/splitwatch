@@ -7,6 +7,9 @@ export function isVideoId(value: string): boolean {
   return ID.test(value);
 }
 
+// The live chat of a stream on a page of its own, where a signed-in viewer can write.
+export const liveChatUrl = (videoId: string): string => `https://www.youtube.com/live_chat?is_popout=1&v=${videoId}`;
+
 // Accepts a bare ID or any common YouTube link (watch, youtu.be, live, embed, shorts) and returns
 // the video ID, or null.
 export function parseVideoId(input: string): string | null {

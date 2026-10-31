@@ -414,3 +414,34 @@ test('a stream pops out into its own window with its sound, and comes back', asy
   await expect.poll(() => app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows().length)).toBe(1);
   await app.close();
 });
+
+test('the live chat opens beside the grid, read-only, and closes', async () => {
+  const { app, page } = await launch(
+    freshUserData({ session: { layout: '2', streams: [VIDEO_A, VIDEO_B], selected: VIDEO_A } }),
+  );
+  const open = page.getByRole('button', { name: en.chat.open.replace('{index}', '2') });
+  await open.click();
+  await expect(open).toHaveAttribute('aria-pressed', 'true');
+  const frame = page.locator('.chat iframe');
+  // YouTube refuses its chat in a frame unless the embedding site names itself.
+  await expect(frame).toHaveAttribute(
+    'src',
+    new RegExp(`v=${VIDEO_B}&embed_domain=com\\.mehmetburaktaskaya\\.splitwatch`),
+  );
+  await expect(page.getByRole('link', { name: en.chat.browser })).toHaveAttribute(
+    'href',
+    `https://www.youtube.com/live_chat?is_popout=1&v=${VIDEO_B}`,
+  );
+  const grid = await page.locator('.grid').boundingBox();
+  const chat = await page.locator('.chat').boundingBox();
+  expect(grid && chat && grid.x + grid.width <= chat.x + 1).toBe(true);
+
+  await page.getByRole('button', { name: en.chat.close }).click();
+  await expect(page.locator('.chat')).toHaveCount(0);
+  // The chat goes with its stream.
+  await open.click();
+  await page.locator(`[data-stream="${VIDEO_B}"]`).hover();
+  await page.getByRole('button', { name: en.tile.remove.replace('{index}', '2') }).click();
+  await expect(page.locator('.chat')).toHaveCount(0);
+  await app.close();
+});

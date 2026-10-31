@@ -1,6 +1,6 @@
 import { type CSSProperties, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { layoutById, minContentSize } from '../../shared/layouts';
+import { CHAT_WIDTH, layoutById, minContentSize } from '../../shared/layouts';
 import { useAppStore } from '../state/app';
 import { useSession } from '../state/session';
 import { IconAdd, IconPopout } from './icons';
@@ -31,14 +31,17 @@ export function Grid() {
   const maximized = useSession((s) => s.maximized);
   const popped = useSession((s) => s.popped);
   const mini = useAppStore((s) => s.mini);
+  const chat = useAppStore((s) => s.chat !== null);
   const [dragging, setDragging] = useState(false);
   const layout = layoutById(layoutId);
 
   // Keep every player at least 200 x 200 px in this layout (mini mode sets its own minimum, and
   // the layout's minimum applies again when it ends).
   useEffect(() => {
-    if (!mini) window.splitwatch.setMinContentSize(minContentSize(layoutId));
-  }, [layoutId, mini]);
+    if (mini) return;
+    const size = minContentSize(layoutId);
+    window.splitwatch.setMinContentSize({ ...size, width: size.width + (chat ? CHAT_WIDTH : 0) });
+  }, [layoutId, mini, chat]);
 
   // Tiles stay in a fixed DOM order (sorted by ID) and are placed with CSS order, because moving an
   // iframe in the DOM reloads it and restarts the stream.

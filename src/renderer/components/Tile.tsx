@@ -14,6 +14,7 @@ import { THEMES, useTheme } from '../theme/engine';
 import {
   IconBack,
   IconBell,
+  IconChat,
   IconClose,
   IconEnlarge,
   IconExternal,
@@ -71,6 +72,7 @@ export function Tile({
   const maximized = useSession((s) => s.maximized);
   const layout = useSession((s) => s.layout);
   const mini = useAppStore((s) => s.mini);
+  const chatHere = useAppStore((s) => s.chat === videoId);
   const notifyOn = usePrefs((s) => s.notify.on);
   const channel = useYouTube((s) => s.streamChannels[videoId]);
   const following = usePrefs((s) => (channel ? s.notify.channels.some((c) => c.id === channel.id) : false));
@@ -305,6 +307,16 @@ export function Tile({
           onClick={() => seekBy(videoId, 10)}
         >
           <IconForward />
+        </button>
+        <button
+          type="button"
+          className="icon-button optional"
+          aria-pressed={chatHere}
+          aria-label={t('chat.open', { index: n })}
+          title={t('chat.open', { index: n })}
+          onClick={() => useAppStore.setState({ chat: chatHere ? null : videoId })}
+        >
+          <IconChat />
         </button>
         <a
           className="icon-button optional"

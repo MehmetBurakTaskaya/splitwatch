@@ -1,6 +1,6 @@
 import { type Session, type WebContents, shell } from 'electron';
 import { APP_ORIGIN, YOUTUBE_REFERER, YOUTUBE_URL_PATTERNS } from '../shared/app';
-import { ALLOWED_PERMISSIONS, isAllowedExternalUrl } from './policy';
+import { ALLOWED_PERMISSIONS, chatSignInTarget, isAllowedExternalUrl } from './policy';
 
 export function hardenSession(ses: Session): void {
   ses.setPermissionRequestHandler((_contents, permission, callback) => callback(ALLOWED_PERMISSIONS.has(permission)));
@@ -15,7 +15,10 @@ export function hardenSession(ses: Session): void {
 // The app never navigates away from itself; links to YouTube and GitHub open in the browser.
 export function hardenWebContents(contents: WebContents): void {
   contents.on('will-navigate', (event, url) => {
-    if (!url.startsWith(`${APP_ORIGIN}/`)) event.preventDefault();
+    if (url.startsWith(`${APP_ORIGIN}/`)) return;
+    event.preventDefault();
+    const chat = chatSignInTarget(url);
+    if (chat) void shell.openExternal(chat);
   });
   contents.on('will-attach-webview', (event) => event.preventDefault());
   contents.setWindowOpenHandler(({ url }) => {

@@ -121,6 +121,12 @@
     "soundOn": "You hear this stream; give the sound back to the grid",
     "soundOff": "Hear this stream"
   },
+  "chat": {
+    "open": "Live chat of stream {index}",
+    "title": "Live chat",
+    "browser": "Chat in your browser",
+    "close": "Close the chat"
+  },
   "error": {
     "embedDisabled": "The owner does not allow this video to be played outside YouTube.",
     "notFound": "This video is unavailable: it was removed or made private.",

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Backdrop } from './components/Backdrop';
+import { ChatPanel } from './components/ChatPanel';
 import { ClipboardSuggestion } from './components/ClipboardSuggestion';
 import { EmptyState } from './components/EmptyState';
 import { EndedSuggestion } from './components/EndedSuggestion';
@@ -38,7 +39,14 @@ export function App() {
       {!mini && <TopBar />}
       {!mini && <ClipboardSuggestion />}
       {!mini && <EndedSuggestion />}
-      {hasStreams ? <Grid /> : <EmptyState />}
+      {hasStreams ? (
+        <div className="stage">
+          <Grid />
+          {!mini && <ChatPanel />}
+        </div>
+      ) : (
+        <EmptyState />
+      )}
       {!mini && <UpdateNotice />}
       {dialog === 'search' && <SearchPalette />}
       {dialog === 'shortcuts' && <ShortcutsDialog />}

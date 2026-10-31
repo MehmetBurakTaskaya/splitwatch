@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import {
   ALLOWED_PERMISSIONS,
   CONTENT_SECURITY_POLICY,
+  chatSignInTarget,
   isAllowedExternalUrl,
   mimeTypeOf,
   resolveAppFile,
@@ -46,6 +47,21 @@ describe('security policy', () => {
     expect(isAllowedExternalUrl('https://example.com/')).toBe(false);
     expect(isAllowedExternalUrl('file:///C:/Windows')).toBe(false);
     expect(isAllowedExternalUrl('not a url')).toBe(false);
+  });
+
+  it("turns the live chat's sign-in into the stream's chat in the browser", () => {
+    const signIn = (next: string, host = 'www.youtube.com') =>
+      `https://accounts.google.com/ServiceLogin?service=youtube&passive=true&continue=${encodeURIComponent(
+        `https://${host}/signin?action_handle_signin=true&app=desktop&next=${encodeURIComponent(next)}`,
+      )}`;
+    expect(chatSignInTarget(signIn('/watch?v=M7lc1UVf-VE'))).toBe(
+      'https://www.youtube.com/live_chat?is_popout=1&v=M7lc1UVf-VE',
+    );
+    expect(chatSignInTarget(signIn('/watch?v=not-an-id'))).toBeNull();
+    expect(chatSignInTarget(signIn('/watch?v=M7lc1UVf-VE', 'example.com'))).toBeNull();
+    expect(chatSignInTarget('https://example.com/ServiceLogin?continue=https://www.youtube.com/')).toBeNull();
+    expect(chatSignInTarget('https://accounts.google.com/ServiceLogin')).toBeNull();
+    expect(chatSignInTarget('not a url')).toBeNull();
   });
 
   it('grants fullscreen only', () => {
