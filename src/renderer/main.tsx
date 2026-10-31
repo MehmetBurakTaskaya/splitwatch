@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { isVideoId } from '../shared/youtube';
 import { App } from './App';
 import { PopoutView } from './components/PopoutView';
-import { initI18n } from './i18n';
+import { changeLocale, initI18n } from './i18n';
 import { connectHost } from './state/app';
 import { connectCommands } from './state/commands';
 import { connectEvents } from './state/events';
@@ -25,6 +25,7 @@ const live = params.get('live') === '1';
 
 if (popout && isVideoId(popout)) {
   void Promise.all([initI18n(requested), loadPrefs()]).then(() => {
+    window.splitwatch.onLocaleChange((lng) => void changeLocale(lng));
     connectTheme();
     createRoot(document.getElementById('root')!).render(
       <StrictMode>
@@ -34,6 +35,7 @@ if (popout && isVideoId(popout)) {
   });
 } else {
   void Promise.all([initI18n(requested), loadState()]).then(() => {
+    window.splitwatch.onLocaleChange((lng) => void changeLocale(lng));
     connectHost();
     connectCommands();
     connectEvents();

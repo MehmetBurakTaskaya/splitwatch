@@ -283,7 +283,10 @@
     "historyNote": "It stays on this computer. Titles and channels go after 30 days; the time by sport stays until you clear it.",
     "sounds": "Quiet theme sounds",
     "soundsTry": "Try",
-    "soundsNote": "Soft sounds in the theme's style when a stream comes or goes, the layout changes or a reminded stream is about to start."
+    "soundsNote": "Soft sounds in the theme's style when a stream comes or goes, the layout changes or a reminded stream is about to start.",
+    "language": "Language",
+    "languageSystem": "Same as the system ({language})",
+    "languageUnreviewed": "This translation has not been checked by a native speaker yet. Corrections are welcome on GitHub."
   },
   "update": {
     "available": "Version {version} is available.",

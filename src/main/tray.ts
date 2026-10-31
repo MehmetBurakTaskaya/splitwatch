@@ -4,7 +4,7 @@ import tray16 from './assets/tray-16.png?inline';
 import tray32 from './assets/tray-32.png?inline';
 import template16 from './assets/tray-template-16.png?inline';
 import template32 from './assets/tray-template-32.png?inline';
-import { t } from './i18n';
+import { onLanguageChange, t } from './i18n';
 import { loadKey } from './key-store';
 import { liveNow } from './live';
 import { mainWindow, onMainWindowChange, sendCommand, showMainWindow } from './main-window';
@@ -106,6 +106,7 @@ export function setupTray(): void {
     }
   });
   onMainWindowChange(refreshMenu);
+  onLanguageChange(refreshMenu);
   onKeyStateChange(() => {
     if (tray) void refreshLive();
   });

@@ -38,6 +38,7 @@ test('an event mode: its theme, schedule and medal table, and the opening animat
     path.join(userData, 'settings.json'),
     JSON.stringify({
       clipboardSuggestions: false,
+      language: 'en',
       event: { active: 'winter-2026', introSeen: ['winter-2026'], country: 'NO' },
     }),
   );

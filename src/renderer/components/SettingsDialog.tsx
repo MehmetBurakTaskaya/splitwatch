@@ -1,8 +1,9 @@
 import { type CSSProperties, type FormEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { LANGUAGE_NAMES, REVIEWED_LOCALES, SUPPORTED_LOCALES, isSupportedLocale } from '../../shared/locales';
 import type { ColorScheme } from '../../shared/settings';
 import type { LoginState, MediaKeysState } from '../../shared/ipc';
-import { MAX_CUSTOM_THEMES, type Palette, type Theme, ownTheme, themeSlug } from '../../shared/themes';
+import { MAX_CUSTOM_THEMES, NEUTRAL_THEME, type Palette, type Theme, ownTheme, themeSlug } from '../../shared/themes';
 import { openDialog, useAppStore } from '../state/app';
 import { setFollowing } from '../state/notify';
 import { setPrefs, usePrefs } from '../state/prefs';
@@ -53,6 +54,7 @@ export function SettingsDialog() {
   return (
     <Dialog title={t('settings.title')} onClose={requestClose} footer={footer} wide>
       <p className="note settings-saved">{t('settings.savedNote')}</p>
+      <LanguageSection />
       <AppearanceSection />
       <section className="settings-section">
         <h3>{t('settings.sound')}</h3>
@@ -111,7 +113,7 @@ const AUTO_THEME = 'auto';
 const SCHEME_LABELS = { system: 'settings.schemeSystem', light: 'settings.schemeLight', dark: 'settings.schemeDark' };
 
 function AppearanceSection() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const choice = usePrefs((s) => s.theme);
   const colorScheme = usePrefs((s) => s.colorScheme);
   const animate = usePrefs((s) => s.animate);
@@ -155,7 +157,7 @@ function AppearanceSection() {
             active[scheme],
             active.sports[0] ?? null,
           )}
-          {THEMES.filter((theme) => !theme.event).map((theme) =>
+          {sortedThemes(THEMES, (theme) => t(`themes.${theme.id}`, theme.id), i18n.language).map((theme) =>
             option(
               theme.id,
               t(`themes.${theme.id}`, theme.id),
@@ -470,7 +472,7 @@ function ApiKeySection({ form }: { form: KeyForm }) {
             placeholder={t('settings.keyLabel')}
             autoComplete="off"
             spellCheck={false}
-            dir="ltr"
+            dir={key ? 'ltr' : undefined}
           />
           <button type="submit" className="button" disabled={busy}>
             {busy ? t('settings.keyChecking') : t('settings.keySave')}
@@ -693,4 +695,47 @@ function SoundsField() {
       <p className="note">{t('settings.soundsNote')}</p>
     </div>
   );
+}
+
+const SYSTEM_LANGUAGE = 'system';
+
+// The interface language: the system's (the default) or one picked here. A translation that no native
+// speaker has checked yet says so.
+function LanguageSection() {
+  const { t, i18n } = useTranslation();
+  const language = usePrefs((s) => s.language);
+  const system = useAppStore((s) => s.info?.systemLanguage) ?? 'en';
+  const shown = i18n.language;
+  return (
+    <section className="settings-section">
+      <h3>{t('settings.language')}</h3>
+      <select
+        className="language-select"
+        value={language}
+        aria-label={t('settings.language')}
+        onChange={(e) => setPrefs({ language: e.target.value })}
+      >
+        <option value={SYSTEM_LANGUAGE}>
+          {t('settings.languageSystem', { language: isSupportedLocale(system) ? LANGUAGE_NAMES[system] : system })}
+        </option>
+        {SUPPORTED_LOCALES.map((tag) => (
+          <option key={tag} value={tag} lang={tag}>
+            {LANGUAGE_NAMES[tag]}
+          </option>
+        ))}
+      </select>
+      {isSupportedLocale(shown) && !REVIEWED_LOCALES.has(shown) && (
+        <p className="note">{t('settings.languageUnreviewed')}</p>
+      )}
+    </section>
+  );
+}
+
+// The app's themes in the order of their names in the page's language, the neutral one first; the
+// event themes come with their modes and are not offered.
+function sortedThemes(themes: readonly Theme[], name: (theme: Theme) => string, locale: string): Theme[] {
+  const collator = new Intl.Collator(locale);
+  return themes
+    .filter((theme) => !theme.event)
+    .sort((a, b) => (a.id === NEUTRAL_THEME ? -1 : b.id === NEUTRAL_THEME ? 1 : collator.compare(name(a), name(b))));
 }

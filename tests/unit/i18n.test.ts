@@ -1,6 +1,7 @@
 import { IntlMessageFormat } from 'intl-messageformat';
 import { describe, expect, it } from 'vitest';
 import { directionOf, pickLocale } from '../../src/renderer/i18n/locale';
+import { matchLocale } from '../../src/shared/locales';
 import en from '../../src/renderer/i18n/locales/en.json';
 import { pseudoLocalize, pseudoMessage } from '../../src/renderer/i18n/pseudo';
 
@@ -48,6 +49,7 @@ const values = {
   place: 'Los Angeles',
   dates: '14 to 30 July 2028',
   country: 'Senegal',
+  language: 'Türkçe',
 };
 
 describe('English messages', () => {
@@ -95,10 +97,24 @@ describe('pseudo-locales', () => {
 });
 
 describe('locale choice', () => {
-  it('prefers a requested pseudo-locale, then supported system languages', () => {
+  it('prefers a requested locale, then the first system language with a translation', () => {
     expect(pickLocale('ar-XB', ['tr-TR'])).toBe('ar-XB');
-    expect(pickLocale(null, ['tr-TR', 'en-GB'])).toBe('en');
-    expect(pickLocale('xx', ['fr-FR'])).toBe('en');
+    expect(pickLocale('de', ['tr-TR'])).toBe('de');
+    expect(pickLocale(null, ['tr-TR', 'en-GB'])).toBe('tr');
+    expect(pickLocale(null, ['fy-NL', 'nl-NL', 'en-GB'])).toBe('en');
+    expect(pickLocale('xx', ['xx-YY'])).toBe('en');
+  });
+
+  it('matches system languages to the translations there are', () => {
+    expect(matchLocale('zh-Hans-CN')).toBe('zh-CN');
+    expect(matchLocale('zh-CN')).toBe('zh-CN');
+    expect(matchLocale('zh')).toBe('zh-CN');
+    expect(matchLocale('zh-TW')).toBeNull();
+    expect(matchLocale('zh-Hant-HK')).toBeNull();
+    expect(matchLocale('pt-PT')).toBe('pt-BR');
+    expect(matchLocale('es-419')).toBe('es');
+    expect(matchLocale('de_AT')).toBe('de');
+    expect(matchLocale('nl')).toBeNull();
   });
 
   it('knows the text direction', () => {

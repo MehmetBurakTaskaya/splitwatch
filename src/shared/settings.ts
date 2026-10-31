@@ -1,3 +1,4 @@
+import { isSupportedLocale } from './locales';
 import { type LayoutId, MAX_STREAMS, MINI_MIN, isLayoutId, layoutFor, layoutById } from './layouts';
 import { DEFAULT_EVENT_SETTINGS, type EventSettings, sanitizeEventSettings } from './events';
 import { DEFAULT_NOTIFY, type NotifySettings, sanitizeNotify } from './notify';
@@ -57,6 +58,8 @@ export interface Settings {
   quotaLimits: QuotaLimits;
   // "auto" (follows the streams' sport) or a theme ID.
   theme: string;
+  // "system" (the system's languages decide) or a supported locale (src/shared/locales.ts).
+  language: string;
   // Themes the user made or imported.
   customThemes: Theme[];
   // Keep a watch history on this computer (see shared/watch.ts), and the added streams for the
@@ -91,6 +94,7 @@ export const DEFAULT_SETTINGS: Settings = {
   sports: [],
   quotaLimits: DEFAULT_LIMITS,
   theme: 'auto',
+  language: 'system',
   customThemes: [],
   watchHistory: true,
   sounds: false,
@@ -215,6 +219,7 @@ export function sanitizeSettings(raw: unknown): Settings {
       : [],
     quotaLimits: sanitizeLimits(raw.quotaLimits),
     theme: typeof raw.theme === 'string' && (raw.theme === 'auto' || SLUG.test(raw.theme)) ? raw.theme : d.theme,
+    language: isSupportedLocale(raw.language) ? raw.language : 'system',
     customThemes: sanitizeCustomThemes(raw.customThemes),
     watchHistory: raw.watchHistory !== false,
     sounds: raw.sounds === true,

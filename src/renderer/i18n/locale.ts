@@ -1,8 +1,7 @@
+import { SOURCE_LOCALE, isSupportedLocale, matchLocale } from '../../shared/locales';
 import { isPseudoLocale } from './pseudo';
 
-export const SOURCE_LOCALE = 'en';
-// Languages with finished translations. More arrive in later versions (see docs/ROADMAP.md).
-export const SUPPORTED_LOCALES: readonly string[] = ['en'];
+export { SOURCE_LOCALE };
 
 const RTL_LANGUAGES = new Set(['ar', 'fa', 'he', 'ur']);
 
@@ -12,13 +11,12 @@ export function directionOf(locale: string): 'ltr' | 'rtl' {
 }
 
 // An explicitly requested locale (a supported one or a pseudo-locale) wins; otherwise the first
-// system language that is supported, by exact tag or by language; otherwise English.
+// system language that has a translation; otherwise English.
 export function pickLocale(requested: string | null, preferred: readonly string[]): string {
-  if (requested && (isPseudoLocale(requested) || SUPPORTED_LOCALES.includes(requested))) return requested;
+  if (requested && (isPseudoLocale(requested) || isSupportedLocale(requested))) return requested;
   for (const tag of preferred) {
-    if (SUPPORTED_LOCALES.includes(tag)) return tag;
-    const language = tag.split('-')[0];
-    if (language && SUPPORTED_LOCALES.includes(language)) return language;
+    const match = matchLocale(tag);
+    if (match) return match;
   }
   return SOURCE_LOCALE;
 }

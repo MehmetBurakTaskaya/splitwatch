@@ -3,7 +3,7 @@ import { BrowserWindow, Menu, app, ipcMain, session } from 'electron';
 import { APP_ID } from '../shared/app';
 import { type AppInfo, IPC } from '../shared/ipc';
 import { getEvents, refreshEvents } from './events-store';
-import { initI18n } from './i18n';
+import { initI18n, onLanguageChange, systemLocale } from './i18n';
 import { linkFromSecondInstance, listenForLinks, setupLinks } from './links';
 import { registerLoginIpc, startedHidden } from './login';
 import { registerMainWindowIpc, setPageLocale, showMainWindow } from './main-window';
@@ -54,14 +54,19 @@ if (!app.requestSingleInstanceLock()) {
   });
 
   void app.whenReady().then(async () => {
-    await initI18n(locale);
-    setPageLocale(locale);
+    setPageLocale(await initI18n(locale));
+    // A new language reaches every open window at once, and new windows through their address.
+    onLanguageChange((lng) => {
+      setPageLocale(lng);
+      for (const win of BrowserWindow.getAllWindows()) win.webContents.send(IPC.localeChanged, lng);
+    });
     hardenSession(session.defaultSession);
     serveApp(path.join(__dirname, '../renderer'));
     ipcMain.handle(IPC.appInfo, (): AppInfo => ({
       version: app.getVersion(),
       platform: process.platform,
       systemLocale: app.getLocale(),
+      systemLanguage: systemLocale(),
       country: app.getLocaleCountryCode(),
     }));
     ipcMain.handle(IPC.eventsList, () => getEvents());

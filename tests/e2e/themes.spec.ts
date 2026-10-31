@@ -16,7 +16,10 @@ const VIDEO_B = 'aqz-KE-bpKQ';
 // No network for Live now: the feeds point at a closed port and the presets stay the shipped ones.
 async function launch(settings: object): Promise<{ app: ElectronApplication; page: Page; errors: string[] }> {
   const dir = mkdtempSync(path.join(tmpdir(), 'splitwatch-test-'));
-  writeFileSync(path.join(dir, 'settings.json'), JSON.stringify({ clipboardSuggestions: false, ...settings }));
+  writeFileSync(
+    path.join(dir, 'settings.json'),
+    JSON.stringify({ clipboardSuggestions: false, language: 'en', ...settings }),
+  );
   const app = await electron.launch({
     args: ['.'],
     env: {

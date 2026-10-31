@@ -49,6 +49,7 @@ export const IPC = {
   watchClear: 'watch:clear',
   keepAwake: 'power:keep-awake',
   subscriptionsImport: 'follows:import',
+  localeChanged: 'app:locale-changed',
   mediaKeysState: 'media-keys:state',
   popoutOpen: 'popout:open',
   popoutClose: 'popout:close',
@@ -65,6 +66,8 @@ export interface AppInfo {
   version: string;
   platform: string;
   systemLocale: string;
+  // The interface language that the system's languages pick (Settings shows it for "system").
+  systemLanguage: string;
   // The system's region (ISO 3166-1 alpha-2), or an empty string.
   country: string;
 }
@@ -215,6 +218,8 @@ export interface SplitwatchApi {
   keepAwake(on: boolean): void;
   // Opens a subscriptions.csv the user picks; null when the user cancels.
   importSubscriptions(): Promise<SubscriptionsImport | null>;
+  // The language setting changed: the page switches to this locale.
+  onLocaleChange(listener: (locale: string) => void): () => void;
   getMediaKeysState(): Promise<MediaKeysState>;
   // A stream in a window of its own, and back.
   openPopout(videoId: string, live: boolean): void;

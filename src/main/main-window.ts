@@ -17,7 +17,7 @@ const listeners = new Set<() => void>();
 
 export const mainWindow = () => win;
 
-// --locale for the page, passed on to every new window.
+// The page's language (--locale, the setting or the system's), passed on to every new window.
 export function setPageLocale(locale: string | undefined): void {
   query = locale ? `?locale=${encodeURIComponent(locale)}` : '';
 }

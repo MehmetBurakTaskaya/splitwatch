@@ -100,7 +100,10 @@ async function launch(
   beforeWindow?: (app: ElectronApplication) => Promise<void>,
 ): Promise<{ app: ElectronApplication; page: Page }> {
   const userData = mkdtempSync(path.join(tmpdir(), 'splitwatch-api-'));
-  writeFileSync(path.join(userData, 'settings.json'), JSON.stringify({ clipboardSuggestions: false, ...settings }));
+  writeFileSync(
+    path.join(userData, 'settings.json'),
+    JSON.stringify({ clipboardSuggestions: false, language: 'en', ...settings }),
+  );
   const app = await electron.launch({
     args: ['.'],
     env: {

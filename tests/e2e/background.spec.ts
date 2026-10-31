@@ -9,7 +9,10 @@ const VIDEO_B = 'aqz-KE-bpKQ';
 
 function freshUserData(settings: object = {}): string {
   const dir = mkdtempSync(path.join(tmpdir(), 'splitwatch-test-'));
-  writeFileSync(path.join(dir, 'settings.json'), JSON.stringify({ clipboardSuggestions: false, ...settings }));
+  writeFileSync(
+    path.join(dir, 'settings.json'),
+    JSON.stringify({ clipboardSuggestions: false, language: 'en', ...settings }),
+  );
   return dir;
 }
 

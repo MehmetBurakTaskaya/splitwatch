@@ -72,7 +72,8 @@ export function TopBar() {
           aria-describedby={message ? 'add-message' : undefined}
           spellCheck={false}
           autoComplete="off"
-          dir="ltr"
+          // Links read left to right; while empty, the hint follows the page's direction.
+          dir={text ? 'ltr' : undefined}
         />
         <button type="submit" className="button">
           {t('add.button')}
