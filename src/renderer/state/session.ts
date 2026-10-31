@@ -19,6 +19,8 @@ interface SessionState extends Session {
   // Streams restored from the last session that have not played yet. YouTube lets one player on a
   // screen start by itself, so the others wait for the user: Play all, or their own play button.
   waiting: string[];
+  // How many seconds each stream is held back to line it up with the others (see SyncPanel).
+  delays: Record<string, number>;
   info: Record<string, VideoInfo | null>;
   status: Record<string, PlayerStatus>;
   // sport: the stream's sport when it is known at adding time (from Live now or a sport search).
@@ -38,6 +40,7 @@ interface SessionState extends Session {
   setInfo(videoId: string, info: VideoInfo | null): void;
   // A sport, "none", or null to let the app find it.
   setSport(videoId: string, sport: string | null): void;
+  setDelay(videoId: string, seconds: number): void;
   popOut(videoId: string): void;
   popIn(videoId: string): void;
   // Puts another stream in a stream's place (same slot, volume and selection), with its sport.
@@ -60,6 +63,7 @@ export const useSession = create<SessionState>((set, get) => ({
   maximized: null,
   popped: [],
   waiting: [],
+  delays: {},
   info: {},
   status: {},
 
@@ -80,7 +84,7 @@ export const useSession = create<SessionState>((set, get) => ({
   },
 
   remove(videoId) {
-    const { streams, selected, maximized, volumes, status, sports, waiting, popped } = get();
+    const { streams, selected, maximized, volumes, status, sports, waiting, popped, delays } = get();
     const index = streams.indexOf(videoId);
     if (index < 0) return;
     const next = streams.filter((id) => id !== videoId);
@@ -93,6 +97,7 @@ export const useSession = create<SessionState>((set, get) => ({
       volumes: without(volumes, videoId),
       status: without(status, videoId),
       sports: without(sports, videoId),
+      delays: without(delays, videoId),
     });
   },
 
@@ -148,10 +153,20 @@ export const useSession = create<SessionState>((set, get) => ({
     set({ sports: sport ? { ...get().sports, [videoId]: sport } : without(get().sports, videoId) });
   },
 
+  setDelay(videoId, seconds) {
+    const { delays } = get();
+    set({ delays: seconds > 0 ? { ...delays, [videoId]: seconds } : without(delays, videoId) });
+  },
+
   popOut(videoId) {
-    const { streams, popped, maximized } = get();
+    const { streams, popped, maximized, delays } = get();
     if (!streams.includes(videoId) || popped.includes(videoId)) return;
-    set({ popped: [...popped, videoId], maximized: maximized === videoId ? null : maximized });
+    // Its own window starts a new player, at live.
+    set({
+      popped: [...popped, videoId],
+      maximized: maximized === videoId ? null : maximized,
+      delays: without(delays, videoId),
+    });
   },
 
   popIn(videoId) {
@@ -159,7 +174,7 @@ export const useSession = create<SessionState>((set, get) => ({
   },
 
   replace(videoId, next, sport) {
-    const { streams, selected, volumes, sports, status, waiting } = get();
+    const { streams, selected, volumes, sports, status, waiting, delays } = get();
     const index = streams.indexOf(videoId);
     if (index < 0 || streams.includes(next)) return;
     const moved = <T>(record: Record<string, T>, value: T | undefined) => {
@@ -174,11 +189,12 @@ export const useSession = create<SessionState>((set, get) => ({
       sports: moved(sports, sport),
       status: without(status, videoId),
       waiting: waiting.filter((id) => id !== videoId),
+      delays: without(delays, videoId),
     });
   },
 
   open(saved) {
-    const keep = (record: Record<string, PlayerStatus>) =>
+    const keep = <T>(record: Record<string, T>) =>
       Object.fromEntries(Object.entries(record).filter(([id]) => saved.streams.includes(id)));
     set({
       layout: saved.layout,
@@ -189,6 +205,7 @@ export const useSession = create<SessionState>((set, get) => ({
       maximized: null,
       waiting: [],
       status: keep(get().status),
+      delays: keep(get().delays),
     });
   },
 }));

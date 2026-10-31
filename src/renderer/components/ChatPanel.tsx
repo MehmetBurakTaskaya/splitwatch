@@ -19,9 +19,9 @@ export function ChatPanel() {
   const params = new URLSearchParams({ v: videoId, embed_domain: APP_ID, ...(dark ? { dark_theme: '1' } : {}) });
 
   return (
-    <aside className="chat" aria-label={t('chat.title')}>
-      <div className="chat-head">
-        <span className="chat-title">
+    <aside className="side chat" aria-label={t('chat.title')}>
+      <div className="side-head">
+        <span className="side-title">
           <strong>{t('chat.title')}</strong>
           {info?.title && (
             <span className="spoiler" dir="auto">

@@ -127,6 +127,21 @@
     "browser": "Chat in your browser",
     "close": "Close the chat"
   },
+  "sync": {
+    "open": "Line up the streams",
+    "title": "Line up the streams",
+    "experimental": "Experimental",
+    "close": "Close the line-up",
+    "intro": "Hold back the streams that run ahead until all of them show the same moment. A stream goes back only as far as YouTube lets it be rewound.",
+    "stream": "Stream {index}",
+    "later": "Hold stream {index} back {seconds, plural, one {# more second} other {# more seconds}}",
+    "sooner": "Hold stream {index} back {seconds, plural, one {# second} other {# seconds}} less",
+    "plus": "+{seconds} s",
+    "minus": "−{seconds} s",
+    "delay": "{seconds, plural, =0 {No delay} other {# s behind}}",
+    "reset": "Reset",
+    "resetLabel": "Take away the delay of stream {index}"
+  },
   "error": {
     "embedDisabled": "The owner does not allow this video to be played outside YouTube.",
     "notFound": "This video is unavailable: it was removed or made private.",

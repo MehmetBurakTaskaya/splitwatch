@@ -187,7 +187,7 @@ export interface SplitwatchApi {
   copyText(text: string): void;
   getMediaKeysState(): Promise<MediaKeysState>;
   // A stream in a window of its own, and back.
-  openPopout(videoId: string): void;
+  openPopout(videoId: string, live: boolean): void;
   closePopout(videoId: string): void;
   onPopoutClosed(listener: (videoId: string) => void): () => void;
   // Where the sound comes from: "grid" or the video ID of a popped-out stream.

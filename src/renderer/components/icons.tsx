@@ -118,6 +118,11 @@ export const IconPopout = () => (
     <path d="M11 3.5h5.5V9M16.5 3.5L10 10M14 12v3.5a1 1 0 0 1-1 1H4.5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1H8" />
   </Icon>
 );
+export const IconAlign = () => (
+  <Icon>
+    <path d="M11 3v14M4 6.5h7M7 10h7M3 13.5h8" />
+  </Icon>
+);
 export const IconChat = () => (
   <Icon>
     <path d="M4 4.5h12a1 1 0 0 1 1 1V13a1 1 0 0 1-1 1H9l-3.5 3v-3H4a1 1 0 0 1-1-1V5.5a1 1 0 0 1 1-1zM6.5 8h7M6.5 10.5h4.5" />

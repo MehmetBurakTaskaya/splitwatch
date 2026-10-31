@@ -247,7 +247,7 @@
   gap: var(--space-2);
 }
 
-/* The grid, and the live chat beside it. */
+/* The grid, and a panel beside it: the live chat, or the line-up of the streams. */
 .stage {
   flex: 1;
   min-block-size: 0;
@@ -256,7 +256,7 @@
 .stage > .grid {
   min-inline-size: 0;
 }
-.chat {
+.side {
   display: flex;
   flex-direction: column;
   flex: none;
@@ -264,7 +264,7 @@
   border-inline-start: 1px solid var(--color-border);
   background: var(--color-surface);
 }
-.chat-head {
+.side-head {
   display: flex;
   align-items: center;
   gap: var(--space-1);
@@ -272,14 +272,14 @@
   padding-inline: var(--space-3) var(--space-1);
   border-block-end: 1px solid var(--color-border);
 }
-.chat-title {
+.side-title {
   display: flex;
   flex-direction: column;
   flex: 1;
   min-inline-size: 0;
   font-size: var(--font-size-1);
 }
-.chat-title .spoiler {
+.side-title > :not(strong) {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -289,4 +289,60 @@
   flex: 1;
   inline-size: 100%;
   border: 0;
+}
+.sync-body {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-3);
+}
+.sync-intro {
+  margin: 0;
+  font-size: var(--font-size-1);
+  color: var(--color-text-muted);
+}
+.sync-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.sync-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.sync-name {
+  display: flex;
+  gap: var(--space-2);
+  min-inline-size: 0;
+}
+.sync-name .spoiler {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sync-index {
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-muted);
+}
+.sync-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+}
+.sync-controls .button {
+  min-inline-size: 0;
+  padding-inline: var(--space-2);
+}
+.sync-name output {
+  flex: none;
+  margin-inline-start: auto;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-muted);
 }

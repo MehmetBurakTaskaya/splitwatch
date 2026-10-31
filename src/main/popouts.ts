@@ -23,7 +23,7 @@ function claim(who: string): void {
   broadcast();
 }
 
-function open(videoId: string): void {
+function open(videoId: string, live: boolean): void {
   const known = windows.get(videoId);
   if (known) return known.focus();
   if (windows.size >= MAX) return;
@@ -43,12 +43,12 @@ function open(videoId: string): void {
     mainWindow()?.webContents.send(IPC.popoutClosed, videoId);
     if (owner === videoId) claim('grid');
   });
-  void win.loadURL(pageUrl({ popout: videoId }));
+  void win.loadURL(pageUrl({ popout: videoId, ...(live ? { live: '1' } : {}) }));
 }
 
 export function registerPopoutIpc(): void {
-  ipcMain.on(IPC.popoutOpen, (_e, id: unknown) => {
-    if (typeof id === 'string' && isVideoId(id)) open(id);
+  ipcMain.on(IPC.popoutOpen, (_e, id: unknown, live: unknown) => {
+    if (typeof id === 'string' && isVideoId(id)) open(id, live === true);
   });
   ipcMain.on(IPC.popoutClose, (_e, id: unknown) => {
     if (typeof id === 'string') windows.get(id)?.close();

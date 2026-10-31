@@ -19,13 +19,14 @@ const params = new URLSearchParams(location.search);
 const requested = params.get('locale');
 // A popped-out stream's window shows one player; it reads the settings but never writes the session.
 const popout = params.get('popout');
+const live = params.get('live') === '1';
 
 if (popout && isVideoId(popout)) {
   void Promise.all([initI18n(requested), loadPrefs()]).then(() => {
     connectTheme();
     createRoot(document.getElementById('root')!).render(
       <StrictMode>
-        <PopoutView videoId={popout} />
+        <PopoutView videoId={popout} live={live} />
       </StrictMode>,
     );
   });

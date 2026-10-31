@@ -1,6 +1,6 @@
 import { type CSSProperties, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CHAT_WIDTH, layoutById, minContentSize } from '../../shared/layouts';
+import { SIDE_WIDTH, layoutById, minContentSize } from '../../shared/layouts';
 import { useAppStore } from '../state/app';
 import { useSession } from '../state/session';
 import { IconAdd, IconPopout } from './icons';
@@ -31,7 +31,7 @@ export function Grid() {
   const maximized = useSession((s) => s.maximized);
   const popped = useSession((s) => s.popped);
   const mini = useAppStore((s) => s.mini);
-  const chat = useAppStore((s) => s.chat !== null);
+  const side = useAppStore((s) => s.chat !== null || s.sync);
   const [dragging, setDragging] = useState(false);
   const layout = layoutById(layoutId);
 
@@ -40,8 +40,8 @@ export function Grid() {
   useEffect(() => {
     if (mini) return;
     const size = minContentSize(layoutId);
-    window.splitwatch.setMinContentSize({ ...size, width: size.width + (chat ? CHAT_WIDTH : 0) });
-  }, [layoutId, mini, chat]);
+    window.splitwatch.setMinContentSize({ ...size, width: size.width + (side ? SIDE_WIDTH : 0) });
+  }, [layoutId, mini, side]);
 
   // Tiles stay in a fixed DOM order (sorted by ID) and are placed with CSS order, because moving an
   // iframe in the DOM reloads it and restarts the stream.

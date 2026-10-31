@@ -53,6 +53,10 @@ button.button-quiet {
   background: transparent;
   border-color: var(--color-border);
 }
+.button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
 
 .icon-button {
   display: inline-grid;

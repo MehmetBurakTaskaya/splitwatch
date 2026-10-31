@@ -35,3 +35,41 @@ describe('replacing an ended stream', () => {
     expect(useSession.getState().streams).toEqual([A, B]);
   });
 });
+
+describe('delays that line up the streams', () => {
+  beforeEach(() => {
+    useSession.setState({ streams: ['M7lc1UVf-VE', 'aqz-KE-bpKQ'], selected: 'M7lc1UVf-VE', popped: [], delays: {} });
+  });
+
+  it('are set per stream, and none is no entry', () => {
+    useSession.getState().setDelay('aqz-KE-bpKQ', 7);
+    expect(useSession.getState().delays).toEqual({ 'aqz-KE-bpKQ': 7 });
+    useSession.getState().setDelay('aqz-KE-bpKQ', 0);
+    expect(useSession.getState().delays).toEqual({});
+  });
+
+  it('go with their stream when it is removed, replaced or popped out', () => {
+    const s = () => useSession.getState();
+    s().setDelay('aqz-KE-bpKQ', 7);
+    s().remove('aqz-KE-bpKQ');
+    expect(s().delays).toEqual({});
+
+    s().add('aqz-KE-bpKQ');
+    s().setDelay('aqz-KE-bpKQ', 7);
+    s().replace('aqz-KE-bpKQ', 'dQw4w9WgXcQ');
+    expect(s().delays).toEqual({});
+
+    s().setDelay('M7lc1UVf-VE', 3);
+    s().popOut('M7lc1UVf-VE');
+    expect(s().delays).toEqual({});
+  });
+
+  it('stay for the streams that a saved layout keeps', () => {
+    useSession.getState().setDelay('M7lc1UVf-VE', 4);
+    useSession.getState().setDelay('aqz-KE-bpKQ', 9);
+    useSession
+      .getState()
+      .open({ layout: '2', streams: ['M7lc1UVf-VE', 'dQw4w9WgXcQ'], selected: null, volumes: {}, sports: {} });
+    expect(useSession.getState().delays).toEqual({ 'M7lc1UVf-VE': 4 });
+  });
+});

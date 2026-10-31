@@ -445,3 +445,37 @@ test('the live chat opens beside the grid, read-only, and closes', async () => {
   await expect(page.locator('.chat')).toHaveCount(0);
   await app.close();
 });
+
+test('the line-up panel holds a stream back beside the grid, instead of a chat', async () => {
+  const { app, page } = await launch(
+    freshUserData({ session: { layout: '2', streams: [VIDEO_A, VIDEO_B], selected: VIDEO_A } }),
+  );
+  const toggle = page.getByRole('button', { name: en.sync.open });
+  await toggle.click();
+  await expect(toggle).toHaveAttribute('aria-pressed', 'true');
+  const rows = page.locator('.sync-row');
+  await expect(rows).toHaveCount(2);
+  const row = page.locator(`[data-sync="${VIDEO_B}"]`);
+  const sooner = row.getByRole('button', { name: /less$/ }).first();
+  await expect(sooner).toBeDisabled();
+  await expect(row.locator('output')).toHaveText('No delay');
+
+  // The selected stream starts by itself; the other waits.
+  if (!process.env.CI) {
+    const first = page.locator(`[data-sync="${VIDEO_A}"]`);
+    await expect(page.locator(`[data-stream="${VIDEO_A}"]`)).toHaveAttribute('data-state', 'playing', {
+      timeout: 45_000,
+    });
+    await first.getByRole('button', { name: 'Hold stream 1 back 5 more seconds' }).click();
+    await expect(first.locator('output')).toHaveText('5 s behind');
+    await first.getByRole('button', { name: en.sync.resetLabel.replace('{index}', '1') }).click();
+    await expect(first.locator('output')).toHaveText('No delay');
+  }
+
+  // A chat takes the panel's place.
+  await page.getByRole('button', { name: en.chat.open.replace('{index}', '1') }).click();
+  await expect(page.locator('.sync')).toHaveCount(0);
+  await expect(page.locator('.chat')).toHaveCount(1);
+  await expect(toggle).toHaveAttribute('aria-pressed', 'false');
+  await app.close();
+});

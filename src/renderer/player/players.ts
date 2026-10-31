@@ -2,12 +2,14 @@ import { useAppStore } from '../state/app';
 import { useEvents } from '../state/events';
 import { useSession } from '../state/session';
 import { useYouTube } from '../state/youtube';
+import { type Held, clampDelay, holdOf, resumeTime } from './live';
 
 // The live YouTube players, by video ID. Sound is set here from the session: only the picked
 // stream is audible (unless everything is muted); the others play muted.
 const players = new Map<string, YT.Player>();
-// Players paused here because they left the screen, to be resumed when they are back.
-const held = new Set<string>();
+// Players paused here because they left the screen, with where they stopped, to be resumed when they
+// are back.
+const held = new Map<string, Held>();
 
 const PLAYING = 1;
 const BUFFERING = 3;
@@ -76,7 +78,7 @@ function visibleStreams(): Set<string> | null {
 }
 
 // YouTube allows no playback from a player the user cannot see: players that leave the screen are
-// paused here, and resumed when they come back. A live stream resumes at its live edge.
+// paused here, and resumed when they come back. A live stream resumes as far behind live as it was.
 let retry: ReturnType<typeof setTimeout> | undefined;
 
 function syncPlayback(): void {
@@ -84,17 +86,17 @@ function syncPlayback(): void {
   let buffering = false;
   for (const [id, player] of players) {
     const shown = visible === null || visible.has(id);
+    const hold = held.get(id);
     try {
       const state = player.getPlayerState();
       if (!shown && (state === PLAYING || state === BUFFERING)) {
         player.pauseVideo();
-        held.add(id);
+        if (!hold) held.set(id, holdOf(player));
         // A player can ignore a pause while it buffers; ask again until it holds.
         if (state === BUFFERING) buffering = true;
-      } else if (shown && held.has(id)) {
+      } else if (shown && hold) {
         held.delete(id);
-        // For a live stream, getDuration() is the time since the stream began: its live edge.
-        if (useYouTube.getState().liveStates[id] === 'live') player.seekTo(player.getDuration(), true);
+        if (useYouTube.getState().liveStates[id] === 'live') player.seekTo(resumeTime(hold), true);
         player.playVideo();
       }
     } catch {
@@ -128,5 +130,25 @@ export function togglePlay(videoId: string | null): void {
 
 export function seekBy(videoId: string | null, seconds: number): void {
   const player = videoId ? players.get(videoId) : undefined;
-  if (player) player.seekTo(Math.max(0, player.getCurrentTime() + seconds), true);
+  if (!videoId || !player) return;
+  player.seekTo(Math.max(0, player.getCurrentTime() + seconds), true);
+  // Going back holds the stream back; going forward takes off as much of its delay.
+  const { delays, setDelay } = useSession.getState();
+  setDelay(videoId, clampDelay((delays[videoId] ?? 0) - seconds));
+}
+
+// Holds a stream back by seconds more (fewer when negative), to line it up with the others.
+export function delayBy(videoId: string, seconds: number): void {
+  const player = players.get(videoId);
+  if (!player) return;
+  const { delays, setDelay } = useSession.getState();
+  const now = delays[videoId] ?? 0;
+  const next = clampDelay(now + seconds);
+  if (next === now) return;
+  try {
+    player.seekTo(Math.max(0, player.getCurrentTime() - (next - now)), true);
+  } catch {
+    return;
+  }
+  setDelay(videoId, next);
 }

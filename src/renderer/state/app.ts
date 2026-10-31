@@ -24,6 +24,8 @@ interface AppState {
   audioOwner: string;
   // The stream whose live chat shows beside the grid.
   chat: string | null;
+  // The panel that lines up the streams, beside the grid (instead of a chat).
+  sync: boolean;
 }
 
 export const useAppStore = create<AppState>(() => ({
@@ -38,6 +40,7 @@ export const useAppStore = create<AppState>(() => ({
   shared: null,
   audioOwner: 'grid',
   chat: null,
+  sync: false,
 }));
 
 export const openDialog = (dialog: DialogName, stream: string | null = null) =>

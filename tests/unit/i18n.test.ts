@@ -34,6 +34,7 @@ const values = {
   channel: 'Fake federation',
   year: '2028',
   days: 12,
+  seconds: 5,
   day: 3,
   total: 17,
   place: 'Los Angeles',

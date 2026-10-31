@@ -3,13 +3,14 @@ import { useTranslation } from 'react-i18next';
 import { LAYOUTS } from '../../shared/layouts';
 import { parseVideoId } from '../../shared/youtube';
 import { playAll } from '../player/players';
-import { openDialog } from '../state/app';
+import { openDialog, useAppStore } from '../state/app';
 import { setPrefs } from '../state/prefs';
 import { type AddResult, useSession } from '../state/session';
 import { useTheme } from '../theme/engine';
 import { EventChip } from './EventChip';
 import { ADD_INPUT_ID } from './Grid';
 import {
+  IconAlign,
   IconKeyboard,
   IconLayouts,
   IconMoon,
@@ -32,6 +33,7 @@ export function TopBar() {
   const muted = useSession((s) => s.muted);
   const masterVolume = useSession((s) => s.masterVolume);
   const waiting = useSession((s) => s.waiting.length);
+  const sync = useAppStore((s) => s.sync);
   const dark = useTheme((s) => s.scheme === 'dark');
   const schemeLabel = dark ? t('scheme.toLight') : t('scheme.toDark');
 
@@ -133,6 +135,19 @@ export function TopBar() {
           </button>
         ))}
       </div>
+
+      {streams.length > 1 && (
+        <button
+          type="button"
+          className="icon-button optional"
+          aria-pressed={sync}
+          aria-label={t('sync.open')}
+          title={t('sync.open')}
+          onClick={() => useAppStore.setState({ sync: !sync, chat: null })}
+        >
+          <IconAlign />
+        </button>
+      )}
 
       <div className="master">
         <button

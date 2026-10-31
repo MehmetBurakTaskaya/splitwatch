@@ -50,8 +50,8 @@ export const PLAYER_MIN = 200;
 export const TILE_BAR = 36;
 export const GRID_GAP = 4;
 export const GRID_PADDING = 4;
-// The live chat panel beside the grid.
-export const CHAT_WIDTH = 340;
+// A panel beside the grid: the live chat, or the one that lines up the streams.
+export const SIDE_WIDTH = 340;
 export const TOP_BAR = 48;
 const TILE_BORDER = 2;
 

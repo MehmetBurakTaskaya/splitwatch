@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { VideoInfo } from '../../shared/ipc';
 import { loadIframeApi } from '../player/iframe-api';
+import { type Held, holdOf, resumeTime } from '../player/live';
 import { IconMuted, IconPause, IconPlay, IconRestore, IconSound } from './icons';
 
 const PLAYING = 1;
@@ -10,11 +11,11 @@ const BUFFERING = 3;
 // A stream in a window of its own: one player and a bar. The sound comes from here only while this
 // window owns it (the grid hands it over, or the sound button claims it). Like the grid, the player
 // pauses while the window is minimized or hidden.
-export function PopoutView({ videoId }: { videoId: string }) {
+export function PopoutView({ videoId, live }: { videoId: string; live: boolean }) {
   const { t } = useTranslation();
   const host = useRef<HTMLDivElement>(null);
   const player = useRef<YT.Player | null>(null);
-  const held = useRef(false);
+  const held = useRef<Held | null>(null);
   const volume = useRef(100);
   const [info, setInfo] = useState<VideoInfo | null>(null);
   const [owner, setOwner] = useState('grid');
@@ -84,16 +85,17 @@ export function PopoutView({ videoId }: { videoId: string }) {
           const state = p.getPlayerState();
           if (!shown && (state === PLAYING || state === BUFFERING)) {
             p.pauseVideo();
-            held.current = true;
+            held.current ??= holdOf(p);
           } else if (shown && held.current) {
-            held.current = false;
+            if (live) p.seekTo(resumeTime(held.current), true);
+            held.current = null;
             p.playVideo();
           }
         } catch {
           // not ready
         }
       }),
-    [],
+    [live],
   );
 
   const toggle = () => {

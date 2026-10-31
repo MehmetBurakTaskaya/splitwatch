@@ -314,7 +314,7 @@ export function Tile({
           aria-pressed={chatHere}
           aria-label={t('chat.open', { index: n })}
           title={t('chat.open', { index: n })}
-          onClick={() => useAppStore.setState({ chat: chatHere ? null : videoId })}
+          onClick={() => useAppStore.setState({ chat: chatHere ? null : videoId, sync: false })}
         >
           <IconChat />
         </button>
@@ -350,7 +350,7 @@ export function Tile({
                 // The sound goes with the stream when it is the one heard.
                 if (s.selected === videoId && !s.muted) window.splitwatch.claimAudio(videoId);
                 s.popOut(videoId);
-                window.splitwatch.openPopout(videoId);
+                window.splitwatch.openPopout(videoId, useYouTube.getState().liveStates[videoId] === 'live');
               }}
             >
               <IconPopout />
