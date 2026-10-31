@@ -1,6 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
-  <rect width="1024" height="1024" rx="224" fill="#0e1116"/>
-  <rect x="200" y="232" width="128" height="560" rx="40" fill="#3fb6a8"/>
-  <rect x="448" y="232" width="128" height="560" rx="40" fill="#e6e9ee"/>
-  <rect x="696" y="232" width="128" height="560" rx="40" fill="#3fb6a8"/>
+  <!-- Splitwatch: a grid of four streams; the one you hear plays in the accent color. -->
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1c232c"/>
+      <stop offset="1" stop-color="#0e1116"/>
+    </linearGradient>
+  </defs>
+  <rect x="100" y="100" width="824" height="824" rx="185" fill="url(#body)"/>
+  <rect x="250" y="250" width="240" height="240" rx="48" fill="#3fb6a8"/>
+  <path d="M338 302 L448 370 L338 438 Z" fill="#ffffff" stroke="#ffffff" stroke-width="24" stroke-linejoin="round"/>
+  <rect x="534" y="250" width="240" height="240" rx="48" fill="#dfe4ea"/>
+  <rect x="250" y="534" width="240" height="240" rx="48" fill="#dfe4ea"/>
+  <rect x="534" y="534" width="240" height="240" rx="48" fill="#dfe4ea"/>
 </svg>

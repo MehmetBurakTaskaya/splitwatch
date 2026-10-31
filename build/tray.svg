@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- The tray mark on Windows and Linux: the grid of four, the heard stream in the accent color. -->
+  <rect x="3" y="3" width="12" height="12" rx="2.5" fill="#3fb6a8"/>
+  <rect x="17" y="3" width="12" height="12" rx="2.5" fill="#9aa4b2"/>
+  <rect x="3" y="17" width="12" height="12" rx="2.5" fill="#9aa4b2"/>
+  <rect x="17" y="17" width="12" height="12" rx="2.5" fill="#9aa4b2"/>
+</svg>
