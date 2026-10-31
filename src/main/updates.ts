@@ -5,6 +5,7 @@ import { autoUpdater } from 'electron-updater';
 import { PRODUCT_NAME, RELEASES_URL, REPOSITORY } from '../shared/app';
 import { IPC, type UpdateState } from '../shared/ipc';
 import { isNewerVersion } from '../shared/version';
+import { getSettings, onSettingsChange } from './settings-store';
 
 let state: UpdateState = { status: 'idle' };
 
@@ -21,6 +22,14 @@ export function setupUpdates(): void {
   ipcMain.handle(IPC.openReleasePage, () => shell.openExternal(`${RELEASES_URL}/latest`));
 
   if (!app.isPackaged || process.env.SPLITWATCH_NO_UPDATES) return;
+  // The check can be turned off in Settings; turning it back on checks at once.
+  if (getSettings().checkUpdates) check();
+  onSettingsChange((s, before) => {
+    if (s.checkUpdates && !before.checkUpdates && state.status === 'idle') check();
+  });
+}
+
+function check(): void {
   if (canUpdateItself()) checkWithUpdater();
   else void checkGitHub();
 }

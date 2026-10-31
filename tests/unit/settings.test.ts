@@ -29,6 +29,8 @@ describe('sanitizeSettings', () => {
       customThemes: [],
       watchHistory: false,
       sounds: true,
+      checkUpdates: false,
+      welcomeSeen: true,
       colorScheme: 'dark',
       animate: false,
       performance: true,

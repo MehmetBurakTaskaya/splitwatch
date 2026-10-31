@@ -67,6 +67,10 @@ export interface Settings {
   watchHistory: boolean;
   // Quiet sounds in the theme's style (src/renderer/theme/sounds.ts).
   sounds: boolean;
+  // Ask GitHub for a new version when the app starts.
+  checkUpdates: boolean;
+  // The first-run guide on the start screen was read.
+  welcomeSeen: boolean;
   colorScheme: ColorScheme;
   animate: boolean;
   performance: boolean;
@@ -98,6 +102,8 @@ export const DEFAULT_SETTINGS: Settings = {
   customThemes: [],
   watchHistory: true,
   sounds: false,
+  checkUpdates: true,
+  welcomeSeen: false,
   colorScheme: 'system',
   animate: true,
   performance: false,
@@ -223,6 +229,8 @@ export function sanitizeSettings(raw: unknown): Settings {
     customThemes: sanitizeCustomThemes(raw.customThemes),
     watchHistory: raw.watchHistory !== false,
     sounds: raw.sounds === true,
+    checkUpdates: raw.checkUpdates !== false,
+    welcomeSeen: raw.welcomeSeen === true,
     colorScheme: scheme === 'light' || scheme === 'dark' ? scheme : 'system',
     animate: raw.animate !== false,
     performance: raw.performance === true,

@@ -98,6 +98,8 @@ export function SettingsDialog() {
       <QuotaSection />
       <SportsSection />
 
+      <UpdatesSection />
+
       {version && <p className="dialog-meta">{t('settings.version', { version })}</p>}
       <div className="dialog-actions">
         <button type="button" className="button" onClick={requestClose}>
@@ -738,4 +740,19 @@ function sortedThemes(themes: readonly Theme[], name: (theme: Theme) => string, 
   return themes
     .filter((theme) => !theme.event)
     .sort((a, b) => (a.id === NEUTRAL_THEME ? -1 : b.id === NEUTRAL_THEME ? 1 : collator.compare(name(a), name(b))));
+}
+
+function UpdatesSection() {
+  const { t } = useTranslation();
+  const on = usePrefs((s) => s.checkUpdates);
+  return (
+    <section className="settings-section">
+      <h3>{t('settings.updates')}</h3>
+      <label className="field field-tight">
+        <input type="checkbox" checked={on} onChange={(e) => setPrefs({ checkUpdates: e.target.checked })} />
+        {t('settings.checkUpdates')}
+      </label>
+      <p className="note field-note">{t('settings.checkUpdatesNote')}</p>
+    </section>
+  );
 }

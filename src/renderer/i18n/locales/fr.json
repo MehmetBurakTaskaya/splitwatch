@@ -23,6 +23,14 @@
     "body": "Collez un lien YouTube ou un ID de vidéo dans le champ en haut. Chaque flux a sa propre place, et celui que vous choisissez est celui que vous entendez.",
     "slot": "Ajouter un flux"
   },
+  "welcome": {
+    "title": "Bienvenue dans Splitwatch",
+    "add": "Collez un lien YouTube dans le champ ci-dessus, ou choisissez un flux dans « En direct » ci-dessous. Jusqu’à neuf flux tiennent côte à côte.",
+    "sound": "Cliquez sur un flux pour l’entendre ; les autres sont lus sans le son. À la prochaine ouverture de Splitwatch, seul ce flux démarre tout seul, et « Tout lire » lance les autres.",
+    "key": "Facultatif : une clé API YouTube gratuite, ajoutée dans les Paramètres, active la recherche, les badges EN DIRECT et les notifications.",
+    "done": "Compris",
+    "settings": "Ouvrir les Paramètres"
+  },
   "clipboard": {
     "prompt": "Ajouter la vidéo YouTube de votre presse-papiers ?",
     "add": "Ajouter",
@@ -286,7 +294,10 @@
     "soundsNote": "Des sons doux dans le style du thème quand un flux arrive ou part, quand la disposition change ou quand un flux avec rappel va commencer.",
     "language": "Langue",
     "languageSystem": "Comme le système ({language})",
-    "languageUnreviewed": "Cette traduction n’a pas encore été relue par un locuteur natif. Les corrections sont les bienvenues sur GitHub."
+    "languageUnreviewed": "Cette traduction n’a pas encore été relue par un locuteur natif. Les corrections sont les bienvenues sur GitHub.",
+    "updates": "Mises à jour",
+    "checkUpdates": "Rechercher une nouvelle version au démarrage de Splitwatch",
+    "checkUpdatesNote": "Splitwatch demande sa dernière version à GitHub et n’envoie rien vous concernant. Si cette option est désactivée, les nouvelles versions se trouvent sur la page de téléchargement."
   },
   "update": {
     "available": "La version {version} est disponible.",

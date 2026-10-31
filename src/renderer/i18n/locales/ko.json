@@ -23,6 +23,14 @@
     "body": "위쪽 입력란에 YouTube 링크나 동영상 ID를 붙여넣으세요. 스트림마다 자리가 하나씩 생기고, 선택한 스트림의 소리가 들려요.",
     "slot": "스트림 추가"
   },
+  "welcome": {
+    "title": "Splitwatch에 오신 것을 환영해요",
+    "add": "위의 입력란에 YouTube 링크를 붙여 넣거나, 아래 ‘지금 라이브’에서 스트림을 고르세요. 스트림은 최대 9개까지 나란히 볼 수 있어요.",
+    "sound": "스트림을 클릭하면 그 소리가 들리고, 나머지는 음소거로 재생돼요. Splitwatch를 다시 열면 그 스트림만 자동으로 시작되고, 나머지는 ‘모두 재생’으로 시작할 수 있어요.",
+    "key": "선택 사항: 설정에서 무료 YouTube API 키를 추가하면 검색, 라이브 표시, 알림을 쓸 수 있어요.",
+    "done": "확인",
+    "settings": "설정 열기"
+  },
   "clipboard": {
     "prompt": "클립보드에 있는 YouTube 동영상을 추가할까요?",
     "add": "추가",
@@ -286,7 +294,10 @@
     "soundsNote": "스트림이 추가되거나 빠질 때, 레이아웃이 바뀔 때, 미리 알림을 설정한 스트림이 곧 시작될 때 테마 스타일의 부드러운 소리가 나요.",
     "language": "언어",
     "languageSystem": "시스템 설정 따르기({language})",
-    "languageUnreviewed": "이 번역은 아직 원어민의 검토를 받지 않았어요. 수정 제안은 GitHub에서 받고 있어요."
+    "languageUnreviewed": "이 번역은 아직 원어민의 검토를 받지 않았어요. 수정 제안은 GitHub에서 받고 있어요.",
+    "updates": "업데이트",
+    "checkUpdates": "Splitwatch를 시작할 때 새 버전 확인",
+    "checkUpdatesNote": "Splitwatch는 GitHub에 최신 버전만 물어보고, 사용자에 관한 정보는 보내지 않아요. 이 기능을 끄면 새 버전은 다운로드 페이지에서 확인할 수 있어요."
   },
   "update": {
     "available": "버전 {version} 업데이트가 있어요.",

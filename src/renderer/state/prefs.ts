@@ -12,6 +12,8 @@ export type Prefs = Pick<
   | 'customThemes'
   | 'watchHistory'
   | 'sounds'
+  | 'checkUpdates'
+  | 'welcomeSeen'
   | 'colorScheme'
   | 'animate'
   | 'performance'
@@ -35,6 +37,8 @@ export const usePrefs = create<Prefs>(() => ({
   customThemes: [],
   watchHistory: DEFAULT_SETTINGS.watchHistory,
   sounds: DEFAULT_SETTINGS.sounds,
+  checkUpdates: DEFAULT_SETTINGS.checkUpdates,
+  welcomeSeen: true,
   colorScheme: DEFAULT_SETTINGS.colorScheme,
   animate: DEFAULT_SETTINGS.animate,
   performance: DEFAULT_SETTINGS.performance,

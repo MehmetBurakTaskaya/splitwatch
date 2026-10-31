@@ -11,7 +11,7 @@ function freshUserData(settings: object = {}): string {
   const dir = mkdtempSync(path.join(tmpdir(), 'splitwatch-test-'));
   writeFileSync(
     path.join(dir, 'settings.json'),
-    JSON.stringify({ clipboardSuggestions: false, language: 'en', ...settings }),
+    JSON.stringify({ clipboardSuggestions: false, language: 'en', welcomeSeen: true, ...settings }),
   );
   return dir;
 }

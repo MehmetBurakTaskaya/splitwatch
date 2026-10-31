@@ -23,6 +23,14 @@
     "body": "在顶部的输入框中粘贴 YouTube 链接或视频 ID。每个视频各占一格，选中哪个就听哪个的声音。",
     "slot": "添加视频"
   },
+  "welcome": {
+    "title": "欢迎使用 Splitwatch",
+    "add": "在上方的输入框中粘贴 YouTube 链接，或从下方“正在直播”中选择视频。最多可并排观看九个视频。",
+    "sound": "点击某个视频即可听到它的声音，其他视频静音播放。下次打开 Splitwatch 时，只有这个视频会自动播放，点击“全部播放”即可开始其余视频。",
+    "key": "可选：在“设置”中添加免费的 YouTube API 密钥，即可使用搜索、直播标记和通知。",
+    "done": "知道了",
+    "settings": "打开设置"
+  },
   "clipboard": {
     "prompt": "要添加剪贴板中的 YouTube 视频吗？",
     "add": "添加",
@@ -286,7 +294,10 @@
     "soundsNote": "添加或移除视频、更改布局，或提醒的视频即将开始时，播放符合主题风格的轻柔音效。",
     "language": "语言",
     "languageSystem": "与系统相同（{language}）",
-    "languageUnreviewed": "此翻译尚未经过母语人士校对。欢迎在 GitHub 上提出更正。"
+    "languageUnreviewed": "此翻译尚未经过母语人士校对。欢迎在 GitHub 上提出更正。",
+    "updates": "更新",
+    "checkUpdates": "启动 Splitwatch 时检查新版本",
+    "checkUpdatesNote": "Splitwatch 只向 GitHub 查询最新版本，不会发送任何关于你的信息。关闭后，可在下载页面查看新版本。"
   },
   "update": {
     "available": "新版本 {version} 已发布。",

@@ -23,6 +23,14 @@
     "body": "Üstteki kutuya bir YouTube bağlantısı veya video kimliği yapıştırın. Her yayın kendi alanında oynar ve seçtiğiniz yayının sesini duyarsınız.",
     "slot": "Yayın ekle"
   },
+  "welcome": {
+    "title": "Splitwatch'a hoş geldiniz",
+    "add": "Üstteki kutuya bir YouTube bağlantısı yapıştırın ya da aşağıdaki Şimdi canlı listesinden bir yayın seçin. Yan yana en fazla dokuz yayın sığar.",
+    "sound": "Bir yayını duymak için üzerine tıklayın; diğerleri sessiz oynar. Splitwatch yeniden açıldığında yalnızca o yayın kendiliğinden başlar, Tümünü oynat da kalanları başlatır.",
+    "key": "İsteğe bağlı: Ayarlar'dan ekleyeceğiniz ücretsiz bir YouTube API anahtarı aramayı, canlı etiketlerini ve bildirimleri açar.",
+    "done": "Anladım",
+    "settings": "Ayarları aç"
+  },
   "clipboard": {
     "prompt": "Panodaki YouTube videosu eklensin mi?",
     "add": "Ekle",
@@ -286,7 +294,10 @@
     "soundsNote": "Bir yayın eklendiğinde ya da kaldırıldığında, düzen değiştiğinde veya hatırlatıcısı olan bir yayın başlamak üzereyken temanın tarzında yumuşak sesler.",
     "language": "Dil",
     "languageSystem": "Sistemle aynı ({language})",
-    "languageUnreviewed": "Bu çeviri henüz anadili Türkçe olan biri tarafından kontrol edilmedi. Düzeltmelerinizi GitHub'da bekliyoruz."
+    "languageUnreviewed": "Bu çeviri henüz anadili Türkçe olan biri tarafından kontrol edilmedi. Düzeltmelerinizi GitHub'da bekliyoruz.",
+    "updates": "Güncellemeler",
+    "checkUpdates": "Açılışta yeni bir sürüm olup olmadığına bak",
+    "checkUpdatesNote": "Splitwatch, GitHub'a yalnızca en son sürümünü sorar; sizinle ilgili hiçbir şey göndermez. Bu kapalıyken yeni sürümleri indirme sayfasında bulabilirsiniz."
   },
   "update": {
     "available": "{version} sürümü kullanıma sunuldu.",

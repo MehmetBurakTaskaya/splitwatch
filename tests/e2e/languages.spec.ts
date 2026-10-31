@@ -11,7 +11,10 @@ const VIDEO_B = 'aqz-KE-bpKQ';
 
 function userData(settings: object): string {
   const dir = mkdtempSync(path.join(tmpdir(), 'splitwatch-lang-'));
-  writeFileSync(path.join(dir, 'settings.json'), JSON.stringify({ clipboardSuggestions: false, ...settings }));
+  writeFileSync(
+    path.join(dir, 'settings.json'),
+    JSON.stringify({ clipboardSuggestions: false, welcomeSeen: true, ...settings }),
+  );
   return dir;
 }
 

@@ -23,6 +23,14 @@
     "body": "Incolla un link di YouTube o l’ID di un video nella casella in alto. Ogni stream ha la sua corsia, e quello che scegli è quello che senti.",
     "slot": "Aggiungi uno stream"
   },
+  "welcome": {
+    "title": "Ti diamo il benvenuto in Splitwatch",
+    "add": "Incolla un link di YouTube nella casella qui sopra, oppure scegli uno stream da “In diretta ora” qui sotto. Fino a nove stream stanno uno accanto all’altro.",
+    "sound": "Fai clic su uno stream per sentirlo; gli altri vanno senza audio. Quando riapri Splitwatch, solo quello stream parte da sé, e “Avvia tutti” fa partire gli altri.",
+    "key": "Facoltativo: una chiave API di YouTube gratuita, aggiunta nelle Impostazioni, attiva la ricerca, i badge LIVE e le notifiche.",
+    "done": "Ho capito",
+    "settings": "Apri le Impostazioni"
+  },
   "clipboard": {
     "prompt": "Vuoi aggiungere il video di YouTube dagli appunti?",
     "add": "Aggiungi",
@@ -286,7 +294,10 @@
     "soundsNote": "Suoni leggeri nello stile del tema quando uno stream arriva o se ne va, il layout cambia o uno stream con promemoria sta per iniziare.",
     "language": "Lingua",
     "languageSystem": "Come il sistema ({language})",
-    "languageUnreviewed": "Questa traduzione non è ancora stata controllata da un madrelingua. Le correzioni sono benvenute su GitHub."
+    "languageUnreviewed": "Questa traduzione non è ancora stata controllata da un madrelingua. Le correzioni sono benvenute su GitHub.",
+    "updates": "Aggiornamenti",
+    "checkUpdates": "Cerca una nuova versione all’avvio di Splitwatch",
+    "checkUpdatesNote": "Splitwatch chiede a GitHub la sua ultima versione e non invia nulla su di te. Se lo disattivi, trovi le nuove versioni nella pagina di download."
   },
   "update": {
     "available": "È disponibile la versione {version}.",

@@ -23,6 +23,14 @@
     "body": "Pega un enlace o ID de video de YouTube en el cuadro de arriba. Cada transmisión tiene su propio espacio, y la que eliges es la que oyes.",
     "slot": "Añadir una transmisión"
   },
+  "welcome": {
+    "title": "Te damos la bienvenida a Splitwatch",
+    "add": "Pega un enlace de YouTube en el cuadro de arriba o elige una transmisión de En vivo ahora, más abajo. Caben hasta nueve transmisiones una al lado de la otra.",
+    "sound": "Haz clic en una transmisión para oírla; las demás se reproducen sin sonido. Cuando Splitwatch vuelva a abrirse, solo esa transmisión empezará sola, y Reproducir todo iniciará las demás.",
+    "key": "Opcional: una clave de API de YouTube gratuita, guardada en Configuración, activa la búsqueda, las etiquetas EN VIVO y las notificaciones.",
+    "done": "Entendido",
+    "settings": "Abrir Configuración"
+  },
   "clipboard": {
     "prompt": "¿Añadir el video de YouTube del portapapeles?",
     "add": "Añadir",
@@ -286,7 +294,10 @@
     "soundsNote": "Sonidos suaves al estilo del tema cuando una transmisión llega o se va, cuando cambia el diseño o cuando está a punto de empezar una transmisión con recordatorio.",
     "language": "Idioma",
     "languageSystem": "Igual que el sistema ({language})",
-    "languageUnreviewed": "Esta traducción aún no la ha revisado un hablante nativo. Se agradecen las correcciones en GitHub."
+    "languageUnreviewed": "Esta traducción aún no la ha revisado un hablante nativo. Se agradecen las correcciones en GitHub.",
+    "updates": "Actualizaciones",
+    "checkUpdates": "Buscar una versión nueva al iniciar Splitwatch",
+    "checkUpdatesNote": "Splitwatch consulta a GitHub cuál es su última versión y no envía nada sobre ti. Si lo desactivas, encontrarás las versiones nuevas en la página de descargas."
   },
   "update": {
     "available": "La versión {version} está disponible.",

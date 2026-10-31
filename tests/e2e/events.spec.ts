@@ -39,6 +39,7 @@ test('an event mode: its theme, schedule and medal table, and the opening animat
     JSON.stringify({
       clipboardSuggestions: false,
       language: 'en',
+      welcomeSeen: true,
       event: { active: 'winter-2026', introSeen: ['winter-2026'], country: 'NO' },
     }),
   );

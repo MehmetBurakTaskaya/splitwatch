@@ -23,6 +23,14 @@
     "body": "Cole um link ou ID de vídeo do YouTube na caixa lá em cima. Cada transmissão ganha seu próprio espaço, e a que você escolher é a que você ouve.",
     "slot": "Adicionar uma transmissão"
   },
+  "welcome": {
+    "title": "Boas-vindas ao Splitwatch",
+    "add": "Cole um link do YouTube na caixa acima ou escolha uma transmissão em Ao vivo agora, mais abaixo. Cabem até nove transmissões lado a lado.",
+    "sound": "Clique em uma transmissão para ouvi-la; as outras tocam sem som. Quando o Splitwatch abrir de novo, só essa transmissão começa sozinha, e Reproduzir tudo inicia as demais.",
+    "key": "Opcional: uma chave de API do YouTube gratuita, adicionada em Configurações, ativa a busca, os selos AO VIVO e as notificações.",
+    "done": "Entendi",
+    "settings": "Abrir Configurações"
+  },
   "clipboard": {
     "prompt": "Adicionar o vídeo do YouTube da sua área de transferência?",
     "add": "Adicionar",
@@ -286,7 +294,10 @@
     "soundsNote": "Sons suaves no estilo do tema quando uma transmissão entra ou sai, o layout muda ou uma transmissão com lembrete está para começar.",
     "language": "Idioma",
     "languageSystem": "Igual ao sistema ({language})",
-    "languageUnreviewed": "Esta tradução ainda não foi revisada por um falante nativo. Correções são bem-vindas no GitHub."
+    "languageUnreviewed": "Esta tradução ainda não foi revisada por um falante nativo. Correções são bem-vindas no GitHub.",
+    "updates": "Atualizações",
+    "checkUpdates": "Procurar uma nova versão quando o Splitwatch abrir",
+    "checkUpdatesNote": "O Splitwatch consulta o GitHub sobre a versão mais recente e não envia nada sobre você. Com isso desativado, as novas versões ficam na página de download."
   },
   "update": {
     "available": "A versão {version} está disponível.",

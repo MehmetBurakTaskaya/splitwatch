@@ -13,7 +13,7 @@ function freshUserData(settings: object = {}): string {
   const dir = mkdtempSync(path.join(tmpdir(), 'splitwatch-test-'));
   writeFileSync(
     path.join(dir, 'settings.json'),
-    JSON.stringify({ clipboardSuggestions: false, language: 'en', ...settings }),
+    JSON.stringify({ clipboardSuggestions: false, language: 'en', welcomeSeen: true, ...settings }),
   );
   return dir;
 }
@@ -459,7 +459,7 @@ test('the line-up panel holds a stream back beside the grid, instead of a chat',
   const rows = page.locator('.sync-row');
   await expect(rows).toHaveCount(2);
   const row = page.locator(`[data-sync="${VIDEO_B}"]`);
-  const sooner = row.getByRole('button', { name: /less$/ }).first();
+  const sooner = row.getByRole('button', { name: en.sync.minus.replace('{seconds}', '1') });
   await expect(sooner).toBeDisabled();
   await expect(row.locator('output')).toHaveText('No delay');
 
@@ -469,9 +469,9 @@ test('the line-up panel holds a stream back beside the grid, instead of a chat',
     await expect(page.locator(`[data-stream="${VIDEO_A}"]`)).toHaveAttribute('data-state', 'playing', {
       timeout: 45_000,
     });
-    await first.getByRole('button', { name: 'Hold stream 1 back 5 more seconds' }).click();
+    await first.getByRole('button', { name: en.sync.plus.replace('{seconds}', '5') }).click();
     await expect(first.locator('output')).toHaveText('5 s behind');
-    await first.getByRole('button', { name: en.sync.resetLabel.replace('{index}', '1') }).click();
+    await first.getByRole('button', { name: en.sync.reset }).click();
     await expect(first.locator('output')).toHaveText('No delay');
   }
 
@@ -603,5 +603,19 @@ test('a reminder that goes out reaches the page, which sounds and keeps showing 
     .poll(() => page.evaluate(() => (window as unknown as { tones: number }).tones), { timeout: 30_000 })
     .toBe(3);
   await expect(page.locator('.ambient-title')).toHaveText(['Final']);
+  await app.close();
+});
+
+test('the first-run guide shows once, until it is read', async () => {
+  const userData = freshUserData({ welcomeSeen: false });
+  let { app, page } = await launch(userData);
+  await expect(page.getByRole('heading', { name: en.welcome.title })).toBeVisible();
+  await expect(page.locator('.welcome-steps li')).toHaveCount(3);
+  await page.getByRole('button', { name: en.welcome.done }).click();
+  await expect(page.getByRole('heading', { name: en.empty.title })).toBeVisible();
+  await app.close();
+  ({ app, page } = await launch(userData));
+  await expect(page.getByRole('heading', { name: en.empty.title })).toBeVisible();
+  await expect(page.getByRole('heading', { name: en.welcome.title })).toHaveCount(0);
   await app.close();
 });

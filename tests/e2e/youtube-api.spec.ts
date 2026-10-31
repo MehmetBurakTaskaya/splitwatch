@@ -102,7 +102,7 @@ async function launch(
   const userData = mkdtempSync(path.join(tmpdir(), 'splitwatch-api-'));
   writeFileSync(
     path.join(userData, 'settings.json'),
-    JSON.stringify({ clipboardSuggestions: false, language: 'en', ...settings }),
+    JSON.stringify({ clipboardSuggestions: false, language: 'en', welcomeSeen: true, ...settings }),
   );
   const app = await electron.launch({
     args: ['.'],

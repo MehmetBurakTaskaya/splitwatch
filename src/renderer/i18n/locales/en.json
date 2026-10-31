@@ -23,6 +23,14 @@
     "body": "Paste a YouTube link or video ID in the box at the top. Each stream gets its own lane, and the one you pick is the one you hear.",
     "slot": "Add a stream"
   },
+  "welcome": {
+    "title": "Welcome to Splitwatch",
+    "add": "Paste a YouTube link in the box above, or pick a stream from Live now below. Up to nine streams fit side by side.",
+    "sound": "Click a stream to hear it; the others play muted. When Splitwatch opens again, only that stream starts by itself, and Play all starts the rest.",
+    "key": "Optional: a free YouTube API key, added in Settings, turns on search, live badges and notifications.",
+    "done": "Got it",
+    "settings": "Open Settings"
+  },
   "clipboard": {
     "prompt": "Add the YouTube video from your clipboard?",
     "add": "Add",
@@ -286,7 +294,10 @@
     "soundsNote": "Soft sounds in the theme's style when a stream comes or goes, the layout changes or a reminded stream is about to start.",
     "language": "Language",
     "languageSystem": "Same as the system ({language})",
-    "languageUnreviewed": "This translation has not been checked by a native speaker yet. Corrections are welcome on GitHub."
+    "languageUnreviewed": "This translation has not been checked by a native speaker yet. Corrections are welcome on GitHub.",
+    "updates": "Updates",
+    "checkUpdates": "Look for a new version when Splitwatch starts",
+    "checkUpdatesNote": "Splitwatch asks GitHub for its latest version and sends nothing about you. With this off, new versions are on the download page."
   },
   "update": {
     "available": "Version {version} is available.",
