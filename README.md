@@ -29,13 +29,18 @@ version by version (see the [roadmap](docs/ROADMAP.md)).
 - **Up to nine streams side by side.** Grids of 1, 2, 3, 4, 6 or 9 streams, or one large stream
   with a side strip. Paste a YouTube link or video ID, or copy a link and Splitwatch offers to add it.
   Drag streams to reorder them; the grid comes back next time.
+- **Ready lists.** One click opens up to nine streams of a sport from its official channels, or one
+  stream each of nine sports (shuffled each time): live and videos, live only, or videos only. Change
+  the grid as you like (remove a stream and paste a link of your own in its place); the list stays as
+  it was. A stream that cannot play in the app gives its place to the next one.
 - **You hear the one you pick.** A main volume and a volume per stream. Enlarge a stream to
   fullscreen, pop one out into a window of its own for a second screen, or keep the picked stream in
   a mini player on top of other windows.
 - **A theme for each sport.** Twelve sport themes, in light and dark, with backgrounds the app draws
   itself: lane ropes for swimming, the bend of a running track, waves, slalom gates and more. With
-  **Automatic**, the window takes the theme of the sport you watch. Make your own themes, with a check
-  that all text stays easy to read, and share them as files.
+  **Automatic**, the window takes the theme of the sport you watch; pick a sport's theme, and the start
+  screen suggests that sport. Make your own themes, with a check that all text stays easy to read, and
+  share them as files.
 - **Live sports, found for you.** "Live now" shows the newest videos of the official channels of 17
   sports. With your own free YouTube API key, it shows which are live or coming up, with a LIVE badge
   in the grid, and you can search YouTube for live streams by sport (Ctrl + K, or Cmd + K on macOS),
@@ -306,6 +311,13 @@ her zaman güncel tutar: açılışta ve 6 saatte bir GitHub'da yeni sürüm ara
 (kapatıldığında ya da bildirim alanında beklerken) yükler; **Ayarlar → Güncellemeler** bölümündeki
 **Güncelle ve yeniden başlat** hemen yükler. Taşınabilir Windows sürümü ve Mac de kendini günceller.
 İndirme sayfasında yalnız en yeni sürüm bulunur.
+
+1.1 ile **Hazır listeler** geldi: tek tıkla bir spor dalının resmî kanallarından en fazla dokuz yayını
+ya da dokuz ayrı spor dalından birer yayını (her seferinde karışık) yan yana açarsınız; "Canlı ve
+videolar", "Yalnızca canlı" ya da "Yalnızca videolar" seçilebilir. Izgarada istediğinizi değiştirin
+(bir yayını çıkarıp yerine kendi bağlantınızı yapıştırın); liste olduğu gibi kalır. Uygulamada
+oynatılamayan bir yayının yerini sıradaki alır. Görünüm bölümünde bir spor dalının temasını
+seçerseniz başlangıç ekranı o dalı önerir.
 
 İndirmek için [Releases](https://github.com/MehmetBurakTaskaya/splitwatch/releases/latest) sayfasına
 gidin. Uygulama henüz kod imzalı olmadığı için ilk açılışta uyarı çıkar:

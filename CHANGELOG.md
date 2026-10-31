@@ -5,6 +5,19 @@ and versions follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- **Ready lists**, on the start screen and in **Saved layouts**: one click opens up to nine streams of
+  a sport from its official channels, side by side, or one stream each of nine sports, shuffled each
+  time. Choose **Live and videos**, **Live only** (with your own API key) or **Videos only**. What you
+  change in the grid stays with the grid; the list is made anew each time. A stream that cannot play
+  in the app gives its place to the next one.
+
+### Changed
+
+- While a sport's theme is picked in **Settings → Appearance**, the start screen suggests that sport.
+- Live now no longer suggests YouTube Shorts.
+
 ## [1.0.1] - 2026-10-31
 
 ### Changed
