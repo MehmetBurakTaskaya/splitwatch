@@ -20,6 +20,7 @@ import {
   IconForward,
   IconGrip,
   IconMini,
+  IconPopout,
   IconMuted,
   IconPause,
   IconPlay,
@@ -327,6 +328,21 @@ export function Tile({
           </button>
         ) : (
           <>
+            <button
+              type="button"
+              className="icon-button optional"
+              aria-label={t('tile.popout', { index: n })}
+              title={t('tile.popout', { index: n })}
+              onClick={() => {
+                const s = state();
+                // The sound goes with the stream when it is the one heard.
+                if (s.selected === videoId && !s.muted) window.splitwatch.claimAudio(videoId);
+                s.popOut(videoId);
+                window.splitwatch.openPopout(videoId);
+              }}
+            >
+              <IconPopout />
+            </button>
             <button
               type="button"
               className="icon-button optional"

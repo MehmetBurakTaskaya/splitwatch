@@ -2,7 +2,7 @@ import { BrowserWindow, type IpcMainEvent, clipboard, ipcMain, nativeTheme, scre
 import { IPC } from '../shared/ipc';
 import { WINDOW_MIN } from '../shared/layouts';
 import { parseVideoId } from '../shared/youtube';
-import { isMini, rememberMiniBounds, setMini } from './mini';
+import { isMini, setMini } from './mini';
 import { getSettings, saveSettings } from './settings-store';
 import { getVideoInfo } from './video-info';
 
@@ -63,7 +63,6 @@ export function forwardWindowChanges(win: BrowserWindow): void {
   win.on('hide', shown(false));
   win.on('restore', shown(true));
   win.on('show', shown(true));
-  win.on('close', () => rememberMiniBounds(win));
 }
 
 function isSize(v: unknown): v is { width: number; height: number } {

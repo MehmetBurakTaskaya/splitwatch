@@ -3,7 +3,7 @@ import { BrowserWindow, ipcMain, nativeTheme } from 'electron';
 import { APP_ORIGIN, PRODUCT_NAME } from '../shared/app';
 import { type AppCommand, IPC } from '../shared/ipc';
 import { WINDOW_MIN } from '../shared/layouts';
-import { forgetMini } from './mini';
+import { forgetMini, rememberMiniBounds } from './mini';
 import { forwardWindowChanges } from './window-ipc';
 
 // The one main window. It can close while the app keeps running in the tray; asks from the tray
@@ -22,17 +22,17 @@ export function setPageLocale(locale: string | undefined): void {
   query = locale ? `?locale=${encodeURIComponent(locale)}` : '';
 }
 
-// Tells the tray when the window comes or goes.
-export function onMainWindowChange(listener: () => void): void {
-  listeners.add(listener);
+// The page URL for a window, with --locale and any other parameters.
+export function pageUrl(params: Record<string, string> = {}): string {
+  const search = new URLSearchParams(query.slice(1));
+  for (const [key, value] of Object.entries(params)) search.set(key, value);
+  const text = search.toString();
+  return `${APP_ORIGIN}/index.html${text ? `?${text}` : ''}`;
 }
 
-function createMainWindow(): BrowserWindow {
-  const created = new BrowserWindow({
-    width: 1280,
-    height: 800,
-    minWidth: WINDOW_MIN.width,
-    minHeight: WINDOW_MIN.height,
+// The options every page window shares: the sandboxed preload and the theme's first color.
+export function pageWindowOptions(): Electron.BrowserWindowConstructorOptions {
+  return {
     show: false,
     title: PRODUCT_NAME,
     backgroundColor: nativeTheme.shouldUseDarkColors ? '#101317' : '#f5f6f8',
@@ -47,10 +47,26 @@ function createMainWindow(): BrowserWindow {
       // their own, and the selected one is unmuted without waiting for a click inside it.
       autoplayPolicy: 'no-user-gesture-required',
     },
+  };
+}
+
+// Tells the tray when the window comes or goes.
+export function onMainWindowChange(listener: () => void): void {
+  listeners.add(listener);
+}
+
+function createMainWindow(): BrowserWindow {
+  const created = new BrowserWindow({
+    ...pageWindowOptions(),
+    width: 1280,
+    height: 800,
+    minWidth: WINDOW_MIN.width,
+    minHeight: WINDOW_MIN.height,
   });
   win = created;
   ready = false;
   forwardWindowChanges(created);
+  created.on('close', () => rememberMiniBounds(created));
   created.once('ready-to-show', () => created.show());
   created.on('closed', () => {
     win = null;
@@ -58,7 +74,7 @@ function createMainWindow(): BrowserWindow {
     forgetMini();
     for (const listener of listeners) listener();
   });
-  void created.loadURL(`${APP_ORIGIN}/index.html${query}`);
+  void created.loadURL(pageUrl());
   for (const listener of listeners) listener();
   return created;
 }

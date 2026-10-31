@@ -3,16 +3,33 @@ import { useTranslation } from 'react-i18next';
 import { layoutById, minContentSize } from '../../shared/layouts';
 import { useAppStore } from '../state/app';
 import { useSession } from '../state/session';
-import { IconAdd } from './icons';
+import { IconAdd, IconPopout } from './icons';
 import { Tile } from './Tile';
 
 export const ADD_INPUT_ID = 'add-stream-input';
+
+// A popped-out stream's place in the grid, with a way to bring it back.
+function PoppedSlot({ videoId, index }: { videoId: string; index: number }) {
+  const { t } = useTranslation();
+  return (
+    <div className="slot popped-slot" style={{ order: index }} data-popped={videoId}>
+      <span className="slot-label">
+        <IconPopout />
+        {t('popout.away', { index: index + 1 })}
+      </span>
+      <button type="button" className="button button-quiet" onClick={() => window.splitwatch.closePopout(videoId)}>
+        {t('popout.back')}
+      </button>
+    </div>
+  );
+}
 
 export function Grid() {
   const { t } = useTranslation();
   const streams = useSession((s) => s.streams);
   const layoutId = useSession((s) => s.layout);
   const maximized = useSession((s) => s.maximized);
+  const popped = useSession((s) => s.popped);
   const mini = useAppStore((s) => s.mini);
   const [dragging, setDragging] = useState(false);
   const layout = layoutById(layoutId);
@@ -36,9 +53,13 @@ export function Grid() {
       style={{ '--columns': layout.columns, '--rows': layout.rows } as CSSProperties}
       data-layout={layoutId}
     >
-      {domOrder.map((id) => (
-        <Tile key={id} videoId={id} index={streams.indexOf(id)} onDragActive={setDragging} />
-      ))}
+      {domOrder.map((id) =>
+        popped.includes(id) ? (
+          <PoppedSlot key={id} videoId={id} index={streams.indexOf(id)} />
+        ) : (
+          <Tile key={id} videoId={id} index={streams.indexOf(id)} onDragActive={setDragging} />
+        ),
+      )}
       {Array.from({ length: empty }, (_, i) => (
         <button
           key={`slot-${i}`}

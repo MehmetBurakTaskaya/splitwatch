@@ -5,6 +5,8 @@ import { useSession } from './session';
 
 // Asks from the tray and the notifications.
 export function connectCommands(): void {
+  // A popped-out stream's window closed: the stream is back in the grid.
+  window.splitwatch.onPopoutClosed((videoId) => useSession.getState().popIn(videoId));
   window.splitwatch.onCommand((command) => {
     const session = useSession.getState();
     switch (command.type) {

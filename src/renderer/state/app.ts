@@ -20,6 +20,8 @@ interface AppState {
   searchSeed: { query: string; sport: string | null } | null;
   // A layout from a splitwatch:// link, waiting for the user's answer.
   shared: SharedLayout | null;
+  // Where the sound comes from: "grid" or a popped-out stream's window.
+  audioOwner: string;
 }
 
 export const useAppStore = create<AppState>(() => ({
@@ -32,6 +34,7 @@ export const useAppStore = create<AppState>(() => ({
   dialogStream: null,
   searchSeed: null,
   shared: null,
+  audioOwner: 'grid',
 }));
 
 export const openDialog = (dialog: DialogName, stream: string | null = null) =>
@@ -47,5 +50,7 @@ export function connectHost(): void {
   window.splitwatch.onUpdateState((update) => useAppStore.setState({ update }));
   window.splitwatch.onFullscreenChange((fullscreen) => useAppStore.setState({ fullscreen }));
   window.splitwatch.onShownChange((shown) => useAppStore.setState({ shown }));
+  void window.splitwatch.getAudioOwner().then((audioOwner) => useAppStore.setState({ audioOwner }));
+  window.splitwatch.onAudioOwner((audioOwner) => useAppStore.setState({ audioOwner }));
   window.splitwatch.onMiniChange((mini) => useAppStore.setState({ mini, ...(mini ? { dialog: null } : {}) }));
 }

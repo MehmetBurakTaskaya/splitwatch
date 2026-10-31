@@ -25,9 +25,11 @@ export function unregisterPlayer(videoId: string): void {
 
 export function applyAudio(): void {
   const { muted, selected, masterVolume, volumes } = useSession.getState();
+  // A popped-out stream's window can own the sound; the grid is silent meanwhile.
+  const gridOwns = useAppStore.getState().audioOwner === 'grid';
   for (const [id, player] of players) {
     try {
-      if (!muted && selected === id) {
+      if (gridOwns && !muted && selected === id) {
         player.setVolume(Math.round((volumes[id] ?? 1) * masterVolume * 100));
         player.unMute();
       } else {
@@ -49,9 +51,14 @@ useSession.subscribe((s, prev) => {
     applyAudio();
   }
   if (s.maximized !== prev.maximized || s.selected !== prev.selected || s.status !== prev.status) syncPlayback();
+  // Picking a stream for its sound, or unmuting, takes the sound back from a popped-out window.
+  if (!s.muted && (prev.muted || s.selected !== prev.selected) && useAppStore.getState().audioOwner !== 'grid') {
+    window.splitwatch.claimAudio('grid');
+  }
 });
 useAppStore.subscribe((s, prev) => {
   if (s.shown !== prev.shown || s.mini !== prev.mini || !s.dialog !== !prev.dialog) syncPlayback();
+  if (s.audioOwner !== prev.audioOwner) applyAudio();
 });
 useEvents.subscribe((s, prev) => {
   if (s.intro !== prev.intro) syncPlayback();

@@ -14,7 +14,9 @@ export function setEnlarged(on: boolean): void {
 // Mini mode needs a picked stream; it replaces the large view.
 export function setMini(on: boolean): void {
   if (on) {
-    if (!useSession.getState().selected) return;
+    const { selected, popped } = useSession.getState();
+    // A popped-out stream is already in a window of its own.
+    if (!selected || popped.includes(selected)) return;
     setEnlarged(false);
   }
   window.splitwatch.setMini(on);

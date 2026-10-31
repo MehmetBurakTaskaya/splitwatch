@@ -40,6 +40,12 @@ export const IPC = {
   eventMedals: 'events:medals',
   copyText: 'clipboard:copy',
   mediaKeysState: 'media-keys:state',
+  popoutOpen: 'popout:open',
+  popoutClose: 'popout:close',
+  popoutClosed: 'popout:closed',
+  audioOwner: 'audio:owner',
+  audioOwnerChanged: 'audio:owner-changed',
+  audioClaim: 'audio:claim',
   presetsList: 'presets:list',
   historyList: 'history:list',
   historyRemember: 'history:remember',
@@ -180,6 +186,14 @@ export interface SplitwatchApi {
   getMedalTable(eventId: string): Promise<MedalTable | null>;
   copyText(text: string): void;
   getMediaKeysState(): Promise<MediaKeysState>;
+  // A stream in a window of its own, and back.
+  openPopout(videoId: string): void;
+  closePopout(videoId: string): void;
+  onPopoutClosed(listener: (videoId: string) => void): () => void;
+  // Where the sound comes from: "grid" or the video ID of a popped-out stream.
+  getAudioOwner(): Promise<string>;
+  onAudioOwner(listener: (owner: string) => void): () => void;
+  claimAudio(owner: string): void;
   getPresets(): Promise<Preset[]>;
   getHistory(): Promise<StreamItem[]>;
   rememberStream(videoId: string): void;

@@ -1,9 +1,9 @@
+import type { Settings } from '../../shared/settings';
 import { usePrefs } from './prefs';
 import { sessionSnapshot, useSession } from './session';
 
-// Restores the settings and the last session, then saves the session whenever it changes. Of the
-// restored streams only the selected one starts by itself; the others wait (see SessionState.waiting).
-export async function loadState(): Promise<void> {
+// Restores the settings into the prefs store (all a popped-out stream's window needs).
+export async function loadPrefs(): Promise<Settings> {
   const settings = await window.splitwatch.getSettings();
   const {
     audioFocus,
@@ -41,7 +41,13 @@ export async function loadState(): Promise<void> {
     event,
     reminders,
   });
-  const { session } = settings;
+  return settings;
+}
+
+// Restores the settings and the last session, then saves the session whenever it changes. Of the
+// restored streams only the selected one starts by itself; the others wait (see SessionState.waiting).
+export async function loadState(): Promise<void> {
+  const { session } = await loadPrefs();
   const starter = session.selected ?? session.streams[0] ?? null;
   useSession.setState({ ...session, waiting: session.streams.filter((id) => id !== starter) });
 

@@ -14,6 +14,8 @@ export type AddResult = 'added' | 'duplicate' | 'full';
 
 interface SessionState extends Session {
   maximized: string | null;
+  // Streams shown in windows of their own instead of the grid (not kept between runs).
+  popped: string[];
   // Streams restored from the last session that have not played yet. YouTube lets one player on a
   // screen start by itself, so the others wait for the user: Play all, or their own play button.
   waiting: string[];
@@ -36,6 +38,8 @@ interface SessionState extends Session {
   setInfo(videoId: string, info: VideoInfo | null): void;
   // A sport, "none", or null to let the app find it.
   setSport(videoId: string, sport: string | null): void;
+  popOut(videoId: string): void;
+  popIn(videoId: string): void;
   // Puts another stream in a stream's place (same slot, volume and selection), with its sport.
   replace(videoId: string, next: string, sport?: string): void;
   // Replaces the grid with a saved one. Streams in both keep playing; the new ones start, since
@@ -54,6 +58,7 @@ function without<T>(record: Record<string, T>, key: string): Record<string, T> {
 export const useSession = create<SessionState>((set, get) => ({
   ...DEFAULT_SETTINGS.session,
   maximized: null,
+  popped: [],
   waiting: [],
   info: {},
   status: {},
@@ -75,12 +80,13 @@ export const useSession = create<SessionState>((set, get) => ({
   },
 
   remove(videoId) {
-    const { streams, selected, maximized, volumes, status, sports, waiting } = get();
+    const { streams, selected, maximized, volumes, status, sports, waiting, popped } = get();
     const index = streams.indexOf(videoId);
     if (index < 0) return;
     const next = streams.filter((id) => id !== videoId);
     set({
       streams: next,
+      popped: popped.filter((id) => id !== videoId),
       waiting: waiting.filter((id) => id !== videoId),
       selected: selected === videoId ? (next[Math.min(index, next.length - 1)] ?? null) : selected,
       maximized: maximized === videoId ? null : maximized,
@@ -140,6 +146,16 @@ export const useSession = create<SessionState>((set, get) => ({
   setSport(videoId, sport) {
     if (!get().streams.includes(videoId)) return;
     set({ sports: sport ? { ...get().sports, [videoId]: sport } : without(get().sports, videoId) });
+  },
+
+  popOut(videoId) {
+    const { streams, popped, maximized } = get();
+    if (!streams.includes(videoId) || popped.includes(videoId)) return;
+    set({ popped: [...popped, videoId], maximized: maximized === videoId ? null : maximized });
+  },
+
+  popIn(videoId) {
+    set({ popped: get().popped.filter((id) => id !== videoId) });
   },
 
   replace(videoId, next, sport) {

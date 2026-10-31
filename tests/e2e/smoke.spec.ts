@@ -394,3 +394,23 @@ test('a layout link asks first, then opens or keeps the shared layout', async ()
   await expect(page.getByRole('dialog').getByRole('button', { name: 'Open Finals night' })).toBeVisible();
   await app.close();
 });
+
+test('a stream pops out into its own window with its sound, and comes back', async () => {
+  const { app, page } = await launch(
+    freshUserData({ session: { layout: '2', streams: [VIDEO_A, VIDEO_B], selected: VIDEO_A, muted: false } }),
+  );
+  await expect(page.locator(`[data-stream="${VIDEO_A}"]`)).toBeVisible();
+  const opened = app.waitForEvent('window');
+  await page.getByRole('button', { name: en.tile.popout.replace('{index}', '1') }).click();
+  const popout = await opened;
+  await expect(popout.locator('.popout')).toBeVisible();
+  // The heard stream takes its sound along.
+  await expect(popout.getByRole('button', { name: en.popout.soundOn })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator(`[data-popped="${VIDEO_A}"]`)).toBeVisible();
+  await expect(page.locator(`[data-stream="${VIDEO_A}"]`)).toHaveCount(0);
+
+  await page.locator(`[data-popped="${VIDEO_A}"]`).getByRole('button', { name: en.popout.back }).click();
+  await expect(page.locator(`[data-stream="${VIDEO_A}"]`)).toBeVisible();
+  await expect.poll(() => app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows().length)).toBe(1);
+  await app.close();
+});

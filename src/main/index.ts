@@ -10,6 +10,7 @@ import { registerMainWindowIpc, setPageLocale, showMainWindow } from './main-win
 import { setupMediaKeys } from './media-keys';
 import { medalTable } from './medals';
 import { setupNotifications } from './notify';
+import { registerPopoutIpc } from './popouts';
 import { setupReminders } from './reminders';
 import { registerAppScheme, serveApp } from './protocol';
 import { hardenSession, hardenWebContents } from './security';
@@ -71,6 +72,7 @@ if (!app.requestSingleInstanceLock()) {
     }
     registerAppIpc();
     registerMainWindowIpc();
+    registerPopoutIpc();
     registerLoginIpc();
     applyColorScheme();
     registerYouTubeIpc();

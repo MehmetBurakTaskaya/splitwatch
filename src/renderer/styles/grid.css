@@ -218,3 +218,31 @@
   color: var(--color-text);
   border-color: var(--color-text-muted);
 }
+
+/* A stream in a window of its own: the player fills the window above its bar. */
+.popout {
+  display: flex;
+  flex-direction: column;
+  block-size: 100vh;
+  background: #000000;
+}
+.popout-player {
+  flex: 1;
+  min-block-size: 200px;
+}
+.popout-player iframe {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  border: 0;
+}
+.popout-bar {
+  flex: none;
+  padding-inline: var(--space-2);
+  background: var(--color-surface);
+}
+.popped-slot {
+  display: grid;
+  place-content: center;
+  gap: var(--space-2);
+}
