@@ -517,3 +517,28 @@ test('your watching shows the time by sport and the latest streams, which go bac
   await expect(dialog.getByText(en.history.empty)).toBeVisible();
   await app.close();
 });
+
+test('the waiting screen counts down to the next streams and puts a started one on the grid', async () => {
+  const now = Date.now();
+  const at = (ms: number) => new Date(now + ms).toISOString();
+  const { app, page } = await launch(
+    freshUserData({
+      reminders: [
+        { videoId: VIDEO_B, title: 'Final', channel: 'Pool TV', at: at(90 * 60_000 + 20_000) },
+        { videoId: VIDEO_A, title: 'Heat 3', channel: 'Pool TV', at: at(-5 * 60_000), notified: true },
+      ],
+    }),
+  );
+  await page.getByRole('button', { name: en.ambient.open }).click();
+  await expect(page.locator('.ambient-time')).toBeVisible();
+  await expect(page.locator('.topbar')).toHaveCount(0);
+  await expect(page.locator('.ambient-when')).toHaveText([en.ambient.now, 'In 1 h 31 min']);
+  await page.keyboard.press('Escape');
+  await expect(page.locator('.ambient')).toHaveCount(0);
+
+  await page.getByRole('button', { name: en.ambient.open }).click();
+  await page.getByRole('button', { name: en.ambient.watchLabel.replace('{title}', 'Heat 3') }).click();
+  await expect(page.locator('.ambient')).toHaveCount(0);
+  await expect(page.locator(`[data-stream="${VIDEO_A}"]`)).toBeVisible();
+  await app.close();
+});

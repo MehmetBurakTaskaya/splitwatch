@@ -46,6 +46,7 @@ export const IPC = {
   watchReport: 'watch:report',
   watchGet: 'watch:get',
   watchClear: 'watch:clear',
+  keepAwake: 'power:keep-awake',
   mediaKeysState: 'media-keys:state',
   popoutOpen: 'popout:open',
   popoutClose: 'popout:close',
@@ -203,6 +204,8 @@ export interface SplitwatchApi {
   getWatch(): Promise<WatchHistory>;
   // Clears the watch history and the streams kept for the search's suggestions.
   clearWatch(): Promise<void>;
+  // Keeps the display from sleeping (the waiting screen).
+  keepAwake(on: boolean): void;
   getMediaKeysState(): Promise<MediaKeysState>;
   // A stream in a window of its own, and back.
   openPopout(videoId: string, live: boolean): void;

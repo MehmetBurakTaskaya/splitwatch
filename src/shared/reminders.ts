@@ -8,6 +8,9 @@ export interface Reminder {
   // The scheduled start (ISO).
   at: string;
   sport?: string;
+  // The notification went out; the reminder stays until an hour after the start (the waiting screen
+  // and the coming week still show it).
+  notified?: true;
 }
 
 export const MAX_REMINDERS = 50;
@@ -29,8 +32,50 @@ export function sanitizeReminders(raw: unknown): Reminder[] {
       channel: typeof r.channel === 'string' ? r.channel.slice(0, 200) : '',
       at: new Date(r.at).toISOString(),
       ...(typeof r.sport === 'string' && SLUG.test(r.sport) ? { sport: r.sport } : {}),
+      ...(r.notified === true ? { notified: true as const } : {}),
     });
     if (reminders.length === MAX_REMINDERS) break;
   }
   return reminders;
+}
+
+// A stream to wait for: a reminder, or a coming stream on the Live now channels.
+export interface NextItem {
+  videoId: string;
+  title: string;
+  channel: string;
+  at: number;
+  reminded: boolean;
+}
+
+// How long a stream that has started stays among the next ones, to be put on the grid.
+export const STARTED_KEEP = 30 * 60_000;
+
+// The next streams by start time, reminders first among the same stream, at most three.
+export function nextUp(
+  reminders: readonly Reminder[],
+  upcoming: readonly { videoId: string; title: string; channel: string; live: string; scheduledStart?: string }[],
+  now: number,
+  limit = 3,
+): NextItem[] {
+  const items = new Map<string, NextItem>();
+  for (const r of reminders) {
+    items.set(r.videoId, {
+      videoId: r.videoId,
+      title: r.title,
+      channel: r.channel,
+      at: Date.parse(r.at),
+      reminded: true,
+    });
+  }
+  for (const u of upcoming) {
+    if (u.live !== 'upcoming' || !u.scheduledStart || items.has(u.videoId)) continue;
+    const at = Date.parse(u.scheduledStart);
+    if (!Number.isNaN(at))
+      items.set(u.videoId, { videoId: u.videoId, title: u.title, channel: u.channel, at, reminded: false });
+  }
+  return [...items.values()]
+    .filter((i) => i.at > now - STARTED_KEEP)
+    .sort((a, b) => a.at - b.at)
+    .slice(0, limit);
 }

@@ -37,6 +37,8 @@ interface AppState {
   chat: string | null;
   // The panel that lines up the streams, beside the grid (instead of a chat).
   sync: boolean;
+  // The waiting screen, in place of the empty grid.
+  ambient: boolean;
   // The theme the theme editor starts from, and whether saving makes a new theme.
   themeDraft: { theme: Theme; isNew: boolean } | null;
 }
@@ -55,6 +57,7 @@ export const useAppStore = create<AppState>(() => ({
   chat: null,
   sync: false,
   themeDraft: null,
+  ambient: false,
 }));
 
 export const openDialog = (dialog: DialogName, stream: string | null = null) =>

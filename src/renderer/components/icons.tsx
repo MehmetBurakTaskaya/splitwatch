@@ -123,6 +123,12 @@ export const IconAlign = () => (
     <path d="M11 3v14M4 6.5h7M7 10h7M3 13.5h8" />
   </Icon>
 );
+export const IconClock = () => (
+  <Icon>
+    <circle cx="10" cy="10" r="7" />
+    <path d="M10 6v4l2.5 2" />
+  </Icon>
+);
 export const IconHistory = () => (
   <Icon>
     <path d="M4 10a6 6 0 1 0 1.8-4.3M4 3.5v2.7h2.7M10 6.5V10l2.5 1.5" />

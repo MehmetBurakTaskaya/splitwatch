@@ -893,3 +893,105 @@ label.field.field-text {
   font-size: var(--font-size-1);
   color: var(--color-text-muted);
 }
+
+/* The waiting screen */
+.ambient {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  padding: var(--space-6) var(--space-4);
+  text-align: center;
+}
+.ambient[data-idle] {
+  cursor: none;
+}
+.ambient-clock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ambient-time {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 14vw, 11rem);
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+.ambient-period {
+  font-size: 0.35em;
+  letter-spacing: 0;
+}
+.ambient-date {
+  margin: var(--space-2) 0 0;
+  font-size: var(--font-size-3);
+  color: var(--color-text-muted);
+}
+.ambient-next {
+  inline-size: min(40rem, 100%);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2);
+  background: color-mix(in srgb, var(--color-surface) 88%, transparent);
+  text-align: start;
+}
+.ambient-next h2 {
+  margin: 0 0 var(--space-3);
+  font-size: var(--font-size-2);
+  color: var(--color-text-muted);
+}
+.ambient-next ol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ambient-next li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px var(--space-3);
+  align-items: center;
+}
+.ambient-when {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-accent-strong);
+}
+.ambient-title {
+  grid-column: 1;
+  font-size: var(--font-size-3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ambient-channel {
+  grid-column: 1;
+  font-size: var(--font-size-1);
+  color: var(--color-text-muted);
+}
+.ambient-next li .button {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+}
+.ambient-none {
+  max-inline-size: 32rem;
+  color: var(--color-text-muted);
+}
+.ambient-leave {
+  position: absolute;
+  inset-block-start: var(--space-4);
+  inset-inline-end: var(--space-4);
+  transition: opacity 0.4s;
+}
+.ambient[data-idle] .ambient-leave {
+  opacity: 0;
+}

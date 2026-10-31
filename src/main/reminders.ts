@@ -5,8 +5,8 @@ import { showNotification } from './notify';
 import { getSettings, onSettingsChange, saveSettings } from './settings-store';
 
 // "Remind me" for upcoming streams: a notification shortly before each one starts, while the app
-// runs (also from the tray); a click adds the stream. A reminder is removed once it fires; one
-// missed by more than an hour (the app was closed) is dropped.
+// runs (also from the tray); a click adds the stream. A reminder is marked once it fires, and goes an
+// hour after the start, whether it fired or was missed (the app was closed).
 
 const EARLY = 2 * 60_000;
 const LATE = 60 * 60_000;
@@ -16,7 +16,11 @@ const timers = new Map<string, NodeJS.Timeout>();
 
 function fire(reminder: Reminder): void {
   timers.delete(reminder.videoId);
-  saveSettings({ reminders: getSettings().reminders.filter((r) => r.videoId !== reminder.videoId) });
+  saveSettings({
+    reminders: getSettings().reminders.map((r) =>
+      r.videoId === reminder.videoId ? { ...r, notified: true as const } : r,
+    ),
+  });
   const body = getSettings().spoilers ? t('notify.spoilerBody') : reminder.title;
   void showNotification(t('notify.reminderTitle', { channel: reminder.channel }), body, () =>
     sendCommand({ type: 'add', videoId: reminder.videoId, ...(reminder.sport ? { sport: reminder.sport } : {}) }),
@@ -39,7 +43,7 @@ function schedule(): void {
   }
   for (const r of reminders) {
     const wait = Date.parse(r.at) - EARLY - now;
-    if (timers.has(r.videoId) || wait > HORIZON) continue;
+    if (r.notified || timers.has(r.videoId) || wait > HORIZON) continue;
     timers.set(
       r.videoId,
       setTimeout(() => fire(r), Math.max(0, wait)),

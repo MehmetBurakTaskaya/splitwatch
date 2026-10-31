@@ -46,6 +46,7 @@ const api: SplitwatchApi = {
   reportWatch: (reports) => ipcRenderer.send(IPC.watchReport, reports),
   getWatch: () => ipcRenderer.invoke(IPC.watchGet),
   clearWatch: () => ipcRenderer.invoke(IPC.watchClear),
+  keepAwake: (on) => ipcRenderer.send(IPC.keepAwake, on),
   getMediaKeysState: () => ipcRenderer.invoke(IPC.mediaKeysState),
   openPopout: (videoId, live) => ipcRenderer.send(IPC.popoutOpen, videoId, live),
   closePopout: (videoId) => ipcRenderer.send(IPC.popoutClose, videoId),

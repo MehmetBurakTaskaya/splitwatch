@@ -447,6 +447,18 @@
     "clear": "Clear",
     "keep": "Keep"
   },
+  "ambient": {
+    "open": "Waiting screen",
+    "title": "Waiting screen",
+    "next": "Coming up",
+    "none": "Nothing coming up yet. Reminders and the coming streams on your sports appear here.",
+    "now": "Starting now",
+    "inMinutes": "In {minutes} min",
+    "inHours": "In {hours} h {minutes} min",
+    "watch": "Watch",
+    "watchLabel": "Watch {title}",
+    "leave": "Leave the waiting screen"
+  },
   "sports": {
     "volleyball": "Volleyball",
     "beach-volleyball": "Beach volleyball",

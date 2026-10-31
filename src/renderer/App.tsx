@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { AmbientScreen } from './components/AmbientScreen';
 import { Backdrop } from './components/Backdrop';
 import { ChatPanel } from './components/ChatPanel';
 import { ClipboardSuggestion } from './components/ClipboardSuggestion';
@@ -26,6 +27,7 @@ import { useSession } from './state/session';
 
 export function App() {
   const hasStreams = useSession((s) => s.streams.length > 0);
+  const ambient = useAppStore((s) => s.ambient) && !hasStreams;
   const dialog = useAppStore((s) => s.dialog);
   const mini = useAppStore((s) => s.mini);
   const intro = useEvents((s) => s.intro !== null);
@@ -39,8 +41,8 @@ export function App() {
   return (
     <div className="shell" data-intro={intro || undefined} data-dialog={dialog ? true : undefined}>
       <Backdrop />
-      {!mini && <TopBar />}
-      {!mini && <ClipboardSuggestion />}
+      {!mini && !ambient && <TopBar />}
+      {!mini && !ambient && <ClipboardSuggestion />}
       {!mini && <EndedSuggestion />}
       {hasStreams ? (
         <div className="stage">
@@ -48,6 +50,8 @@ export function App() {
           {!mini && <ChatPanel />}
           {!mini && <SyncPanel />}
         </div>
+      ) : ambient ? (
+        <AmbientScreen />
       ) : (
         <EmptyState />
       )}

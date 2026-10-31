@@ -11,6 +11,7 @@ import { setupMediaKeys } from './media-keys';
 import { medalTable } from './medals';
 import { setupNotifications } from './notify';
 import { registerPopoutIpc } from './popouts';
+import { registerPowerIpc } from './power';
 import { setupReminders } from './reminders';
 import { registerThemeFileIpc } from './theme-files';
 import { registerWatchIpc } from './watch';
@@ -77,6 +78,7 @@ if (!app.requestSingleInstanceLock()) {
     registerPopoutIpc();
     registerThemeFileIpc();
     registerWatchIpc();
+    registerPowerIpc();
     registerLoginIpc();
     applyColorScheme();
     registerYouTubeIpc();

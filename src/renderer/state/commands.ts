@@ -6,8 +6,10 @@ import { useSession } from './session';
 // Asks from the tray and the notifications.
 export function connectCommands(): void {
   useSession.subscribe((s) => {
-    const { chat } = useAppStore.getState();
+    const { chat, ambient } = useAppStore.getState();
     if (chat && !s.streams.includes(chat)) useAppStore.setState({ chat: null });
+    // A stream on the grid ends the waiting.
+    if (ambient && s.streams.length) useAppStore.setState({ ambient: false });
   });
   // A popped-out stream's window closed: the stream is back in the grid.
   window.splitwatch.onPopoutClosed((videoId) => useSession.getState().popIn(videoId));
