@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { contrast, hslToHex, mix } from '../../src/shared/color';
 import en from '../../src/renderer/i18n/locales/en.json';
 import { validatePreset } from '../../src/shared/presets';
+import { PROTECTED_WORDS } from '../../src/shared/protected-words';
 import {
   type Theme,
   MAX_CUSTOM_THEMES,
@@ -157,11 +158,9 @@ describe('colors', () => {
   });
 });
 
-// Words and marks of the organizers of the multi-sport Games stay out of the project (see
-// CONTRIBUTING.md). The word is assembled here so this file does not contain it.
+// Words and marks of the organizers of the multi-sport Games stay out of the project, in every
+// language (see CONTRIBUTING.md and src/shared/protected-words.ts).
 describe('protected names', () => {
-  const word = ['o', 'l', 'y', 'm', 'p'].join('');
-
   it('never appear in the tracked files', () => {
     // New files count too, before their first commit.
     const tracked = execFileSync('git', ['ls-files', '--cached', '--others', '--exclude-standard'], {
@@ -171,7 +170,10 @@ describe('protected names', () => {
       .filter(Boolean);
     const hits = tracked
       .filter((f) => /\.(ts|tsx|mjs|js|json|css|md|ya?ml|html|svg)$/.test(f))
-      .filter((f) => readFileSync(f, 'utf8').toLowerCase().includes(word));
+      .filter((f) => {
+        const text = readFileSync(f, 'utf8').toLowerCase();
+        return PROTECTED_WORDS.some((word) => text.includes(word));
+      });
     expect(hits).toEqual([]);
     // Reading every file can take a few seconds on a cold disk.
   }, 30_000);
