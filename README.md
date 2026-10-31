@@ -5,8 +5,8 @@ Windows and macOS (Linux, experimental).
 
 > **Early development.** Splitwatch plays a grid of streams, finds live sports on official channels,
 > searches YouTube, dresses itself in the sport you watch, keeps your layouts, shrinks to a mini
-> player, tells you when a channel goes live and has modes for the Summer and Winter Games. More
-> arrives version by version; see the [roadmap](docs/ROADMAP.md).
+> player, tells you when a channel goes live and has modes for the Summer and Winter Games, in twelve
+> languages. More arrives version by version; see the [roadmap](docs/ROADMAP.md).
 
 ## What it does
 
@@ -41,6 +41,9 @@ Windows and macOS (Linux, experimental).
 - Quiet theme sounds, off by default.
 - Follow the channels of your YouTube subscriptions, from a Google Takeout export.
 - Summer Games and Winter Games modes (see below).
+- Twelve languages: English, Spanish, Simplified Chinese, Japanese, German, French, Brazilian
+  Portuguese, Arabic, Korean, Italian, Russian and Turkish. Splitwatch follows your system's
+  language, or the one you pick in **Settings → Language**.
 
 ## Summer and Winter Games
 
@@ -138,7 +141,8 @@ much is left, and Splitwatch stops before the limit.
 
 ## What is coming
 
-- Eleven more interface languages.
+- Polish toward version 1.0: accessibility, performance, a first-run guide and the final icon.
+- Reviews of the translations by native speakers (see [CONTRIBUTING.md](CONTRIBUTING.md)).
 
 ## Keyboard shortcuts
 
@@ -258,6 +262,10 @@ olarak paylaşabilir, izleme geçmişinizi ve istatistiklerinizi görebilir (yal
 tutulur, Ayarlar'dan kapatılıp silinebilir), sıradaki yayınlara geri sayan bir bekleme ekranı
 açabilir, sessiz tema seslerini açabilir (varsayılan kapalı) ve Google Takeout'tan aldığınız
 `subscriptions.csv` ile YouTube aboneliklerinizdeki kanalları takip edebilirsiniz.
+
+0.9 ile arayüz Türkçe dahil on iki dilde: Splitwatch sisteminizin dilini kullanır; başka bir dili
+**Ayarlar → Dil** bölümünden seçebilirsiniz. Çeviriler henüz anadili o dil olan biri tarafından
+kontrol edilmedi; düzeltmelerinizi GitHub'da bekliyoruz.
 
 İndirmek için [Releases](https://github.com/MehmetBurakTaskaya/splitwatch/releases/latest) sayfasına
 gidin. Uygulama henüz kod imzalı olmadığı için ilk açılışta uyarı çıkar:

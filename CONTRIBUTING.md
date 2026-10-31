@@ -36,10 +36,20 @@ Every word in the interface comes from a translation file; ESLint rejects litera
 - Try your change in the two pseudo-locales: `npx electron . --locale=en-XA` makes every string about
   40% longer, `--locale=ar-XB` switches to right to left.
 
-A later version (see the [roadmap](docs/ROADMAP.md)) adds Spanish, Simplified Chinese, Japanese, German,
-French, Brazilian Portuguese, Arabic, Korean, Italian, Russian and Turkish. The first translations are machine-made and
-marked "needs review"; native speakers reviewing them is one of the most useful contributions. The
-translation guide will be added here with them.
+Splitwatch also speaks Spanish (`es`), Simplified Chinese (`zh-CN`), Japanese (`ja`), German (`de`),
+French (`fr`), Brazilian Portuguese (`pt-BR`), Arabic (`ar`), Korean (`ko`), Italian (`it`), Russian
+(`ru`) and Turkish (`tr`), each a file next to `en.json`. No native speaker has checked them yet, and
+reviewing one is among the most useful contributions:
+
+- Use the app in your language (**Settings → Language**) and fix what reads wrong, in that file.
+  Keep every `{argument}` as it is, use your language's plural categories (`one`, `few`, `many`,
+  `other`…; `other` is required), and never put a grammatical suffix on an argument.
+- Run `node scripts/check-locale.mjs <tag>`: it checks the keys, the ICU syntax, the arguments and
+  the protected words (see Themes below), as the tests do.
+- Once a native speaker has read the whole file, add its tag to `REVIEWED_LOCALES` in
+  `src/shared/locales.ts`; Settings then stops calling it unchecked.
+- A new English message goes into every file in the same change. If you cannot translate it, copy the
+  English text; it shows in English until someone translates it.
 
 ## Sport presets
 

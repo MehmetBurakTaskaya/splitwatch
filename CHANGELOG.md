@@ -5,6 +5,26 @@ and versions follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-10-31
+
+Splitwatch now speaks twelve languages.
+
+### Added
+
+- The interface in Spanish, Simplified Chinese, Japanese, German, French, Brazilian Portuguese,
+  Arabic (right to left), Korean, Italian, Russian and Turkish, besides English. Splitwatch follows
+  your system's language; **Settings → Language** picks another, and the window, the tray menu and
+  the notifications switch at once. No native speaker has checked these translations yet, and
+  Settings says so; corrections are welcome.
+
+### Changed
+
+- The themes in Settings are in the order of their names in your language.
+
+### Fixed
+
+- In right-to-left languages, the hint in the link field showed its words in the wrong order.
+
 ## [0.8.0] - 2026-10-31
 
 Splitwatch now pops streams out into windows of their own, shows the live chat, lines up streams
@@ -187,7 +207,8 @@ The first version: the app's foundation and its release pipeline, without stream
 - Security baseline: sandboxed, isolated renderer without Node.js, strict Content Security Policy,
   hardened Electron fuses.
 
-[Unreleased]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.9.0...HEAD
+[0.9.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.5.0...v0.6.0

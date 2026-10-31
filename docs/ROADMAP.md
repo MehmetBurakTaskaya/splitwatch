@@ -12,7 +12,7 @@ Each phase ends with a release that is tested on Windows and, where possible, on
 | 5     | Saved layouts, mini mode, tray or menu bar, live notifications, start with the system                                                                | done   |
 | 6     | Summer Games and Winter Games event modes                                                                                                            | done   |
 | 7     | Extra features (below)                                                                                                                               | done   |
-| 8     | Languages: Spanish, Simplified Chinese, Japanese, German, French, Brazilian Portuguese, Arabic, Korean, Italian, Russian, Turkish                    |        |
+| 8     | Languages: Spanish, Simplified Chinese, Japanese, German, French, Brazilian Portuguese, Arabic, Korean, Italian, Russian, Turkish                    | done   |
 | 9     | Polish: accessibility, performance, onboarding, final icon, v1.0.0                                                                                   |        |
 
 ## Phase 7 extra features

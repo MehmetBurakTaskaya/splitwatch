@@ -50,7 +50,7 @@ Splitwatch in **Settings → YouTube API key → Remove key**.
 
 In Splitwatch's app data folder:
 
-- `settings.json`: your settings, keyboard shortcuts, chosen sports, theme and quota limits, the
+- `settings.json`: your settings, language, keyboard shortcuts, chosen sports, theme and quota limits, the
   streams in your grid (video IDs, layout, volumes, sports), so the grid comes back next time, your
   saved layouts, where the mini player was, the channels you follow (their IDs and names), and for
   the Summer and Winter Games modes the mode you turned on and the country you follow, and your

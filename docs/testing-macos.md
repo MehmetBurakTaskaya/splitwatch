@@ -99,6 +99,14 @@ If a tile shows a message instead of a video, note the message and the error cod
    Mac turns the display off: the display should stay on. Press Escape.
 5. In **Settings → Sound**, tick **Quiet theme sounds** and click **Try**.
 
+## Version 0.9 (about 5 more minutes)
+
+1. Open **Settings**: the first section is **Language**. Pick **日本語**: the window switches to Japanese
+   at once. Check that the Japanese text uses a Japanese font (Hiragino) and nothing is cut off.
+2. Pick **العربية**: the window turns right to left. Check the top bar and Settings.
+3. Click the Splitwatch icon in the menu bar (with **Keep Splitwatch in the menu bar** on): the menu
+   is in Arabic too. Pick **Same as the system** again.
+
 Send back: your Mac model, macOS version, and what happened at each step (a screenshot helps:
 **Shift + Cmd + 3**). For 0.4, also whether the background moves smoothly and how busy Activity
 Monitor shows Splitwatch on the start screen.
