@@ -6,7 +6,7 @@ export interface Held {
   at: number;
 }
 
-export function holdOf(player: YT.Player, now = performance.now()): Held {
+export function holdOf(player: { getCurrentTime(): number }, now = performance.now()): Held {
   return { time: player.getCurrentTime(), at: now };
 }
 

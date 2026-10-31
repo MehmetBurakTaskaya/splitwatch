@@ -3,7 +3,7 @@ import { MAX_DELAY, clampDelay, holdOf, resumeTime } from '../../src/renderer/pl
 
 describe('live streams held off screen', () => {
   it('resume as far behind live as they were, by moving on for as long as they were held', () => {
-    const player = { getCurrentTime: () => 1200.5 } as YT.Player;
+    const player = { getCurrentTime: () => 1200.5 };
     const held = holdOf(player, 10_000);
     expect(held).toEqual({ time: 1200.5, at: 10_000 });
     expect(resumeTime(held, 10_000)).toBe(1200.5);
