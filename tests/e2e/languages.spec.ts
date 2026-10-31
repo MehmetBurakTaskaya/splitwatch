@@ -34,18 +34,18 @@ test('the language follows the setting at once, and after a restart', async () =
   const dir = userData({ language: 'en' });
   let { app, page } = await launch(dir);
   await page.getByRole('button', { name: en.settings.open }).click();
-  await page.getByLabel(en.settings.language).selectOption('tr');
+  await page.getByLabel(en.settings.language, { exact: true }).selectOption('tr');
   await expect(page.locator('html')).toHaveAttribute('lang', 'tr');
   await expect(page.getByRole('heading', { name: tr.settings.title, exact: true })).toBeVisible();
   await expect(page.getByText(tr.settings.languageUnreviewed)).toBeVisible();
 
-  await page.getByLabel(tr.settings.language).selectOption('ar');
+  await page.getByLabel(tr.settings.language, { exact: true }).selectOption('ar');
   await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
   await app.close();
 
   ({ app, page } = await launch(dir));
   await expect(page.locator('html')).toHaveAttribute('lang', 'ar');
-  await expect(page.getByLabel(ar.add.label)).toBeVisible();
+  await expect(page.getByLabel(ar.add.label, { exact: true })).toBeVisible();
   await app.close();
 });
 
