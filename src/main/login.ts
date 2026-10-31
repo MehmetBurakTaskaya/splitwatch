@@ -1,3 +1,5 @@
+import { existsSync, rmSync, writeFileSync } from 'node:fs';
+import path from 'node:path';
 import { app, ipcMain } from 'electron';
 import { IPC, type LoginState } from '../shared/ipc';
 import { getSettings, onSettingsChange } from './settings-store';
@@ -29,8 +31,23 @@ function setOpenAtLogin(on: boolean): void {
   );
 }
 
+// An update installed while the app waited in the tray starts it again there (src/main/updates.ts).
+const restartHidden = () => path.join(app.getPath('userData'), 'restart-hidden');
+
+export function markRestartHidden(): void {
+  try {
+    writeFileSync(restartHidden(), '');
+  } catch {
+    // The app then comes back with its window, which loses nothing.
+  }
+}
+
 // Started by the system at sign-in, to stay in the tray. --hidden also works on macOS, for tests.
 export function startedHidden(): boolean {
+  if (existsSync(restartHidden())) {
+    rmSync(restartHidden(), { force: true });
+    return true;
+  }
   const { background, startHidden } = getSettings();
   if (!background || !startHidden) return false;
   if (process.argv.includes('--hidden')) return true;

@@ -610,7 +610,7 @@ test('the first-run guide shows once, until it is read', async () => {
   const userData = freshUserData({ welcomeSeen: false });
   let { app, page } = await launch(userData);
   await expect(page.getByRole('heading', { name: en.welcome.title })).toBeVisible();
-  await expect(page.locator('.welcome-steps li')).toHaveCount(3);
+  await expect(page.locator('.welcome-steps li')).toHaveCount(4);
   await page.getByRole('button', { name: en.welcome.done }).click();
   await expect(page.getByRole('heading', { name: en.empty.title })).toBeVisible();
   await app.close();

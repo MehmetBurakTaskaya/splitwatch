@@ -28,6 +28,7 @@
     "add": "Cole um link do YouTube na caixa acima ou escolha uma transmissão em Ao vivo agora, mais abaixo. Cabem até nove transmissões lado a lado.",
     "sound": "Clique em uma transmissão para ouvi-la; as outras tocam sem som. Quando o Splitwatch abrir de novo, só essa transmissão começa sozinha, e Reproduzir tudo inicia as demais.",
     "key": "Opcional: uma chave de API do YouTube gratuita, adicionada em Configurações, ativa a busca, os selos AO VIVO e as notificações.",
+    "updates": "O Splitwatch se mantém atualizado pelo GitHub e não envia nada sobre você.",
     "done": "Entendi",
     "settings": "Abrir Configurações"
   },
@@ -296,15 +297,20 @@
     "languageSystem": "Igual ao sistema ({language})",
     "languageUnreviewed": "Esta tradução ainda não foi revisada por um falante nativo. Correções são bem-vindas no GitHub.",
     "updates": "Atualizações",
-    "checkUpdates": "Procurar uma nova versão quando o Splitwatch abrir",
-    "checkUpdatesNote": "O Splitwatch consulta o GitHub sobre a versão mais recente e não envia nada sobre você. Com isso desativado, as novas versões ficam na página de download."
+    "updatesNote": "O Splitwatch se mantém atualizado. Ele procura uma nova versão no GitHub ao abrir e a cada 6 horas, e a instala quando ninguém está assistindo: ao ser fechado, ou enquanto espera na {platform, select, darwin {barra de menus} other {área de notificação}}. Ele não envia nada sobre você.",
+    "updateIdle": "O Splitwatch procura uma nova versão logo depois de abrir.",
+    "updateChecking": "Procurando uma nova versão…",
+    "updateNone": "Atualizado. Última procura: {time, time, short}.",
+    "updateError": "A última procura falhou. O Splitwatch tenta de novo em menos de uma hora.",
+    "checkNow": "Verificar agora"
   },
   "update": {
     "available": "A versão {version} está disponível.",
     "downloading": "Baixando a atualização: {progress, number, percent}",
-    "ready": "A versão {version} está pronta para instalar.",
-    "restart": "Reiniciar e atualizar",
-    "download": "Baixar"
+    "ready": "A versão {version} está pronta. Ela é instalada quando você fecha o Splitwatch.",
+    "restart": "Atualizar e reiniciar",
+    "download": "Baixar",
+    "move": "Saiu a versão {version}. Mova o Splitwatch para Aplicativos para que ele possa se atualizar sozinho."
   },
   "tray": {
     "tooltip": "Splitwatch",

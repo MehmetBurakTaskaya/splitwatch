@@ -28,6 +28,7 @@
     "add": "在上方的输入框中粘贴 YouTube 链接，或从下方“正在直播”中选择视频。最多可并排观看九个视频。",
     "sound": "点击某个视频即可听到它的声音，其他视频静音播放。下次打开 Splitwatch 时，只有这个视频会自动播放，点击“全部播放”即可开始其余视频。",
     "key": "可选：在“设置”中添加免费的 YouTube API 密钥，即可使用搜索、直播标记和通知。",
+    "updates": "Splitwatch 会通过 GitHub 自动保持最新，不会发送任何关于你的信息。",
     "done": "知道了",
     "settings": "打开设置"
   },
@@ -296,15 +297,20 @@
     "languageSystem": "与系统相同（{language}）",
     "languageUnreviewed": "此翻译尚未经过母语人士校对。欢迎在 GitHub 上提出更正。",
     "updates": "更新",
-    "checkUpdates": "启动 Splitwatch 时检查新版本",
-    "checkUpdatesNote": "Splitwatch 只向 GitHub 查询最新版本，不会发送任何关于你的信息。关闭后，可在下载页面查看新版本。"
+    "updatesNote": "Splitwatch 会自动保持最新：启动时及每 6 小时在 GitHub 上查找新版本，并在无人观看时安装，也就是在你关闭它时，或它在{platform, select, darwin {菜单栏} other {通知区域}}中等待时。它不会发送任何关于你的信息。",
+    "updateIdle": "Splitwatch 会在启动后不久查找新版本。",
+    "updateChecking": "正在查找新版本…",
+    "updateNone": "已是最新版本。上次查找时间：{time, time, short}。",
+    "updateError": "上次查找失败。Splitwatch 会在一小时内重试。",
+    "checkNow": "立即检查"
   },
   "update": {
     "available": "新版本 {version} 已发布。",
     "downloading": "正在下载更新：{progress, number, percent}",
-    "ready": "版本 {version} 已准备好安装。",
-    "restart": "重启并更新",
-    "download": "下载"
+    "ready": "版本 {version} 已准备好，将在你关闭 Splitwatch 时安装。",
+    "restart": "更新并重启",
+    "download": "下载",
+    "move": "版本 {version} 已发布。请将 Splitwatch 移到“应用程序”文件夹，以便它自行更新。"
   },
   "tray": {
     "tooltip": "Splitwatch",

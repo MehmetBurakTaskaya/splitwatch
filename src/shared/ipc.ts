@@ -15,6 +15,7 @@ export const IPC = {
   rendererReady: 'app:renderer-ready',
   updateState: 'update:state',
   updateInstall: 'update:install',
+  updateCheck: 'update:check',
   openReleasePage: 'update:open-release-page',
   settingsGet: 'settings:get',
   settingsSave: 'settings:save',
@@ -123,12 +124,13 @@ export interface VideoInfo {
 export type UpdateState =
   | { status: 'idle' }
   | { status: 'checking' }
-  | { status: 'none' }
-  // canInstall is false on macOS, where the app offers the download instead of updating itself.
-  | { status: 'available'; version: string; canInstall: boolean }
+  | { status: 'none'; checkedAt: number }
+  // canInstall is false where this copy cannot replace itself; reason says what the user can do:
+  // move the app to Applications (macOS), or download the new version.
+  | { status: 'available'; version: string; canInstall: boolean; reason?: 'move' | 'download' }
   | { status: 'downloading'; progress: number }
   | { status: 'ready'; version: string }
-  | { status: 'error' };
+  | { status: 'error'; checkedAt: number };
 
 // none: no key; valid: the last call with it worked; invalid: YouTube refused it;
 // unavailable: the system offers no secure storage, so no key can be kept.
@@ -172,6 +174,8 @@ export interface SplitwatchApi {
   onUpdateState(listener: (state: UpdateState) => void): () => void;
   installUpdate(): Promise<void>;
   openReleasePage(): Promise<void>;
+  // Looks for a new version at once (Settings → Updates).
+  checkForUpdates(): Promise<void>;
   rendererReady(): void;
   getSettings(): Promise<Settings>;
   saveSettings(patch: Partial<Settings>): void;

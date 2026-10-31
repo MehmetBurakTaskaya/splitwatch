@@ -28,6 +28,7 @@
     "add": "Üstteki kutuya bir YouTube bağlantısı yapıştırın ya da aşağıdaki Şimdi canlı listesinden bir yayın seçin. Yan yana en fazla dokuz yayın sığar.",
     "sound": "Bir yayını duymak için üzerine tıklayın; diğerleri sessiz oynar. Splitwatch yeniden açıldığında yalnızca o yayın kendiliğinden başlar, Tümünü oynat da kalanları başlatır.",
     "key": "İsteğe bağlı: Ayarlar'dan ekleyeceğiniz ücretsiz bir YouTube API anahtarı aramayı, canlı etiketlerini ve bildirimleri açar.",
+    "updates": "Splitwatch kendini GitHub'dan güncel tutar ve sizinle ilgili hiçbir şey göndermez.",
     "done": "Anladım",
     "settings": "Ayarları aç"
   },
@@ -296,15 +297,20 @@
     "languageSystem": "Sistemle aynı ({language})",
     "languageUnreviewed": "Bu çeviri henüz anadili Türkçe olan biri tarafından kontrol edilmedi. Düzeltmelerinizi GitHub'da bekliyoruz.",
     "updates": "Güncellemeler",
-    "checkUpdates": "Açılışta yeni bir sürüm olup olmadığına bak",
-    "checkUpdatesNote": "Splitwatch, GitHub'a yalnızca en son sürümünü sorar; sizinle ilgili hiçbir şey göndermez. Bu kapalıyken yeni sürümleri indirme sayfasında bulabilirsiniz."
+    "updatesNote": "Splitwatch kendini güncel tutar. Açılışta ve 6 saatte bir GitHub'da yeni sürüm arar ve kimse izlemiyorken yükler: kapatıldığında ya da {platform, select, darwin {menü çubuğunda} other {bildirim alanında}} beklerken. Sizinle ilgili hiçbir şey göndermez.",
+    "updateIdle": "Splitwatch açıldıktan kısa süre sonra yeni sürüm arar.",
+    "updateChecking": "Yeni sürüm aranıyor…",
+    "updateNone": "Güncel. Son bakılan saat: {time, time, short}.",
+    "updateError": "Son arama başarısız oldu. Splitwatch bir saat içinde yeniden dener.",
+    "checkNow": "Şimdi denetle"
   },
   "update": {
     "available": "{version} sürümü kullanıma sunuldu.",
     "downloading": "Güncelleme indiriliyor: {progress, number, percent}",
-    "ready": "{version} sürümü yüklenmeye hazır.",
-    "restart": "Yeniden başlat ve güncelle",
-    "download": "İndir"
+    "ready": "{version} sürümü hazır. Splitwatch kapandığında yüklenir.",
+    "restart": "Güncelle ve yeniden başlat",
+    "download": "İndir",
+    "move": "{version} sürümü çıktı. Kendini güncelleyebilmesi için Splitwatch'u Uygulamalar klasörüne taşıyın."
   },
   "tray": {
     "tooltip": "Splitwatch",

@@ -12,6 +12,12 @@ import { forwardWindowChanges } from './window-ipc';
 const MAX = 4;
 const windows = new Map<string, BrowserWindow>();
 let owner = 'grid';
+const listeners = new Set<() => void>();
+
+export const popoutCount = (): number => windows.size;
+export function onPopoutsChange(listener: () => void): void {
+  listeners.add(listener);
+}
 
 function broadcast(): void {
   for (const win of BrowserWindow.getAllWindows()) win.webContents.send(IPC.audioOwnerChanged, owner);
@@ -42,6 +48,7 @@ function open(videoId: string, live: boolean): void {
     windows.delete(videoId);
     mainWindow()?.webContents.send(IPC.popoutClosed, videoId);
     if (owner === videoId) claim('grid');
+    for (const listener of listeners) listener();
   });
   void win.loadURL(pageUrl({ popout: videoId, ...(live ? { live: '1' } : {}) }));
 }

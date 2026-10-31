@@ -1,8 +1,9 @@
 import { type CSSProperties, type FormEvent, useEffect, useMemo, useRef, useState } from 'react';
+import type { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { LANGUAGE_NAMES, REVIEWED_LOCALES, SUPPORTED_LOCALES, isSupportedLocale } from '../../shared/locales';
 import type { ColorScheme } from '../../shared/settings';
-import type { LoginState, MediaKeysState } from '../../shared/ipc';
+import type { LoginState, MediaKeysState, UpdateState } from '../../shared/ipc';
 import { MAX_CUSTOM_THEMES, NEUTRAL_THEME, type Palette, type Theme, ownTheme, themeSlug } from '../../shared/themes';
 import { openDialog, useAppStore } from '../state/app';
 import { setFollowing } from '../state/notify';
@@ -744,15 +745,52 @@ function sortedThemes(themes: readonly Theme[], name: (theme: Theme) => string, 
 
 function UpdatesSection() {
   const { t } = useTranslation();
-  const on = usePrefs((s) => s.checkUpdates);
+  const update = useAppStore((s) => s.update);
+  const platform = useAppStore((s) => s.info?.platform) ?? '';
+  const busy = update.status === 'checking' || update.status === 'downloading';
   return (
     <section className="settings-section">
       <h3>{t('settings.updates')}</h3>
-      <label className="field field-tight">
-        <input type="checkbox" checked={on} onChange={(e) => setPrefs({ checkUpdates: e.target.checked })} />
-        {t('settings.checkUpdates')}
-      </label>
-      <p className="note field-note">{t('settings.checkUpdatesNote')}</p>
+      <p className="note">{t('settings.updatesNote', { platform })}</p>
+      <p className="note" role="status">
+        {updateLine(update, t)}
+      </p>
+      <div className="theme-tools-row">
+        <button
+          type="button"
+          className="button button-quiet"
+          disabled={busy}
+          onClick={() => void window.splitwatch.checkForUpdates()}
+        >
+          {t('settings.checkNow')}
+        </button>
+        {update.status === 'ready' && (
+          <button type="button" className="button" onClick={() => void window.splitwatch.installUpdate()}>
+            {t('update.restart')}
+          </button>
+        )}
+      </div>
     </section>
   );
+}
+
+function updateLine(update: UpdateState, t: TFunction): string {
+  switch (update.status) {
+    case 'checking':
+      return t('settings.updateChecking');
+    case 'none':
+      return t('settings.updateNone', { time: new Date(update.checkedAt) });
+    case 'error':
+      return t('settings.updateError');
+    case 'downloading':
+      return t('update.downloading', { progress: update.progress });
+    case 'ready':
+      return t('update.ready', { version: update.version });
+    case 'available':
+      return update.reason === 'move'
+        ? t('update.move', { version: update.version })
+        : t('update.available', { version: update.version });
+    default:
+      return t('settings.updateIdle');
+  }
 }

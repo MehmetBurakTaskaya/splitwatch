@@ -28,6 +28,7 @@
     "add": "Paste a YouTube link in the box above, or pick a stream from Live now below. Up to nine streams fit side by side.",
     "sound": "Click a stream to hear it; the others play muted. When Splitwatch opens again, only that stream starts by itself, and Play all starts the rest.",
     "key": "Optional: a free YouTube API key, added in Settings, turns on search, live badges and notifications.",
+    "updates": "Splitwatch keeps itself up to date from GitHub and sends nothing about you.",
     "done": "Got it",
     "settings": "Open Settings"
   },
@@ -296,15 +297,20 @@
     "languageSystem": "Same as the system ({language})",
     "languageUnreviewed": "This translation has not been checked by a native speaker yet. Corrections are welcome on GitHub.",
     "updates": "Updates",
-    "checkUpdates": "Look for a new version when Splitwatch starts",
-    "checkUpdatesNote": "Splitwatch asks GitHub for its latest version and sends nothing about you. With this off, new versions are on the download page."
+    "updatesNote": "Splitwatch keeps itself up to date. It looks for a new version on GitHub at start and every 6 hours, and installs it while nobody is watching: when you close it, or while it waits in {platform, select, darwin {the menu bar} other {the notification area}}. It sends nothing about you.",
+    "updateIdle": "Splitwatch looks for a new version shortly after it starts.",
+    "updateChecking": "Looking for a new version…",
+    "updateNone": "Up to date. Last looked at {time, time, short}.",
+    "updateError": "The last look failed. Splitwatch tries again within an hour.",
+    "checkNow": "Check now"
   },
   "update": {
     "available": "Version {version} is available.",
     "downloading": "Downloading the update: {progress, number, percent}",
-    "ready": "Version {version} is ready to install.",
-    "restart": "Restart and update",
-    "download": "Download"
+    "ready": "Version {version} is ready. It installs when you close Splitwatch.",
+    "restart": "Update and restart",
+    "download": "Download",
+    "move": "Version {version} is out. Move Splitwatch to Applications so that it can update itself."
   },
   "tray": {
     "tooltip": "Splitwatch",

@@ -28,6 +28,7 @@
     "add": "위의 입력란에 YouTube 링크를 붙여 넣거나, 아래 ‘지금 라이브’에서 스트림을 고르세요. 스트림은 최대 9개까지 나란히 볼 수 있어요.",
     "sound": "스트림을 클릭하면 그 소리가 들리고, 나머지는 음소거로 재생돼요. Splitwatch를 다시 열면 그 스트림만 자동으로 시작되고, 나머지는 ‘모두 재생’으로 시작할 수 있어요.",
     "key": "선택 사항: 설정에서 무료 YouTube API 키를 추가하면 검색, 라이브 표시, 알림을 쓸 수 있어요.",
+    "updates": "Splitwatch는 GitHub에서 스스로 최신 상태를 유지하고, 사용자에 관한 정보는 보내지 않아요.",
     "done": "확인",
     "settings": "설정 열기"
   },
@@ -296,15 +297,20 @@
     "languageSystem": "시스템 설정 따르기({language})",
     "languageUnreviewed": "이 번역은 아직 원어민의 검토를 받지 않았어요. 수정 제안은 GitHub에서 받고 있어요.",
     "updates": "업데이트",
-    "checkUpdates": "Splitwatch를 시작할 때 새 버전 확인",
-    "checkUpdatesNote": "Splitwatch는 GitHub에 최신 버전만 물어보고, 사용자에 관한 정보는 보내지 않아요. 이 기능을 끄면 새 버전은 다운로드 페이지에서 확인할 수 있어요."
+    "updatesNote": "Splitwatch는 스스로 최신 상태를 유지해요. 시작할 때와 6시간마다 GitHub에서 새 버전을 찾고, 아무도 보고 있지 않을 때(닫을 때나 {platform, select, darwin {메뉴 막대에서} other {알림 영역에서}} 기다리는 동안) 설치해요. 사용자에 관한 정보는 보내지 않아요.",
+    "updateIdle": "Splitwatch는 시작하고 잠시 후 새 버전을 찾아요.",
+    "updateChecking": "새 버전을 찾는 중…",
+    "updateNone": "최신 상태예요. 마지막 확인: {time, time, short}",
+    "updateError": "마지막 확인에 실패했어요. 한 시간 안에 다시 시도해요.",
+    "checkNow": "지금 확인"
   },
   "update": {
     "available": "버전 {version} 업데이트가 있어요.",
     "downloading": "업데이트 다운로드 중: {progress, number, percent}",
-    "ready": "버전 {version} 설치 준비가 끝났어요.",
-    "restart": "다시 시작하고 업데이트",
-    "download": "다운로드"
+    "ready": "버전 {version} 준비가 끝났어요. Splitwatch를 닫으면 설치돼요.",
+    "restart": "업데이트하고 다시 시작",
+    "download": "다운로드",
+    "move": "버전 {version}이(가) 나왔어요. 스스로 업데이트할 수 있도록 Splitwatch를 응용 프로그램 폴더로 옮겨 주세요."
   },
   "tray": {
     "tooltip": "Splitwatch",

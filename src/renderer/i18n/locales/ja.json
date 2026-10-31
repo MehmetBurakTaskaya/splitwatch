@@ -28,6 +28,7 @@
     "add": "上の入力欄にYouTubeのリンクを貼り付けるか、下の「ライブ中」から配信を選んでください。最大9本の配信を並べて表示できます。",
     "sound": "配信をクリックすると、その音声が聞こえます。ほかの配信はミュートで再生されます。次にSplitwatchを開いたときは、その配信だけが自動で再生され、残りは「すべて再生」で始まります。",
     "key": "任意：設定で無料のYouTube APIキーを追加すると、検索、ライブ表示、通知が使えるようになります。",
+    "updates": "SplitwatchはGitHubから自動で最新の状態を保ち、個人に関する情報は一切送信しません。",
     "done": "わかりました",
     "settings": "設定を開く"
   },
@@ -296,15 +297,20 @@
     "languageSystem": "システムと同じ（{language}）",
     "languageUnreviewed": "この翻訳はまだネイティブスピーカーの確認を受けていません。修正はGitHubで受け付けています。",
     "updates": "アップデート",
-    "checkUpdates": "Splitwatchの起動時に新しいバージョンを確認する",
-    "checkUpdatesNote": "SplitwatchはGitHubに最新バージョンを問い合わせるだけで、個人に関する情報は一切送信しません。オフにした場合、新しいバージョンはダウンロードページで確認できます。"
+    "updatesNote": "Splitwatchは自動で最新の状態を保ちます。起動時と6時間ごとにGitHubで新しいバージョンを確認し、視聴していないとき（閉じたとき、または{platform, select, darwin {メニューバー} other {通知領域}}で待機しているとき）にインストールします。個人に関する情報は一切送信しません。",
+    "updateIdle": "Splitwatchは起動後まもなく新しいバージョンを確認します。",
+    "updateChecking": "新しいバージョンを確認しています…",
+    "updateNone": "最新の状態です。最終確認：{time, time, short}",
+    "updateError": "前回の確認に失敗しました。1時間以内に再試行します。",
+    "checkNow": "今すぐ確認"
   },
   "update": {
     "available": "バージョン{version}を利用できます。",
     "downloading": "アップデートをダウンロード中：{progress, number, percent}",
-    "ready": "バージョン{version}をインストールする準備ができました。",
-    "restart": "再起動してアップデート",
-    "download": "ダウンロード"
+    "ready": "バージョン{version}の準備ができました。Splitwatchを閉じるとインストールされます。",
+    "restart": "アップデートして再起動",
+    "download": "ダウンロード",
+    "move": "バージョン{version}が公開されました。自動でアップデートできるよう、Splitwatchを「アプリケーション」フォルダに移動してください。"
   },
   "tray": {
     "tooltip": "Splitwatch",

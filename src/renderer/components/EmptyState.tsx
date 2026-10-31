@@ -41,6 +41,7 @@ function Welcome() {
         <li>{t('welcome.add')}</li>
         <li>{t('welcome.sound')}</li>
         <li>{t('welcome.key')}</li>
+        <li>{t('welcome.updates')}</li>
       </ol>
       <div className="welcome-actions">
         <button type="button" className="button" onClick={done}>

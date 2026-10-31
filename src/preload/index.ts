@@ -14,6 +14,7 @@ const api: SplitwatchApi = {
   onUpdateState: (listener) => subscribe<UpdateState>(IPC.updateState, listener),
   installUpdate: () => ipcRenderer.invoke(IPC.updateInstall),
   openReleasePage: () => ipcRenderer.invoke(IPC.openReleasePage),
+  checkForUpdates: () => ipcRenderer.invoke(IPC.updateCheck),
   rendererReady: () => ipcRenderer.send(IPC.rendererReady),
   getSettings: () => ipcRenderer.invoke(IPC.settingsGet),
   saveSettings: (patch) => ipcRenderer.send(IPC.settingsSave, patch),

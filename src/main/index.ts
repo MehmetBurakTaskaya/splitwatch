@@ -2,6 +2,8 @@ import path from 'node:path';
 import { BrowserWindow, Menu, app, ipcMain, session } from 'electron';
 import { APP_ID } from '../shared/app';
 import { type AppInfo, IPC } from '../shared/ipc';
+import { parseApplyUpdate } from '../shared/updates';
+import { applyUpdate } from './apply-update';
 import { getEvents, refreshEvents } from './events-store';
 import { initI18n, onLanguageChange, systemLocale } from './i18n';
 import { linkFromSecondInstance, listenForLinks, setupLinks } from './links';
@@ -23,6 +25,10 @@ import { setupTray } from './tray';
 import { setupUpdates } from './updates';
 import { applyColorScheme, registerAppIpc } from './window-ipc';
 import { registerYouTubeIpc } from './youtube-ipc';
+
+// A downloaded portable update that puts itself in place (apply-update.ts) does nothing else.
+const update = parseApplyUpdate(process.argv);
+if (update) applyUpdate(update);
 
 const argValue = (name: string) => process.argv.find((a) => a.startsWith(`--${name}=`))?.slice(name.length + 3);
 // --locale=en-XA or --locale=ar-XB opens a pseudo-locale for layout tests.

@@ -16,8 +16,12 @@ export function UpdateNotice() {
     case 'available':
       return (
         <div className="banner banner-quiet" role="status">
-          <span>{t('update.available', { version: update.version })}</span>
-          {!update.canInstall && (
+          <span>
+            {update.reason === 'move'
+              ? t('update.move', { version: update.version })
+              : t('update.available', { version: update.version })}
+          </span>
+          {!update.canInstall && update.reason !== 'move' && (
             <button type="button" className="button" onClick={() => void window.splitwatch.openReleasePage()}>
               {t('update.download')}
             </button>
