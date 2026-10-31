@@ -4,14 +4,17 @@ Splitwatch uses no paid services, so its builds are not signed by a commercial c
 
 ## Today
 
-| System  | Signature                                              | What users see                                                                                                                                                 | How updates work                                            |
-| ------- | ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| Windows | none                                                   | SmartScreen: "Windows protected your PC" → **More info** → **Run anyway**                                                                                      | electron-updater installs new versions from GitHub Releases |
-| macOS   | ad-hoc (`mac.identity: "-"` in `electron-builder.yml`) | Gatekeeper refuses the first launch → **System Settings → Privacy & Security → Open Anyway**, or `xattr -dr com.apple.quarantine /Applications/Splitwatch.app` | The app checks GitHub Releases and opens the download page  |
+| System  | Signature                                              | What users see                                                                                                                                                 | How updates work                                                                                                 |
+| ------- | ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Windows | none                                                   | SmartScreen: "Windows protected your PC" → **More info** → **Run anyway**                                                                                      | electron-updater installs new versions from GitHub Releases; the portable copy replaces its own files (ADR 0013) |
+| macOS   | ad-hoc (`mac.identity: "-"` in `electron-builder.yml`) | Gatekeeper refuses the first launch → **System Settings → Privacy & Security → Open Anyway**, or `xattr -dr com.apple.quarantine /Applications/Splitwatch.app` | The app replaces its own bundle with the checked update ZIP (ADR 0013)                                           |
 
-Why macOS does not update itself: Squirrel.Mac, which Electron's updater uses on macOS, works only
-with code-signed apps, and a Developer ID certificate needs the paid Apple Developer Program. Ad-hoc
-signing is enough for Apple Silicon to run the app, but not for Gatekeeper or notarization.
+Squirrel.Mac, which Electron's updater uses on macOS, works only with code-signed apps, and a
+Developer ID certificate needs the paid Apple Developer Program. So the Mac app updates itself
+without it: it downloads the update ZIP from the release, checks it against the SHA-512 in
+`latest-mac.yml`, and swaps its bundle once it has quit. The app's own download carries no quarantine
+flag, so the new version opens without Gatekeeper's question. Each build has its own ad-hoc
+signature, so macOS may ask again for the Accessibility permission (media keys) after an update.
 
 ## Windows: SignPath Foundation
 
@@ -26,6 +29,9 @@ repository. Its [conditions](https://signpath.org/terms) include, among others:
 - a "Code signing policy" section linked from the home and download pages (SignPath attribution,
   team roles, privacy statement);
 - binaries built from source in a verifiable way, which the GitHub Actions release workflow does.
+
+SignPath also asks for a way to turn off the features that send data. Splitwatch's update check
+cannot be turned off (ADR 0013), so applying would need that decision revisited.
 
 Steps when the project qualifies:
 

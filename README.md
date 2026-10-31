@@ -148,8 +148,7 @@ much is left, and Splitwatch stops before the limit.
 ## What is coming
 
 - Reviews of the translations by native speakers (see [CONTRIBUTING.md](CONTRIBUTING.md)).
-- Signed Windows builds through SignPath Foundation, and the later ideas on the
-  [roadmap](docs/ROADMAP.md).
+- The later ideas on the [roadmap](docs/ROADMAP.md).
 
 ## Keyboard shortcuts
 
@@ -173,12 +172,14 @@ much is left, and Splitwatch stops before the limit.
 
 Get the latest version from [Releases](https://github.com/MehmetBurakTaskaya/splitwatch/releases/latest):
 
-| System                                              | File                                                           |
-| --------------------------------------------------- | -------------------------------------------------------------- |
-| Windows 10 or 11 (64-bit)                           | `Splitwatch-Setup-<version>-x64.exe`                           |
-| Windows, without installing                         | `Splitwatch-<version>-win-x64.zip` (unzip, run Splitwatch.exe) |
-| macOS 13 Ventura or later (Apple Silicon and Intel) | `Splitwatch-<version>-mac-universal.dmg`                       |
-| Linux (x86-64), experimental                        | `Splitwatch-<version>-x86_64.AppImage`                         |
+| System                                              | File                                                      |
+| --------------------------------------------------- | --------------------------------------------------------- |
+| Windows 10 or 11 (64-bit)                           | `Splitwatch-Setup-x64.exe`                                |
+| Windows, without installing                         | `Splitwatch-Portable-x64.zip` (unzip, run Splitwatch.exe) |
+| macOS 13 Ventura or later (Apple Silicon and Intel) | `Splitwatch-macOS.dmg`                                    |
+| Linux (x86-64), experimental                        | `Splitwatch-x86_64.AppImage`                              |
+
+Only the newest version is offered. Releases before 1.0.1 had the version in their file names.
 
 Splitwatch is not code-signed yet, so both systems warn the first time.
 
@@ -198,9 +199,12 @@ from the user namespaces that Chromium's sandbox uses, so an AppImage may not st
 safest fix is an AppArmor profile for Splitwatch that allows `userns`; starting it with `--no-sandbox`
 also works but turns the sandbox off. Tray icons need a desktop with StatusNotifier support.
 
-**Updates.** The Windows installer's copy and the AppImage update themselves and ask you to restart.
-The portable Windows copy and macOS tell you when a new version is out and open the download page:
-automatic updates on macOS need a paid Apple certificate. More in [docs/signing.md](docs/signing.md).
+**Updates.** Splitwatch keeps itself up to date. It looks for a new version on GitHub at start and
+every 6 hours and installs it while nobody is watching: when you close it, or while it waits in the
+notification area (the menu bar on macOS), where it starts again by itself. **Update and restart** in
+**Settings → Updates** installs at once. The installed and the portable Windows copy, the Mac app and
+the AppImage all update themselves; on a Mac, Splitwatch has to be in Applications for that, and macOS
+may ask again for the media keys' permission after an update. More in [docs/signing.md](docs/signing.md).
 
 ## Privacy
 
@@ -274,8 +278,11 @@ açabilir, sessiz tema seslerini açabilir (varsayılan kapalı) ve Google Takeo
 **Ayarlar → Dil** bölümünden seçebilirsiniz. Çeviriler henüz anadili o dil olan biri tarafından
 kontrol edilmedi; düzeltmelerinizi GitHub'da bekliyoruz.
 
-1.0 ile ilk açılışta kısa bir tanıtım çıkar, yeni bir simge gelir ve güncelleme denetimi
-**Ayarlar → Güncellemeler** bölümünden kapatılabilir.
+1.0 ile ilk açılışta kısa bir tanıtım çıkar ve yeni bir simge gelir. 1.0.1'den beri Splitwatch kendini
+her zaman güncel tutar: açılışta ve 6 saatte bir GitHub'da yeni sürüm arar, kimse izlemiyorken
+(kapatıldığında ya da bildirim alanında beklerken) yükler; **Ayarlar → Güncellemeler** bölümündeki
+**Güncelle ve yeniden başlat** hemen yükler. Taşınabilir Windows sürümü ve Mac de kendini günceller.
+İndirme sayfasında yalnız en yeni sürüm bulunur.
 
 İndirmek için [Releases](https://github.com/MehmetBurakTaskaya/splitwatch/releases/latest) sayfasına
 gidin. Uygulama henüz kod imzalı olmadığı için ilk açılışta uyarı çıkar:
@@ -287,5 +294,4 @@ gidin. Uygulama henüz kod imzalı olmadığı için ilk açılışta uyarı ç�
   yukarıdaki `xattr` komutunu bir kez çalıştırın.
 
 Kurmadan çalıştırmak için Windows ZIP'i, Linux için (deneysel) AppImage'ı indirebilirsiniz.
-Kurulu Windows sürümü ve AppImage kendini günceller; taşınabilir sürüm ve macOS yeni sürüm
-çıktığında indirme sayfasını açar.
+Hepsi kendini günceller.

@@ -115,10 +115,16 @@ If a tile shows a message instead of a video, note the message and the error cod
 2. Quit Splitwatch, open Finder's **Go → Go to Folder**, enter `~/Library/Application Support/Splitwatch`
    and rename `settings.json` to `settings-old.json`. Start Splitwatch: the start screen shows a short
    welcome with three points, and **Got it** hides it for good. Quit, and rename the file back.
-3. In **Settings → Updates**, untick the box, quit and start again: no update notice appears even when
-   a newer version exists.
-4. Turn on VoiceOver (**Cmd + F5**) for a minute and move through the top bar and Settings with
+3. Turn on VoiceOver (**Cmd + F5**) for a minute and move through the top bar and Settings with
    **Ctrl + Option + arrow keys**: every button should say what it does.
+
+## Version 1.0.1 and later (a minute, then once per new version)
+
+1. Make sure Splitwatch is in **Applications** (not opened from the disk image or Downloads).
+2. Open **Settings → Updates** and click **Check now**: it says that Splitwatch is up to date.
+3. When a newer version is out, quit Splitwatch and open it again after a minute: **Settings → Updates**
+   and the version line at the end of Settings show the new version. If you use the media keys, check
+   whether macOS asks again for the Accessibility permission.
 
 Send back: your Mac model, macOS version, and what happened at each step (a screenshot helps:
 **Shift + Cmd + 3**). For 0.4, also whether the background moves smoothly and how busy Activity

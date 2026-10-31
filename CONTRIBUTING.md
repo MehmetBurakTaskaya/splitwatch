@@ -53,6 +53,13 @@ reviewing one is among the most useful contributions:
 - A new English message goes into every file in the same change. If you cannot translate it, copy the
   English text; it shows in English until someone translates it.
 
+## Releases and download numbers
+
+A tag such as `v1.2.3` builds a draft release (`.github/workflows/release.yml`); publishing it turns
+the older releases into drafts (`hide-old-releases.yml`). File names carry no version. To see how
+often Splitwatch is downloaded and about how many copies are in use, run `npm run stats` (with the
+GitHub CLI signed in) or start **Actions → Download numbers** (ADR 0013).
+
 ## Icons
 
 The app icon is `build/icon.svg` and the tray marks are `build/tray.svg` and `build/tray-template.svg`

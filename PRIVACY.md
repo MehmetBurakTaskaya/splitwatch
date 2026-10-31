@@ -14,11 +14,18 @@ developer. Everything it stores stays on your computer.
 | YouTube Data API v3 (`googleapis.com`)      | Only with your own API key: when you search, every few minutes while the window is visible to check which streams are live, and in the background for live notifications and the tray's Live now list | Your search words, video IDs and your API key                                                                                                |
 | GitHub (`raw.githubusercontent.com`)        | Once a day, to update the sport presets and the Summer and Winter Games calendars                                                                                                                     | A normal web request                                                                                                                         |
 | English Wikipedia (`en.wikipedia.org`)      | When you open an event's medal table, at most every ten minutes                                                                                                                                       | The page ID of the medal table; nothing about you                                                                                            |
-| GitHub (`api.github.com`, `github.com`)     | At start, to check for a new version, unless you turn it off in **Settings → Updates**                                                                                                                | A normal web request with your IP address; nothing else                                                                                      |
+| GitHub (`github.com`)                       | 30 seconds after start and every 6 hours, to look for a new version, and to download it                                                                                                               | A normal web request with your IP address; nothing else                                                                                      |
 
 When the window is hidden, Splitwatch makes no requests for "Live now" or live states, unless you
 turned on live notifications (every ten minutes) or keep Splitwatch in the notification area with a
 key (its Live now list, every five minutes).
+
+## Updates and download numbers
+
+Splitwatch keeps itself up to date and this cannot be turned off: it reads a small file from GitHub
+to learn the newest version and downloads it from GitHub. How many people download and use Splitwatch
+is known only from the download counts GitHub keeps for each release file, which anyone with access
+to the repository can see; Splitwatch itself sends nothing about you or your copy.
 
 ## Notifications, links and starting with the system
 

@@ -5,6 +5,21 @@ and versions follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-10-31
+
+### Changed
+
+- Splitwatch keeps itself up to date. It looks for a new version at start and every 6 hours and
+  installs it while nobody is watching: when you close it, or while it waits in the notification
+  area (the menu bar on macOS), where it starts again by itself. **Update and restart** in
+  **Settings → Updates** installs at once, and **Check now** looks at once. The switch that turned
+  the check off in 1.0.0 is gone.
+- The portable Windows copy and the Mac app now update themselves too.
+- Only the newest version is on the download page, and its file names carry no version
+  (`Splitwatch-Setup-x64.exe`, `Splitwatch-Portable-x64.zip`, `Splitwatch-macOS.dmg`,
+  `Splitwatch-x86_64.AppImage`).
+- The first-run guide says that Splitwatch keeps itself up to date and sends nothing about you.
+
 ## [1.0.0] - 2026-10-31
 
 Splitwatch 1.0: a new icon, a short welcome on the first start, a way to turn off the update check,
@@ -236,7 +251,8 @@ The first version: the app's foundation and its release pipeline, without stream
 - Security baseline: sandboxed, isolated renderer without Node.js, strict Content Security Policy,
   hardened Electron fuses.
 
-[Unreleased]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.9.0...v1.0.0
 [0.9.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.7.0...v0.8.0
