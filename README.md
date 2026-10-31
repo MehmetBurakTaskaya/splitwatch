@@ -230,9 +230,9 @@ canlı ve yaklaşan yayınları, hatırlatma, günün finallerini tek ızgarada 
 vurgulandığı madalya tablosu (İngilizce Wikipedia'dan, CC BY-SA 4.0).
 
 YouTube kuralları gereği açılışta yalnız son seçtiğiniz yayın kendiliğinden başlar; diğerlerini üst
-çubuktaki **Play all** başlatır. Görünmeyen yayınlar (büyütülmüş yayının, mini oynatıcının arkasında
-, pencere simge durumundayken ya da Ayarlar gibi bir pencere açıkken) duraklar ve göründüklerinde
-devam eder.
+çubuktaki **Play all** başlatır. Görünmeyen yayınlar (büyütülmüş yayının ya da mini oynatıcının
+arkasında kalanlar, pencere simge durumundayken ya da Ayarlar gibi bir pencere açıkken) duraklar ve
+göründüklerinde devam eder.
 
 İndirmek için [Releases](https://github.com/MehmetBurakTaskaya/splitwatch/releases/latest) sayfasına
 gidin. Uygulama henüz kod imzalı olmadığı için ilk açılışta uyarı çıkar:
