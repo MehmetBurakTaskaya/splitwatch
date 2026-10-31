@@ -241,14 +241,15 @@ kbd {
 }
 
 /* When the bar is short of room, the link box gives way first (down to its minimum), then the event
-   chip's label, which shortens with an ellipsis. Below 1200 px the app name and Play all's label step
-   aside. */
+   chip's label, which shortens with an ellipsis. Below 1200 px the app name, Play all's label and the
+   light or dark button (also in Settings) step aside. */
 .play-all {
   flex: none;
 }
 @media (max-width: 1199px) {
   .brand-name,
-  .play-all-label {
+  .play-all-label,
+  .topbar .scheme-toggle {
     display: none;
   }
 }

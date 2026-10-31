@@ -172,7 +172,7 @@ export function TopBar() {
 
       <button
         type="button"
-        className="icon-button optional"
+        className="icon-button optional scheme-toggle"
         aria-label={schemeLabel}
         title={schemeLabel}
         onClick={() => setPrefs({ colorScheme: dark ? 'light' : 'dark' })}

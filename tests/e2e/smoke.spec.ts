@@ -419,9 +419,9 @@ test('the live chat opens beside the grid, read-only, and closes', async () => {
   const { app, page } = await launch(
     freshUserData({ session: { layout: '2', streams: [VIDEO_A, VIDEO_B], selected: VIDEO_A } }),
   );
+  // The panel narrows the tiles, which may then hide their less needed buttons, this one too.
   const open = page.getByRole('button', { name: en.chat.open.replace('{index}', '2') });
   await open.click();
-  await expect(open).toHaveAttribute('aria-pressed', 'true');
   const frame = page.locator('.chat iframe');
   // YouTube refuses its chat in a frame unless the embedding site names itself.
   await expect(frame).toHaveAttribute(
@@ -472,11 +472,15 @@ test('the line-up panel holds a stream back beside the grid, instead of a chat',
     await expect(first.locator('output')).toHaveText('No delay');
   }
 
-  // A chat takes the panel's place.
-  await page.getByRole('button', { name: en.chat.open.replace('{index}', '1') }).click();
+  // One panel at a time: a chat takes the line-up's place, and the line-up the chat's.
+  await toggle.click();
   await expect(page.locator('.sync')).toHaveCount(0);
+  await page.getByRole('button', { name: en.chat.open.replace('{index}', '1') }).click();
   await expect(page.locator('.chat')).toHaveCount(1);
-  await expect(toggle).toHaveAttribute('aria-pressed', 'false');
+  await toggle.click();
+  await expect(page.locator('.chat')).toHaveCount(0);
+  await expect(page.locator('.sync')).toHaveCount(1);
+  await expect(toggle).toHaveAttribute('aria-pressed', 'true');
   await app.close();
 });
 
