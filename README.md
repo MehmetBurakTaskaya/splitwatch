@@ -1,49 +1,64 @@
-# Splitwatch
+<p align="center">
+  <img src="build/icon.svg" width="112" height="112" alt="Splitwatch icon: a grid of four tiles, one with a play mark">
+</p>
 
-Watch several YouTube sports live streams side by side, in one window. Free and open source, for
-Windows and macOS (Linux, experimental).
+<h1 align="center">Splitwatch</h1>
 
-> **Version 1.0.** Splitwatch plays a grid of streams, finds live sports on official channels,
-> searches YouTube, dresses itself in the sport you watch, keeps your layouts, shrinks to a mini
-> player, tells you when a channel goes live and has modes for the Summer and Winter Games, in twelve
-> languages. More arrives version by version; see the [roadmap](docs/ROADMAP.md).
+<p align="center">
+  <strong>Every sport. Every stream. One screen.</strong><br>
+  Watch several YouTube sports live streams side by side, in one window. Free and open source, for
+  Windows and macOS (Linux, experimental).
+</p>
 
-## What it does
+<p align="center">
+  <a href="https://github.com/MehmetBurakTaskaya/splitwatch/releases/latest">Download</a> ·
+  <a href="#türkçe">Türkçe</a> ·
+  <a href="CHANGELOG.md">Changelog</a> ·
+  <a href="docs/ROADMAP.md">Roadmap</a>
+</p>
 
-- A grid of 1, 2, 3, 4, 6 or 9 streams, or one large stream with a side strip, each a "lane".
-- Paste a YouTube link or video ID to add a stream; copy a link and Splitwatch offers to add it.
-- The stream you pick is the one you hear; a main volume and a volume per stream.
-- Enlarge one stream to fullscreen, drag streams to reorder them, and the grid comes back next time.
-- Keyboard shortcuts for everything, and you can change them.
-- "Live now": live and upcoming streams from the official channels of 17 sports (presets), with a
-  LIVE badge on streams in the grid.
-- Search YouTube for live streams (Ctrl + K, or Cmd + K on macOS), filtered by sport, with the cost
-  shown before each search.
-- Twelve sport themes, in light and dark, that follow the sport you watch (see below), and a
-  light or dark button in the top bar.
-- Saved layouts: save the grid under a name (Ctrl + S, or Cmd + S) and open it again later, or
-  share one as a `splitwatch://` link that opens it in someone else's Splitwatch (after they agree).
-- A mini player: the picked stream in a small window that stays on top of other windows.
-- Keep Splitwatch in the notification area (the menu bar on macOS) when its window closes, and start
-  it when you sign in.
-- Live notifications, with your own API key: Splitwatch tells you when a channel you follow, or an
-  official channel of a sport you pick, goes live, and a click adds the stream.
-- The coming week: the upcoming streams of your sports by day, with **Remind me**.
-- When a stream ends, Splitwatch offers a live stream of the same sport in its place.
-- Spoiler protection: titles and thumbnails stay blurred until you point at them.
-- The keyboard's media keys can play, pause and switch streams, also from the background.
-- Pop a stream out into a window of its own, for a second screen.
-- Read a stream's live chat beside the grid, or open it in your browser to write.
-- Line up streams that run ahead of one another (experimental): hold one back by seconds.
-- Make your own themes, with a check that all text stays easy to read, and share them as files.
-- Your watching: the time you watched by week, month, sport and channel, kept on this computer only.
-- A waiting screen: a large clock that counts down to the next streams you are waiting for.
-- Quiet theme sounds, off by default.
-- Follow the channels of your YouTube subscriptions, from a Google Takeout export.
-- Summer Games and Winter Games modes (see below).
-- Twelve languages: English, Spanish, Simplified Chinese, Japanese, German, French, Brazilian
-  Portuguese, Arabic, Korean, Italian, Russian and Turkish. Splitwatch follows your system's
-  language, or the one you pick in **Settings → Language**.
+![A short tour of Splitwatch. The start screen wears the Track theme and goes through Turkish, Japanese, Arabic, German and Spanish. A swimming stream is added by its link, its sport is set to Swimming, and the window turns to the Pool theme. Three swimming streams play side by side next to an empty place with lane ropes, another stream is picked to be heard, and the layout changes to one large stream with a side strip. Athletics, volleyball, basketball, alpine skiing and ice hockey streams each bring their own theme, in light and dark. Four streams of different sports keep a neutral window, each with its sport's color, first light, then dark. It ends with: Every sport. Every stream. One screen. 12 sport themes, 12 languages, free and open source, for Windows and macOS.](docs/assets/demo.gif)
+
+Paste a YouTube link, or pick a live stream from the official channels of 17 sports, and Splitwatch
+puts it in a grid next to the others: up to nine at once. The stream you pick is the one you hear.
+The window dresses itself in the sport you watch, and everything has a key. Version 1.0; more arrives
+version by version (see the [roadmap](docs/ROADMAP.md)).
+
+## Features
+
+- **Up to nine streams side by side.** Grids of 1, 2, 3, 4, 6 or 9 streams, or one large stream
+  with a side strip. Paste a YouTube link or video ID, or copy a link and Splitwatch offers to add it.
+  Drag streams to reorder them; the grid comes back next time.
+- **You hear the one you pick.** A main volume and a volume per stream. Enlarge a stream to
+  fullscreen, pop one out into a window of its own for a second screen, or keep the picked stream in
+  a mini player on top of other windows.
+- **A theme for each sport.** Twelve sport themes, in light and dark, with backgrounds the app draws
+  itself: lane ropes for swimming, the bend of a running track, waves, slalom gates and more. With
+  **Automatic**, the window takes the theme of the sport you watch. Make your own themes, with a check
+  that all text stays easy to read, and share them as files.
+- **Live sports, found for you.** "Live now" shows the newest videos of the official channels of 17
+  sports. With your own free YouTube API key, it shows which are live or coming up, with a LIVE badge
+  in the grid, and you can search YouTube for live streams by sport (Ctrl + K, or Cmd + K on macOS),
+  get a notification when a channel goes live, and see the coming week with **Remind me**. When a
+  stream ends, Splitwatch offers a live stream of the same sport in its place.
+- **Summer and Winter Games modes.** The event's look, a day-by-day schedule and the medal table
+  (see below).
+- **For long days of sport.** Spoiler protection blurs titles and thumbnails until you point at them;
+  a waiting screen counts down to the next streams; read a stream's live chat beside the grid; line up
+  streams that run ahead of one another (experimental); the keyboard's media keys play, pause and
+  switch streams, also from the background.
+- **Saved layouts.** Save the grid under a name (Ctrl + S, or Cmd + S) and open it later, or share
+  it as a `splitwatch://` link that opens it in someone else's Splitwatch (after they agree).
+- **Keyboard first.** Shortcuts for everything, and you can change them.
+- **Stays at hand.** Keep Splitwatch in the notification area (the menu bar on macOS) when its window
+  closes, and start it when you sign in. Quiet theme sounds, off by default.
+- **Your watching, on your computer.** The time you watched by week, month, sport and channel, kept
+  on this computer only. Follow the channels of your YouTube subscriptions, from a Google Takeout
+  export.
+- **Twelve languages.** English, Spanish, Simplified Chinese, Japanese, German, French, Brazilian
+  Portuguese, Arabic (right to left), Korean, Italian, Russian and Turkish. Splitwatch follows your
+  system's language, or the one you pick in **Settings → Language**.
+- **Keeps itself up to date**, and sends nothing about you (see [Download](#download)).
 
 ## Summer and Winter Games
 
@@ -237,7 +252,15 @@ their logos or marks; every theme picture and icon is its own. The theme heading
 [Oswald](https://github.com/googlefonts/OswaldFont) and [Exo 2](https://github.com/googlefonts/Exo-2.0),
 under the SIL Open Font License 1.1 (the licenses ship with the app in `licenses/`).
 
+The demo above plays highlights that FISU, the International University Sports Federation, publishes
+on [its YouTube channel](https://www.youtube.com/channel/UCTo1z8OU-GBc7psIy-9-wtg) under the Creative
+Commons Attribution license (CC BY 3.0). Splitwatch is not affiliated with or endorsed by FISU. The
+demo is recorded with `node scripts/record-demo.mjs`.
+
 ## Türkçe
+
+**Her spor, her yayın, tek ekranda.** Yukarıdaki kısa tanıtımda FISU'nun (Uluslararası Üniversite
+Sporları Federasyonu) YouTube kanalında CC BY 3.0 lisansıyla yayımladığı özet videolar oynar.
 
 Splitwatch, birden çok YouTube spor canlı yayınını tek pencerede yan yana izlemeye yarayan ücretsiz
 ve açık kaynaklı bir masaüstü uygulamasıdır (Windows ve macOS). Sürüm 1.0:

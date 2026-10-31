@@ -67,6 +67,14 @@ The app icon is `build/icon.svg` and the tray marks are `build/tray.svg` and `bu
 every size from the SVG with Electron and writes `build/icon.png`, `build/icon.ico`, `build/icon.icns`
 and the tray PNGs in `src/main/assets/`. Like the themes, the icon is drawn here and is no one's mark.
 
+## Demo GIF
+
+`docs/assets/demo.gif`, at the top of the README, is recorded from the built app with
+`node scripts/record-demo.mjs` (it needs the internet and ffmpeg). The windows open off the screen
+with their sound muted. The streams are FISU's highlights, published under CC BY 3.0 and credited in
+the README; a new recording uses only videos whose owner publishes them under a license that allows
+this.
+
 ## Sport presets
 
 A preset lists the official YouTube channels of one sport; "Live now" checks them for live and upcoming
