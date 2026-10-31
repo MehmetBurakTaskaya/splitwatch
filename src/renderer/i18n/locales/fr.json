@@ -186,7 +186,7 @@
     },
     "keys": {
       "space": "Espace",
-      "escape": "Esc"
+      "escape": "Échap"
     }
   },
   "settings": {
@@ -261,7 +261,7 @@
     "startAtLogin": "Lancer Splitwatch à l’ouverture de session",
     "startHidden": "Démarrer dans la {platform, select, darwin {barre des menus} other {zone de notification}}, sans fenêtre",
     "startUnavailable": "Le démarrage avec le système fonctionne dans l’application installée.",
-    "startApproval": "macOS demande votre accord : Réglages Système, Général, Ouverture.",
+    "startApproval": "macOS demande votre accord : Réglages Système, Général, Ouverture et extensions.",
     "notify": "Notifications de direct",
     "notifyOn": "Me prévenir quand un flux passe en direct",
     "notifyNeedsKey": "Cela nécessite votre clé API YouTube : sans elle, Splitwatch ne peut pas savoir si un flux est en direct.",
@@ -441,8 +441,8 @@
     "remind": "Me le rappeler"
   },
   "history": {
-    "open": "Vos visionnages",
-    "title": "Vos visionnages",
+    "open": "Votre historique",
+    "title": "Votre historique",
     "note": "Conservé uniquement sur cet ordinateur. Les titres et les chaînes sont effacés 30 jours après votre dernier visionnage, comme le demande YouTube ; le temps par sport reste jusqu’à ce que vous l’effaciez.",
     "off": "L’historique de visionnage est désactivé, rien de nouveau n’est donc ajouté. Vous pouvez l’activer dans les Paramètres.",
     "empty": "Rien de regardé pour l’instant. Le temps est compté pendant que des flux sont lus à l’écran.",
