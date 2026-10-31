@@ -14,7 +14,7 @@ developer. Everything it stores stays on your computer.
 | YouTube Data API v3 (`googleapis.com`)      | Only with your own API key: when you search, every few minutes while the window is visible to check which streams are live, and in the background for live notifications and the tray's Live now list | Your search words, video IDs and your API key                                                                                                |
 | GitHub (`raw.githubusercontent.com`)        | Once a day, to update the sport presets and the Summer and Winter Games calendars                                                                                                                     | A normal web request                                                                                                                         |
 | English Wikipedia (`en.wikipedia.org`)      | When you open an event's medal table, at most every ten minutes                                                                                                                                       | The page ID of the medal table; nothing about you                                                                                            |
-| GitHub (`api.github.com`, `github.com`)     | At start, to check for a new version                                                                                                                                                                  | A normal web request with your IP address; nothing else                                                                                      |
+| GitHub (`api.github.com`, `github.com`)     | At start, to check for a new version, unless you turn it off in **Settings → Updates**                                                                                                                | A normal web request with your IP address; nothing else                                                                                      |
 
 When the window is hidden, Splitwatch makes no requests for "Live now" or live states, unless you
 turned on live notifications (every ten minutes) or keep Splitwatch in the notification area with a
@@ -28,7 +28,7 @@ shows what it holds until you choose to open or keep it.
 
 Live notifications are shown by your system; Splitwatch sends nothing anywhere to show them. Starting
 Splitwatch when you sign in adds it to your system's list of startup apps (on Windows, the Run entry
-of your account; on macOS, Login Items), and turning it off removes it.
+of your account; on macOS, Login Items & Extensions), and turning it off removes it.
 
 ## The clipboard
 

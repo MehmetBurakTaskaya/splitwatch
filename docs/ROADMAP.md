@@ -13,7 +13,7 @@ Each phase ends with a release that is tested on Windows and, where possible, on
 | 6     | Summer Games and Winter Games event modes                                                                                                            | done   |
 | 7     | Extra features (below)                                                                                                                               | done   |
 | 8     | Languages: Spanish, Simplified Chinese, Japanese, German, French, Brazilian Portuguese, Arabic, Korean, Italian, Russian, Turkish                    | done   |
-| 9     | Polish: accessibility, performance, onboarding, final icon, v1.0.0                                                                                   |        |
+| 9     | Polish: accessibility, performance, onboarding, final icon, v1.0.0                                                                                   | done   |
 
 ## Phase 7 extra features
 

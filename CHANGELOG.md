@@ -5,6 +5,35 @@ and versions follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-10-31
+
+Splitwatch 1.0: a new icon, a short welcome on the first start, a way to turn off the update check,
+and the polish of accessibility and translations.
+
+### Added
+
+- A new icon: a grid of four streams, the one you hear in green with a play mark. The tray and the
+  top bar use the same grid.
+- On the first start, the start screen explains in three points how to add streams, which stream you
+  hear, what Play all does and that an API key is optional. **Got it** hides it for good.
+- **Settings → Updates**: turn off the check for a new version at start. Splitwatch then asks GitHub
+  nothing.
+
+### Changed
+
+- The translations had their open questions settled in a structured review: Spanish now says
+  Agregar, German "Streams synchronisieren" and Sek., Min., Std., French Échap and "Votre historique",
+  Chinese 维基百科, and several languages name the macOS and Google Cloud Console settings as those
+  show them today. They still wait for native speakers.
+- English names the current macOS setting **Login Items & Extensions** and the Console's
+  **APIs & Services**.
+
+### Fixed
+
+- The line-up buttons now tell screen readers their visible text (+5 s and so on), and the selected
+  day of an event schedule shows its number clearly.
+- Spanish, Portuguese and Italian no longer use a wrong article before a time at 1 o'clock.
+
 ## [0.9.0] - 2026-10-31
 
 Splitwatch now speaks twelve languages.
@@ -207,7 +236,8 @@ The first version: the app's foundation and its release pipeline, without stream
 - Security baseline: sandboxed, isolated renderer without Node.js, strict Content Security Policy,
   hardened Electron fuses.
 
-[Unreleased]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.9.0...HEAD
+[Unreleased]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.9.0...v1.0.0
 [0.9.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.6.0...v0.7.0

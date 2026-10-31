@@ -3,7 +3,7 @@
 Watch several YouTube sports live streams side by side, in one window. Free and open source, for
 Windows and macOS (Linux, experimental).
 
-> **Early development.** Splitwatch plays a grid of streams, finds live sports on official channels,
+> **Version 1.0.** Splitwatch plays a grid of streams, finds live sports on official channels,
 > searches YouTube, dresses itself in the sport you watch, keeps your layouts, shrinks to a mini
 > player, tells you when a channel goes live and has modes for the Summer and Winter Games, in twelve
 > languages. More arrives version by version; see the [roadmap](docs/ROADMAP.md).
@@ -115,6 +115,12 @@ Swell, with seven moving rows of waves, is the busiest background; Pool, Track a
 0.7 to 1.1 % on the start screen. When the players fill the grid, the background is drawn once and
 costs nothing more.
 
+Startup and memory, measured with `node scripts/measure-startup.mjs` on the same laptop while other
+work kept its processor about 85 % busy: Splitwatch showed its top bar 0.3 seconds after an empty
+Electron window would have shown (3.9 against 3.6 seconds, medians of five cold starts). Memory,
+summed over all of its processes, was 0.5 GB on the start screen, 1.4 GB with four streams playing
+and 2.0 GB with nine; most of it is YouTube's players.
+
 ### Your own themes
 
 **Settings → Appearance → New theme** starts from the theme you see. Pick colors for light and dark,
@@ -141,8 +147,9 @@ much is left, and Splitwatch stops before the limit.
 
 ## What is coming
 
-- Polish toward version 1.0: accessibility, performance, a first-run guide and the final icon.
 - Reviews of the translations by native speakers (see [CONTRIBUTING.md](CONTRIBUTING.md)).
+- Signed Windows builds through SignPath Foundation, and the later ideas on the
+  [roadmap](docs/ROADMAP.md).
 
 ## Keyboard shortcuts
 
@@ -229,14 +236,14 @@ under the SIL Open Font License 1.1 (the licenses ship with the app in `licenses
 ## Türkçe
 
 Splitwatch, birden çok YouTube spor canlı yayınını tek pencerede yan yana izlemeye yarayan ücretsiz
-ve açık kaynaklı bir masaüstü uygulamasıdır (Windows ve macOS). Şu an erken geliştirme aşamasındadır:
-YouTube linki ya da video kimliği yapıştırarak en fazla dokuz yayını bir grid'de izleyebilirsiniz;
-seçtiğiniz yayının sesini duyarsınız. "Live now" 17 sporun resmî kanallarındaki yayınları gösterir;
-kendi ücretsiz YouTube API anahtarınızla (Ayarlar → YouTube API key) canlı yayın araması ve LIVE
+ve açık kaynaklı bir masaüstü uygulamasıdır (Windows ve macOS). Sürüm 1.0:
+YouTube bağlantısı ya da video kimliği yapıştırarak en fazla dokuz yayını bir ızgarada izleyebilirsiniz;
+seçtiğiniz yayının sesini duyarsınız. "Şimdi canlı" 17 sporun resmî kanallarındaki yayınları gösterir;
+kendi ücretsiz YouTube API anahtarınızla (Ayarlar → YouTube API anahtarı) canlı yayın araması ve CANLI
 etiketleri de açılır. On iki spor teması, izlediğiniz sporun renklerini ve uygulamanın kendi çizdiği
-bir arka planı getirir; ayarlar Ayarlar → Appearance bölümündedir. Düzenleri bir adla kaydedip
+bir arka planı getirir; ayarlar Ayarlar → Görünüm bölümündedir. Düzenleri bir adla kaydedip
 yeniden açabilir (Ctrl + S), seçili yayını diğer pencerelerin üstünde duran küçük bir mini
-oynatıcıda izleyebilir (I), Splitwatch'ı pencere kapanınca bildirim alanında tutabilir ve oturum
+oynatıcıda izleyebilir (I), Splitwatch'u pencere kapanınca bildirim alanında tutabilir ve oturum
 açılınca başlatabilirsiniz. API anahtarınızla, takip ettiğiniz bir kanal canlı yayına başlayınca
 bildirim alırsınız.
 
@@ -245,13 +252,13 @@ yayınları için hatırlatma kurabilir, spoiler korumasını açabilir (başlı
 üzerlerine gelinene kadar bulanık kalır) ve klavyenin medya tuşlarını kullanabilirsiniz. Biten bir
 yayının yerine aynı sporun canlı bir yayını önerilir.
 
-Summer Games ve Winter Games modları, oyunlara 30 günden az kalınca üst çubuktaki etiketle
+Yaz Oyunları ve Kış Oyunları modları, oyunlara 30 günden az kalınca üst çubuktaki etiketle
 önerilir (her an denenebilir): etkinliğin görünümü, açılış animasyonu, gün gün program (o günün
 canlı ve yaklaşan yayınları, hatırlatma, günün finallerini tek ızgarada açma) ve ülkenizin
 vurgulandığı madalya tablosu (İngilizce Wikipedia'dan, CC BY-SA 4.0).
 
 YouTube kuralları gereği açılışta yalnız son seçtiğiniz yayın kendiliğinden başlar; diğerlerini üst
-çubuktaki **Play all** başlatır. Görünmeyen yayınlar (büyütülmüş yayının ya da mini oynatıcının
+çubuktaki **Tümünü oynat** başlatır. Görünmeyen yayınlar (büyütülmüş yayının ya da mini oynatıcının
 arkasında kalanlar, pencere simge durumundayken ya da Ayarlar gibi bir pencere açıkken) duraklar ve
 göründüklerinde devam eder.
 
@@ -267,12 +274,15 @@ açabilir, sessiz tema seslerini açabilir (varsayılan kapalı) ve Google Takeo
 **Ayarlar → Dil** bölümünden seçebilirsiniz. Çeviriler henüz anadili o dil olan biri tarafından
 kontrol edilmedi; düzeltmelerinizi GitHub'da bekliyoruz.
 
+1.0 ile ilk açılışta kısa bir tanıtım çıkar, yeni bir simge gelir ve güncelleme denetimi
+**Ayarlar → Güncellemeler** bölümünden kapatılabilir.
+
 İndirmek için [Releases](https://github.com/MehmetBurakTaskaya/splitwatch/releases/latest) sayfasına
 gidin. Uygulama henüz kod imzalı olmadığı için ilk açılışta uyarı çıkar:
 
 - **Windows:** "Windows bilgisayarınızı korudu" uyarısında **Ek bilgi**'ye, sonra **Yine de çalıştır**'a
   tıklayın.
-- **macOS:** `.dmg` dosyasını açıp Splitwatch'ı Uygulamalar klasörüne sürükleyin. İlk açılışta
+- **macOS:** `.dmg` dosyasını açıp Splitwatch'u Uygulamalar klasörüne sürükleyin. İlk açılışta
   **Sistem Ayarları → Gizlilik ve Güvenlik** bölümünde **Yine de Aç**'a tıklayın ya da Terminal'de
   yukarıdaki `xattr` komutunu bir kez çalıştırın.
 

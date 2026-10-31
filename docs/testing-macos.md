@@ -62,7 +62,7 @@ If a tile shows a message instead of a video, note the message and the error cod
 4. In **Settings → In the background**, tick **Keep Splitwatch in the menu bar**. Close the window:
    the Splitwatch icon stays in the menu bar; its menu reopens the window.
 5. Tick **Start Splitwatch when I sign in**. If Settings says macOS needs your approval, open
-   **System Settings → General → Login Items** and allow it. Log out and in again.
+   **System Settings → General → Login Items & Extensions** and allow it. Log out and in again.
 6. With a key, turn on **Tell me when a stream goes live**: macOS should show a "Live notifications
    are on" notification. If Settings says the system did not show it, note that (macOS may refuse
    notifications from an app without a developer signature).
@@ -106,6 +106,19 @@ If a tile shows a message instead of a video, note the message and the error cod
 2. Pick **العربية**: the window turns right to left. Check the top bar and Settings.
 3. Click the Splitwatch icon in the menu bar (with **Keep Splitwatch in the menu bar** on): the menu
    is in Arabic too. Pick **Same as the system** again.
+
+## Version 1.0 (about 5 more minutes)
+
+1. Look at Splitwatch in the Dock and in Launchpad: the icon is a grid of four tiles, the top left
+   one green with a play mark. With **Keep Splitwatch in the menu bar** on, the menu bar shows the
+   same grid in black and gray, and it follows the menu bar's light or dark look.
+2. Quit Splitwatch, open Finder's **Go → Go to Folder**, enter `~/Library/Application Support/Splitwatch`
+   and rename `settings.json` to `settings-old.json`. Start Splitwatch: the start screen shows a short
+   welcome with three points, and **Got it** hides it for good. Quit, and rename the file back.
+3. In **Settings → Updates**, untick the box, quit and start again: no update notice appears even when
+   a newer version exists.
+4. Turn on VoiceOver (**Cmd + F5**) for a minute and move through the top bar and Settings with
+   **Ctrl + Option + arrow keys**: every button should say what it does.
 
 Send back: your Mac model, macOS version, and what happened at each step (a screenshot helps:
 **Shift + Cmd + 3**). For 0.4, also whether the background moves smoothly and how busy Activity

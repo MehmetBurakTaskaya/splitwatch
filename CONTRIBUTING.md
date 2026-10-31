@@ -51,6 +51,13 @@ reviewing one is among the most useful contributions:
 - A new English message goes into every file in the same change. If you cannot translate it, copy the
   English text; it shows in English until someone translates it.
 
+## Icons
+
+The app icon is `build/icon.svg` and the tray marks are `build/tray.svg` and `build/tray-template.svg`
+(macOS colors the template itself). After changing one, run `node scripts/build-icons.mjs`: it draws
+every size from the SVG with Electron and writes `build/icon.png`, `build/icon.ico`, `build/icon.icns`
+and the tray PNGs in `src/main/assets/`. Like the themes, the icon is drawn here and is no one's mark.
+
 ## Sport presets
 
 A preset lists the official YouTube channels of one sport; "Live now" checks them for live and upcoming
