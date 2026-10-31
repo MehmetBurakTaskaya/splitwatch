@@ -4,16 +4,19 @@ import { IconClose } from './icons';
 
 // A modal built on <dialog>, so focus is trapped natively. onClose is a request: Escape, the close
 // button in the corner, a click outside the box and Enter on a checkbox or radio button (their
-// changes apply at once) all ask the owner, which closes the dialog by no longer rendering it.
+// changes apply at once) all ask the owner, which closes the dialog by no longer rendering it. A
+// dialog whose changes wait for a save button gets that Enter as onEnter instead.
 export function Dialog({
   title,
   onClose,
+  onEnter,
   wide,
   footer,
   children,
 }: {
   title: string;
   onClose: () => void;
+  onEnter?: () => void;
   wide?: boolean;
   // Shown under the scrolling content, always in view.
   footer?: ReactNode;
@@ -49,7 +52,7 @@ export function Dialog({
     const target = e.target;
     if (e.key === 'Enter' && target instanceof HTMLInputElement && ['checkbox', 'radio'].includes(target.type)) {
       e.preventDefault();
-      onClose();
+      (onEnter ?? onClose)();
     }
   };
 

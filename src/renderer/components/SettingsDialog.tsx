@@ -2,7 +2,7 @@ import { type CSSProperties, type FormEvent, useEffect, useMemo, useRef, useStat
 import { useTranslation } from 'react-i18next';
 import type { ColorScheme } from '../../shared/settings';
 import type { LoginState, MediaKeysState } from '../../shared/ipc';
-import type { Palette } from '../../shared/themes';
+import { MAX_CUSTOM_THEMES, type Palette, type Theme, ownTheme, themeSlug } from '../../shared/themes';
 import { openDialog, useAppStore } from '../state/app';
 import { setFollowing } from '../state/notify';
 import { setPrefs, usePrefs } from '../state/prefs';
@@ -116,6 +116,7 @@ function AppearanceSection() {
   const spoilers = usePrefs((s) => s.spoilers);
   const scheme = useTheme((s) => s.scheme);
   const active = useTheme((s) => s.theme);
+  const own = usePrefs((s) => s.customThemes);
 
   const option = (value: string, name: string, note: string, palette: Palette, sport: string | null) => (
     <label key={value} className="theme-option">
@@ -162,7 +163,11 @@ function AppearanceSection() {
               theme.sports[0] ?? null,
             ),
           )}
+          {own.map((theme) =>
+            option(theme.id, theme.name ?? theme.id, t('settings.themeOwnNote'), theme[scheme], null),
+          )}
         </div>
+        <ThemeTools />
       </fieldset>
       <fieldset className="field">
         <legend>{t('settings.scheme')}</legend>
@@ -514,5 +519,104 @@ function SportsSection() {
         ))}
       </div>
     </section>
+  );
+}
+
+// Making, changing, sharing and deleting themes of the user's own.
+function ThemeTools() {
+  const { t } = useTranslation();
+  const choice = usePrefs((s) => s.theme);
+  const own = usePrefs((s) => s.customThemes);
+  const active = useTheme((s) => s.theme);
+  const [message, setMessage] = useState<string | null>(null);
+  const [confirming, setConfirming] = useState(false);
+  const mine = own.find((x) => x.id === choice) ?? null;
+  const full = own.length >= MAX_CUSTOM_THEMES;
+  const nameOf = (theme: Theme) => theme.name ?? t(`themes.${theme.id}`, theme.id);
+
+  const edit = (theme: Theme, isNew: boolean) =>
+    useAppStore.setState({ themeDraft: { theme, isNew }, dialog: 'themeEditor' });
+
+  const importTheme = async () => {
+    setMessage(null);
+    const result = await window.splitwatch.importTheme();
+    if (!result) return;
+    if ('error' in result) {
+      setMessage(t(result.error === 'contrast' ? 'settings.themeContrast' : 'settings.themeInvalid'));
+      return;
+    }
+    const current = usePrefs.getState().customThemes;
+    const name = result.theme.name ?? result.theme.id;
+    // A file with an app theme's ID becomes a theme of its own.
+    const builtIn = THEMES.some((x) => x.id === result.theme.id);
+    const replacing = !builtIn && current.some((x) => x.id === result.theme.id);
+    if (!replacing && current.length >= MAX_CUSTOM_THEMES) {
+      setMessage(t('settings.themeFull', { max: MAX_CUSTOM_THEMES }));
+      return;
+    }
+    const id = builtIn ? themeSlug(name, new Set([...THEMES, ...current].map((x) => x.id))) : result.theme.id;
+    const theme = ownTheme(result.theme, id, name);
+    setPrefs({ customThemes: [...current.filter((x) => x.id !== id), theme], theme: id });
+    setMessage(t(replacing ? 'settings.themeUpdated' : 'settings.themeAdded', { name }));
+  };
+
+  const exportTheme = async () => {
+    setMessage(null);
+    const theme = mine ?? ownTheme(active, active.id, nameOf(active));
+    if (await window.splitwatch.exportTheme(theme)) setMessage(t('settings.themeExported'));
+  };
+
+  const remove = () => {
+    if (!mine) return;
+    setPrefs({ customThemes: own.filter((x) => x.id !== mine.id), theme: 'auto' });
+    setConfirming(false);
+    setMessage(t('settings.themeDeleted', { name: nameOf(mine) }));
+  };
+
+  return (
+    <div className="theme-tools">
+      <div className="theme-tools-row">
+        <button
+          type="button"
+          className="button button-quiet"
+          disabled={full}
+          onClick={() => edit(ownTheme(active, '', t('themeEditor.defaultName')), true)}
+        >
+          {t('settings.themeNew')}
+        </button>
+        {mine && (
+          <button type="button" className="button button-quiet" onClick={() => edit(mine, false)}>
+            {t('settings.themeEdit')}
+          </button>
+        )}
+        <button type="button" className="button button-quiet" onClick={() => void importTheme()}>
+          {t('settings.themeImport')}
+        </button>
+        <button type="button" className="button button-quiet" onClick={() => void exportTheme()}>
+          {t('settings.themeExport')}
+        </button>
+        {mine && !confirming && (
+          <button type="button" className="button button-quiet" onClick={() => setConfirming(true)}>
+            {t('settings.themeDelete')}
+          </button>
+        )}
+      </div>
+      {confirming && mine && (
+        <div className="theme-tools-row" role="alert">
+          <span>{t('settings.themeDeleteAsk', { name: nameOf(mine) })}</span>
+          <button type="button" className="button" onClick={remove}>
+            {t('settings.themeDelete')}
+          </button>
+          <button type="button" className="button button-quiet" onClick={() => setConfirming(false)}>
+            {t('settings.themeKeep')}
+          </button>
+        </div>
+      )}
+      {message && (
+        <p className="note" role="status">
+          {message}
+        </p>
+      )}
+    </div>
   );
 }

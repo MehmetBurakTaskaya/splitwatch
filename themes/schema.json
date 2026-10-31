@@ -15,6 +15,12 @@
       "type": "string",
       "pattern": "^[a-z][a-z0-9-]{1,40}$"
     },
+    "name": {
+      "description": "Only for a theme of the user's own: its name, as the user gave it.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40
+    },
     "event": {
       "description": "Only for the Summer and Winter Games themes: the event mode that shows this theme in place of the neutral one. Such a theme has no sports and is not offered in Settings.",
       "enum": ["summer", "winter"]

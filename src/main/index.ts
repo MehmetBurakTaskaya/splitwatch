@@ -12,6 +12,7 @@ import { medalTable } from './medals';
 import { setupNotifications } from './notify';
 import { registerPopoutIpc } from './popouts';
 import { setupReminders } from './reminders';
+import { registerThemeFileIpc } from './theme-files';
 import { registerAppScheme, serveApp } from './protocol';
 import { hardenSession, hardenWebContents } from './security';
 import { flushSettings, getSettings } from './settings-store';
@@ -73,6 +74,7 @@ if (!app.requestSingleInstanceLock()) {
     registerAppIpc();
     registerMainWindowIpc();
     registerPopoutIpc();
+    registerThemeFileIpc();
     registerLoginIpc();
     applyColorScheme();
     registerYouTubeIpc();

@@ -102,3 +102,58 @@ test('tiles show their sport, mixed sports stay neutral, and the sport can be ch
   expect(errors).toEqual([]);
   await app.close();
 });
+
+test('makes a theme of your own, keeps it easy to read, and shares it as a file', async () => {
+  const { app, page } = await launch({ colorScheme: 'light' });
+  const file = path.join(mkdtempSync(path.join(tmpdir(), 'splitwatch-theme-')), 'evening.json');
+  const cssVar = (name: string) =>
+    page.evaluate((n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim(), name);
+
+  await page.getByRole('button', { name: en.settings.open }).click();
+  await page.getByRole('button', { name: en.settings.themeNew }).click();
+  const editor = page.getByRole('dialog', { name: en.themeEditor.newTitle });
+  await expect(editor.getByLabel(en.themeEditor.name)).toHaveValue(en.themeEditor.defaultName);
+  await editor.getByLabel(en.settings.schemeLight).check();
+
+  // Pale text cannot be saved, and the whole app wears the theme while it is edited.
+  const text = editor.getByLabel(en.themeEditor.uiRoles.text, { exact: true });
+  await text.fill('#d0d0d0');
+  await expect(editor.getByRole('button', { name: en.themeEditor.save })).toBeDisabled();
+  await expect(editor.locator('.theme-check li')).toHaveCount(3);
+  expect(await cssVar('--color-text')).toBe('#d0d0d0');
+  await text.fill('#202020');
+  await expect(editor.locator('.theme-check li')).toHaveCount(0);
+  await editor.getByLabel(en.themeEditor.name).fill('Evening');
+  await editor.getByRole('button', { name: en.themeEditor.save }).click();
+
+  const settings = page.getByRole('dialog', { name: en.settings.title });
+  const mine = settings.getByRole('radio', { name: /^Evening/ });
+  await expect(mine).toBeChecked();
+  expect(await cssVar('--color-text')).toBe('#202020');
+
+  // Out to a file and back in.
+  await app.evaluate(({ dialog }, f) => {
+    dialog.showSaveDialog = (async () => ({ canceled: false, filePath: f })) as never;
+    dialog.showOpenDialog = (async () => ({ canceled: false, filePaths: [f] })) as never;
+  }, file);
+  await settings.getByRole('button', { name: en.settings.themeExport }).click();
+  await expect(settings.locator('.theme-tools [role=status]')).toHaveText(en.settings.themeExported);
+  const saved = JSON.parse(readFileSync(file, 'utf8'));
+  expect(saved).toMatchObject({ id: 'evening', name: 'Evening', sports: [] });
+
+  await settings.getByRole('button', { name: en.settings.themeDelete }).click();
+  await settings.getByRole('alert').getByRole('button', { name: en.settings.themeDelete }).click();
+  await expect(mine).toHaveCount(0);
+  await settings.getByRole('button', { name: en.settings.themeImport }).click();
+  await expect(settings.locator('.theme-tools [role=status]')).toHaveText(
+    en.settings.themeAdded.replace('{name}', 'Evening'),
+  );
+  await expect(mine).toBeChecked();
+
+  // A file whose text would be hard to read stays out.
+  const pale = { ...saved, id: 'pale', light: { ...saved.light, ui: { ...saved.light.ui, text: '#eeeeee' } } };
+  writeFileSync(file, JSON.stringify(pale));
+  await settings.getByRole('button', { name: en.settings.themeImport }).click();
+  await expect(settings.locator('.theme-tools [role=status]')).toHaveText(en.settings.themeContrast);
+  await app.close();
+});

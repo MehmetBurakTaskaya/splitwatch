@@ -262,7 +262,22 @@
     "notifyChannels": "Channels you follow",
     "notifyNoChannels": "None yet. Follow a channel with the bell on one of its streams.",
     "notifyUnfollow": "Stop following {channel}",
-    "notifyFailed": "The system did not show the test notification. Check that notifications are allowed for Splitwatch."
+    "notifyFailed": "The system did not show the test notification. Check that notifications are allowed for Splitwatch.",
+    "themeOwnNote": "Your theme",
+    "themeNew": "New theme",
+    "themeEdit": "Edit",
+    "themeImport": "Import…",
+    "themeExport": "Export…",
+    "themeDelete": "Delete",
+    "themeDeleteAsk": "Delete {name}?",
+    "themeKeep": "Keep",
+    "themeAdded": "Added the theme {name}.",
+    "themeUpdated": "Updated the theme {name}.",
+    "themeDeleted": "Deleted the theme {name}.",
+    "themeExported": "Saved the theme to a file.",
+    "themeInvalid": "That file is not a Splitwatch theme.",
+    "themeContrast": "That theme's text would be hard to read, so it was not added.",
+    "themeFull": "There are {max} themes of your own, the most there can be. Delete one first."
   },
   "update": {
     "available": "Version {version} is available.",
@@ -494,6 +509,71 @@
     "halfpipe": "Halfpipe",
     "summer-games": "Summer Games",
     "winter-games": "Winter Games"
+  },
+  "backdrops": {
+    "stripes": "Stripes",
+    "pool": "Pool lanes",
+    "track": "Running track",
+    "transition": "Transition zone",
+    "ridges": "Ridges",
+    "contours": "Contour lines",
+    "court": "Court lines",
+    "beach": "Beach",
+    "hardwood": "Hardwood floor",
+    "swell": "Swell",
+    "rink": "Rink",
+    "slalom": "Slalom gates",
+    "halfpipe": "Halfpipe",
+    "stadium": "Stadium",
+    "aurora": "Aurora"
+  },
+  "fonts": {
+    "oswald": "Oswald",
+    "exo2": "Exo 2"
+  },
+  "themeEditor": {
+    "newTitle": "New theme",
+    "editTitle": "Edit the theme",
+    "note": "While you edit, the whole app wears the theme.",
+    "defaultName": "My theme",
+    "name": "Name",
+    "backdrop": "Background picture",
+    "font": "Heading font",
+    "fontNone": "The app's font",
+    "scheme": "Colors for",
+    "ui": "Interface colors",
+    "scene": "Background colors",
+    "uiRoles": {
+      "bg": "Background",
+      "surface": "Panels",
+      "text": "Text",
+      "muted": "Quiet text",
+      "border": "Lines",
+      "accent": "Accent",
+      "accentStrong": "Strong accent",
+      "onAccent": "Text on the strong accent",
+      "accentSoft": "Soft accent"
+    },
+    "sceneRoles": {
+      "base": "Base",
+      "line": "Lines",
+      "accent": "Accent",
+      "accent2": "Second accent",
+      "glow": "Glow"
+    },
+    "check": "Easy to read",
+    "ok": "All text is easy to read, in light and in dark mode.",
+    "issue": "{fg} on {bg} ({scheme}): {ratio}:1, needs at least {min}:1",
+    "save": "Save",
+    "cancel": "Cancel",
+    "discard": "Don't save",
+    "ask": "Save the changes to this theme?",
+    "askBlocked": "This theme cannot be saved while some text is hard to read. Leave without saving?"
+  },
+  "themeFile": {
+    "filter": "Splitwatch theme",
+    "importTitle": "Import a theme",
+    "exportTitle": "Export the theme"
   },
   "sport": {
     "title": "Sport of stream {index}",

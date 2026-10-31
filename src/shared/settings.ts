@@ -2,6 +2,7 @@ import { type LayoutId, MAX_STREAMS, MINI_MIN, isLayoutId, layoutFor, layoutById
 import { DEFAULT_EVENT_SETTINGS, type EventSettings, sanitizeEventSettings } from './events';
 import { DEFAULT_NOTIFY, type NotifySettings, sanitizeNotify } from './notify';
 import { type Reminder, sanitizeReminders } from './reminders';
+import { type Theme, sanitizeCustomThemes } from './themes';
 import { DEFAULT_LIMITS, type QuotaLimits, sanitizeLimits } from './quota';
 import { SHORTCUT_ACTIONS, type ShortcutAction, isReservedKey } from './shortcuts';
 import { isVideoId } from './youtube';
@@ -56,6 +57,8 @@ export interface Settings {
   quotaLimits: QuotaLimits;
   // "auto" (follows the streams' sport) or a theme ID.
   theme: string;
+  // Themes the user made or imported.
+  customThemes: Theme[];
   colorScheme: ColorScheme;
   animate: boolean;
   performance: boolean;
@@ -83,6 +86,7 @@ export const DEFAULT_SETTINGS: Settings = {
   sports: [],
   quotaLimits: DEFAULT_LIMITS,
   theme: 'auto',
+  customThemes: [],
   colorScheme: 'system',
   animate: true,
   performance: false,
@@ -175,6 +179,7 @@ export function sanitizeSettings(raw: unknown): Settings {
       shortcuts: {},
       sports: [],
       layouts: [],
+      customThemes: [],
       notify: sanitizeNotify(null),
       event: sanitizeEventSettings(null),
       reminders: [],
@@ -203,6 +208,7 @@ export function sanitizeSettings(raw: unknown): Settings {
       : [],
     quotaLimits: sanitizeLimits(raw.quotaLimits),
     theme: typeof raw.theme === 'string' && (raw.theme === 'auto' || SLUG.test(raw.theme)) ? raw.theme : d.theme,
+    customThemes: sanitizeCustomThemes(raw.customThemes),
     colorScheme: scheme === 'light' || scheme === 'dark' ? scheme : 'system',
     animate: raw.animate !== false,
     performance: raw.performance === true,

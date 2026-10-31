@@ -25,6 +25,7 @@ describe('sanitizeSettings', () => {
       sports: ['volleyball', 'triathlon'],
       quotaLimits: { units: 20000, searches: 50 },
       theme: 'pool',
+      customThemes: [],
       colorScheme: 'dark',
       animate: false,
       performance: true,

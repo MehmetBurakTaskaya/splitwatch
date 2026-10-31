@@ -14,6 +14,7 @@ import { SharedDialog } from './components/SharedDialog';
 import { ShortcutsDialog } from './components/ShortcutsDialog';
 import { SportDialog } from './components/SportDialog';
 import { SyncPanel } from './components/SyncPanel';
+import { ThemeEditorDialog } from './components/ThemeEditorDialog';
 import { TopBar } from './components/TopBar';
 import { UpcomingDialog } from './components/UpcomingDialog';
 import { UpdateNotice } from './components/UpdateNotice';
@@ -58,6 +59,7 @@ export function App() {
       {dialog === 'event' && <EventDialog />}
       {dialog === 'upcoming' && <UpcomingDialog />}
       {dialog === 'shared' && <SharedDialog />}
+      {dialog === 'themeEditor' && <ThemeEditorDialog />}
       <Intro />
     </div>
   );

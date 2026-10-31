@@ -25,8 +25,14 @@ export const THEMES: readonly Theme[] = Object.values(files)
   .filter((t): t is Theme => t !== null)
   .sort((a, b) => (a.id === NEUTRAL_THEME ? -1 : b.id === NEUTRAL_THEME ? 1 : a.id.localeCompare(b.id)));
 
+// The app's themes and the user's own (an own theme never takes an app theme's ID).
+export function allThemes(): readonly Theme[] {
+  const own = usePrefs.getState().customThemes;
+  return own.length ? [...THEMES, ...own.filter((c) => !THEMES.some((t) => t.id === c.id))] : THEMES;
+}
+
 export const themeById = (id: string): Theme =>
-  THEMES.find((t) => t.id === id) ?? THEMES.find((t) => t.id === NEUTRAL_THEME)!;
+  allThemes().find((t) => t.id === id) ?? THEMES.find((t) => t.id === NEUTRAL_THEME)!;
 
 const CSS_VARS: Record<UiRole, string> = {
   bg: '--color-bg',
@@ -82,11 +88,17 @@ export function activeEventKind(): EventKind | null {
 // The theme of an event mode, drawn as a frame over a sport's backdrop.
 export const eventTheme = (kind: EventKind): Theme | undefined => THEMES.find((t) => t.event === kind);
 
+// While the theme editor is open, the app shows the theme being edited and nothing else picks one.
+let previewing = false;
+const systemScheme = (): Scheme => (darkQuery.matches ? 'dark' : 'light');
+
 function choose(): void {
+  if (previewing) return;
   const { theme: choice, sports: liveSports } = usePrefs.getState();
   const event = activeEventKind();
-  const id = pickTheme(THEMES, choice, useSession.getState().streams.map(streamSport), liveSports, event);
-  if (id !== useTheme.getState().theme.id) useTheme.setState({ theme: themeById(id) });
+  const id = pickTheme(allThemes(), choice, useSession.getState().streams.map(streamSport), liveSports, event);
+  const theme = themeById(id);
+  if (theme !== useTheme.getState().theme) useTheme.setState({ theme });
   if (event) document.documentElement.dataset.event = event;
   else delete document.documentElement.dataset.event;
 }
@@ -94,14 +106,23 @@ function choose(): void {
 // Picks the theme from the settings and the streams, follows the system's light or dark mode and
 // its reduced-motion setting, and writes the colors into the page's CSS variables.
 export function connectTheme(): void {
-  darkQuery.addEventListener('change', () => useTheme.setState({ scheme: darkQuery.matches ? 'dark' : 'light' }));
+  darkQuery.addEventListener('change', () => {
+    if (!previewing) useTheme.setState({ scheme: systemScheme() });
+  });
   motionQuery.addEventListener('change', () => useTheme.setState({ reducedMotion: motionQuery.matches }));
   useTheme.subscribe((s, prev) => {
     if (s.theme !== prev.theme || s.scheme !== prev.scheme) apply();
   });
   const root = document.documentElement;
   usePrefs.subscribe((s, prev) => {
-    if (s.theme !== prev.theme || s.sports !== prev.sports || s.event.active !== prev.event.active) choose();
+    if (
+      s.theme !== prev.theme ||
+      s.customThemes !== prev.customThemes ||
+      s.sports !== prev.sports ||
+      s.event.active !== prev.event.active
+    ) {
+      choose();
+    }
     root.toggleAttribute('data-performance', s.performance);
     root.toggleAttribute('data-spoilers', s.spoilers);
   });
@@ -118,4 +139,16 @@ export function connectTheme(): void {
   });
   choose();
   apply();
+}
+
+// Shows a theme on the whole app, in one mode, while the theme editor is open; null goes back to the
+// theme and the mode the app picks.
+export function previewTheme(theme: Theme | null, scheme?: Scheme): void {
+  previewing = theme !== null;
+  if (theme) {
+    useTheme.setState({ theme, ...(scheme ? { scheme } : {}) });
+  } else {
+    useTheme.setState({ scheme: systemScheme() });
+    choose();
+  }
 }

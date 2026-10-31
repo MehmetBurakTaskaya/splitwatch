@@ -6,9 +6,15 @@ import en from '../../src/renderer/i18n/locales/en.json';
 import { validatePreset } from '../../src/shared/presets';
 import {
   type Theme,
+  MAX_CUSTOM_THEMES,
   NEUTRAL_THEME,
+  contrastIssues,
   contrastProblems,
+  ownTheme,
   pickTheme,
+  sanitizeCustomThemes,
+  themeFile,
+  themeSlug,
   themeForSport,
   validateTheme,
 } from '../../src/shared/themes';
@@ -169,4 +175,59 @@ describe('protected names', () => {
     expect(hits).toEqual([]);
     // Reading every file can take a few seconds on a cold disk.
   }, 30_000);
+});
+
+describe('themes of your own', () => {
+  const neutral = validateTheme(read('themes/neutral.json'))!;
+  const mine = ownTheme(neutral, 'evening', 'Evening');
+
+  it('carry a name of their own, and no sports or event', () => {
+    expect(validateTheme({ ...mine, name: '  Evening  ' })?.name).toBe('Evening');
+    expect(validateTheme({ ...mine, name: '' })).toBeNull();
+    expect(validateTheme({ ...mine, name: 'x'.repeat(41) })).toBeNull();
+    expect(validateTheme({ ...mine, name: 'Tab\there' })).toBeNull();
+    const summer = validateTheme(read('themes/summer-games.json'))!;
+    expect(ownTheme(summer, 'copy', 'Copy')).not.toHaveProperty('event');
+    expect(ownTheme(validateTheme(read('themes/pool.json'))!, 'copy', 'Copy').sports).toEqual([]);
+  });
+
+  it('report each color pair that is hard to read', () => {
+    expect(contrastIssues(mine)).toEqual([]);
+    const pale = { ...mine, light: { ...mine.light, ui: { ...mine.light.ui, text: '#d0d0d0' } } };
+    const issues = contrastIssues(pale);
+    expect(issues.map((i) => `${i.scheme} ${i.fg} ${i.bg}`)).toEqual([
+      'light text bg',
+      'light text surface',
+      'light text accentSoft',
+    ]);
+    expect(issues[0]!.min).toBe(4.5);
+    expect(issues[0]!.ratio).toBeLessThan(4.5);
+  });
+
+  it('are kept only when valid and easy to read, each ID once, at most twenty', () => {
+    const pale = { ...mine, id: 'pale', dark: { ...mine.dark, ui: { ...mine.dark.ui, muted: '#20242a' } } };
+    const summer = read('themes/summer-games.json');
+    const kept = sanitizeCustomThemes([mine, { ...mine, name: 'Again' }, pale, summer, { id: 'broken' }, 'text']);
+    expect(kept).toEqual([mine]);
+    const many = Array.from({ length: 30 }, (_, i) => ownTheme(neutral, `t${i}x`, `Theme ${i}`));
+    expect(sanitizeCustomThemes(many)).toHaveLength(MAX_CUSTOM_THEMES);
+    expect(sanitizeCustomThemes(null)).toEqual([]);
+  });
+
+  it('get an ID from their name that no theme has yet', () => {
+    expect(themeSlug('Evening Glow', new Set())).toBe('evening-glow');
+    expect(themeSlug('Gece Yarısı Şov', new Set())).toBe('gece-yarisi-sov');
+    expect(themeSlug('Pool', new Set(['pool', 'pool-2']))).toBe('pool-3');
+    expect(themeSlug('2024 !!', new Set())).toBe('theme');
+    expect(themeSlug('✨', new Set(['theme']))).toBe('theme-2');
+    expect(themeSlug('x'.repeat(60), new Set())).toHaveLength(36);
+  });
+
+  it('go to a file that reads back as the same theme', () => {
+    const text = themeFile(mine);
+    expect(text.endsWith('}\n')).toBe(true);
+    const parsed = JSON.parse(text);
+    expect(parsed.$schema).toMatch(/themes\/schema\.json$/);
+    expect(validateTheme(parsed)).toEqual(mine);
+  });
 });

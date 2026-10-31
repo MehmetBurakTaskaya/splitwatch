@@ -6,6 +6,7 @@ import type { Preset } from './presets';
 import type { SharedLayout } from './share';
 import type { QuotaBucket, QuotaLimits } from './quota';
 import type { Settings } from './settings';
+import type { Theme } from './themes';
 
 export const IPC = {
   appInfo: 'app:info',
@@ -39,6 +40,8 @@ export const IPC = {
   eventsList: 'events:list',
   eventMedals: 'events:medals',
   copyText: 'clipboard:copy',
+  themeImport: 'theme:import',
+  themeExport: 'theme:export',
   mediaKeysState: 'media-keys:state',
   popoutOpen: 'popout:open',
   popoutClose: 'popout:close',
@@ -88,6 +91,9 @@ export interface MediaKeysState {
 
 // Starting with the system works in the installed app on Windows and macOS. status is macOS's
 // answer (enabled, requires-approval, not-registered, not-found).
+// A theme file the user opened: the theme, or why it cannot be used.
+export type ThemeImport = { theme: Theme } | { error: 'invalid' | 'contrast' };
+
 export interface LoginState {
   supported: boolean;
   openAtLogin: boolean;
@@ -185,6 +191,10 @@ export interface SplitwatchApi {
   // null when the event has no medal table page yet, or it could not be read.
   getMedalTable(eventId: string): Promise<MedalTable | null>;
   copyText(text: string): void;
+  // Opens a theme file the user picks; null when the user cancels.
+  importTheme(): Promise<ThemeImport | null>;
+  // Saves a theme to a file the user picks; false when the user cancels.
+  exportTheme(theme: Theme): Promise<boolean>;
   getMediaKeysState(): Promise<MediaKeysState>;
   // A stream in a window of its own, and back.
   openPopout(videoId: string, live: boolean): void;
