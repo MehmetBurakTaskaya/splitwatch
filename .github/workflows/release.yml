@@ -1,7 +1,8 @@
 name: Release
 
 # A tag such as v0.1.0 builds the installers and attaches them, with the update metadata
-# (latest.yml, latest-mac.yml), to a draft GitHub Release. Publishing the draft is a manual step.
+# (latest.yml, latest-mac.yml, latest-linux.yml, latest-portable.yml), to a draft GitHub Release.
+# Publishing the draft is a manual step; publishing hides the older releases (hide-old-releases.yml).
 on:
   push:
     tags: ['v*']
@@ -48,6 +49,29 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: npx electron-builder --publish always
+      # Updates fetch a copy of the installer (and of the AppImage) under a name of its own, so the
+      # download numbers tell people's downloads from updates (ADR 0013); the portable copy reads
+      # latest-portable.yml, with the checksum of its ZIP.
+      - name: Update files
+        if: runner.os != 'macOS'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd release
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            cp Splitwatch-Setup-x64.exe Splitwatch-Update-x64.exe
+            cp Splitwatch-Setup-x64.exe.blockmap Splitwatch-Update-x64.exe.blockmap
+            sed -i 's/Splitwatch-Setup-x64\.exe/Splitwatch-Update-x64.exe/g' latest.yml
+            node ../scripts/portable-yml.mjs Splitwatch-Portable-x64.zip > latest-portable.yml
+            files="Splitwatch-Update-x64.exe Splitwatch-Update-x64.exe.blockmap latest.yml latest-portable.yml"
+          else
+            cp Splitwatch-x86_64.AppImage Splitwatch-Update-x86_64.AppImage
+            sed -i 's/Splitwatch-x86_64\.AppImage/Splitwatch-Update-x86_64.AppImage/g' latest-linux.yml
+            files="Splitwatch-Update-x86_64.AppImage latest-linux.yml"
+          fi
+          cat latest*.yml
+          gh release upload "$GITHUB_REF_NAME" --clobber $files
       - name: Start the packaged app once
         shell: bash
         env:
