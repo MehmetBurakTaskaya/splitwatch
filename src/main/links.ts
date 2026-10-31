@@ -37,7 +37,7 @@ export function setupLinks(): void {
 }
 
 // Windows and Linux start a second instance with the link; it comes here instead.
-export function linkFromSecondInstance(args: readonly string[]): boolean {
+export function linkFromSecondInstance(args: readonly string[] = []): boolean {
   const link = linkInArgs(args);
   if (link) open(link);
   return link !== null;
