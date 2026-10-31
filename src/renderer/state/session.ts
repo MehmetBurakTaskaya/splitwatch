@@ -36,6 +36,8 @@ interface SessionState extends Session {
   setInfo(videoId: string, info: VideoInfo | null): void;
   // A sport, "none", or null to let the app find it.
   setSport(videoId: string, sport: string | null): void;
+  // Puts another stream in a stream's place (same slot, volume and selection), with its sport.
+  replace(videoId: string, next: string, sport?: string): void;
   // Replaces the grid with a saved one. Streams in both keep playing; the new ones start, since
   // the user asked for them.
   open(saved: Pick<Session, 'layout' | 'streams' | 'selected' | 'volumes' | 'sports'>): void;
@@ -138,6 +140,25 @@ export const useSession = create<SessionState>((set, get) => ({
   setSport(videoId, sport) {
     if (!get().streams.includes(videoId)) return;
     set({ sports: sport ? { ...get().sports, [videoId]: sport } : without(get().sports, videoId) });
+  },
+
+  replace(videoId, next, sport) {
+    const { streams, selected, volumes, sports, status, waiting } = get();
+    const index = streams.indexOf(videoId);
+    if (index < 0 || streams.includes(next)) return;
+    const moved = <T>(record: Record<string, T>, value: T | undefined) => {
+      const copy = without(record, videoId);
+      if (value !== undefined) copy[next] = value;
+      return copy;
+    };
+    set({
+      streams: streams.map((id) => (id === videoId ? next : id)),
+      selected: selected === videoId ? next : selected,
+      volumes: moved(volumes, volumes[videoId]),
+      sports: moved(sports, sport),
+      status: without(status, videoId),
+      waiting: waiting.filter((id) => id !== videoId),
+    });
   },
 
   open(saved) {

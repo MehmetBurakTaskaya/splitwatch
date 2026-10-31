@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Backdrop } from './components/Backdrop';
 import { ClipboardSuggestion } from './components/ClipboardSuggestion';
 import { EmptyState } from './components/EmptyState';
+import { EndedSuggestion } from './components/EndedSuggestion';
 import { EventDialog } from './components/EventDialog';
 import { Grid } from './components/Grid';
 import { Intro } from './components/Intro';
@@ -35,6 +36,7 @@ export function App() {
       <Backdrop />
       {!mini && <TopBar />}
       {!mini && <ClipboardSuggestion />}
+      {!mini && <EndedSuggestion />}
       {hasStreams ? <Grid /> : <EmptyState />}
       {!mini && <UpdateNotice />}
       {dialog === 'search' && <SearchPalette />}

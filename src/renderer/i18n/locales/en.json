@@ -28,6 +28,11 @@
     "add": "Add",
     "dismiss": "Not now"
   },
+  "ended": {
+    "prompt": "Stream {index} has ended. Live now in {sport}:",
+    "replace": "Watch it instead",
+    "dismiss": "Not now"
+  },
   "layout": {
     "label": "Layout",
     "1": "One stream",
