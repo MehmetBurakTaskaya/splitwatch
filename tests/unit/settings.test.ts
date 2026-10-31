@@ -39,16 +39,16 @@ describe('sanitizeSettings', () => {
         introSeen: ['summer-2028'],
         country: 'SN',
         snow: 3,
-        reminders: [
-          {
-            videoId: 'M7lc1UVf-VE',
-            title: 'Final',
-            channel: 'A federation',
-            at: '2028-07-20T18:00:00.000Z',
-            sport: 'swimming',
-          },
-        ],
       },
+      reminders: [
+        {
+          videoId: 'M7lc1UVf-VE',
+          title: 'Final',
+          channel: 'A federation',
+          at: '2028-07-20T18:00:00.000Z',
+          sport: 'swimming',
+        },
+      ],
       notify: {
         on: true,
         sports: ['swimming'],
@@ -175,5 +175,14 @@ describe('mini bounds', () => {
     expect(sanitizeBounds({ x: 10, y: 20, width: 100, height: 316 })).toBeNull();
     expect(sanitizeBounds({ x: 10, y: 1e9, width: 490, height: 316 })).toBeNull();
     expect(sanitizeBounds('nonsense')).toBeNull();
+  });
+});
+
+describe('reminders', () => {
+  it('move from the event settings of 0.6 to their own place', () => {
+    const reminder = { videoId: 'M7lc1UVf-VE', title: 'Final', channel: 'C', at: '2028-07-20T18:00:00.000Z' };
+    const settings = sanitizeSettings({ event: { active: null, reminders: [reminder] } });
+    expect(settings.reminders).toEqual([reminder]);
+    expect(settings.event).not.toHaveProperty('reminders');
   });
 });

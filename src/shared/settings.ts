@@ -1,6 +1,7 @@
 import { type LayoutId, MAX_STREAMS, MINI_MIN, isLayoutId, layoutFor, layoutById } from './layouts';
 import { DEFAULT_EVENT_SETTINGS, type EventSettings, sanitizeEventSettings } from './events';
 import { DEFAULT_NOTIFY, type NotifySettings, sanitizeNotify } from './notify';
+import { type Reminder, sanitizeReminders } from './reminders';
 import { DEFAULT_LIMITS, type QuotaLimits, sanitizeLimits } from './quota';
 import { SHORTCUT_ACTIONS, type ShortcutAction, isReservedKey } from './shortcuts';
 import { isVideoId } from './youtube';
@@ -68,6 +69,7 @@ export interface Settings {
   startHidden: boolean;
   notify: NotifySettings;
   event: EventSettings;
+  reminders: Reminder[];
   session: Session;
 }
 
@@ -89,6 +91,7 @@ export const DEFAULT_SETTINGS: Settings = {
   startHidden: false,
   notify: DEFAULT_NOTIFY,
   event: DEFAULT_EVENT_SETTINGS,
+  reminders: [],
   session: { layout: '1', streams: [], selected: null, muted: false, masterVolume: 1, volumes: {}, sports: {} },
 };
 
@@ -171,6 +174,7 @@ export function sanitizeSettings(raw: unknown): Settings {
       layouts: [],
       notify: sanitizeNotify(null),
       event: sanitizeEventSettings(null),
+      reminders: [],
       session: sanitizeSession(null),
     };
   }
@@ -206,6 +210,8 @@ export function sanitizeSettings(raw: unknown): Settings {
     startHidden: raw.background === true && raw.startHidden === true,
     notify: sanitizeNotify(raw.notify),
     event: sanitizeEventSettings(raw.event),
+    // 0.6 kept the reminders with the event settings.
+    reminders: sanitizeReminders(raw.reminders ?? (isRecord(raw.event) ? raw.event.reminders : undefined)),
     session: sanitizeSession(raw.session),
   };
 }

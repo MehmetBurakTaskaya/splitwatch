@@ -11,6 +11,7 @@ import { SettingsDialog } from './components/SettingsDialog';
 import { ShortcutsDialog } from './components/ShortcutsDialog';
 import { SportDialog } from './components/SportDialog';
 import { TopBar } from './components/TopBar';
+import { UpcomingDialog } from './components/UpcomingDialog';
 import { UpdateNotice } from './components/UpdateNotice';
 import { useIframeFocus, useShortcuts } from './hooks/useShortcuts';
 import { useAppStore } from './state/app';
@@ -42,6 +43,7 @@ export function App() {
       {dialog === 'sport' && <SportDialog />}
       {dialog === 'layouts' && <LayoutsDialog />}
       {dialog === 'event' && <EventDialog />}
+      {dialog === 'upcoming' && <UpcomingDialog />}
       <Intro />
     </div>
   );

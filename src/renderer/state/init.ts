@@ -20,6 +20,7 @@ export async function loadState(): Promise<void> {
     startHidden,
     notify,
     event,
+    reminders,
   } = settings;
   usePrefs.setState({
     audioFocus,
@@ -36,6 +37,7 @@ export async function loadState(): Promise<void> {
     startHidden,
     notify,
     event,
+    reminders,
   });
   const { session } = settings;
   const starter = session.selected ?? session.streams[0] ?? null;

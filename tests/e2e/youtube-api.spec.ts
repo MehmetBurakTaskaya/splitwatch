@@ -10,6 +10,9 @@ import { type ElectronApplication, type Page, _electron as electron, expect, tes
 const en = JSON.parse(readFileSync('src/renderer/i18n/locales/en.json', 'utf8'));
 const LIVE = 'M7lc1UVf-VE';
 const FOUND = 'aqz-KE-bpKQ';
+const UPCOMING = 'dQw4w9WgXcQ';
+// Two days from now, at a full hour.
+const UPCOMING_AT = new Date(Math.ceil(Date.now() / 3_600_000) * 3_600_000 + 2 * 86_400_000).toISOString();
 const KEY = 'test-key-0123456789abcdef';
 
 interface Fake {
@@ -27,6 +30,13 @@ function feed(channelId: string): string {
   <title>Fake live final</title>
   <author><name>Fake federation</name></author>
   <published>2026-10-30T15:00:00+00:00</published>
+ </entry>
+ <entry>
+  <yt:videoId>${UPCOMING}</yt:videoId>
+  <yt:channelId>${channelId}</yt:channelId>
+  <title>Fake semifinal</title>
+  <author><name>Fake federation</name></author>
+  <published>2026-10-30T14:00:00+00:00</published>
  </entry>
 </feed>`;
 }
@@ -53,10 +63,11 @@ async function startFake(): Promise<Fake> {
         items: ids.map((id) => ({
           id,
           snippet: {
-            title: id === LIVE ? 'Fake live final' : 'Other',
+            title: id === LIVE ? 'Fake live final' : id === UPCOMING ? 'Fake semifinal' : 'Other',
             channelTitle: 'Fake federation',
-            liveBroadcastContent: id === LIVE ? 'live' : 'none',
+            liveBroadcastContent: id === LIVE ? 'live' : id === UPCOMING ? 'upcoming' : 'none',
           },
+          ...(id === UPCOMING ? { liveStreamingDetails: { scheduledStartTime: UPCOMING_AT } } : {}),
           status: { embeddable: true },
         })),
       });
@@ -182,5 +193,23 @@ test('tells once when a watched channel goes live, and the notification adds the
 
   await app.evaluate(() => (globalThis as unknown as { last: Electron.Notification }).last.emit('click'));
   await expect(page.locator(`[data-stream="${LIVE}"]`)).toHaveAttribute('data-sport', 'swimming');
+  await app.close();
+});
+
+test('the coming week lists upcoming streams by day, and keeps a reminder', async () => {
+  const { app, page } = await launch(fake, true);
+  await page.getByRole('button', { name: en.upcoming.open }).click();
+  const dialog = page.getByRole('dialog');
+  const item = dialog.locator('.upcoming-item', { hasText: 'Fake semifinal' });
+  await expect(item).toBeVisible();
+  await item.getByRole('button', { name: en.upcoming.remind }).click();
+  await expect(item.getByRole('button', { name: en.upcoming.remind })).toHaveAttribute('aria-pressed', 'true');
+  await expect(dialog.locator('.upcoming-reminders')).toContainText('Fake semifinal');
+  await page.waitForTimeout(800);
+  const dir = (await app.evaluate(({ app: a }) => a.getPath('userData'))) as string;
+  const saved = JSON.parse(readFileSync(path.join(dir, 'settings.json'), 'utf8'));
+  expect(saved.reminders).toEqual([
+    expect.objectContaining({ videoId: UPCOMING, at: UPCOMING_AT, title: 'Fake semifinal' }),
+  ]);
   await app.close();
 });

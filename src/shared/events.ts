@@ -154,15 +154,6 @@ export function sortEvents(events: GamesEvent[], now: Date): GamesEvent[] {
   );
 }
 
-// A "remind me" for an upcoming stream: a notification when it starts.
-export interface Reminder {
-  videoId: string;
-  title: string;
-  channel: string;
-  at: string;
-  sport?: string;
-}
-
 export interface EventSettings {
   // The event whose mode is on (the user turned it on, or tried it).
   active: string | null;
@@ -174,7 +165,6 @@ export interface EventSettings {
   // system's region is the default).
   country: string | null;
   snow: number;
-  reminders: Reminder[];
 }
 
 export const DEFAULT_EVENT_SETTINGS: EventSettings = {
@@ -183,34 +173,15 @@ export const DEFAULT_EVENT_SETTINGS: EventSettings = {
   introSeen: [],
   country: null,
   snow: 2,
-  reminders: [],
 };
-export const MAX_REMINDERS = 50;
 
-const VIDEO_ID = /^[A-Za-z0-9_-]{11}$/;
 const slugs = (v: unknown) =>
   Array.isArray(v)
     ? [...new Set(v.filter((s): s is string => typeof s === 'string' && SLUG.test(s)))].slice(0, 50)
     : [];
 
 export function sanitizeEventSettings(raw: unknown): EventSettings {
-  if (!isRecord(raw)) return { ...DEFAULT_EVENT_SETTINGS, dismissed: [], introSeen: [], reminders: [] };
-  const reminders: Reminder[] = [];
-  if (Array.isArray(raw.reminders)) {
-    for (const r of raw.reminders) {
-      if (!isRecord(r) || typeof r.videoId !== 'string' || !VIDEO_ID.test(r.videoId)) continue;
-      if (typeof r.at !== 'string' || Number.isNaN(Date.parse(r.at))) continue;
-      if (reminders.some((known) => known.videoId === r.videoId)) continue;
-      reminders.push({
-        videoId: r.videoId,
-        title: typeof r.title === 'string' ? r.title.slice(0, 300) : '',
-        channel: typeof r.channel === 'string' ? r.channel.slice(0, 200) : '',
-        at: new Date(r.at).toISOString(),
-        ...(typeof r.sport === 'string' && SLUG.test(r.sport) ? { sport: r.sport } : {}),
-      });
-      if (reminders.length === MAX_REMINDERS) break;
-    }
-  }
+  if (!isRecord(raw)) return { ...DEFAULT_EVENT_SETTINGS, dismissed: [], introSeen: [] };
   const snow = typeof raw.snow === 'number' && Number.isInteger(raw.snow) ? Math.min(3, Math.max(0, raw.snow)) : 2;
   return {
     active: typeof raw.active === 'string' && SLUG.test(raw.active) ? raw.active : null,
@@ -218,6 +189,5 @@ export function sanitizeEventSettings(raw: unknown): EventSettings {
     introSeen: slugs(raw.introSeen),
     country: typeof raw.country === 'string' && /^[A-Z]{2}$/.test(raw.country) ? raw.country : null,
     snow,
-    reminders,
   };
 }

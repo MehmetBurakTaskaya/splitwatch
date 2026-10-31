@@ -15,6 +15,7 @@ import {
 } from '../../src/shared/events';
 import iocCodes from '../../src/shared/ioc-codes.json';
 import { parseMedalTable } from '../../src/shared/medals';
+import { sanitizeReminders } from '../../src/shared/reminders';
 
 const read = (file: string) => JSON.parse(readFileSync(file, 'utf8'));
 const files = readdirSync('events').filter((f) => f.endsWith('.json') && f !== 'index.json' && f !== 'schema.json');
@@ -107,9 +108,7 @@ describe('event settings', () => {
     expect(sanitizeEventSettings('nonsense')).toEqual(sanitizeEventSettings({}));
     expect(sanitizeEventSettings({ snow: 9 }).snow).toBe(3);
     expect(sanitizeEventSettings({ country: 'tr' }).country).toBeNull();
-    expect(sanitizeEventSettings({ reminders: [{ videoId: 'nope', at: '2028-07-20T18:00:00Z' }] }).reminders).toEqual(
-      [],
-    );
+    expect(sanitizeReminders([{ videoId: 'nope', at: '2028-07-20T18:00:00Z' }])).toEqual([]);
   });
 });
 

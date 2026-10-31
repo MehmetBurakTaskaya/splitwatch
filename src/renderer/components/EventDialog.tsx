@@ -174,7 +174,7 @@ function Schedule({ event, country }: { event: GamesEvent; country: string | nul
   const now = useEvents((s) => s.now);
   const liveNow = useYouTube((s) => s.liveNow);
   const presets = useYouTube((s) => s.presets);
-  const reminders = usePrefs((s) => s.event.reminders);
+  const reminders = usePrefs((s) => s.reminders);
   const days = eventDays(event);
   const today = localDate(new Date(now), event.timezone);
   const [day, setDay] = useState(days.includes(today) ? today : days[0]!);

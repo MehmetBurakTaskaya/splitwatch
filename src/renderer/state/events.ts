@@ -1,12 +1,5 @@
 import { create } from 'zustand';
-import {
-  type EventSettings,
-  type GamesEvent,
-  type Reminder,
-  MAX_REMINDERS,
-  sortEvents,
-  suggestedEvent,
-} from '../../shared/events';
+import { type EventSettings, type GamesEvent, sortEvents, suggestedEvent } from '../../shared/events';
 import { setPrefs, usePrefs } from './prefs';
 
 interface EventsState {
@@ -70,10 +63,4 @@ export function dismiss(id: string): void {
 export const setCountry = (country: string) => setEventPrefs({ country });
 export const setSnow = (snow: number) => setEventPrefs({ snow });
 
-export function toggleReminder(reminder: Reminder): void {
-  const { reminders } = usePrefs.getState().event;
-  const others = reminders.filter((r) => r.videoId !== reminder.videoId);
-  setEventPrefs({
-    reminders: others.length === reminders.length ? [...others, reminder].slice(-MAX_REMINDERS) : others,
-  });
-}
+export { toggleReminder } from './reminders';

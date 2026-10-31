@@ -1,4 +1,4 @@
-import type { Reminder } from '../shared/events';
+import type { Reminder } from '../shared/reminders';
 import { t } from './i18n';
 import { sendCommand } from './main-window';
 import { showNotification } from './notify';
@@ -16,8 +16,7 @@ const timers = new Map<string, NodeJS.Timeout>();
 
 function fire(reminder: Reminder): void {
   timers.delete(reminder.videoId);
-  const event = getSettings().event;
-  saveSettings({ event: { ...event, reminders: event.reminders.filter((r) => r.videoId !== reminder.videoId) } });
+  saveSettings({ reminders: getSettings().reminders.filter((r) => r.videoId !== reminder.videoId) });
   const body = getSettings().spoilers ? t('notify.spoilerBody') : reminder.title;
   void showNotification(t('notify.reminderTitle', { channel: reminder.channel }), body, () =>
     sendCommand({ type: 'add', videoId: reminder.videoId, ...(reminder.sport ? { sport: reminder.sport } : {}) }),
@@ -26,7 +25,7 @@ function fire(reminder: Reminder): void {
 
 function schedule(): void {
   const now = Date.now();
-  const reminders = getSettings().event.reminders;
+  const reminders = getSettings().reminders;
   for (const [id, timer] of timers) {
     if (!reminders.some((r) => r.videoId === id)) {
       clearTimeout(timer);
@@ -35,8 +34,7 @@ function schedule(): void {
   }
   const stale = reminders.filter((r) => Date.parse(r.at) < now - LATE);
   if (stale.length) {
-    const event = getSettings().event;
-    saveSettings({ event: { ...event, reminders: reminders.filter((r) => !stale.includes(r)) } });
+    saveSettings({ reminders: reminders.filter((r) => !stale.includes(r)) });
     return;
   }
   for (const r of reminders) {
@@ -52,7 +50,7 @@ function schedule(): void {
 export function setupReminders(): void {
   schedule();
   onSettingsChange((s, before) => {
-    if (s.event.reminders !== before.event.reminders) schedule();
+    if (s.reminders !== before.reminders) schedule();
   });
   setInterval(schedule, 60 * 60_000);
 }

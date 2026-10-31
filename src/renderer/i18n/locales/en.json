@@ -343,6 +343,16 @@
     "startsAt": "Starts {time, date, ::EEEMMMdjmm}",
     "add": "Add {title}"
   },
+  "upcoming": {
+    "open": "The coming week",
+    "title": "The coming week",
+    "reminders": "Your reminders",
+    "noReminders": "No reminders yet. Splitwatch tells you when a stream you pick starts, while it runs.",
+    "remove": "Remove the reminder for {title}",
+    "needsKey": "With your own YouTube API key, this lists the coming week's streams on the channels of your sports.",
+    "none": "Nothing is scheduled on the channels of your sports for the coming week.",
+    "remind": "Remind me"
+  },
   "sports": {
     "volleyball": "Volleyball",
     "beach-volleyball": "Beach volleyball",

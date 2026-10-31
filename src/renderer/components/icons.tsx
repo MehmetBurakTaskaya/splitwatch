@@ -102,6 +102,12 @@ export const IconBell = () => (
     <path d="M5.5 13.5V9a4.5 4.5 0 0 1 9 0v4.5l1.5 1.5H4zM8.5 17h3" />
   </Icon>
 );
+export const IconCalendar = () => (
+  <Icon>
+    <rect x="3" y="4.5" width="14" height="12.5" rx="1.5" />
+    <path d="M3 8.5h14M7 2.5v4M13 2.5v4" />
+  </Icon>
+);
 export const IconLayouts = () => (
   <Icon>
     <path d="M6 3h8a1 1 0 0 1 1 1v13l-5-3.5L5 17V4a1 1 0 0 1 1-1z" />

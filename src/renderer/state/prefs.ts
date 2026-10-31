@@ -17,6 +17,7 @@ export type Prefs = Pick<
   | 'startHidden'
   | 'notify'
   | 'event'
+  | 'reminders'
 >;
 
 export const usePrefs = create<Prefs>(() => ({
@@ -34,6 +35,7 @@ export const usePrefs = create<Prefs>(() => ({
   startHidden: DEFAULT_SETTINGS.startHidden,
   notify: DEFAULT_SETTINGS.notify,
   event: DEFAULT_SETTINGS.event,
+  reminders: [],
 }));
 
 export function setPrefs(patch: Partial<Prefs>): void {
