@@ -77,6 +77,16 @@ If a tile shows a message instead of a video, note the message and the error cod
 3. Pick **Summer Games 2028** and turn its mode on: floodlights replace the northern lights.
 4. Click **Turn off the mode**.
 
+## Version 0.7 (about 5 more minutes)
+
+1. Open **Settings**: the grid disappears and its streams pause; close Settings and they go on.
+2. In **Settings → Appearance**, tick **Spoiler protection**: titles blur until you point at them.
+3. Press **Cmd + S**, click the link icon next to a saved layout, then in Terminal run
+   `open "<the copied link>"`: Splitwatch asks whether to open the layout.
+4. In **Settings → Sound**, tick **Use the keyboard's media keys**. If Settings asks for it, allow
+   Splitwatch under **System Settings → Privacy & Security → Accessibility**. Press the play/pause key
+   with another app in front.
+
 Send back: your Mac model, macOS version, and what happened at each step (a screenshot helps:
 **Shift + Cmd + 3**). For 0.4, also whether the background moves smoothly and how busy Activity
 Monitor shows Splitwatch on the start screen.

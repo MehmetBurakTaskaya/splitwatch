@@ -1,7 +1,7 @@
 # Splitwatch
 
 Watch several YouTube sports live streams side by side, in one window. Free and open source, for
-Windows and macOS.
+Windows and macOS (Linux, experimental).
 
 > **Early development.** Splitwatch plays a grid of streams, finds live sports on official channels,
 > searches YouTube, dresses itself in the sport you watch, keeps your layouts, shrinks to a mini
@@ -21,12 +21,17 @@ Windows and macOS.
   shown before each search.
 - Twelve sport themes, in light and dark, that follow the sport you watch (see below), and a
   light or dark button in the top bar.
-- Saved layouts: save the grid under a name (Ctrl + S, or Cmd + S) and open it again later.
+- Saved layouts: save the grid under a name (Ctrl + S, or Cmd + S) and open it again later, or
+  share one as a `splitwatch://` link that opens it in someone else's Splitwatch (after they agree).
 - A mini player: the picked stream in a small window that stays on top of other windows.
 - Keep Splitwatch in the notification area (the menu bar on macOS) when its window closes, and start
   it when you sign in.
 - Live notifications, with your own API key: Splitwatch tells you when a channel you follow, or an
   official channel of a sport you pick, goes live, and a click adds the stream.
+- The coming week: the upcoming streams of your sports by day, with **Remind me**.
+- When a stream ends, Splitwatch offers a live stream of the same sport in its place.
+- Spoiler protection: titles and thumbnails stay blurred until you point at them.
+- The keyboard's media keys can play, pause and switch streams, also from the background.
 - Summer Games and Winter Games modes (see below).
 
 ## Summer and Winter Games
@@ -59,8 +64,9 @@ YouTube allows one player on a screen to start playing by itself, and no playbac
 cannot see. So when Splitwatch opens, only the stream you picked last starts; **Play all** in the top
 bar starts the others. Streams you add start at once, since you asked for them. Streams pause while
 they are out of sight (behind the enlarged stream, behind the mini player, or while the window is
-minimized) and go on when they come back, live streams at their live edge. Closing the window stops
-them all, also when Splitwatch stays in the notification area.
+minimized, or while a dialog such as Settings covers the window, since nothing may cover a player)
+and go on when they come back, live streams at their live edge. Closing the window stops them all,
+also when Splitwatch stays in the notification area.
 
 ## Themes
 
@@ -120,29 +126,32 @@ much is left, and Splitwatch stops before the limit.
 
 ## Keyboard shortcuts
 
-| Key         | Action                                       |
-| ----------- | -------------------------------------------- |
-| 1 – 9       | Pick a stream (you hear it)                  |
-| M           | Mute or unmute                               |
-| F           | Enlarge the picked stream, fullscreen        |
-| Esc         | Back to the grid (also from the mini player) |
-| Space       | Play or pause the picked stream              |
-| ← / →       | Back or forward 10 seconds                   |
-| Alt + ← / → | Move the picked stream earlier or later      |
-| L           | Next layout                                  |
-| I           | Mini player                                  |
-| ?           | Show the shortcuts (and change them)         |
-| Ctrl/Cmd+K  | Find a stream                                |
-| Ctrl/Cmd+S  | Save or open a layout                        |
+| Key         | Action                                                 |
+| ----------- | ------------------------------------------------------ |
+| 1 – 9       | Pick a stream (you hear it)                            |
+| M           | Mute or unmute                                         |
+| F           | Enlarge the picked stream, fullscreen                  |
+| Esc         | Back to the grid (also from the mini player)           |
+| Space       | Play or pause the picked stream                        |
+| ← / →       | Back or forward 10 seconds                             |
+| Alt + ← / → | Move the picked stream earlier or later                |
+| L           | Next layout                                            |
+| I           | Mini player                                            |
+| ?           | Show the shortcuts (and change them)                   |
+| Ctrl/Cmd+K  | Find a stream                                          |
+| Ctrl/Cmd+S  | Save or open a layout                                  |
+| Media keys  | Play/pause, next and previous stream (Settings, Sound) |
 
 ## Download
 
 Get the latest version from [Releases](https://github.com/MehmetBurakTaskaya/splitwatch/releases/latest):
 
-| System                                              | File                                     |
-| --------------------------------------------------- | ---------------------------------------- |
-| Windows 10 or 11 (64-bit)                           | `Splitwatch-Setup-<version>-x64.exe`     |
-| macOS 13 Ventura or later (Apple Silicon and Intel) | `Splitwatch-<version>-mac-universal.dmg` |
+| System                                              | File                                                           |
+| --------------------------------------------------- | -------------------------------------------------------------- |
+| Windows 10 or 11 (64-bit)                           | `Splitwatch-Setup-<version>-x64.exe`                           |
+| Windows, without installing                         | `Splitwatch-<version>-win-x64.zip` (unzip, run Splitwatch.exe) |
+| macOS 13 Ventura or later (Apple Silicon and Intel) | `Splitwatch-<version>-mac-universal.dmg`                       |
+| Linux (x86-64), experimental                        | `Splitwatch-<version>-x86_64.AppImage`                         |
 
 Splitwatch is not code-signed yet, so both systems warn the first time.
 
@@ -157,9 +166,14 @@ next to the message about Splitwatch. Or run this once in Terminal:
 xattr -dr com.apple.quarantine /Applications/Splitwatch.app
 ```
 
-**Updates.** On Windows, Splitwatch updates itself and asks you to restart. On macOS it tells you when
-a new version is out and opens the download page: automatic updates on macOS need a paid Apple
-certificate. More in [docs/signing.md](docs/signing.md).
+**Linux.** Make the AppImage executable (`chmod +x`) and run it. Ubuntu 23.10 and later keep apps
+from the user namespaces that Chromium's sandbox uses, so an AppImage may not start there. The
+safest fix is an AppArmor profile for Splitwatch that allows `userns`; starting it with `--no-sandbox`
+also works but turns the sandbox off. Tray icons need a desktop with StatusNotifier support.
+
+**Updates.** The Windows installer's copy and the AppImage update themselves and ask you to restart.
+The portable Windows copy and macOS tell you when a new version is out and open the download page:
+automatic updates on macOS need a paid Apple certificate. More in [docs/signing.md](docs/signing.md).
 
 ## Privacy
 
@@ -205,6 +219,11 @@ oynatıcıda izleyebilir (I), Splitwatch'ı pencere kapanınca bildirim alanınd
 açılınca başlatabilirsiniz. API anahtarınızla, takip ettiğiniz bir kanal canlı yayına başlayınca
 bildirim alırsınız.
 
+Ayrıca: düzenleri `splitwatch://` bağlantısıyla paylaşabilir, önümüzdeki haftanın yaklaşan
+yayınları için hatırlatma kurabilir, spoiler korumasını açabilir (başlıklar ve küçük resimler
+üzerlerine gelinene kadar bulanık kalır) ve klavyenin medya tuşlarını kullanabilirsiniz. Biten bir
+yayının yerine aynı sporun canlı bir yayını önerilir.
+
 Summer Games ve Winter Games modları, oyunlara 30 günden az kalınca üst çubuktaki etiketle
 önerilir (her an denenebilir): etkinliğin görünümü, açılış animasyonu, gün gün program (o günün
 canlı ve yaklaşan yayınları, hatırlatma, günün finallerini tek ızgarada açma) ve ülkenizin
@@ -212,7 +231,8 @@ vurgulandığı madalya tablosu (İngilizce Wikipedia'dan, CC BY-SA 4.0).
 
 YouTube kuralları gereği açılışta yalnız son seçtiğiniz yayın kendiliğinden başlar; diğerlerini üst
 çubuktaki **Play all** başlatır. Görünmeyen yayınlar (büyütülmüş yayının, mini oynatıcının arkasında
-ya da pencere simge durumundayken) duraklar ve göründüklerinde devam eder.
+, pencere simge durumundayken ya da Ayarlar gibi bir pencere açıkken) duraklar ve göründüklerinde
+devam eder.
 
 İndirmek için [Releases](https://github.com/MehmetBurakTaskaya/splitwatch/releases/latest) sayfasına
 gidin. Uygulama henüz kod imzalı olmadığı için ilk açılışta uyarı çıkar:
@@ -223,4 +243,6 @@ gidin. Uygulama henüz kod imzalı olmadığı için ilk açılışta uyarı ç�
   **Sistem Ayarları → Gizlilik ve Güvenlik** bölümünde **Yine de Aç**'a tıklayın ya da Terminal'de
   yukarıdaki `xattr` komutunu bir kez çalıştırın.
 
-Windows'ta uygulama kendini günceller; macOS'ta yeni sürüm çıktığında indirme sayfasını açar.
+Kurmadan çalıştırmak için Windows ZIP'i, Linux için (deneysel) AppImage'ı indirebilirsiniz.
+Kurulu Windows sürümü ve AppImage kendini günceller; taşınabilir sürüm ve macOS yeni sürüm
+çıktığında indirme sayfasını açar.

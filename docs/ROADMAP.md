@@ -11,11 +11,14 @@ Each phase ends with a release that is tested on Windows and, where possible, on
 | 4     | Theme engine, the first 12 sport themes, sport icons                                                                                                 | done   |
 | 5     | Saved layouts, mini mode, tray or menu bar, live notifications, start with the system                                                                | done   |
 | 6     | Summer Games and Winter Games event modes                                                                                                            | done   |
-| 7     | Extra features (below)                                                                                                                               |        |
+| 7     | Extra features (below)                                                                                                                               | half   |
 | 8     | Languages: Spanish, Simplified Chinese, Japanese, German, French, Brazilian Portuguese, Arabic, Korean, Italian, Russian, Turkish                    |        |
 | 9     | Polish: accessibility, performance, onboarding, final icon, v1.0.0                                                                                   |        |
 
 ## Phase 7 extra features
+
+Done in 0.7: spoiler protection, the coming week with reminders, the next live stream when one ends,
+layout links, the media keys, the portable Windows ZIP and the Linux AppImage. Next: the rest.
 
 - Spoiler protection: hide titles and thumbnails that may show a score
 - Upcoming streams calendar with reminders, outside the event modes too

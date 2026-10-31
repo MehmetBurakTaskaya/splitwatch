@@ -5,6 +5,28 @@ and versions follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-10-31
+
+Splitwatch now keeps spoilers out of sight, lists the coming week, shares layouts as links and runs on
+Linux.
+
+### Added
+
+- Spoiler protection (Settings, Appearance): titles and thumbnails stay blurred until you point at
+  them, and notifications leave titles out.
+- The coming week (in Live now): the upcoming streams of your sports by day, with Remind me.
+- When a stream ends, a banner offers a live stream of the same sport in its place.
+- Layout links: copy a saved layout or the grid as a `splitwatch://` link; opening one asks whether
+  to open it or keep it.
+- The keyboard's media keys (Settings, Sound): play or pause the picked stream and pick the next or
+  previous one, also from the background.
+- A portable Windows ZIP, and an AppImage for Linux (experimental).
+
+### Changed
+
+- A dialog such as Settings now hides the grid and pauses its streams while it is open, since YouTube
+  allows nothing in front of a player.
+
 ## [0.6.0] - 2026-10-31
 
 Splitwatch now has modes for the Summer and Winter Games, with their look, a day-by-day schedule and

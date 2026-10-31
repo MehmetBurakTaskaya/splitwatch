@@ -19,7 +19,11 @@ When the window is hidden, Splitwatch makes no requests for "Live now" or live s
 turned on live notifications (every ten minutes) or keep Splitwatch in the notification area with a
 key (its Live now list, every five minutes).
 
-## Notifications and starting with the system
+## Notifications, links and starting with the system
+
+The installed app registers itself for `splitwatch://` links (on Windows in your account's registry,
+on macOS and Linux through the app's package), so a layout link opens in Splitwatch. A link only
+shows what it holds until you choose to open or keep it.
 
 Live notifications are shown by your system; Splitwatch sends nothing anywhere to show them. Starting
 Splitwatch when you sign in adds it to your system's list of startup apps (on Windows, the Run entry
@@ -29,7 +33,8 @@ of your account; on macOS, Login Items), and turning it off removes it.
 
 When the Splitwatch window comes to the front, it looks at the clipboard once for a YouTube link and,
 if it finds one that is not in the grid, offers to add it. Nothing else on the clipboard is used, kept
-or sent. You can turn this off in **Settings → Offer to add YouTube links I copy**.
+or sent. You can turn this off in **Settings → Offer to add YouTube links I copy**. Splitwatch writes
+to the clipboard only when you copy a layout link.
 
 ## YouTube
 
@@ -47,7 +52,7 @@ In Splitwatch's app data folder:
 - `settings.json`: your settings, keyboard shortcuts, chosen sports, theme and quota limits, the
   streams in your grid (video IDs, layout, volumes, sports), so the grid comes back next time, your
   saved layouts, where the mini player was, the channels you follow (their IDs and names), and for
-  the Summer and Winter Games modes the mode you turned on, the country you follow and your
+  the Summer and Winter Games modes the mode you turned on and the country you follow, and your
   reminders (video IDs, titles and start times).
 - `youtube-api-key.bin`: your API key, if you add one, encrypted by your system (the macOS Keychain or,
   on Windows, the Data Protection API tied to your Windows account). It is never stored as plain text.
