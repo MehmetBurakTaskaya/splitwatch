@@ -32,7 +32,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, macos-latest]
+        os: [windows-latest, macos-latest, ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v7
@@ -54,8 +54,12 @@ jobs:
           SPLITWATCH_NO_UPDATES: '1'
         run: |
           if [ "$RUNNER_OS" = "Windows" ]; then
-            app="release/win-unpacked/Splitwatch.exe"
+            release/win-unpacked/Splitwatch.exe --smoke-test
+          elif [ "$RUNNER_OS" = "macOS" ]; then
+            "$(ls -d release/mac-universal/*.app)/Contents/MacOS/Splitwatch" --smoke-test
           else
-            app="$(ls -d release/mac-universal/*.app)/Contents/MacOS/Splitwatch"
+            # Ubuntu's AppArmor blocks the user namespaces of Chromium's sandbox; this runner allows
+            # them, as a user can for the app (see README). No display: a virtual one.
+            sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+            xvfb-run -a release/linux-unpacked/splitwatch --smoke-test
           fi
-          "$app" --smoke-test

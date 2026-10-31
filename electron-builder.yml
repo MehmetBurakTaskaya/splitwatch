@@ -34,12 +34,24 @@ win:
   target:
     - target: nsis
       arch: [x64]
-  artifactName: Splitwatch-Setup-${version}-x64.${ext}
+    # A portable copy: unzip and run. It does not update itself (src/main/updates.ts).
+    - target: zip
+      arch: [x64]
+  artifactName: Splitwatch-${version}-win-x64.${ext}
 
 nsis:
   oneClick: true
   perMachine: false
   deleteAppDataOnUninstall: false
+  artifactName: Splitwatch-Setup-${version}-x64.${ext}
+
+# Linux, experimental: an AppImage, which updates itself like the Windows installer.
+linux:
+  target:
+    - target: AppImage
+      arch: [x64]
+  category: AudioVideo
+  artifactName: Splitwatch-${version}-x86_64.${ext}
 
 # Ad-hoc signed: no paid Apple certificate. Users clear the quarantine flag once (see README).
 mac:

@@ -1,6 +1,8 @@
+import { existsSync } from 'node:fs';
+import path from 'node:path';
 import { BrowserWindow, app, ipcMain, net, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
-import { RELEASES_URL, REPOSITORY } from '../shared/app';
+import { PRODUCT_NAME, RELEASES_URL, REPOSITORY } from '../shared/app';
 import { IPC, type UpdateState } from '../shared/ipc';
 import { isNewerVersion } from '../shared/version';
 
@@ -19,11 +21,22 @@ export function setupUpdates(): void {
   ipcMain.handle(IPC.openReleasePage, () => shell.openExternal(`${RELEASES_URL}/latest`));
 
   if (!app.isPackaged || process.env.SPLITWATCH_NO_UPDATES) return;
-  if (process.platform === 'darwin') void checkGitHub();
-  else checkWithUpdater();
+  if (canUpdateItself()) checkWithUpdater();
+  else void checkGitHub();
 }
 
-// Windows (NSIS): electron-updater downloads from GitHub Releases and installs on restart.
+// The Windows installer's copy and the Linux AppImage update themselves. A portable Windows copy
+// (from the ZIP, with no uninstaller next to it), a Linux build run outside its AppImage and macOS
+// (Squirrel.Mac needs a signed app) offer the download instead.
+function canUpdateItself(): boolean {
+  if (process.platform === 'win32') {
+    return existsSync(path.join(path.dirname(process.execPath), `Uninstall ${PRODUCT_NAME}.exe`));
+  }
+  return process.platform === 'linux' && !!process.env.APPIMAGE;
+}
+
+// Windows (NSIS) and Linux (AppImage): electron-updater downloads from GitHub Releases and installs
+// on restart.
 function checkWithUpdater(): void {
   autoUpdater.autoDownload = true;
   autoUpdater.autoInstallOnAppQuit = true;
@@ -38,8 +51,7 @@ function checkWithUpdater(): void {
   autoUpdater.checkForUpdates().catch(() => publish({ status: 'error' }));
 }
 
-// macOS: Squirrel.Mac only updates code-signed apps, so the app looks up the latest release
-// and offers the download instead.
+// Everywhere else: the app looks up the latest release and offers the download.
 async function checkGitHub(): Promise<void> {
   publish({ status: 'checking' });
   try {
