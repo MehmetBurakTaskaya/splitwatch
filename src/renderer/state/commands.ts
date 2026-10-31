@@ -1,6 +1,8 @@
 import { setMini } from '../hooks/useShortcuts';
 import { togglePlay } from '../player/players';
 import { useAppStore } from './app';
+import { playCue } from '../theme/sounds';
+import { usePrefs } from './prefs';
 import { useSession } from './session';
 
 // Asks from the tray and the notifications.
@@ -37,6 +39,10 @@ export function connectCommands(): void {
         const index = (streams.indexOf(selected ?? '') + step + streams.length) % streams.length;
         return session.select(streams[index]!, { unmute: true });
       }
+      case 'reminders':
+        usePrefs.setState({ reminders: command.reminders });
+        if (command.fired) playCue('reminder');
+        return;
       case 'sharedLayout':
         if (useAppStore.getState().mini) setMini(false);
         return useAppStore.setState({ shared: command.layout, dialog: 'shared', dialogStream: null });

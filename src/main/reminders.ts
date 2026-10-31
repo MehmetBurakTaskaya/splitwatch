@@ -1,6 +1,6 @@
 import type { Reminder } from '../shared/reminders';
 import { t } from './i18n';
-import { sendCommand } from './main-window';
+import { sendCommand, sendToPage } from './main-window';
 import { showNotification } from './notify';
 import { getSettings, onSettingsChange, saveSettings } from './settings-store';
 
@@ -14,13 +14,18 @@ const LATE = 60 * 60_000;
 const HORIZON = 20 * 24 * 60 * 60_000;
 const timers = new Map<string, NodeJS.Timeout>();
 
+// Saves the reminders and tells the page, whose copy would otherwise bring back the old ones.
+function store(reminders: Reminder[], fired: string | null): void {
+  saveSettings({ reminders });
+  sendToPage({ type: 'reminders', reminders: getSettings().reminders, fired });
+}
+
 function fire(reminder: Reminder): void {
   timers.delete(reminder.videoId);
-  saveSettings({
-    reminders: getSettings().reminders.map((r) =>
-      r.videoId === reminder.videoId ? { ...r, notified: true as const } : r,
-    ),
-  });
+  store(
+    getSettings().reminders.map((r) => (r.videoId === reminder.videoId ? { ...r, notified: true as const } : r)),
+    reminder.videoId,
+  );
   const body = getSettings().spoilers ? t('notify.spoilerBody') : reminder.title;
   void showNotification(t('notify.reminderTitle', { channel: reminder.channel }), body, () =>
     sendCommand({ type: 'add', videoId: reminder.videoId, ...(reminder.sport ? { sport: reminder.sport } : {}) }),
@@ -38,7 +43,10 @@ function schedule(): void {
   }
   const stale = reminders.filter((r) => Date.parse(r.at) < now - LATE);
   if (stale.length) {
-    saveSettings({ reminders: reminders.filter((r) => !stale.includes(r)) });
+    store(
+      reminders.filter((r) => !stale.includes(r)),
+      null,
+    );
     return;
   }
   for (const r of reminders) {

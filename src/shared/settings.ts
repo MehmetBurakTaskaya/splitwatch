@@ -62,6 +62,8 @@ export interface Settings {
   // Keep a watch history on this computer (see shared/watch.ts), and the added streams for the
   // search's suggestions.
   watchHistory: boolean;
+  // Quiet sounds in the theme's style (src/renderer/theme/sounds.ts).
+  sounds: boolean;
   colorScheme: ColorScheme;
   animate: boolean;
   performance: boolean;
@@ -91,6 +93,7 @@ export const DEFAULT_SETTINGS: Settings = {
   theme: 'auto',
   customThemes: [],
   watchHistory: true,
+  sounds: false,
   colorScheme: 'system',
   animate: true,
   performance: false,
@@ -214,6 +217,7 @@ export function sanitizeSettings(raw: unknown): Settings {
     theme: typeof raw.theme === 'string' && (raw.theme === 'auto' || SLUG.test(raw.theme)) ? raw.theme : d.theme,
     customThemes: sanitizeCustomThemes(raw.customThemes),
     watchHistory: raw.watchHistory !== false,
+    sounds: raw.sounds === true,
     colorScheme: scheme === 'light' || scheme === 'dark' ? scheme : 'system',
     animate: raw.animate !== false,
     performance: raw.performance === true,

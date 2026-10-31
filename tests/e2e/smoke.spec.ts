@@ -542,3 +542,59 @@ test('the waiting screen counts down to the next streams and puts a started one 
   await expect(page.locator(`[data-stream="${VIDEO_A}"]`)).toBeVisible();
   await app.close();
 });
+
+test('quiet theme sounds stay off until turned on, then sound for streams that come and go', async () => {
+  const { app, page } = await launch(freshUserData());
+  // Count the tones the page makes.
+  await page.evaluate(() => {
+    const counted = window as unknown as { tones: number };
+    counted.tones = 0;
+    const Base = window.AudioContext;
+    window.AudioContext = class extends Base {
+      override createOscillator() {
+        counted.tones++;
+        return super.createOscillator();
+      }
+    };
+  });
+  const tones = () => page.evaluate(() => (window as unknown as { tones: number }).tones);
+  await addStream(page, VIDEO_A);
+  expect(await tones()).toBe(0);
+
+  await page.getByRole('button', { name: en.settings.open }).click();
+  const try_ = page.getByRole('button', { name: en.settings.soundsTry });
+  await expect(try_).toBeDisabled();
+  await page.getByLabel(en.settings.sounds).check();
+  await try_.click();
+  await expect.poll(tones).toBe(3);
+  await page.keyboard.press('Escape');
+  await addStream(page, VIDEO_B);
+  await expect.poll(tones).toBe(5);
+  await app.close();
+});
+
+test('a reminder that goes out reaches the page, which sounds and keeps showing it', async () => {
+  const at = new Date(Date.now() + 2 * 60_000 + 12_000).toISOString();
+  const { app, page } = await launch(
+    freshUserData({ sounds: true, reminders: [{ videoId: VIDEO_B, title: 'Final', channel: 'Pool TV', at }] }),
+  );
+  await page.evaluate(() => {
+    const counted = window as unknown as { tones: number };
+    counted.tones = 0;
+    const Base = window.AudioContext;
+    window.AudioContext = class extends Base {
+      override createOscillator() {
+        counted.tones++;
+        return super.createOscillator();
+      }
+    };
+  });
+  await page.getByRole('button', { name: en.ambient.open }).click();
+  await expect(page.locator('.ambient-title')).toHaveText(['Final']);
+  // The reminder goes out two minutes before the start.
+  await expect
+    .poll(() => page.evaluate(() => (window as unknown as { tones: number }).tones), { timeout: 30_000 })
+    .toBe(3);
+  await expect(page.locator('.ambient-title')).toHaveText(['Final']);
+  await app.close();
+});

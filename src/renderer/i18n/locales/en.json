@@ -280,7 +280,10 @@
     "themeFull": "There are {max} themes of your own, the most there can be. Delete one first.",
     "history": "Watch history",
     "historyKeep": "Keep a watch history on this computer",
-    "historyNote": "It stays on this computer. Titles and channels go after 30 days; the time by sport stays until you clear it."
+    "historyNote": "It stays on this computer. Titles and channels go after 30 days; the time by sport stays until you clear it.",
+    "sounds": "Quiet theme sounds",
+    "soundsTry": "Try",
+    "soundsNote": "Soft sounds in the theme's style when a stream comes or goes, the layout changes or a reminded stream is about to start."
   },
   "update": {
     "available": "Version {version} is available.",

@@ -3,6 +3,7 @@ import type { GamesEvent } from './events';
 import type { MedalRow } from './medals';
 import type { FollowedChannel } from './notify';
 import type { Preset } from './presets';
+import type { Reminder } from './reminders';
 import type { SharedLayout } from './share';
 import type { QuotaBucket, QuotaLimits } from './quota';
 import type { Settings } from './settings';
@@ -84,7 +85,9 @@ export type AppCommand =
   | { type: 'selectNext' }
   | { type: 'selectPrevious' }
   // A splitwatch:// link, checked; the page asks before it opens it.
-  | { type: 'sharedLayout'; layout: SharedLayout };
+  | { type: 'sharedLayout'; layout: SharedLayout }
+  // The main process changed the reminders: one went out (fired) or went stale.
+  | { type: 'reminders'; reminders: Reminder[]; fired: string | null };
 
 // on: the setting; held: Splitwatch has the keys (another app may hold them); needsAccessibility:
 // macOS has not yet trusted Splitwatch as an accessibility client.

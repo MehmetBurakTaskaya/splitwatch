@@ -27,6 +27,7 @@ describe('sanitizeSettings', () => {
       theme: 'pool',
       customThemes: [],
       watchHistory: false,
+      sounds: true,
       colorScheme: 'dark',
       animate: false,
       performance: true,

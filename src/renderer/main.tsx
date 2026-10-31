@@ -11,6 +11,7 @@ import { loadPrefs, loadState } from './state/init';
 import { connectWatch } from './state/watch';
 import { connectYouTube } from './state/youtube';
 import { connectTheme } from './theme/engine';
+import { connectSounds } from './theme/sounds';
 import './styles/tokens.css';
 import './styles/base.css';
 import './styles/grid.css';
@@ -39,6 +40,7 @@ if (popout && isVideoId(popout)) {
     connectYouTube();
     connectTheme();
     connectWatch();
+    connectSounds();
     createRoot(document.getElementById('root')!).render(
       <StrictMode>
         <App />

@@ -8,6 +8,7 @@ import { setFollowing } from '../state/notify';
 import { setPrefs, usePrefs } from '../state/prefs';
 import { refreshLiveNow, useYouTube } from '../state/youtube';
 import { THEMES, useTheme } from '../theme/engine';
+import { playCue } from '../theme/sounds';
 import { Dialog } from './Dialog';
 import { IconClose } from './icons';
 import { SportIcon } from './sport-icons';
@@ -77,6 +78,7 @@ export function SettingsDialog() {
           </label>
         </fieldset>
         <MediaKeysField />
+        <SoundsField />
         <label className="field">
           <input
             type="checkbox"
@@ -637,5 +639,24 @@ function HistorySection() {
         {t('history.open')}
       </button>
     </section>
+  );
+}
+
+function SoundsField() {
+  const { t } = useTranslation();
+  const on = usePrefs((s) => s.sounds);
+  return (
+    <div className="field sounds-field">
+      <div className="theme-tools-row">
+        <label>
+          <input type="checkbox" checked={on} onChange={(e) => setPrefs({ sounds: e.target.checked })} />
+          {t('settings.sounds')}
+        </label>
+        <button type="button" className="button button-quiet" disabled={!on} onClick={() => playCue('reminder', true)}>
+          {t('settings.soundsTry')}
+        </button>
+      </div>
+      <p className="note">{t('settings.soundsNote')}</p>
+    </div>
   );
 }
