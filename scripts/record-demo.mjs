@@ -290,10 +290,12 @@ body{display:flex;flex-direction:column;align-items:center;justify-content:cente
 img{width:120px;height:120px}h1{margin:4px 0 0;font-size:40px;font-weight:600;color:#c9d6e6}
 p.slogan{margin:0 0 14px;font-size:62px;font-weight:700;letter-spacing:-1px;line-height:1.1}
 p{margin:0;font-size:25px;color:#c9d6e6}p.small{font-size:21px;color:#93a7bf}
+p.credit{position:absolute;bottom:22px;font-size:16px;color:#7f93ab}
 </style><img src="data:image/svg+xml;base64,${icon}" alt=""><h1>Splitwatch</h1>
 <p class="slogan">Every sport. Every stream.<br>One screen.</p>
 <p>12 sport themes · 12 languages</p>
-<p class="small">Free and open source · for Windows and macOS</p>`,
+<p class="small">Free and open source · for Windows and macOS</p>
+<p class="credit">Highlights: FISU, International University Sports Federation · CC BY 3.0</p>`,
     },
   );
   await app.close();
