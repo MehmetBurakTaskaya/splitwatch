@@ -214,7 +214,7 @@ kbd {
   position: relative;
   display: flex;
   gap: var(--space-1);
-  flex: 1 1 18rem;
+  flex: 1 50 18rem;
   min-inline-size: 10rem;
   max-inline-size: 32rem;
 }
@@ -236,8 +236,17 @@ kbd {
   white-space: nowrap;
 }
 
+/* When the bar is short of room, the link box gives way first (down to its minimum), then the event
+   chip's label, which shortens with an ellipsis. Below 1200 px the app name and Play all's label step
+   aside. */
 .play-all {
   flex: none;
+}
+@media (max-width: 1199px) {
+  .brand-name,
+  .play-all-label {
+    display: none;
+  }
 }
 /* Narrow windows keep the top bar on one line: the name, the main volume slider (each stream has
    its own) and the light or dark button (also in Settings) step aside, and Play all keeps its icon. */

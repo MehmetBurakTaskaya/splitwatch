@@ -206,6 +206,30 @@ test('the long pseudo-locale still fits the window', async () => {
   await app.close();
 });
 
+test('the top bar stays on one line at any width, with its longest labels', async () => {
+  const { app, page } = await launch(
+    freshUserData({
+      event: { active: 'summer-2028', introSeen: ['summer-2028'] },
+      session: { layout: '2', streams: [VIDEO_A, VIDEO_B], selected: VIDEO_A },
+    }),
+    '--locale=en-XA',
+  );
+  await expect(page.locator('.event-chip')).toBeVisible();
+  await expect(page.locator('.play-all')).toBeVisible();
+  for (const width of [1280, 1024, 900, 720]) {
+    await app.evaluate(({ BrowserWindow }, w) => BrowserWindow.getAllWindows()[0]!.setSize(w, 640), width);
+    await expect
+      .poll(() =>
+        page.evaluate(() => {
+          const bar = document.querySelector('.topbar')!;
+          return bar.scrollWidth <= bar.clientWidth && document.documentElement.scrollWidth <= window.innerWidth;
+        }),
+      )
+      .toBe(true);
+  }
+  await app.close();
+});
+
 test('dialogs close from outside the box and from Enter on a choice, and keep a typed key', async () => {
   const { app, page } = await launch(freshUserData());
   const dialog = page.getByRole('dialog');
