@@ -79,6 +79,16 @@ const SPORT_PATHS: Record<string, ReactNode> = {
       <circle cx="15.5" cy="4.5" r="1.4" />
     </>
   ),
+  // A racket with strings, longer than the table-tennis paddle, and a ball with its seam.
+  tennis: (
+    <>
+      <ellipse cx="7.6" cy="7.6" rx="3.6" ry="4.8" transform="rotate(-45 7.6 7.6)" />
+      <path d="M5 7.6l5.2 0M7.6 5v5.2" />
+      <path d="M10.4 10.4l5.6 5.6" className="thick" />
+      <circle cx="15.2" cy="4.8" r="2" />
+      <path d="M13.4 4.1c.9.4 2.7.4 3.6 0" />
+    </>
+  ),
   badminton: (
     <>
       <path d="M8 15.5a2 2 0 0 0 4 0z" />

@@ -6,7 +6,25 @@
     {
       "id": "UCi8PYovluicFUUD_YxJIcMA",
       "name": "United World Wrestling",
-      "checked": "2026-10-30"
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCXmtjT8iO5BaMDvKOxcvgWw",
+      "name": "USA Wrestling",
+      "checked": "2026-10-31",
+      "review": "Ownership rests on the verification badge with the organization's name; its site shows no link to the channel."
+    },
+    {
+      "id": "UC-6JJppbiGJOnXSJBuSnwhg",
+      "name": "Türkiye Güreş Federasyonu",
+      "checked": "2026-10-31",
+      "review": "Ownership rests on the verification badge with the organization's name; its site shows no link to the channel."
+    },
+    {
+      "id": "UCB0zHtqhvp2fuz0kJJlUpQw",
+      "name": "Real American Freestyle Wrestling",
+      "checked": "2026-10-31",
+      "review": "Ownership rests on the verification badge with the organization's name; its site shows no link to the channel."
     }
   ],
   "keywords": ["wrestling live"]

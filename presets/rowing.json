@@ -6,7 +6,27 @@
     {
       "id": "UCUtND8H4BQaFsQlWxakWX1Q",
       "name": "World Rowing",
-      "checked": "2026-10-30"
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCk5gEr_7yZ-XKsX57qKZ1bw",
+      "name": "Henley Royal Regatta",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCTawEbpBucZiouD1n9Vk3EQ",
+      "name": "Head Of The Charles Regatta",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCGA5MO_nMT3qlJZREK-JGyQ",
+      "name": "British Rowing",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UC2X_QdKKpNWvRXDP1bX5jXg",
+      "name": "The Boat Race",
+      "checked": "2026-10-31"
     }
   ],
   "keywords": ["rowing live"]

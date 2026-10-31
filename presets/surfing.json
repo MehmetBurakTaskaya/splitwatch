@@ -6,7 +6,22 @@
     {
       "id": "UChuLeaTGRcfzo0UjL-2qSbQ",
       "name": "World Surf League",
-      "checked": "2026-10-30"
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCZhixj2QS9WzrluwSc9iCzA",
+      "name": "ISA Surfing",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCS9OGf3gXRshwT-eWgDe1Cg",
+      "name": "USA Surfing",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCyClZKrBMRLdlYK6UzLRcNg",
+      "name": "Nippon Surfing Association",
+      "checked": "2026-10-31"
     }
   ],
   "keywords": ["surfing live"]

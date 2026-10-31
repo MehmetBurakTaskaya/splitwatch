@@ -6,7 +6,32 @@
     {
       "id": "UCtInrnU3QbWqFGsdKT1GZtg",
       "name": "FIBA Basketball",
-      "checked": "2026-10-30"
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UC7LpyJP5fupiJu2CdzRQheg",
+      "name": "FIBA 3x3",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCKuhExlRMWgfcaD__HtN1yw",
+      "name": "Lega Basket Serie A",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UC4NpGzqd6nnntf8ehYC50-A",
+      "name": "B.LEAGUE",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCGr3nR_XH9r6E5b09ZJAT9w",
+      "name": "EuroLeague Basketball",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCWJ2lWNubArHWmf3FIHbfcQ",
+      "name": "NBA",
+      "checked": "2026-10-31"
     }
   ],
   "keywords": ["basketball live"]

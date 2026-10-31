@@ -6,7 +6,33 @@
     {
       "id": "UCNMg6XDhRZI2QzL4pWOvP_w",
       "name": "Volleyball World",
-      "checked": "2026-10-30"
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UC8XRC858pOERvclUDb_d7rg",
+      "name": "European Volleyball",
+      "checked": "2026-10-31",
+      "review": "Ownership rests on the verification badge with the organization's name; its site shows no link to the channel."
+    },
+    {
+      "id": "UCTgQ8Bfq3AUuo1vWULdvRKw",
+      "name": "TVF Voleybol TV",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCnQA-X8zl0Mwg0Aj2XYIipw",
+      "name": "Lega Volley Femminile",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCCvANrN21QfwbC10bYxAz1A",
+      "name": "Lega Pallavolo Serie A",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UC50fvwgEsELna_WzlQsy1FQ",
+      "name": "SV.LEAGUE",
+      "checked": "2026-10-31"
     }
   ],
   "keywords": ["volleyball live"]

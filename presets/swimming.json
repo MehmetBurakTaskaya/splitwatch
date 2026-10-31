@@ -6,7 +6,22 @@
     {
       "id": "UCZko_COpTM4_d2kPrxZfzFg",
       "name": "World Aquatics",
-      "checked": "2026-10-30"
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCznRyLyXK9QWHs05PK2MGBQ",
+      "name": "USA Swimming",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UClLyhI4E7BF3MmPREE9wMEg",
+      "name": "Japan Swimming Federation",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCbdK9FG_t6ENQRhds_NNtXQ",
+      "name": "Swim England",
+      "checked": "2026-10-31"
     }
   ],
   "keywords": ["swimming live"]

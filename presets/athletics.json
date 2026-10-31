@@ -6,7 +6,27 @@
     {
       "id": "UCQk7fWv15ChjMJLCRVmtApw",
       "name": "World Athletics",
-      "checked": "2026-10-30"
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCp21zu_8Hd0w9HULooemRCA",
+      "name": "European Athletics",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCR69bettlgCtKUWIDh2PUJA",
+      "name": "USA Track and Field",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCPGXX6m7rfGVWuMJTFDC_aw",
+      "name": "Japan Association of Athletics Federations",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UC6PZm2HZT3uOL1Z9F203K4g",
+      "name": "Wanda Diamond League",
+      "checked": "2026-10-31"
     }
   ],
   "keywords": ["athletics live", "marathon live"]

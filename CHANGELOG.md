@@ -12,11 +12,19 @@ and versions follow [Semantic Versioning](https://semver.org/).
   time. Choose **Live and videos**, **Live only** (with your own API key) or **Videos only**. What you
   change in the grid stays with the grid; the list is made anew each time. A stream that cannot play
   in the app gives its place to the next one.
+- **Tennis**, with the channels of the ITF, the ATP and WTA tours and three Grand Slams.
+- More official channels for almost every sport (federations, leagues, tours and events): 75 in all,
+  up from 14, so a ready list fills a whole grid. Alpine skiing and snowboard keep the FIS channel,
+  the only one that qualifies.
 
 ### Changed
 
 - While a sport's theme is picked in **Settings → Appearance**, the start screen suggests that sport.
 - Live now no longer suggests YouTube Shorts.
+- Beach volleyball reads Volleyball World's beach channel instead of its main channel, which shows
+  mostly indoor volleyball.
+- A ready list takes its channels in turns, so a channel that posts many videos a day does not fill
+  the grid alone.
 
 ## [1.0.1] - 2026-10-31
 

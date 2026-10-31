@@ -10,7 +10,9 @@ import { tempDir } from './temp';
 // play in an embedded player.
 const en = JSON.parse(readFileSync('src/renderer/i18n/locales/en.json', 'utf8'));
 const KEY = 'test-key-0123456789abcdef';
-const SWIMMING_CHANNEL = 'UCZko_COpTM4_d2kPrxZfzFg';
+const SWIMMING: string[] = JSON.parse(readFileSync('presets/swimming.json', 'utf8')).channels.map(
+  (c: { id: string }) => c.id,
+);
 const PER_CHANNEL = 6;
 
 const videoId = (channelId: string, i: number) => `${channelId.slice(-8)}${String(i).padStart(3, '0')}`;
@@ -34,7 +36,7 @@ async function startFake(): Promise<Fake> {
   <yt:videoId>${videoId(channel, i)}</yt:videoId>
   <yt:channelId>${channel}</yt:channelId>
   <title>Fake race ${i + 1}</title>
-  <author><name>Fake federation</name></author>
+  <author><name>Fake ${channel}</name></author>
   <published>2026-10-${String(30 - i).padStart(2, '0')}T15:00:00+00:00</published>
  </entry>`,
       ).join('\n');
@@ -50,12 +52,13 @@ async function startFake(): Promise<Fake> {
         JSON.stringify({
           items: ids.map((id) => {
             const i = Number(id.slice(-3));
+            const channelId = SWIMMING.find((c) => c.endsWith(id.slice(0, 8))) ?? SWIMMING[0];
             return {
               id,
               snippet: {
                 title: `Fake race ${i + 1}`,
-                channelTitle: 'Fake federation',
-                channelId: SWIMMING_CHANNEL,
+                channelTitle: `Fake ${channelId}`,
+                channelId,
                 liveBroadcastContent: i < 2 ? 'live' : 'none',
               },
               status: { embeddable: i !== 2 },
@@ -119,7 +122,7 @@ test('a ready list fills a whole grid, and changes to the grid leave the list as
   await page.getByRole('button', { name: en.ready.title }).click();
   await expect(sport(page, en.ready.mix)).toBeChecked();
   await sport(page, en.sports.swimming).check();
-  await expect(status(page)).toHaveText(`The ${PER_CHANNEL} newest videos are ready.`);
+  await expect(status(page)).toHaveText('The 9 newest videos are ready.');
   await expect(dialog(page).getByText(en.ready.latestNote)).toBeVisible();
 
   // Live streams cannot be told apart without a key.
@@ -128,27 +131,26 @@ test('a ready list fills a whole grid, and changes to the grid leave the list as
   await expect(dialog(page).getByRole('button', { name: /^Open/ })).toBeDisabled();
   await dialog(page).getByRole('radio', { name: en.ready.kindAll }).check();
 
-  await dialog(page)
-    .getByRole('button', { name: `Open ${PER_CHANNEL} side by side` })
-    .click();
+  await dialog(page).getByRole('button', { name: 'Open 9 side by side' }).click();
   await expect(dialog(page)).toBeHidden();
-  await expect(page.locator('.grid')).toHaveAttribute('data-layout', '6');
-  await expect(page.locator('[data-stream]')).toHaveCount(PER_CHANNEL);
-  await expect(page.locator(`[data-stream="${videoId(SWIMMING_CHANNEL, 0)}"]`)).toHaveAttribute('data-slot', '0');
+  await expect(page.locator('.grid')).toHaveAttribute('data-layout', '9');
+  await expect(page.locator('[data-stream]')).toHaveCount(9);
+  // The channels take turns: each one's newest video first.
+  for (const [slot, channel] of SWIMMING.entries()) {
+    await expect(page.locator(`[data-stream="${videoId(channel, 0)}"]`)).toHaveAttribute('data-slot', String(slot));
+  }
 
   // Removing a stream leaves its place empty, for a link of your own; the list itself stays whole.
   await page.getByRole('button', { name: 'Remove stream 1' }).click();
-  await expect(page.locator('[data-stream]')).toHaveCount(PER_CHANNEL - 1);
-  await expect(page.locator('.grid')).toHaveAttribute('data-layout', '6');
+  await expect(page.locator('[data-stream]')).toHaveCount(8);
+  await expect(page.locator('.grid')).toHaveAttribute('data-layout', '9');
 
   await page.getByRole('button', { name: en.layouts.title }).click();
   await page.getByRole('dialog', { name: en.layouts.title }).getByRole('button', { name: en.ready.title }).click();
   await sport(page, en.sports.swimming).check();
-  await expect(status(page)).toHaveText(`The ${PER_CHANNEL} newest videos are ready.`);
-  await expect(
-    dialog(page).getByText(`This takes the place of the ${PER_CHANNEL - 1} streams in the grid.`),
-  ).toBeVisible();
-  await expect(dialog(page).getByRole('button', { name: `Open ${PER_CHANNEL} instead` })).toBeEnabled();
+  await expect(status(page)).toHaveText('The 9 newest videos are ready.');
+  await expect(dialog(page).getByText('This takes the place of the 8 streams in the grid.')).toBeVisible();
+  await expect(dialog(page).getByRole('button', { name: 'Open 9 instead' })).toBeEnabled();
   await app.close();
 });
 
@@ -159,29 +161,32 @@ test('the mix takes one stream from each of nine sports', async () => {
   await dialog(page).getByRole('button', { name: 'Open 9 side by side' }).click();
   await expect(page.locator('.grid')).toHaveAttribute('data-layout', '9');
   await expect(page.locator('[data-stream]')).toHaveCount(9);
-  const channels = await page
+  const sports = await page
     .locator('[data-stream]')
-    .evaluateAll((tiles) => tiles.map((t) => (t.getAttribute('data-stream') ?? '').slice(0, 8)));
-  expect(new Set(channels).size).toBe(9);
+    .evaluateAll((tiles) => tiles.map((t) => t.getAttribute('data-sport')));
+  expect(new Set(sports).size).toBe(9);
   await app.close();
 });
 
 test('with a key: live streams first, none that cannot play, and the theme picks the sport', async () => {
   const { app, page } = await launch(fake, true, { theme: 'pool' });
-  // Live now on the start screen follows the Pool theme: only the swimming channel's feed is read.
-  await expect.poll(() => fake.feeds.length).toBeGreaterThan(0);
-  expect(new Set(fake.feeds)).toEqual(new Set([SWIMMING_CHANNEL]));
+  // Live now on the start screen follows the Pool theme: only the swimming channels' feeds are read.
+  await expect.poll(() => new Set(fake.feeds).size).toBe(SWIMMING.length);
+  expect(new Set(fake.feeds)).toEqual(new Set(SWIMMING));
 
   await page.getByRole('button', { name: en.ready.title }).click();
   await expect(sport(page, en.sports.swimming)).toBeChecked();
-  // Six videos, one of which cannot play here: four fill a grid, two of them live.
-  await expect(status(page)).toHaveText('4 streams ready, 2 live.');
+  // Six videos a channel: two live, one that cannot play here and three others. The live streams
+  // come first, and Live only fills the largest whole grid they can.
+  const live = 2 * SWIMMING.length;
+  const liveGrid = [9, 6, 4, 3, 2, 1].find((size) => live >= size);
+  await expect(status(page)).toHaveText(`9 streams ready, ${Math.min(live, 9)} live.`);
   await dialog(page).getByRole('radio', { name: en.ready.kindLive }).check();
-  await expect(status(page)).toHaveText('2 streams ready, 2 live.');
+  await expect(status(page)).toHaveText(`${liveGrid} streams ready, ${liveGrid} live.`);
   await dialog(page).getByRole('radio', { name: en.ready.kindVideos }).check();
-  await expect(status(page)).toHaveText('3 streams ready, none live.');
-  await dialog(page).getByRole('button', { name: 'Open 3 side by side' }).click();
-  await expect(page.locator('[data-stream]')).toHaveCount(3);
-  await expect(page.locator(`[data-stream="${videoId(SWIMMING_CHANNEL, 2)}"]`)).toHaveCount(0);
+  await expect(status(page)).toHaveText('9 streams ready, none live.');
+  await dialog(page).getByRole('button', { name: 'Open 9 side by side' }).click();
+  await expect(page.locator('[data-stream]')).toHaveCount(9);
+  for (const channel of SWIMMING) await expect(page.locator(`[data-stream="${videoId(channel, 2)}"]`)).toHaveCount(0);
   await app.close();
 });

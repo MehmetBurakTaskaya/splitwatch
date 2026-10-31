@@ -84,8 +84,11 @@ so a merged change reaches everyone without a new release.
 
 Rules:
 
-- Only channels that belong to a sport's organizer, league or federation and that stream on YouTube.
-  No re-upload or fan channels, and no keyword-only presets (they surface unofficial streams).
+- Only channels that belong to a sport's organizer, league or federation and that stream or post its
+  competitions on YouTube, with almost all of their videos about that sport. No re-upload or fan
+  channels, and no keyword-only presets (they surface unofficial streams).
+- Put the channel most likely to stream live first: when many sports are picked, Live now reads
+  every sport's first channel before any second one.
 - Use the channel ID (`UC` followed by 22 characters), not the @handle. To find it, open the channel,
   then **More about this channel → Share channel → Copy channel ID**.
 - Check that the ID is right and the channel is active, and put that day in `checked`.

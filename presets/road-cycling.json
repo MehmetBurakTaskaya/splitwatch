@@ -6,7 +6,28 @@
     {
       "id": "UCloqTh1nPpW13LCntQglS-Q",
       "name": "UCI",
-      "checked": "2026-10-30"
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCSpycUnuU0IVF7gGIhGojhg",
+      "name": "Tour de France",
+      "checked": "2026-10-31",
+      "review": "Ownership rests on the verification badge with the organization's name; its site shows no link to the channel."
+    },
+    {
+      "id": "UCe10BxbsFg9Kbmkg-ean_Dg",
+      "name": "Giro d'Italia",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCm0Qjs5OBrv3-d6kKBshEbg",
+      "name": "Tour Down Under",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCEUcmt11cRv1JAicidGR6kg",
+      "name": "Deutschland Tour",
+      "checked": "2026-10-31"
     }
   ],
   "keywords": ["road cycling live"]

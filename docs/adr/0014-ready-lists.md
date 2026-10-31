@@ -23,7 +23,8 @@ Live now, so they hold no unofficial copies of anyone's broadcast.
   stream of the list that cannot play in an embedded player (errors 100, 101 and 150) gives its place
   to the next spare, without a click.
 - **Live and videos** puts live streams first, then the newest videos; **Live only** and **Videos
-  only** narrow it. Upcoming streams are left out, since nothing plays yet. Telling live from videos
+  only** narrow it. Within each, the channels take turns, each one's newest first, so a channel that
+  posts many videos a day (a league's nightly highlights) does not fill the grid alone. Upcoming streams are left out, since nothing plays yet. Telling live from videos
   needs a key (one videos.list call per 50 videos, 1 unit), which also drops videos that cannot be
   embedded; without one, the list holds the newest videos and says so, and Live only is not offered.
 - **The mix** takes the best stream of each of nine sports, the sports in a random order each time
@@ -40,8 +41,11 @@ sport instead of the sports picked in Settings. The ready list starts with that 
 
 **More channels per sport.** One channel per sport gave too few videos for a grid of nine, so the
 presets get more official channels (federations, tours and leagues, events), each checked as
-before. Live now still reads at most 30 channels, now taken in turns (every sport's first channel
-before any second), so a cap leaves no sport out.
+before: 75 channels for 18 sports, tennis among them. A channel qualifies when almost all of its
+videos are about its sport and it streams or posts its competitions; Alpine skiing and snowboard
+keep only the FIS channel, since FIS has merged its channels into one and no other qualifies. Live
+now still reads at most 30 channels, now taken in turns (every sport's first channel before any
+second), so a cap leaves no sport out; each preset puts the channel most likely to stream first.
 
 ## Consequences
 

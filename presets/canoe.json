@@ -6,7 +6,22 @@
     {
       "id": "UCVagCjubko2x50KpYhnLsCQ",
       "name": "Planet Canoe",
-      "checked": "2026-10-30"
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UC_5tOn1iQv4-BAfjR8D-ThA",
+      "name": "Paddle Europe",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCibHSfUikLKS61pT2cwESJA",
+      "name": "Paddle Australia",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCNlUA-_AVL4g0udydqJXcWA",
+      "name": "Deutscher Kanu-Verband",
+      "checked": "2026-10-31"
     }
   ],
   "keywords": ["canoe live", "kayak live"]

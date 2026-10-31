@@ -4,9 +4,19 @@
   "sport": "beach-volleyball",
   "channels": [
     {
-      "id": "UCNMg6XDhRZI2QzL4pWOvP_w",
-      "name": "Volleyball World",
-      "checked": "2026-10-30"
+      "id": "UCHQUWveEpeO1KTkwbDn6jNA",
+      "name": "Beach Volleyball World",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCD5-eRiWjgPUje8YGKfAbOg",
+      "name": "AVP Beach Volleyball",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UC6p6EacZ652hBdyRe9ZfQiw",
+      "name": "Queen & King of the Court",
+      "checked": "2026-10-31"
     }
   ],
   "keywords": ["beach volleyball live"]

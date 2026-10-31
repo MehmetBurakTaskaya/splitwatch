@@ -6,7 +6,28 @@
     {
       "id": "UCXRVKD6l-LrX5TmGJqQFFoQ",
       "name": "World Triathlon",
-      "checked": "2026-10-30"
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCUlPrWg9Ef-IGsKRfDCPPew",
+      "name": "IRONMAN Triathlon",
+      "checked": "2026-10-31",
+      "review": "Ownership rests on the verification badge with the organization's name; its site shows no link to the channel."
+    },
+    {
+      "id": "UCITB6kXrkXZBD9e_sHCVE1Q",
+      "name": "T100 Triathlon World Tour",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCn48f1SClNIF5tctiukJN9w",
+      "name": "Challenge Family Triathlon",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCNUgZnp4wC7aS8rHtyOF08w",
+      "name": "Europe Triathlon",
+      "checked": "2026-10-31"
     }
   ],
   "keywords": ["triathlon live"]

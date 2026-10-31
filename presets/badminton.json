@@ -6,7 +6,23 @@
     {
       "id": "UChh-akEbUM8_6ghGVnJd6cQ",
       "name": "BWF TV",
-      "checked": "2026-10-30"
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCKKVmSr0-nktD2CFXATNkYw",
+      "name": "Badminton Europe",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCVWheF3rns7z5jNS2luqOyQ",
+      "name": "Badminton Asia",
+      "checked": "2026-10-31",
+      "review": "Ownership rests on the verification badge with the organization's name; its site shows no link to the channel."
+    },
+    {
+      "id": "UCYpz3DqW5cqmvw1XjJiatfQ",
+      "name": "Badminton Oceania",
+      "checked": "2026-10-31"
     }
   ],
   "keywords": ["badminton live"]

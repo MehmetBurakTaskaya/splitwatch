@@ -6,7 +6,32 @@
     {
       "id": "UCtmgna7qB0oQF2oOcVgndbw",
       "name": "IIHF",
-      "checked": "2026-10-30"
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCF1xXCjbnsdKZ-ojiqlFzlQ",
+      "name": "Svenska Spel Damhockeyligan",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCqFMzb-4AUf6WAIbl132QKA",
+      "name": "NHL",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCOscS0J7zLW4RME4IMzAvWQ",
+      "name": "Champions Hockey League",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCUMwsAsbK-SsW5GHufJJFUA",
+      "name": "SHL",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCGxrUE2U-ncnBf4vDww-gAQ",
+      "name": "Liiga",
+      "checked": "2026-10-31"
     }
   ],
   "keywords": ["ice hockey live"]

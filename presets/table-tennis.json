@@ -6,7 +6,28 @@
     {
       "id": "UC9ckyA_A3MfXUa0ttxMoIZw",
       "name": "World Table Tennis",
-      "checked": "2026-10-30"
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UC2ySPiV4DZp58qQ4KES2o1g",
+      "name": "ITTF",
+      "checked": "2026-10-31",
+      "review": "Ownership rests on the verification badge with the organization's name; its site shows no link to the channel."
+    },
+    {
+      "id": "UCHIe8E2_SQplR_SzH9gLurg",
+      "name": "ETTU",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCOYzMI5f_3mG4yRzIjIIRqQ",
+      "name": "Major League Table Tennis",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCVrQ-40Ye0Bqyx-NeTtorgw",
+      "name": "Table Tennis England",
+      "checked": "2026-10-31"
     }
   ],
   "keywords": ["table tennis live"]

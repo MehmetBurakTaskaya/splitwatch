@@ -1,0 +1,39 @@
+{
+  "$schema": "./schema.json",
+  "id": "tennis",
+  "sport": "tennis",
+  "channels": [
+    {
+      "id": "UCsyvlpbK0BTEc3jec6nhPyQ",
+      "name": "World Tennis",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCY_5h5zaSwN7Or4kIJDYNXA",
+      "name": "ATP Tour",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCaBIVVpHjq6j3tSyxwTE-8Q",
+      "name": "WTA",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCeTKJSW1NTAkf27nNmjWt5A",
+      "name": "Australian Open",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCF3K1Jf8hjFW8qliei8fQ3A",
+      "name": "Roland-Garros",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "UCXbboag48Qlr78zzz6SkzkQ",
+      "name": "US Open Tennis Championships",
+      "checked": "2026-10-31",
+      "review": "Ownership rests on the verification badge with the organization's name; its site shows no link to the channel."
+    }
+  ],
+  "keywords": ["tennis live"]
+}

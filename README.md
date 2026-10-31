@@ -19,7 +19,7 @@
 
 ![A short tour of Splitwatch. The start screen wears the Track theme and goes through Turkish, Japanese, Arabic, German and Spanish. A swimming stream is added by its link, its sport is set to Swimming, and the window turns to the Pool theme. Three swimming streams play side by side next to an empty place with lane ropes, another stream is picked to be heard, and the layout changes to one large stream with a side strip. Athletics, volleyball, basketball, alpine skiing and ice hockey streams each bring their own theme, in light and dark. Four streams of different sports keep a neutral window, each with its sport's color, first light, then dark. It ends with: Every sport. Every stream. One screen. 12 sport themes, 12 languages, free and open source, for Windows and macOS.](docs/assets/demo.gif)
 
-Paste a YouTube link, or pick a live stream from the official channels of 17 sports, and Splitwatch
+Paste a YouTube link, or pick a live stream from the official channels of 18 sports, and Splitwatch
 puts it in a grid next to the others: up to nine at once. The stream you pick is the one you hear.
 The window dresses itself in the sport you watch, and everything has a key. Version 1.0; more arrives
 version by version (see the [roadmap](docs/ROADMAP.md)).
@@ -41,7 +41,7 @@ version by version (see the [roadmap](docs/ROADMAP.md)).
   **Automatic**, the window takes the theme of the sport you watch; pick a sport's theme, and the start
   screen suggests that sport. Make your own themes, with a check that all text stays easy to read, and
   share them as files.
-- **Live sports, found for you.** "Live now" shows the newest videos of the official channels of 17
+- **Live sports, found for you.** "Live now" shows the newest videos of the official channels of 18
   sports. With your own free YouTube API key, it shows which are live or coming up, with a LIVE badge
   in the grid, and you can search YouTube for live streams by sport (Ctrl + K, or Cmd + K on macOS),
   get a notification when a channel goes live, and see the coming week with **Remind me**. When a
@@ -270,7 +270,7 @@ Sporları Federasyonu) YouTube kanalında CC BY 3.0 lisansıyla yayımladığı 
 Splitwatch, birden çok YouTube spor canlı yayınını tek pencerede yan yana izlemeye yarayan ücretsiz
 ve açık kaynaklı bir masaüstü uygulamasıdır (Windows ve macOS). Sürüm 1.0:
 YouTube bağlantısı ya da video kimliği yapıştırarak en fazla dokuz yayını bir ızgarada izleyebilirsiniz;
-seçtiğiniz yayının sesini duyarsınız. "Şimdi canlı" 17 sporun resmî kanallarındaki yayınları gösterir;
+seçtiğiniz yayının sesini duyarsınız. "Şimdi canlı" 18 sporun resmî kanallarındaki yayınları gösterir;
 kendi ücretsiz YouTube API anahtarınızla (Ayarlar → YouTube API anahtarı) canlı yayın araması ve CANLI
 etiketleri de açılır. On iki spor teması, izlediğiniz sporun renklerini ve uygulamanın kendi çizdiği
 bir arka planı getirir; ayarlar Ayarlar → Görünüm bölümündedir. Düzenleri bir adla kaydedip
@@ -317,7 +317,8 @@ ya da dokuz ayrı spor dalından birer yayını (her seferinde karışık) yan y
 videolar", "Yalnızca canlı" ya da "Yalnızca videolar" seçilebilir. Izgarada istediğinizi değiştirin
 (bir yayını çıkarıp yerine kendi bağlantınızı yapıştırın); liste olduğu gibi kalır. Uygulamada
 oynatılamayan bir yayının yerini sıradaki alır. Görünüm bölümünde bir spor dalının temasını
-seçerseniz başlangıç ekranı o dalı önerir.
+seçerseniz başlangıç ekranı o dalı önerir. Tenis eklendi ve spor dallarının çoğuna yeni resmî kanallar
+geldi.
 
 İndirmek için [Releases](https://github.com/MehmetBurakTaskaya/splitwatch/releases/latest) sayfasına
 gidin. Uygulama henüz kod imzalı olmadığı için ilk açılışta uyarı çıkar:
