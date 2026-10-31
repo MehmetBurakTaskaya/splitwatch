@@ -193,6 +193,8 @@
     "animateNote": "Only while they show: on the start screen and in empty places of the grid.",
     "performance": "Performance mode",
     "performanceNote": "Simpler, still backgrounds and no transitions, for slower computers.",
+    "spoilers": "Spoiler protection: blur titles and thumbnails until I point at them",
+    "spoilersNote": "Notifications and the tray leave titles out too. YouTube's own player can still show a title over the video.",
     "startup": "In the background",
     "background": "Keep Splitwatch in the {platform, select, darwin {menu bar} other {notification area}} when its window closes",
     "backgroundNote": "The streams stop with the window. Splitwatch keeps an eye on what is live, and its icon opens the window again.",
@@ -231,7 +233,8 @@
     "title": "{channel} is live",
     "testTitle": "Live notifications are on",
     "testBody": "Splitwatch will tell you when a stream goes live on the channels you picked.",
-    "reminderTitle": "Starting now on {channel}"
+    "reminderTitle": "Starting now on {channel}",
+    "spoilerBody": "Title hidden by spoiler protection."
   },
   "event": {
     "kind": {

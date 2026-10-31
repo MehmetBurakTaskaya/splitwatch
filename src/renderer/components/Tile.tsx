@@ -236,7 +236,7 @@ export function Tile({
           <span className="tile-name" dir="auto" title={title}>
             {live === 'live' && <span className="badge badge-live">{t('live.badge')}</span>}
             {live === 'upcoming' && <span className="badge">{t('live.upcoming')}</span>}
-            {title}
+            <span className="spoiler">{title}</span>
           </span>
           {info?.channel && (
             <span className="tile-channel" dir="auto">

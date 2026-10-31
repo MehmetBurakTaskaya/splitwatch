@@ -35,7 +35,7 @@ export function ClipboardSuggestion() {
     <div className="banner" role="status">
       <span>{t('clipboard.prompt')}</span>
       {offer.info && (
-        <span className="banner-detail" dir="auto">
+        <span className="banner-detail spoiler" dir="auto">
           {offer.info.title}
         </span>
       )}

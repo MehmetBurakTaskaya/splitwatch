@@ -276,7 +276,7 @@ function Schedule({ event, country }: { event: GamesEvent; country: string | nul
                       {mentions(item) && (
                         <span className="badge">{t('event.mentions', { country: countryName(country!, lang) })}</span>
                       )}
-                      {item.title}
+                      <span className="spoiler">{item.title}</span>
                     </span>
                     {item.live === 'live' ? (
                       <button

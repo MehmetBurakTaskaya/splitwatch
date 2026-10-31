@@ -112,6 +112,7 @@ function AppearanceSection() {
   const colorScheme = usePrefs((s) => s.colorScheme);
   const animate = usePrefs((s) => s.animate);
   const performance = usePrefs((s) => s.performance);
+  const spoilers = usePrefs((s) => s.spoilers);
   const scheme = useTheme((s) => s.scheme);
   const active = useTheme((s) => s.theme);
 
@@ -191,6 +192,11 @@ function AppearanceSection() {
         {t('settings.performance')}
       </label>
       <p className="note field-note">{t('settings.performanceNote')}</p>
+      <label className="field field-tight">
+        <input type="checkbox" checked={spoilers} onChange={(e) => setPrefs({ spoilers: e.target.checked })} />
+        {t('settings.spoilers')}
+      </label>
+      <p className="note field-note">{t('settings.spoilersNote')}</p>
     </section>
   );
 }

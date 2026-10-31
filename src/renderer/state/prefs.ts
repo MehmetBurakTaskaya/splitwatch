@@ -11,6 +11,7 @@ export type Prefs = Pick<
   | 'colorScheme'
   | 'animate'
   | 'performance'
+  | 'spoilers'
   | 'layouts'
   | 'background'
   | 'startHidden'
@@ -27,6 +28,7 @@ export const usePrefs = create<Prefs>(() => ({
   colorScheme: DEFAULT_SETTINGS.colorScheme,
   animate: DEFAULT_SETTINGS.animate,
   performance: DEFAULT_SETTINGS.performance,
+  spoilers: DEFAULT_SETTINGS.spoilers,
   layouts: [],
   background: DEFAULT_SETTINGS.background,
   startHidden: DEFAULT_SETTINGS.startHidden,

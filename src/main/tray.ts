@@ -37,7 +37,8 @@ function liveMenu(): MenuItemConstructorOptions[] {
   if (live === null) return [{ label: t('tray.liveNeedsKey'), enabled: false }];
   if (!live.length) return [{ label: t('tray.liveNone'), enabled: false }];
   return live.map((item) => ({
-    label: short(item.channel ? `${item.title} · ${item.channel}` : item.title),
+    // With spoiler protection on, the channel alone.
+    label: short(getSettings().spoilers ? item.channel : item.channel ? `${item.title} · ${item.channel}` : item.title),
     click: () => sendCommand({ type: 'add', videoId: item.videoId, ...(item.sport ? { sport: item.sport } : {}) }),
   }));
 }

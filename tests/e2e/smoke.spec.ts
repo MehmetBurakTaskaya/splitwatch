@@ -363,3 +363,14 @@ test('the mini player shows the picked stream on top of other windows, and goes 
   await expect(page.locator('.topbar')).toBeVisible();
   await app.close();
 });
+
+test('spoiler protection blurs titles until they are pointed at', async () => {
+  const { app, page } = await launch(
+    freshUserData({ spoilers: true, session: { layout: '1', streams: [VIDEO_A], selected: VIDEO_A } }),
+  );
+  const title = page.locator('.tile-name .spoiler');
+  await expect(title).toHaveCSS('filter', 'blur(6px)');
+  await page.locator('.tile-bar').hover();
+  await expect(title).toHaveCSS('filter', 'none');
+  await app.close();
+});

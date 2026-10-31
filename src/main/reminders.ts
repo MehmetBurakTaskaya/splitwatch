@@ -18,7 +18,8 @@ function fire(reminder: Reminder): void {
   timers.delete(reminder.videoId);
   const event = getSettings().event;
   saveSettings({ event: { ...event, reminders: event.reminders.filter((r) => r.videoId !== reminder.videoId) } });
-  void showNotification(t('notify.reminderTitle', { channel: reminder.channel }), reminder.title, () =>
+  const body = getSettings().spoilers ? t('notify.spoilerBody') : reminder.title;
+  void showNotification(t('notify.reminderTitle', { channel: reminder.channel }), body, () =>
     sendCommand({ type: 'add', videoId: reminder.videoId, ...(reminder.sport ? { sport: reminder.sport } : {}) }),
   );
 }

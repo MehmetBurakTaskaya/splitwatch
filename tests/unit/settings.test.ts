@@ -28,6 +28,7 @@ describe('sanitizeSettings', () => {
       colorScheme: 'dark',
       animate: false,
       performance: true,
+      spoilers: true,
       layouts: [],
       miniBounds: { x: -1200, y: 40, width: 490, height: 316 },
       background: true,

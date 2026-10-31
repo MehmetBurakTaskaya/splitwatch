@@ -58,6 +58,8 @@ export interface Settings {
   colorScheme: ColorScheme;
   animate: boolean;
   performance: boolean;
+  // Titles and thumbnails stay blurred until pointed at, and notifications leave titles out.
+  spoilers: boolean;
   layouts: SavedLayout[];
   miniBounds: Bounds | null;
   // Closing the window leaves the app in the tray (the menu bar on macOS).
@@ -80,6 +82,7 @@ export const DEFAULT_SETTINGS: Settings = {
   colorScheme: 'system',
   animate: true,
   performance: false,
+  spoilers: false,
   layouts: [],
   miniBounds: null,
   background: false,
@@ -196,6 +199,7 @@ export function sanitizeSettings(raw: unknown): Settings {
     colorScheme: scheme === 'light' || scheme === 'dark' ? scheme : 'system',
     animate: raw.animate !== false,
     performance: raw.performance === true,
+    spoilers: raw.spoilers === true,
     layouts: sanitizeSavedLayouts(raw.layouts),
     miniBounds: sanitizeBounds(raw.miniBounds),
     background: raw.background === true,

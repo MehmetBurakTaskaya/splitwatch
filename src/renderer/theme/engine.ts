@@ -103,8 +103,10 @@ export function connectTheme(): void {
   usePrefs.subscribe((s, prev) => {
     if (s.theme !== prev.theme || s.sports !== prev.sports || s.event.active !== prev.event.active) choose();
     root.toggleAttribute('data-performance', s.performance);
+    root.toggleAttribute('data-spoilers', s.spoilers);
   });
   root.toggleAttribute('data-performance', usePrefs.getState().performance);
+  root.toggleAttribute('data-spoilers', usePrefs.getState().spoilers);
   useSession.subscribe((s, prev) => {
     if (s.streams !== prev.streams || s.sports !== prev.sports) choose();
   });

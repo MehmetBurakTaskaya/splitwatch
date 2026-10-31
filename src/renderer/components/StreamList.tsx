@@ -14,7 +14,7 @@ export function StreamList({ items, label }: { items: StreamItem[]; label: strin
         return (
           <li key={item.videoId} className="stream-item">
             <img
-              className="stream-thumb"
+              className="stream-thumb spoiler"
               src={`https://i.ytimg.com/vi/${item.videoId}/mqdefault.jpg`}
               alt=""
               loading="lazy"
@@ -22,7 +22,7 @@ export function StreamList({ items, label }: { items: StreamItem[]; label: strin
               height={72}
             />
             <span className="stream-text">
-              <span className="stream-title" dir="auto">
+              <span className="stream-title spoiler" dir="auto">
                 {item.title}
               </span>
               <span className="stream-meta">

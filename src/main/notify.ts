@@ -91,7 +91,8 @@ async function check(): Promise<void> {
     const facts = known.get(id);
     const sport = entry ? sportOf.get(entry.channelId) : null;
     const channel = facts?.channel || entry?.channel || '';
-    void showNotification(t('notify.title', { channel }), facts?.title || entry?.title || '', () =>
+    const title = getSettings().spoilers ? t('notify.spoilerBody') : facts?.title || entry?.title || '';
+    void showNotification(t('notify.title', { channel }), title, () =>
       sendCommand({ type: 'add', videoId: id, ...(sport ? { sport } : {}) }),
     );
   }
