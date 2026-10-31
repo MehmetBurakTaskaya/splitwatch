@@ -241,6 +241,7 @@
     "quotaResets": "초기화 시각: {time, time, short}(태평양 시간 자정)",
     "sports": "지금 라이브에 표시할 종목",
     "sportsNote": "하나도 선택하지 않으면 모든 종목이 표시돼요.",
+    "sportsTheme": "모양에서 종목 테마를 고른 동안에는 시작 화면이 그 종목을 추천해요.",
     "appearance": "모양",
     "theme": "테마",
     "themeAuto": "자동",
@@ -658,5 +659,27 @@
     "autoMissing": "자동으로 찾기(찾지 못함)",
     "none": "종목 없음",
     "close": "닫기"
+  },
+  "ready": {
+    "title": "준비된 목록",
+    "note": "한 종목의 공식 채널 스트림, 또는 9개 종목에서 하나씩 고른 스트림을 클릭 한 번으로 나란히 열어요. 목록은 매번 새로 만들어지니, 그리드에서 바꾼 내용은 그 그리드에만 남아요.",
+    "fromLayouts": "한 종목이나 9개 종목의 스트림을 클릭 한 번으로.",
+    "sport": "종목",
+    "mix": "9개 종목 믹스",
+    "kind": "표시",
+    "kindAll": "라이브와 동영상",
+    "kindLive": "라이브만",
+    "kindVideos": "동영상만",
+    "loading": "채널을 확인하는 중…",
+    "found": "{count, plural, other {스트림 #개 준비됨}}, {live, plural, =0 {라이브 없음} other {라이브 #개}}.",
+    "foundLatest": "{count, plural, other {최신 동영상 #개가 준비됐어요.}}",
+    "none": "지금은 이 선택으로 보여 줄 것이 없어요.",
+    "noneLive": "지금 이 채널들에는 라이브 방송이 없어요. '라이브와 동영상'을 고르면 최신 동영상으로 그리드를 채워요.",
+    "needsKey": "라이브 방송과 동영상을 구분하려면 내 YouTube API 키가 필요해요(설정 → YouTube API 키).",
+    "latestNote": "API 키가 없으면 각 채널의 최신 동영상이에요. 그중 일부는 라이브일 수도 있어요.",
+    "open": "{count, plural, other {#개 나란히 열기}}",
+    "replace": "{count, plural, other {대신 #개 열기}}",
+    "replaceNote": "{count, plural, other {그리드의 스트림 #개를 대신해요.}} 남겨 두려면 먼저 레이아웃으로 저장하세요.",
+    "shuffle": "다시 섞기"
   }
 }

@@ -7,7 +7,7 @@ import { deleteLayout, linkOf, openLayout, renameLayout, restoreLayout, saveLayo
 import { usePrefs } from '../state/prefs';
 import { useSession } from '../state/session';
 import { Dialog } from './Dialog';
-import { IconDelete, IconLink, IconRename, LayoutGlyph } from './icons';
+import { IconDelete, IconLink, IconReady, IconRename, LayoutGlyph } from './icons';
 
 export function LayoutsDialog() {
   const { t } = useTranslation();
@@ -40,6 +40,13 @@ export function LayoutsDialog() {
 
   return (
     <Dialog title={t('layouts.title')} onClose={requestClose} wide>
+      <p className="layouts-ready">
+        <button type="button" className="button button-quiet" onClick={() => openDialog('ready')}>
+          <IconReady />
+          {t('ready.title')}
+        </button>
+        <span className="note">{t('ready.fromLayouts')}</span>
+      </p>
       <form className="layout-save" onSubmit={save}>
         <label htmlFor="layout-name">{t('layouts.nameLabel')}</label>
         <div className="layout-save-row">

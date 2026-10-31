@@ -241,6 +241,7 @@
     "quotaResets": "Sıfırlanma saati: {time, time, short} (Pasifik Saati ile gece yarısı).",
     "sports": "“Şimdi canlı” listesindeki spor dalları",
     "sportsNote": "Hiçbiri işaretli değilse tümü gösterilir.",
+    "sportsTheme": "Görünüm bölümünde bir spor dalının teması seçiliyken başlangıç ekranı o spor dalını önerir.",
     "appearance": "Görünüm",
     "theme": "Tema",
     "themeAuto": "Otomatik",
@@ -658,5 +659,27 @@
     "autoMissing": "Otomatik bul (bulunamadı)",
     "none": "Spor dalı yok",
     "close": "Kapat"
+  },
+  "ready": {
+    "title": "Hazır listeler",
+    "note": "Bir spor dalının resmî kanallarından yayınlar ya da dokuz spor dalından birer yayın, tek tıkla yan yana. Her liste yeniden hazırlanır; ızgarada yaptığınız değişiklikler yalnızca ızgarada kalır.",
+    "fromLayouts": "Bir spor dalından ya da dokuz daldan yayınlar, tek tıkla.",
+    "sport": "Spor dalı",
+    "mix": "Dokuz spor dalından karışık",
+    "kind": "Göster",
+    "kindAll": "Canlı ve videolar",
+    "kindLive": "Yalnızca canlı",
+    "kindVideos": "Yalnızca videolar",
+    "loading": "Kanallara bakılıyor…",
+    "found": "{count, plural, one {# yayın hazır} other {# yayın hazır}}, {live, plural, =0 {hiçbiri canlı değil} other {# tanesi canlı}}.",
+    "foundLatest": "{count, plural, one {En yeni video hazır.} other {En yeni # video hazır.}}",
+    "none": "Bu seçim için şu anda gösterilecek bir şey yok.",
+    "noneLive": "Bu kanallarda şu anda canlı yayın yok. Canlı ve videolar seçeneği ızgarayı kanalların en yeni videolarıyla doldurur.",
+    "needsKey": "Canlı yayınları videolardan ayırmak için kendi YouTube API anahtarınız gerekir (Ayarlar → YouTube API anahtarı).",
+    "latestNote": "API anahtarı olmadan bunlar kanalların en yeni videolarıdır; bazıları canlı olabilir.",
+    "open": "{count, plural, one {# yayını aç} other {# yayını yan yana aç}}",
+    "replace": "{count, plural, one {Yerine # yayını aç} other {Yerine # yayını aç}}",
+    "replaceNote": "{count, plural, one {Bu, ızgaradaki yayının yerini alır.} other {Bu, ızgaradaki # yayının yerini alır.}} Saklamak için önce onları düzen olarak kaydedin.",
+    "shuffle": "Yeniden karıştır"
   }
 }

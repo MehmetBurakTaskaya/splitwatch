@@ -5,8 +5,18 @@ import { canStoreKey, deleteKey, loadKey, saveKey } from './key-store';
 import { liveNow, liveStates, streamChannels, streamSports } from './live';
 import { getPresets, refreshPresets } from './presets-store';
 import { onQuotaChange, quotaSnapshot } from './quota-store';
+import { readyListFor } from './ready-lists';
 import { currentKeyState, onKeyStateChange, searchLive, setKeyState, testKey } from './youtube-api';
+import { MIX, isReadyKind } from '../shared/ready-lists';
 import { isVideoId } from '../shared/youtube';
+
+// Sports the renderer names must be preset sports.
+const presetSports = (raw: unknown): string[] | null => {
+  if (!Array.isArray(raw)) return null;
+  const known = new Set(getPresets().map((p) => p.sport));
+  const sports = raw.filter((s): s is string => typeof s === 'string' && known.has(s)).slice(0, 20);
+  return sports.length ? sports : null;
+};
 
 const searchCache = new Map<string, { at: number; result: SearchResult }>();
 const SEARCH_TTL = 10 * 60_000;
@@ -67,7 +77,12 @@ export function registerYouTubeIpc(): void {
     return out;
   });
 
-  ipcMain.handle(IPC.youtubeLiveNow, () => liveNow());
+  ipcMain.handle(IPC.youtubeLiveNow, (_e, sports: unknown) => liveNow(presetSports(sports)));
+  ipcMain.handle(IPC.youtubeReadyList, (_e, sport: unknown, kind: unknown) => {
+    const valid = sport === MIX || (typeof sport === 'string' && getPresets().some((p) => p.sport === sport));
+    if (!valid || !isReadyKind(kind)) return { layout: null, items: [], spare: [], liveKnown: false };
+    return readyListFor(sport, kind);
+  });
 
   const videoIds = (raw: unknown) =>
     Array.isArray(raw) ? raw.filter((id): id is string => typeof id === 'string' && isVideoId(id)).slice(0, 50) : [];

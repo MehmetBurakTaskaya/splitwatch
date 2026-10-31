@@ -241,6 +241,7 @@
     "quotaResets": "Wird um {time, time, short} zurückgesetzt (Mitternacht pazifischer Zeit).",
     "sports": "Sportarten für „Jetzt live“",
     "sportsNote": "Ist keine angehakt, gelten alle.",
+    "sportsTheme": "Solange unter Darstellung das Design einer Sportart gewählt ist, schlägt der Startbildschirm diese Sportart vor.",
     "appearance": "Darstellung",
     "theme": "Design",
     "themeAuto": "Automatisch",
@@ -658,5 +659,27 @@
     "autoMissing": "Automatisch erkennen (nicht gefunden)",
     "none": "Keine Sportart",
     "close": "Schließen"
+  },
+  "ready": {
+    "title": "Fertige Listen",
+    "note": "Streams einer Sportart von ihren offiziellen Kanälen oder je ein Stream aus neun Sportarten, mit einem Klick nebeneinander. Jede Liste wird neu zusammengestellt; was du im Raster änderst, bleibt im Raster.",
+    "fromLayouts": "Streams einer Sportart oder von neun, mit einem Klick.",
+    "sport": "Sportart",
+    "mix": "Mix aus neun Sportarten",
+    "kind": "Anzeigen",
+    "kindAll": "Live und Videos",
+    "kindLive": "Nur live",
+    "kindVideos": "Nur Videos",
+    "loading": "Kanäle werden durchsucht …",
+    "found": "{count, plural, one {# Stream bereit} other {# Streams bereit}}, {live, plural, =0 {keiner live} other {# live}}.",
+    "foundLatest": "{count, plural, one {Das neueste Video ist bereit.} other {Die # neuesten Videos sind bereit.}}",
+    "none": "Für diese Auswahl gibt es gerade nichts.",
+    "noneLive": "Auf diesen Kanälen läuft gerade nichts live. Mit „Live und Videos“ füllen ihre neuesten Videos das Raster.",
+    "needsKey": "Um Livestreams von Videos zu unterscheiden, brauchst du deinen eigenen YouTube-API-Schlüssel (Einstellungen → YouTube-API-Schlüssel).",
+    "latestNote": "Ohne API-Schlüssel sind das die neuesten Videos der Kanäle; manche davon können live sein.",
+    "open": "{count, plural, one {# Stream öffnen} other {# nebeneinander öffnen}}",
+    "replace": "{count, plural, one {Stattdessen # Stream öffnen} other {Stattdessen # öffnen}}",
+    "replaceNote": "{count, plural, one {Das ersetzt den Stream im Raster.} other {Das ersetzt die # Streams im Raster.}} Speichere sie vorher als Layout, um sie zu behalten.",
+    "shuffle": "Neu mischen"
   }
 }

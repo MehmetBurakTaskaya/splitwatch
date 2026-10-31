@@ -241,6 +241,7 @@
     "quotaResets": "Resets at {time, time, short} (midnight Pacific Time).",
     "sports": "Sports for Live now",
     "sportsNote": "None ticked means all.",
+    "sportsTheme": "While a sport's theme is picked in Appearance, the start screen suggests that sport instead.",
     "appearance": "Appearance",
     "theme": "Theme",
     "themeAuto": "Automatic",
@@ -658,5 +659,27 @@
     "autoMissing": "Find it automatically (not found)",
     "none": "No sport",
     "close": "Close"
+  },
+  "ready": {
+    "title": "Ready lists",
+    "note": "Streams of one sport from its official channels, or one stream each of nine sports, side by side in one click. Each list is made anew, so what you change in the grid stays with the grid.",
+    "fromLayouts": "Streams of one sport, or of nine, in one click.",
+    "sport": "Sport",
+    "mix": "Mix of nine sports",
+    "kind": "Show",
+    "kindAll": "Live and videos",
+    "kindLive": "Live only",
+    "kindVideos": "Videos only",
+    "loading": "Looking at the channels…",
+    "found": "{count, plural, one {# stream ready} other {# streams ready}}, {live, plural, =0 {none live} other {# live}}.",
+    "foundLatest": "{count, plural, one {The newest video is ready.} other {The # newest videos are ready.}}",
+    "none": "Nothing to show for this choice right now.",
+    "noneLive": "No live streams on these channels right now. Live and videos fills the grid with their newest videos.",
+    "needsKey": "Telling live streams from videos needs your own YouTube API key (Settings → YouTube API key).",
+    "latestNote": "Without an API key, these are the channels' newest videos; some of them may be live.",
+    "open": "{count, plural, one {Open # stream} other {Open # side by side}}",
+    "replace": "{count, plural, one {Open # stream instead} other {Open # instead}}",
+    "replaceNote": "{count, plural, one {This takes the place of the stream in the grid.} other {This takes the place of the # streams in the grid.}} Save them as a layout first to keep them.",
+    "shuffle": "Shuffle again"
   }
 }

@@ -11,6 +11,7 @@ import { Grid } from './components/Grid';
 import { HistoryDialog } from './components/HistoryDialog';
 import { Intro } from './components/Intro';
 import { LayoutsDialog } from './components/LayoutsDialog';
+import { ReadyListsDialog } from './components/ReadyListsDialog';
 import { SearchPalette } from './components/SearchPalette';
 import { SettingsDialog } from './components/SettingsDialog';
 import { SharedDialog } from './components/SharedDialog';
@@ -62,6 +63,7 @@ export function App() {
       {dialog === 'settings' && <SettingsDialog />}
       {dialog === 'sport' && <SportDialog />}
       {dialog === 'layouts' && <LayoutsDialog />}
+      {dialog === 'ready' && <ReadyListsDialog />}
       {dialog === 'event' && <EventDialog />}
       {dialog === 'upcoming' && <UpcomingDialog />}
       {dialog === 'shared' && <SharedDialog />}

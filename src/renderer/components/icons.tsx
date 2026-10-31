@@ -144,6 +144,17 @@ export const IconLayouts = () => (
     <path d="M6 3h8a1 1 0 0 1 1 1v13l-5-3.5L5 17V4a1 1 0 0 1 1-1z" />
   </Icon>
 );
+// A ready list: a grid of nine.
+export const IconReady = () => (
+  <Icon>
+    <path d="M3.5 3.5h3v3h-3zM8.5 3.5h3v3h-3zM13.5 3.5h3v3h-3zM3.5 8.5h3v3h-3zM8.5 8.5h3v3h-3zM13.5 8.5h3v3h-3zM3.5 13.5h3v3h-3zM8.5 13.5h3v3h-3zM13.5 13.5h3v3h-3z" />
+  </Icon>
+);
+export const IconShuffle = () => (
+  <Icon>
+    <path d="M3 6h3.5l7 8H17M3 14h3.5l2-2.3M11.5 8.3l2-2.3H17M15 4l2 2-2 2M15 12l2 2-2 2" />
+  </Icon>
+);
 export const IconRename = () => (
   <Icon>
     <path d="M12.5 4.5l3 3L7 16H4v-3z" />

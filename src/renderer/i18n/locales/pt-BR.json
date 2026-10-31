@@ -241,6 +241,7 @@
     "quotaResets": "Renovação: {time, time, short} (meia-noite no horário do Pacífico).",
     "sports": "Esportes em “Ao vivo agora”",
     "sportsNote": "Nenhum marcado significa todos.",
+    "sportsTheme": "Enquanto o tema de um esporte estiver escolhido em Aparência, a tela inicial sugere esse esporte.",
     "appearance": "Aparência",
     "theme": "Tema",
     "themeAuto": "Automático",
@@ -658,5 +659,27 @@
     "autoMissing": "Detectar automaticamente (não encontrado)",
     "none": "Sem esporte",
     "close": "Fechar"
+  },
+  "ready": {
+    "title": "Listas prontas",
+    "note": "Transmissões de um esporte vindas dos canais oficiais dele, ou uma de cada um de nove esportes, lado a lado em um clique. Cada lista é montada de novo, então o que você mudar na grade fica só na grade.",
+    "fromLayouts": "Transmissões de um esporte, ou de nove, em um clique.",
+    "sport": "Esporte",
+    "mix": "Mistura de nove esportes",
+    "kind": "Mostrar",
+    "kindAll": "Ao vivo e vídeos",
+    "kindLive": "Só ao vivo",
+    "kindVideos": "Só vídeos",
+    "loading": "Consultando os canais…",
+    "found": "{count, plural, one {# transmissão pronta} other {# transmissões prontas}}, {live, plural, =0 {nenhuma ao vivo} other {# ao vivo}}.",
+    "foundLatest": "{count, plural, one {O vídeo mais recente está pronto.} other {Os # vídeos mais recentes estão prontos.}}",
+    "none": "Nada para mostrar nesta escolha agora.",
+    "noneLive": "Nenhuma transmissão ao vivo nesses canais agora. A opção Ao vivo e vídeos preenche a grade com os vídeos mais recentes deles.",
+    "needsKey": "Para separar transmissões ao vivo de vídeos, você precisa da sua própria chave de API do YouTube (Configurações → Chave de API do YouTube).",
+    "latestNote": "Sem chave de API, estes são os vídeos mais recentes dos canais; alguns podem estar ao vivo.",
+    "open": "{count, plural, one {Abrir # transmissão} other {Abrir # lado a lado}}",
+    "replace": "{count, plural, one {Abrir # transmissão no lugar} other {Abrir # no lugar}}",
+    "replaceNote": "{count, plural, one {Isso substitui a transmissão da grade.} other {Isso substitui as # transmissões da grade.}} Para mantê-las, salve-as antes como layout.",
+    "shuffle": "Misturar de novo"
   }
 }

@@ -241,6 +241,7 @@
     "quotaResets": "Remise à zéro à {time, time, short} (minuit, heure du Pacifique).",
     "sports": "Sports pour « En direct »",
     "sportsNote": "Si aucun n’est coché, tous le sont.",
+    "sportsTheme": "Tant que le thème d’un sport est choisi dans Apparence, l’écran d’accueil propose ce sport.",
     "appearance": "Apparence",
     "theme": "Thème",
     "themeAuto": "Automatique",
@@ -658,5 +659,27 @@
     "autoMissing": "Le trouver automatiquement (introuvable)",
     "none": "Aucun sport",
     "close": "Fermer"
+  },
+  "ready": {
+    "title": "Listes prêtes",
+    "note": "Des flux d’un sport depuis ses chaînes officielles, ou un flux de chacun de neuf sports, côte à côte en un clic. Chaque liste est refaite à chaque fois : ce que vous changez dans la grille reste dans la grille.",
+    "fromLayouts": "Des flux d’un sport, ou de neuf, en un clic.",
+    "sport": "Sport",
+    "mix": "Mélange de neuf sports",
+    "kind": "Afficher",
+    "kindAll": "En direct et vidéos",
+    "kindLive": "En direct seulement",
+    "kindVideos": "Vidéos seulement",
+    "loading": "Consultation des chaînes…",
+    "found": "{count, plural, one {# flux prêt} other {# flux prêts}}, {live, plural, =0 {aucun en direct} other {# en direct}}.",
+    "foundLatest": "{count, plural, one {La vidéo la plus récente est prête.} other {Les # vidéos les plus récentes sont prêtes.}}",
+    "none": "Rien à afficher pour ce choix en ce moment.",
+    "noneLive": "Aucun direct sur ces chaînes en ce moment. Le choix En direct et vidéos remplit la grille avec leurs vidéos les plus récentes.",
+    "needsKey": "Pour distinguer les directs des vidéos, il faut votre propre clé API YouTube (Paramètres → Clé API YouTube).",
+    "latestNote": "Sans clé API, ce sont les vidéos les plus récentes des chaînes ; certaines peuvent être en direct.",
+    "open": "{count, plural, one {Ouvrir # flux} other {Ouvrir # flux côte à côte}}",
+    "replace": "{count, plural, one {Ouvrir # flux à la place} other {Ouvrir # flux à la place}}",
+    "replaceNote": "{count, plural, one {Cela remplace le flux de la grille.} other {Cela remplace les # flux de la grille.}} Pour les garder, enregistrez-les d’abord comme disposition.",
+    "shuffle": "Mélanger à nouveau"
   }
 }

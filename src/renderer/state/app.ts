@@ -10,6 +10,7 @@ export type DialogName =
   | 'settings'
   | 'sport'
   | 'layouts'
+  | 'ready'
   | 'event'
   | 'upcoming'
   | 'shared'

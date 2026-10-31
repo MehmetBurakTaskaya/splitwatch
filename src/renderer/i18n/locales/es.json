@@ -241,6 +241,7 @@
     "quotaResets": "Se restablece: {time, time, short} (medianoche, hora del Pacífico).",
     "sports": "Deportes para “En vivo ahora”",
     "sportsNote": "Si no marcas ninguno, se incluyen todos.",
+    "sportsTheme": "Mientras tengas elegido el tema de un deporte en Apariencia, la pantalla de inicio sugiere ese deporte.",
     "appearance": "Apariencia",
     "theme": "Tema",
     "themeAuto": "Automático",
@@ -658,5 +659,27 @@
     "autoMissing": "Detectarlo automáticamente (no encontrado)",
     "none": "Sin deporte",
     "close": "Cerrar"
+  },
+  "ready": {
+    "title": "Listas preparadas",
+    "note": "Transmisiones de un deporte desde sus canales oficiales, o una de cada uno de nueve deportes, una al lado de otra con un clic. Cada lista se arma de nuevo, así que lo que cambies en la cuadrícula se queda en la cuadrícula.",
+    "fromLayouts": "Transmisiones de un deporte, o de nueve, con un clic.",
+    "sport": "Deporte",
+    "mix": "Mezcla de nueve deportes",
+    "kind": "Mostrar",
+    "kindAll": "En vivo y videos",
+    "kindLive": "Solo en vivo",
+    "kindVideos": "Solo videos",
+    "loading": "Revisando los canales…",
+    "found": "{count, plural, one {# transmisión lista} other {# transmisiones listas}}, {live, plural, =0 {ninguna en vivo} other {# en vivo}}.",
+    "foundLatest": "{count, plural, one {El video más reciente está listo.} other {Los # videos más recientes están listos.}}",
+    "none": "Ahora mismo no hay nada que mostrar para esta opción.",
+    "noneLive": "Ahora mismo no hay transmisiones en vivo en estos canales. La opción En vivo y videos llena la cuadrícula con sus videos más recientes.",
+    "needsKey": "Para distinguir las transmisiones en vivo de los videos necesitas tu propia clave de API de YouTube (Configuración → Clave de API de YouTube).",
+    "latestNote": "Sin clave de API, estos son los videos más recientes de los canales; algunos pueden estar en vivo.",
+    "open": "{count, plural, one {Abrir # transmisión} other {Abrir # una al lado de otra}}",
+    "replace": "{count, plural, one {Abrir # transmisión en su lugar} other {Abrir # en su lugar}}",
+    "replaceNote": "{count, plural, one {Esto reemplaza la transmisión de la cuadrícula.} other {Esto reemplaza las # transmisiones de la cuadrícula.}} Para conservarlas, guárdalas antes como diseño.",
+    "shuffle": "Mezclar de nuevo"
   }
 }

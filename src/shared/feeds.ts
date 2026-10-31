@@ -8,6 +8,9 @@ export interface FeedEntry {
   channelId: string;
   channel: string;
   published: string;
+  // A YouTube Short: the feed links it as /shorts/<id>. Shorts are tall clips of seconds, which a
+  // grid of wide players shows poorly, so the suggestions leave them out.
+  short: boolean;
 }
 
 const CHANNEL_ID = /^UC[A-Za-z0-9_-]{22}$/;
@@ -51,6 +54,7 @@ export function parseFeed(xml: string): FeedEntry[] {
       title: (tag(block!, 'title') ?? '').slice(0, 300),
       channel: (tag(author, 'name') ?? '').slice(0, 200),
       published: tag(block!, 'published') ?? '',
+      short: /<link [^>]*href="https:\/\/www\.youtube\.com\/shorts\//.test(block!),
     });
   }
   return entries;

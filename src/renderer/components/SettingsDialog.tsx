@@ -552,6 +552,7 @@ function SportsSection() {
     <section className="settings-section">
       <h3>{t('settings.sports')}</h3>
       <p className="note">{t('settings.sportsNote')}</p>
+      <p className="note">{t('settings.sportsTheme')}</p>
       <div className="sport-grid">
         {sports.map((sport) => (
           <label key={sport}>

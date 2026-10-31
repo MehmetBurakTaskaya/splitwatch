@@ -16,6 +16,7 @@ function messages(tree: unknown, prefix = ''): [string, string][] {
 const values = {
   version: '1.2.3',
   count: 2,
+  live: 1,
   progress: 0.42,
   index: 3,
   title: 'Final',

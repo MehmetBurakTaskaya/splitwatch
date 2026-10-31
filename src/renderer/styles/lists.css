@@ -1067,3 +1067,55 @@ label.field.field-text {
   flex-wrap: wrap;
   gap: var(--space-2);
 }
+
+/* Ready lists: the start card's buttons, the choices and what the list holds */
+.empty-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.layouts-ready {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-block: 0 var(--space-3);
+}
+.layouts-ready .note {
+  margin: 0;
+}
+.ready-kinds {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+}
+.ready-kinds legend {
+  inline-size: 100%;
+}
+.ready-items {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--font-size-1);
+}
+.ready-items li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-inline-size: 0;
+}
+.ready-items .icon {
+  flex: none;
+  color: var(--color-text-muted);
+}
+.ready-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.ready-status {
+  margin: 0;
+  margin-inline-end: auto;
+}

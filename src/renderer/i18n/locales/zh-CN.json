@@ -241,6 +241,7 @@
     "quotaResets": "将于 {time, time, short}（太平洋时间午夜）重置。",
     "sports": "“正在直播”中的运动项目",
     "sportsNote": "不勾选任何项即表示全部。",
+    "sportsTheme": "在“外观”中选择了某个项目的主题时，开始屏幕会推荐该项目。",
     "appearance": "外观",
     "theme": "主题",
     "themeAuto": "自动",
@@ -658,5 +659,27 @@
     "autoMissing": "自动识别（未识别到）",
     "none": "无运动项目",
     "close": "关闭"
+  },
+  "ready": {
+    "title": "现成列表",
+    "note": "一键并排打开某个运动项目官方频道的视频，或九个项目各一个视频。列表每次都会重新生成，所以你在网格中做的改动只留在网格里。",
+    "fromLayouts": "一键打开一个项目或九个项目的视频。",
+    "sport": "运动项目",
+    "mix": "九个项目混合",
+    "kind": "显示",
+    "kindAll": "直播和视频",
+    "kindLive": "仅直播",
+    "kindVideos": "仅视频",
+    "loading": "正在查看频道…",
+    "found": "{count, plural, other {已准备 # 个视频}}，{live, plural, =0 {没有正在直播的} other {其中 # 个正在直播}}。",
+    "foundLatest": "{count, plural, other {已准备最新的 # 个视频。}}",
+    "none": "此选项目前没有可显示的内容。",
+    "noneLive": "这些频道目前没有直播。选择“直播和视频”会用它们最新的视频填满网格。",
+    "needsKey": "要区分直播和视频，需要你自己的 YouTube API 密钥（设置 → YouTube API 密钥）。",
+    "latestNote": "没有 API 密钥时，这些是各频道最新的视频，其中有些可能正在直播。",
+    "open": "{count, plural, other {并排打开 # 个}}",
+    "replace": "{count, plural, other {改为打开这 # 个}}",
+    "replaceNote": "{count, plural, other {这会替换网格中的 # 个视频。}}如要保留，请先将它们保存为布局。",
+    "shuffle": "重新打乱"
   }
 }

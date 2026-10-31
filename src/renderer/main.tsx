@@ -8,6 +8,7 @@ import { connectHost } from './state/app';
 import { connectCommands } from './state/commands';
 import { connectEvents } from './state/events';
 import { loadPrefs, loadState } from './state/init';
+import { connectReadyLists } from './state/ready';
 import { connectWatch } from './state/watch';
 import { connectYouTube } from './state/youtube';
 import { connectTheme } from './theme/engine';
@@ -39,6 +40,8 @@ if (popout && isVideoId(popout)) {
     connectHost();
     connectCommands();
     connectEvents();
+    // Before connectYouTube, whose first "Live now" already follows a sport theme.
+    connectReadyLists();
     connectYouTube();
     connectTheme();
     connectWatch();

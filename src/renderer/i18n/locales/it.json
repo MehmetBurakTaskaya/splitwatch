@@ -241,6 +241,7 @@
     "quotaResets": "Azzeramento: {time, time, short} (mezzanotte, ora del Pacifico).",
     "sports": "Sport di “In diretta ora”",
     "sportsNote": "Se non ne selezioni nessuno, valgono tutti.",
+    "sportsTheme": "Finché in Aspetto è scelto il tema di uno sport, la schermata iniziale propone quello sport.",
     "appearance": "Aspetto",
     "theme": "Tema",
     "themeAuto": "Automatico",
@@ -658,5 +659,27 @@
     "autoMissing": "Trovalo in automatico (non trovato)",
     "none": "Nessuno sport",
     "close": "Chiudi"
+  },
+  "ready": {
+    "title": "Liste pronte",
+    "note": "Stream di uno sport dai suoi canali ufficiali, oppure uno stream per ciascuno di nove sport, uno accanto all’altro con un clic. Ogni lista viene preparata da capo, quindi quello che cambi nella griglia resta nella griglia.",
+    "fromLayouts": "Stream di uno sport, o di nove, con un clic.",
+    "sport": "Sport",
+    "mix": "Mix di nove sport",
+    "kind": "Mostra",
+    "kindAll": "Dirette e video",
+    "kindLive": "Solo dirette",
+    "kindVideos": "Solo video",
+    "loading": "Controllo dei canali…",
+    "found": "{count, plural, one {# stream pronto} other {# stream pronti}}, {live, plural, =0 {nessuno in diretta} other {# in diretta}}.",
+    "foundLatest": "{count, plural, one {Il video più recente è pronto.} other {I # video più recenti sono pronti.}}",
+    "none": "Al momento non c’è niente da mostrare per questa scelta.",
+    "noneLive": "Al momento non ci sono dirette su questi canali. Con Dirette e video la griglia si riempie dei loro video più recenti.",
+    "needsKey": "Per distinguere le dirette dai video serve una tua chiave API di YouTube (Impostazioni → Chiave API di YouTube).",
+    "latestNote": "Senza chiave API, questi sono i video più recenti dei canali; alcuni potrebbero essere in diretta.",
+    "open": "{count, plural, one {Apri # stream} other {Apri # stream affiancati}}",
+    "replace": "{count, plural, one {Apri invece # stream} other {Apri invece # stream}}",
+    "replaceNote": "{count, plural, one {Questo prende il posto dello stream nella griglia.} other {Questo prende il posto dei # stream nella griglia.}} Per tenerli, salvali prima come layout.",
+    "shuffle": "Rimescola"
   }
 }

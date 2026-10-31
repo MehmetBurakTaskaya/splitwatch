@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { openDialog, useAppStore } from '../state/app';
 import { setPrefs, usePrefs } from '../state/prefs';
-import { IconClock } from './icons';
+import { IconClock, IconReady } from './icons';
 import { LiveNowPanel } from './LiveNowPanel';
 
 export function EmptyState() {
@@ -16,10 +16,20 @@ export function EmptyState() {
           <h1>{t('empty.title')}</h1>
           <p className="lead">{t('app.tagline')}</p>
           <p>{t('empty.body')}</p>
-          <button type="button" className="button button-quiet" onClick={() => useAppStore.setState({ ambient: true })}>
-            <IconClock />
-            {t('ambient.open')}
-          </button>
+          <div className="empty-actions">
+            <button type="button" className="button" onClick={() => openDialog('ready')}>
+              <IconReady />
+              {t('ready.title')}
+            </button>
+            <button
+              type="button"
+              className="button button-quiet"
+              onClick={() => useAppStore.setState({ ambient: true })}
+            >
+              <IconClock />
+              {t('ambient.open')}
+            </button>
+          </div>
         </section>
       )}
       <div className="empty-live">

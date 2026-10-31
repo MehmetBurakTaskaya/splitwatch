@@ -74,6 +74,12 @@ for (const scheme of ['light', 'dark'] as const) {
     await page.getByRole('button', { name: en.history.open }).click();
     problems.push(...(await audit(page, 'your watching')));
     await page.keyboard.press('Escape');
+    await page.getByRole('button', { name: en.ready.title }).click();
+    await expect(page.getByRole('dialog', { name: en.ready.title }).getByRole('status')).not.toHaveText(
+      en.ready.loading,
+    );
+    problems.push(...(await audit(page, 'ready lists')));
+    await page.keyboard.press('Escape');
     await app.close();
 
     // The grid, its panels and the dialogs, with an event mode on.

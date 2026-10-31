@@ -6,6 +6,7 @@ import type { Preset } from './presets';
 import type { Reminder } from './reminders';
 import type { SharedLayout } from './share';
 import type { QuotaBucket, QuotaLimits } from './quota';
+import type { ReadyKind, ReadyList } from './ready-lists';
 import type { Settings } from './settings';
 import type { Theme } from './themes';
 import type { WatchHistory, WatchReport } from './watch';
@@ -37,6 +38,7 @@ export const IPC = {
   youtubeSearch: 'youtube:search',
   youtubeLiveNow: 'youtube:live-now',
   youtubeLiveStates: 'youtube:live-states',
+  youtubeReadyList: 'youtube:ready-list',
   youtubeStreamSports: 'youtube:stream-sports',
   youtubeStreamChannels: 'youtube:stream-channels',
   notifyTest: 'notify:test',
@@ -198,8 +200,11 @@ export interface SplitwatchApi {
   setApiKey(key: string): Promise<SetKeyResult>;
   removeApiKey(): Promise<void>;
   search(query: string, sport: string | null): Promise<SearchResult>;
-  getLiveNow(): Promise<LiveNow>;
+  // Live now for these sports (a sport theme's), or for the sports picked in Settings.
+  getLiveNow(sports?: string[] | null): Promise<LiveNow>;
   getLiveStates(videoIds: string[]): Promise<Record<string, LiveState>>;
+  // A ready list of one sport, or of nine (MIX), from the preset channels.
+  getReadyList(sport: string, kind: ReadyKind): Promise<ReadyList>;
   // The sport of each stream whose channel is a preset channel, or null.
   getStreamSports(videoIds: string[]): Promise<Record<string, string | null>>;
   // The channel of each stream (needs a key), or null.

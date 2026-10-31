@@ -31,13 +31,28 @@ export const useYouTube = create<YouTubeState>(() => ({
 const LIVE_NOW_EVERY = 5 * 60_000;
 const LIVE_STATES_EVERY = 2 * 60_000;
 
+// The sports "Live now" suggests instead of those picked in Settings (a sport theme's; see ready.ts).
+let suggestedSports: () => string[] | null = () => null;
+export const setSuggestedSports = (pick: () => string[] | null) => {
+  suggestedSports = pick;
+};
+
+let liveAgain = false;
 export async function refreshLiveNow(): Promise<void> {
-  if (useYouTube.getState().liveLoading) return;
+  // A request while one runs (the theme changed, say) runs once that one is done.
+  if (useYouTube.getState().liveLoading) {
+    liveAgain = true;
+    return;
+  }
   useYouTube.setState({ liveLoading: true });
   try {
-    useYouTube.setState({ liveNow: await window.splitwatch.getLiveNow() });
+    useYouTube.setState({ liveNow: await window.splitwatch.getLiveNow(suggestedSports()) });
   } finally {
     useYouTube.setState({ liveLoading: false });
+  }
+  if (liveAgain) {
+    liveAgain = false;
+    void refreshLiveNow();
   }
 }
 

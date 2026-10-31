@@ -74,17 +74,34 @@ export function channelSports(presets: Preset[]): Map<string, string | null> {
   return new Map([...sportsOf].map(([id, set]) => [id, set.size === 1 ? [...set][0]! : null]));
 }
 
-export async function liveNow(): Promise<LiveNow> {
-  const sports = getSettings().sports;
-  const sportOf = channelSports(getPresets().filter((p) => sports.length === 0 || sports.includes(p.sport)));
-  const channels = [...sportOf.keys()].slice(0, MAX_CHANNELS);
+// The presets' channels in turns, every sport's first channel before any sport's second, so that a
+// cap on the number of channels leaves no sport out.
+export function fairChannels(presets: Preset[]): string[] {
+  const out: string[] = [];
+  for (let i = 0; presets.some((p) => i < p.channels.length); i++) {
+    for (const p of presets) {
+      const id = p.channels[i]?.id;
+      if (id && !out.includes(id)) out.push(id);
+    }
+  }
+  return out;
+}
+
+// Live now for the given sports (a sport theme's, so the start screen suggests the sport on screen),
+// or for the sports picked in Settings (empty: all).
+export async function liveNow(only: string[] | null = null): Promise<LiveNow> {
+  const sports = only ?? getSettings().sports;
+  const chosen = getPresets().filter((p) => sports.length === 0 || sports.includes(p.sport));
+  const sportOf = channelSports(chosen);
+  const channels = fairChannels(chosen).slice(0, MAX_CHANNELS);
   const cacheKey = channels.join(',');
   if (liveNowCache && liveNowCache.key === cacheKey && Date.now() - liveNowCache.at < LIVE_NOW_TTL) {
     return liveNowCache.value;
   }
 
+  // Shorts are never live and show poorly in the grid.
   const entries = (await Promise.all(channels.map((id) => channelFeed(id)))).flatMap((list) =>
-    list.slice(0, PER_CHANNEL),
+    list.filter((e) => !e.short).slice(0, PER_CHANNEL),
   );
   const byId = new Map(entries.map((e) => [e.videoId, e]));
   const known = (await loadKey()) ? await factsFor([...byId.keys()]) : null;
@@ -140,7 +157,8 @@ export async function liveStates(ids: string[]): Promise<Record<string, LiveStat
 export async function streamSports(ids: string[]): Promise<Record<string, string | null>> {
   const out: Record<string, string | null> = Object.fromEntries(ids.map((id) => [id, null]));
   if (!ids.length) return out;
-  const sportOf = channelSports(getPresets());
+  const presets = getPresets();
+  const sportOf = channelSports(presets);
   let unknown = ids;
   if (await loadKey()) {
     const known = await factsFor(ids);
@@ -150,7 +168,7 @@ export async function streamSports(ids: string[]): Promise<Record<string, string
     }
   }
   if (unknown.length) {
-    const channels = [...sportOf.keys()].slice(0, MAX_CHANNELS);
+    const channels = fairChannels(presets).slice(0, MAX_CHANNELS);
     const feedsByChannel = await Promise.all(channels.map(async (id) => [id, await channelFeed(id)] as const));
     for (const [channelId, entries] of feedsByChannel) {
       for (const e of entries) if (unknown.includes(e.videoId)) out[e.videoId] = sportOf.get(channelId) ?? null;

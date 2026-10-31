@@ -10,7 +10,16 @@ const FEED = `<?xml version="1.0" encoding="UTF-8"?>
   <yt:channelId>UCXRVKD6l-LrX5TmGJqQFFoQ</yt:channelId>
   <title>Elite Women &amp; Men | Live &#8211; Finals</title>
   <author><name>World Triathlon</name><uri>https://www.youtube.com/channel/UCXRVKD6l-LrX5TmGJqQFFoQ</uri></author>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=M7lc1UVf-VE"/>
   <published>2026-10-30T15:00:08+00:00</published>
+ </entry>
+ <entry>
+  <yt:videoId>aqz-KE-bpKQ</yt:videoId>
+  <yt:channelId>UCXRVKD6l-LrX5TmGJqQFFoQ</yt:channelId>
+  <title>Behind the start line #shorts</title>
+  <link rel="alternate" href="https://www.youtube.com/shorts/aqz-KE-bpKQ"/>
+  <author><name>World Triathlon</name></author>
+  <published>2026-10-30T16:00:00+00:00</published>
  </entry>
  <entry>
   <yt:videoId>bad</yt:videoId>
@@ -20,7 +29,7 @@ const FEED = `<?xml version="1.0" encoding="UTF-8"?>
 </feed>`;
 
 describe('channel feeds', () => {
-  it('reads valid entries and decodes entities', () => {
+  it('reads valid entries, decodes entities and tells Shorts apart', () => {
     expect(parseFeed(FEED)).toEqual([
       {
         videoId: 'M7lc1UVf-VE',
@@ -28,6 +37,15 @@ describe('channel feeds', () => {
         title: 'Elite Women & Men | Live – Finals',
         channel: 'World Triathlon',
         published: '2026-10-30T15:00:08+00:00',
+        short: false,
+      },
+      {
+        videoId: 'aqz-KE-bpKQ',
+        channelId: 'UCXRVKD6l-LrX5TmGJqQFFoQ',
+        title: 'Behind the start line #shorts',
+        channel: 'World Triathlon',
+        published: '2026-10-30T16:00:00+00:00',
+        short: true,
       },
     ]);
   });
