@@ -5,6 +5,8 @@ and versions follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-31
+
 ### Added
 
 - **Ready lists**, on the start screen and in **Saved layouts**: one click opens up to nine streams of
@@ -272,7 +274,8 @@ The first version: the app's foundation and its release pipeline, without stream
 - Security baseline: sandboxed, isolated renderer without Node.js, strict Content Security Policy,
   hardened Electron fuses.
 
-[Unreleased]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.9.0...v1.0.0
 [0.9.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.8.0...v0.9.0

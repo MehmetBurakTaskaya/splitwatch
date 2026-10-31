@@ -21,7 +21,7 @@
 
 Paste a YouTube link, or pick a live stream from the official channels of 18 sports, and Splitwatch
 puts it in a grid next to the others: up to nine at once. The stream you pick is the one you hear.
-The window dresses itself in the sport you watch, and everything has a key. Version 1.0; more arrives
+The window dresses itself in the sport you watch, and everything has a key. Version 1.1; more arrives
 version by version (see the [roadmap](docs/ROADMAP.md)).
 
 ## Features
@@ -268,7 +268,7 @@ demo is recorded with `node scripts/record-demo.mjs`.
 Sporları Federasyonu) YouTube kanalında CC BY 3.0 lisansıyla yayımladığı özet videolar oynar.
 
 Splitwatch, birden çok YouTube spor canlı yayınını tek pencerede yan yana izlemeye yarayan ücretsiz
-ve açık kaynaklı bir masaüstü uygulamasıdır (Windows ve macOS). Sürüm 1.0:
+ve açık kaynaklı bir masaüstü uygulamasıdır (Windows ve macOS). Sürüm 1.1:
 YouTube bağlantısı ya da video kimliği yapıştırarak en fazla dokuz yayını bir ızgarada izleyebilirsiniz;
 seçtiğiniz yayının sesini duyarsınız. "Şimdi canlı" 18 sporun resmî kanallarındaki yayınları gösterir;
 kendi ücretsiz YouTube API anahtarınızla (Ayarlar → YouTube API anahtarı) canlı yayın araması ve CANLI
