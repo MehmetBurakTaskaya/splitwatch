@@ -9,6 +9,7 @@ export type Prefs = Pick<
   | 'sports'
   | 'theme'
   | 'customThemes'
+  | 'watchHistory'
   | 'colorScheme'
   | 'animate'
   | 'performance'
@@ -29,6 +30,7 @@ export const usePrefs = create<Prefs>(() => ({
   sports: [],
   theme: DEFAULT_SETTINGS.theme,
   customThemes: [],
+  watchHistory: DEFAULT_SETTINGS.watchHistory,
   colorScheme: DEFAULT_SETTINGS.colorScheme,
   animate: DEFAULT_SETTINGS.animate,
   performance: DEFAULT_SETTINGS.performance,

@@ -277,7 +277,10 @@
     "themeExported": "Saved the theme to a file.",
     "themeInvalid": "That file is not a Splitwatch theme.",
     "themeContrast": "That theme's text would be hard to read, so it was not added.",
-    "themeFull": "There are {max} themes of your own, the most there can be. Delete one first."
+    "themeFull": "There are {max} themes of your own, the most there can be. Delete one first.",
+    "history": "Watch history",
+    "historyKeep": "Keep a watch history on this computer",
+    "historyNote": "It stays on this computer. Titles and channels go after 30 days; the time by sport stays until you clear it."
   },
   "update": {
     "available": "Version {version} is available.",
@@ -419,6 +422,30 @@
     "needsKey": "With your own YouTube API key, this lists the coming week's streams on the channels of your sports.",
     "none": "Nothing is scheduled on the channels of your sports for the coming week.",
     "remind": "Remind me"
+  },
+  "history": {
+    "open": "Your watching",
+    "title": "Your watching",
+    "note": "Kept on this computer only. Titles and channels go 30 days after you last watched, as YouTube asks; the time by sport stays until you clear it.",
+    "off": "The watch history is off, so nothing new is added. Settings can turn it on.",
+    "empty": "Nothing watched yet. Time counts while streams play on screen.",
+    "week": "Last 7 days",
+    "month": "Last 30 days",
+    "since": "Since {time, date, medium}",
+    "all": "In all",
+    "bySport": "By sport",
+    "noSport": "No sport",
+    "channels": "Channels watched most, last 30 days",
+    "recent": "Watched lately",
+    "meta": "{channel} · {time, date, medium} · {duration}",
+    "minutes": "{minutes, plural, =0 {Under a minute} other {# min}}",
+    "hours": "{hours} h {minutes} min",
+    "add": "Add",
+    "addLabel": "Add {title} to the grid",
+    "clearOpen": "Clear the history…",
+    "clearAsk": "Clear the whole watch history, and the streams kept for search suggestions?",
+    "clear": "Clear",
+    "keep": "Keep"
   },
   "sports": {
     "volleyball": "Volleyball",

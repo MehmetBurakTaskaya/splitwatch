@@ -123,6 +123,11 @@ export const IconAlign = () => (
     <path d="M11 3v14M4 6.5h7M7 10h7M3 13.5h8" />
   </Icon>
 );
+export const IconHistory = () => (
+  <Icon>
+    <path d="M4 10a6 6 0 1 0 1.8-4.3M4 3.5v2.7h2.7M10 6.5V10l2.5 1.5" />
+  </Icon>
+);
 export const IconChat = () => (
   <Icon>
     <path d="M4 4.5h12a1 1 0 0 1 1 1V13a1 1 0 0 1-1 1H9l-3.5 3v-3H4a1 1 0 0 1-1-1V5.5a1 1 0 0 1 1-1zM6.5 8h7M6.5 10.5h4.5" />

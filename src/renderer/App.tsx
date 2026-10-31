@@ -6,6 +6,7 @@ import { EmptyState } from './components/EmptyState';
 import { EndedSuggestion } from './components/EndedSuggestion';
 import { EventDialog } from './components/EventDialog';
 import { Grid } from './components/Grid';
+import { HistoryDialog } from './components/HistoryDialog';
 import { Intro } from './components/Intro';
 import { LayoutsDialog } from './components/LayoutsDialog';
 import { SearchPalette } from './components/SearchPalette';
@@ -60,6 +61,7 @@ export function App() {
       {dialog === 'upcoming' && <UpcomingDialog />}
       {dialog === 'shared' && <SharedDialog />}
       {dialog === 'themeEditor' && <ThemeEditorDialog />}
+      {dialog === 'history' && <HistoryDialog />}
       <Intro />
     </div>
   );

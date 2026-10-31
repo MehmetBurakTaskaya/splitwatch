@@ -8,6 +8,7 @@ import { connectHost } from './state/app';
 import { connectCommands } from './state/commands';
 import { connectEvents } from './state/events';
 import { loadPrefs, loadState } from './state/init';
+import { connectWatch } from './state/watch';
 import { connectYouTube } from './state/youtube';
 import { connectTheme } from './theme/engine';
 import './styles/tokens.css';
@@ -37,6 +38,7 @@ if (popout && isVideoId(popout)) {
     connectEvents();
     connectYouTube();
     connectTheme();
+    connectWatch();
     createRoot(document.getElementById('root')!).render(
       <StrictMode>
         <App />

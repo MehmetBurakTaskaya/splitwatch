@@ -1,10 +1,20 @@
-import type { Theme } from '../../shared/themes';
 import { create } from 'zustand';
 import type { AppInfo, UpdateState } from '../../shared/ipc';
 import type { SharedLayout } from '../../shared/share';
+import type { Theme } from '../../shared/themes';
 
 export type DialogName =
-  'search' | 'shortcuts' | 'settings' | 'sport' | 'layouts' | 'event' | 'upcoming' | 'shared' | 'themeEditor' | null;
+  | 'search'
+  | 'shortcuts'
+  | 'settings'
+  | 'sport'
+  | 'layouts'
+  | 'event'
+  | 'upcoming'
+  | 'shared'
+  | 'themeEditor'
+  | 'history'
+  | null;
 
 interface AppState {
   info: AppInfo | null;

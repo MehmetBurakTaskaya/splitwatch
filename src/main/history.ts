@@ -3,6 +3,7 @@ import path from 'node:path';
 import { app } from 'electron';
 import type { StreamItem } from '../shared/ipc';
 import { isVideoId } from '../shared/youtube';
+import { getSettings } from './settings-store';
 import { getVideoInfo } from './video-info';
 
 // Streams the user added before, for the search palette's local suggestions. YouTube's developer
@@ -46,7 +47,7 @@ export function getHistory(): StreamItem[] {
 }
 
 export async function rememberStream(videoId: unknown): Promise<void> {
-  if (typeof videoId !== 'string' || !isVideoId(videoId)) return;
+  if (typeof videoId !== 'string' || !isVideoId(videoId) || !getSettings().watchHistory) return;
   const info = await getVideoInfo(videoId);
   if (!info) return;
   const next = [{ videoId, ...info, seenAt: Date.now() }, ...load().filter((s) => s.videoId !== videoId)];
@@ -55,5 +56,14 @@ export async function rememberStream(videoId: unknown): Promise<void> {
     writeFileSync(file(), JSON.stringify(items));
   } catch {
     // Suggestions are a convenience; a failed write loses nothing important.
+  }
+}
+
+export function clearSeen(): void {
+  items = [];
+  try {
+    writeFileSync(file(), '[]');
+  } catch {
+    // nothing kept to clear
   }
 }

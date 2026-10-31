@@ -59,6 +59,9 @@ export interface Settings {
   theme: string;
   // Themes the user made or imported.
   customThemes: Theme[];
+  // Keep a watch history on this computer (see shared/watch.ts), and the added streams for the
+  // search's suggestions.
+  watchHistory: boolean;
   colorScheme: ColorScheme;
   animate: boolean;
   performance: boolean;
@@ -87,6 +90,7 @@ export const DEFAULT_SETTINGS: Settings = {
   quotaLimits: DEFAULT_LIMITS,
   theme: 'auto',
   customThemes: [],
+  watchHistory: true,
   colorScheme: 'system',
   animate: true,
   performance: false,
@@ -209,6 +213,7 @@ export function sanitizeSettings(raw: unknown): Settings {
     quotaLimits: sanitizeLimits(raw.quotaLimits),
     theme: typeof raw.theme === 'string' && (raw.theme === 'auto' || SLUG.test(raw.theme)) ? raw.theme : d.theme,
     customThemes: sanitizeCustomThemes(raw.customThemes),
+    watchHistory: raw.watchHistory !== false,
     colorScheme: scheme === 'light' || scheme === 'dark' ? scheme : 'system',
     animate: raw.animate !== false,
     performance: raw.performance === true,

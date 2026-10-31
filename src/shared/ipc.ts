@@ -7,6 +7,7 @@ import type { SharedLayout } from './share';
 import type { QuotaBucket, QuotaLimits } from './quota';
 import type { Settings } from './settings';
 import type { Theme } from './themes';
+import type { WatchHistory, WatchReport } from './watch';
 
 export const IPC = {
   appInfo: 'app:info',
@@ -42,6 +43,9 @@ export const IPC = {
   copyText: 'clipboard:copy',
   themeImport: 'theme:import',
   themeExport: 'theme:export',
+  watchReport: 'watch:report',
+  watchGet: 'watch:get',
+  watchClear: 'watch:clear',
   mediaKeysState: 'media-keys:state',
   popoutOpen: 'popout:open',
   popoutClose: 'popout:close',
@@ -195,6 +199,10 @@ export interface SplitwatchApi {
   importTheme(): Promise<ThemeImport | null>;
   // Saves a theme to a file the user picks; false when the user cancels.
   exportTheme(theme: Theme): Promise<boolean>;
+  reportWatch(reports: WatchReport[]): void;
+  getWatch(): Promise<WatchHistory>;
+  // Clears the watch history and the streams kept for the search's suggestions.
+  clearWatch(): Promise<void>;
   getMediaKeysState(): Promise<MediaKeysState>;
   // A stream in a window of its own, and back.
   openPopout(videoId: string, live: boolean): void;

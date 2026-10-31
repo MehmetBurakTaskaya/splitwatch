@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { openDialog } from '../state/app';
 import { useYouTube } from '../state/youtube';
-import { IconCalendar } from './icons';
+import { IconCalendar, IconHistory } from './icons';
 import { StreamList } from './StreamList';
 
 // Live and upcoming streams of the preset channels, or their newest videos without a key.
@@ -15,10 +15,16 @@ export function LiveNowPanel({ limit = 12 }: { limit?: number }) {
     <section className="live-now" aria-busy={loading}>
       <div className="live-now-head">
         <h2>{title}</h2>
-        <button type="button" className="button button-quiet" onClick={() => openDialog('upcoming')}>
-          <IconCalendar />
-          {t('upcoming.open')}
-        </button>
+        <div className="live-now-actions">
+          <button type="button" className="button button-quiet" onClick={() => openDialog('upcoming')}>
+            <IconCalendar />
+            {t('upcoming.open')}
+          </button>
+          <button type="button" className="button button-quiet" onClick={() => openDialog('history')}>
+            <IconHistory />
+            {t('history.open')}
+          </button>
+        </div>
       </div>
       {liveNow?.mode === 'latest' && <p className="note">{t('live.latestNote')}</p>}
       {!liveNow && loading && <p className="note">{t('live.loading')}</p>}

@@ -90,6 +90,7 @@ export function SettingsDialog() {
       <StartupSection />
       <ApiKeySection form={keyForm} />
       <NotifySection />
+      <HistorySection />
       <QuotaSection />
       <SportsSection />
 
@@ -618,5 +619,23 @@ function ThemeTools() {
         </p>
       )}
     </div>
+  );
+}
+
+function HistorySection() {
+  const { t } = useTranslation();
+  const on = usePrefs((s) => s.watchHistory);
+  return (
+    <section className="settings-section">
+      <h3>{t('settings.history')}</h3>
+      <label className="field">
+        <input type="checkbox" checked={on} onChange={(e) => setPrefs({ watchHistory: e.target.checked })} />
+        {t('settings.historyKeep')}
+      </label>
+      <p className="note">{t('settings.historyNote')}</p>
+      <button type="button" className="button button-quiet" onClick={() => openDialog('history')}>
+        {t('history.open')}
+      </button>
+    </section>
   );
 }

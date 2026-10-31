@@ -479,3 +479,41 @@ test('the line-up panel holds a stream back beside the grid, instead of a chat',
   await expect(toggle).toHaveAttribute('aria-pressed', 'false');
   await app.close();
 });
+
+test('your watching shows the time by sport and the latest streams, which go back on the grid', async () => {
+  const userData = freshUserData();
+  const now = Date.now();
+  const today = new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(now);
+  writeFileSync(
+    path.join(userData, 'watch.json'),
+    JSON.stringify({
+      entries: [
+        {
+          videoId: VIDEO_A,
+          title: 'Heat 3',
+          channel: 'Pool TV',
+          sport: 'swimming',
+          lastAt: now,
+          seconds: 5400,
+          days: { [today]: 5400 },
+        },
+      ],
+      totals: { seconds: 7200, sports: { swimming: 5400, none: 1800 }, since: now - 86_400_000 },
+    }),
+  );
+  const { app, page } = await launch(userData);
+  await page.getByRole('button', { name: en.history.open }).click();
+  const dialog = page.getByRole('dialog', { name: en.history.title });
+  await expect(dialog.locator('.watch-totals dd')).toHaveText(['1 h 30 min', '1 h 30 min', '2 h 0 min']);
+  await expect(dialog.locator('.watch-bars').first().locator('li')).toHaveCount(2);
+  await dialog.getByRole('button', { name: en.history.addLabel.replace('{title}', 'Heat 3') }).click();
+  await expect(dialog).toHaveCount(0);
+  await expect(page.locator(`[data-stream="${VIDEO_A}"]`)).toBeVisible();
+
+  await page.getByRole('button', { name: en.settings.open }).click();
+  await page.getByRole('button', { name: en.history.open }).click();
+  await dialog.getByRole('button', { name: en.history.clearOpen }).click();
+  await dialog.getByRole('button', { name: en.history.clear, exact: true }).click();
+  await expect(dialog.getByText(en.history.empty)).toBeVisible();
+  await app.close();
+});

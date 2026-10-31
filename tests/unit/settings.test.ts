@@ -26,6 +26,7 @@ describe('sanitizeSettings', () => {
       quotaLimits: { units: 20000, searches: 50 },
       theme: 'pool',
       customThemes: [],
+      watchHistory: false,
       colorScheme: 'dark',
       animate: false,
       performance: true,
