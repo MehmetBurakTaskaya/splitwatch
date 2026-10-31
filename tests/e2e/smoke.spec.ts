@@ -374,3 +374,23 @@ test('spoiler protection blurs titles until they are pointed at', async () => {
   await expect(title).toHaveCSS('filter', 'none');
   await app.close();
 });
+
+test('a layout link asks first, then opens or keeps the shared layout', async () => {
+  const { app, page } = await launch(freshUserData());
+  const link = `splitwatch://layout?l=2&v=${VIDEO_A},${VIDEO_B}&s=,swimming&n=Finals%20night`;
+  // Windows and Linux hand a link to the running app as a second start.
+  await app.evaluate(({ app: a }, url) => a.emit('second-instance', {}, ['Splitwatch.exe', url]), link);
+  const dialog = page.getByRole('dialog');
+  await expect(dialog.getByRole('heading', { name: en.shared.title })).toBeVisible();
+  await expect(dialog).toContainText('Finals night');
+  await expect(page.locator('[data-stream]')).toHaveCount(0);
+  await dialog.getByRole('button', { name: en.shared.save }).click();
+  await expect(dialog.getByText(en.shared.saved)).toBeVisible();
+  await dialog.getByRole('button', { name: en.shared.open }).click();
+  await expect(dialog).toBeHidden();
+  await expect(page.locator('[data-stream]')).toHaveCount(2);
+  await expect(page.locator(`[data-stream="${VIDEO_B}"]`)).toHaveAttribute('data-sport', 'swimming');
+  await page.keyboard.press('Control+s');
+  await expect(page.getByRole('dialog').getByRole('button', { name: 'Open Finals night' })).toBeVisible();
+  await app.close();
+});

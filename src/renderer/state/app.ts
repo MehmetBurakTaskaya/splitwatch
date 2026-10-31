@@ -1,7 +1,9 @@
 import { create } from 'zustand';
 import type { AppInfo, UpdateState } from '../../shared/ipc';
+import type { SharedLayout } from '../../shared/share';
 
-export type DialogName = 'search' | 'shortcuts' | 'settings' | 'sport' | 'layouts' | 'event' | 'upcoming' | null;
+export type DialogName =
+  'search' | 'shortcuts' | 'settings' | 'sport' | 'layouts' | 'event' | 'upcoming' | 'shared' | null;
 
 interface AppState {
   info: AppInfo | null;
@@ -16,6 +18,8 @@ interface AppState {
   dialogStream: string | null;
   // What the search opens with, when another view opens it.
   searchSeed: { query: string; sport: string | null } | null;
+  // A layout from a splitwatch:// link, waiting for the user's answer.
+  shared: SharedLayout | null;
 }
 
 export const useAppStore = create<AppState>(() => ({
@@ -27,6 +31,7 @@ export const useAppStore = create<AppState>(() => ({
   dialog: null,
   dialogStream: null,
   searchSeed: null,
+  shared: null,
 }));
 
 export const openDialog = (dialog: DialogName, stream: string | null = null) =>

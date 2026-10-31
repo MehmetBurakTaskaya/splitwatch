@@ -108,6 +108,11 @@ export const IconCalendar = () => (
     <path d="M3 8.5h14M7 2.5v4M13 2.5v4" />
   </Icon>
 );
+export const IconLink = () => (
+  <Icon>
+    <path d="M8.5 11.5l3-3M9 6l1.5-1.5a3 3 0 0 1 4.24 4.24L13.2 10.3M10.8 13.7L9.3 15.2a3 3 0 0 1-4.24-4.24L6.6 9.4" />
+  </Icon>
+);
 export const IconLayouts = () => (
   <Icon>
     <path d="M6 3h8a1 1 0 0 1 1 1v13l-5-3.5L5 17V4a1 1 0 0 1 1-1z" />

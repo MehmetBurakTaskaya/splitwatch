@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { layoutById } from '../../shared/layouts';
 import { MAX_LAYOUT_NAME, MAX_SAVED_LAYOUTS, type SavedLayout } from '../../shared/settings';
 import { openDialog } from '../state/app';
-import { deleteLayout, openLayout, renameLayout, restoreLayout, saveLayout } from '../state/layouts';
+import { deleteLayout, linkOf, openLayout, renameLayout, restoreLayout, saveLayout } from '../state/layouts';
 import { usePrefs } from '../state/prefs';
 import { useSession } from '../state/session';
 import { Dialog } from './Dialog';
-import { IconDelete, IconRename, LayoutGlyph } from './icons';
+import { IconDelete, IconLink, IconRename, LayoutGlyph } from './icons';
 
 export function LayoutsDialog() {
   const { t } = useTranslation();
@@ -28,6 +28,11 @@ export function LayoutsDialog() {
     } else {
       setMessage({ text: t(`layouts.${result}`, { max: MAX_SAVED_LAYOUTS }), problem: true });
     }
+  };
+
+  const copy = (link: string) => {
+    window.splitwatch.copyText(link);
+    setMessage({ text: t('layouts.copied'), problem: false });
   };
 
   // Escape while renaming stops the renaming instead of closing.
@@ -57,6 +62,19 @@ export function LayoutsDialog() {
             {t('layouts.save')}
           </button>
         </div>
+        {hasStreams && (
+          <button
+            type="button"
+            className="button button-quiet layout-copy-grid"
+            onClick={() => {
+              const { layout, streams, sports } = useSession.getState();
+              copy(linkOf({ name: name.trim(), layout, streams, sports }));
+            }}
+          >
+            <IconLink />
+            {t('layouts.copyGrid')}
+          </button>
+        )}
         {!hasStreams && <p className="note">{t('layouts.empty')}</p>}
         {message && (
           <p className={message.problem ? 'dialog-problem' : 'note'} role={message.problem ? 'alert' : 'status'}>
@@ -109,6 +127,15 @@ export function LayoutsDialog() {
                   }}
                 >
                   {t('layouts.open')}
+                </button>
+                <button
+                  type="button"
+                  className="icon-button"
+                  aria-label={t('layouts.copyLink', { name: entry.name })}
+                  title={t('layouts.copyLink', { name: entry.name })}
+                  onClick={() => copy(linkOf(entry))}
+                >
+                  <IconLink />
                 </button>
                 <button
                   type="button"

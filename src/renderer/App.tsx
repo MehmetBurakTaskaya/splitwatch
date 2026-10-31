@@ -9,6 +9,7 @@ import { Intro } from './components/Intro';
 import { LayoutsDialog } from './components/LayoutsDialog';
 import { SearchPalette } from './components/SearchPalette';
 import { SettingsDialog } from './components/SettingsDialog';
+import { SharedDialog } from './components/SharedDialog';
 import { ShortcutsDialog } from './components/ShortcutsDialog';
 import { SportDialog } from './components/SportDialog';
 import { TopBar } from './components/TopBar';
@@ -46,6 +47,7 @@ export function App() {
       {dialog === 'layouts' && <LayoutsDialog />}
       {dialog === 'event' && <EventDialog />}
       {dialog === 'upcoming' && <UpcomingDialog />}
+      {dialog === 'shared' && <SharedDialog />}
       <Intro />
     </div>
   );

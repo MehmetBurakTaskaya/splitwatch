@@ -14,6 +14,12 @@ files:
 
 asar: true
 
+# splitwatch:// layout links: macOS (Info.plist) and Linux (.desktop) register them from here; on
+# Windows the app registers itself (src/main/links.ts).
+protocols:
+  - name: Splitwatch layout
+    schemes: [splitwatch]
+
 # Hardening flags baked into the Electron binary.
 electronFuses:
   runAsNode: false

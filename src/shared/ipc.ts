@@ -3,6 +3,7 @@ import type { GamesEvent } from './events';
 import type { MedalRow } from './medals';
 import type { FollowedChannel } from './notify';
 import type { Preset } from './presets';
+import type { SharedLayout } from './share';
 import type { QuotaBucket, QuotaLimits } from './quota';
 import type { Settings } from './settings';
 
@@ -37,6 +38,7 @@ export const IPC = {
   notifyTest: 'notify:test',
   eventsList: 'events:list',
   eventMedals: 'events:medals',
+  copyText: 'clipboard:copy',
   presetsList: 'presets:list',
   historyList: 'history:list',
   historyRemember: 'history:remember',
@@ -58,7 +60,12 @@ export interface MedalTable {
 }
 
 // Asks from the tray and the notifications, which the page carries out.
-export type AppCommand = { type: 'add'; videoId: string; sport?: string } | { type: 'toggleMute' } | { type: 'mini' };
+export type AppCommand =
+  | { type: 'add'; videoId: string; sport?: string }
+  | { type: 'toggleMute' }
+  | { type: 'mini' }
+  // A splitwatch:// link, checked; the page asks before it opens it.
+  | { type: 'sharedLayout'; layout: SharedLayout };
 
 // Starting with the system works in the installed app on Windows and macOS. status is macOS's
 // answer (enabled, requires-approval, not-registered, not-found).
@@ -158,6 +165,7 @@ export interface SplitwatchApi {
   getEvents(): Promise<GamesEvent[]>;
   // null when the event has no medal table page yet, or it could not be read.
   getMedalTable(eventId: string): Promise<MedalTable | null>;
+  copyText(text: string): void;
   getPresets(): Promise<Preset[]>;
   getHistory(): Promise<StreamItem[]>;
   rememberStream(videoId: string): void;

@@ -18,6 +18,9 @@ export function connectCommands(): void {
         return session.toggleMute();
       case 'mini':
         return setMini(true);
+      case 'sharedLayout':
+        if (useAppStore.getState().mini) setMini(false);
+        return useAppStore.setState({ shared: command.layout, dialog: 'shared', dialogStream: null });
     }
   });
 }

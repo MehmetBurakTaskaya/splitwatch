@@ -40,6 +40,7 @@ const api: SplitwatchApi = {
   testNotification: () => ipcRenderer.invoke(IPC.notifyTest),
   getEvents: () => ipcRenderer.invoke(IPC.eventsList),
   getMedalTable: (eventId) => ipcRenderer.invoke(IPC.eventMedals, eventId),
+  copyText: (text) => ipcRenderer.send(IPC.copyText, text),
   getPresets: () => ipcRenderer.invoke(IPC.presetsList),
   getHistory: () => ipcRenderer.invoke(IPC.historyList),
   rememberStream: (videoId) => ipcRenderer.send(IPC.historyRemember, videoId),

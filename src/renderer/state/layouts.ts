@@ -1,4 +1,5 @@
 import { MAX_SAVED_LAYOUTS, type SavedLayout, layoutName } from '../../shared/settings';
+import { type SharedLayout, layoutLink } from '../../shared/share';
 import { setPrefs, usePrefs } from './prefs';
 import { useSession } from './session';
 
@@ -36,6 +37,30 @@ export function saveLayout(rawName: string): SaveResult {
   };
   setPrefs({ layouts: [entry, ...layouts.filter((l) => l !== same)] });
   return same ? 'replaced' : 'saved';
+}
+
+// Keeps a layout from a link; a name it already has gets a number.
+export function saveShared(shared: SharedLayout, fallback: string): SaveResult {
+  const layouts = usePrefs.getState().layouts;
+  if (layouts.length >= MAX_SAVED_LAYOUTS) return 'full';
+  const base = shared.name ?? fallback;
+  let name = base;
+  for (let n = 2; layouts.some((l) => sameName(l.name, name)); n++) name = `${base} ${n}`;
+  const entry: SavedLayout = {
+    id: newId(),
+    name,
+    layout: shared.layout,
+    streams: shared.streams,
+    selected: shared.streams[0] ?? null,
+    volumes: {},
+    sports: shared.sports,
+  };
+  setPrefs({ layouts: [entry, ...layouts] });
+  return 'saved';
+}
+
+export function linkOf(entry: Pick<SavedLayout, 'name' | 'layout' | 'streams' | 'sports'>): string {
+  return layoutLink({ name: entry.name || null, layout: entry.layout, streams: entry.streams, sports: entry.sports });
 }
 
 export function openLayout(id: string): void {

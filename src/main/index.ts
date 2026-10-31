@@ -4,6 +4,7 @@ import { APP_ID } from '../shared/app';
 import { type AppInfo, IPC } from '../shared/ipc';
 import { getEvents, refreshEvents } from './events-store';
 import { initI18n } from './i18n';
+import { linkFromSecondInstance, listenForLinks, setupLinks } from './links';
 import { registerLoginIpc, startedHidden } from './login';
 import { registerMainWindowIpc, setPageLocale, showMainWindow } from './main-window';
 import { medalTable } from './medals';
@@ -26,6 +27,7 @@ const smokeTest = process.argv.includes('--smoke-test');
 if (process.env.SPLITWATCH_USER_DATA) app.setPath('userData', process.env.SPLITWATCH_USER_DATA);
 
 registerAppScheme();
+listenForLinks();
 app.setAppUserModelId(APP_ID);
 app.on('web-contents-created', (_event, contents) => hardenWebContents(contents));
 
@@ -41,7 +43,9 @@ if (!app.requestSingleInstanceLock()) {
   app.quit();
 } else {
   // Starting Splitwatch again brings its window back, also from the tray.
-  app.on('second-instance', () => showMainWindow());
+  app.on('second-instance', (_event, args) => {
+    if (!linkFromSecondInstance(args)) showMainWindow();
+  });
 
   void app.whenReady().then(async () => {
     await initI18n(locale);
@@ -75,6 +79,7 @@ if (!app.requestSingleInstanceLock()) {
     setupNotifications();
     setupReminders();
     if (!startedHidden()) showMainWindow();
+    setupLinks();
   });
 
   app.on('will-quit', flushSettings);

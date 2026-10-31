@@ -66,7 +66,22 @@
     "delete": "Delete {name}",
     "deleted": "“{name}” deleted.",
     "undo": "Undo",
-    "close": "Close"
+    "close": "Close",
+    "copyLink": "Copy a link to {name}",
+    "copyGrid": "Copy a link to this grid",
+    "copied": "Link copied. Anyone with Splitwatch can open it."
+  },
+  "shared": {
+    "title": "A shared layout",
+    "unnamed": "A layout without a name",
+    "summary": "{count, plural, one {# stream} other {# streams}} · {layout}",
+    "note": "Opening it replaces the streams in your grid. Saving it keeps it in your layouts.",
+    "open": "Open it",
+    "save": "Save it",
+    "saved": "Saved in your layouts.",
+    "full": "There are 20 saved layouts, the most there can be.",
+    "cancel": "Cancel",
+    "defaultName": "Shared layout"
   },
   "master": {
     "volume": "Main volume",
