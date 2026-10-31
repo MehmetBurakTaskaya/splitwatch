@@ -600,9 +600,11 @@
   font-weight: 400;
 }
 
-/* The opening animation covers the window; the grid under it is hidden (and its players paused). */
-.shell[data-intro] .grid {
-  visibility: hidden;
+/* The opening animation and the dialogs cover the window: YouTube allows nothing in front of a
+   player, so the grid under them is hidden (and its players paused). */
+.shell[data-intro] .grid,
+.shell[data-dialog] .grid {
+  display: none;
 }
 .intro {
   position: fixed;

@@ -30,7 +30,7 @@ export function App() {
   }, []);
 
   return (
-    <div className="shell" data-intro={intro || undefined}>
+    <div className="shell" data-intro={intro || undefined} data-dialog={dialog ? true : undefined}>
       <Backdrop />
       {!mini && <TopBar />}
       {!mini && <ClipboardSuggestion />}

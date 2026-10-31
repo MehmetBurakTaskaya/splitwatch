@@ -51,7 +51,7 @@ useSession.subscribe((s, prev) => {
   if (s.maximized !== prev.maximized || s.selected !== prev.selected || s.status !== prev.status) syncPlayback();
 });
 useAppStore.subscribe((s, prev) => {
-  if (s.shown !== prev.shown || s.mini !== prev.mini) syncPlayback();
+  if (s.shown !== prev.shown || s.mini !== prev.mini || !s.dialog !== !prev.dialog) syncPlayback();
 });
 useEvents.subscribe((s, prev) => {
   if (s.intro !== prev.intro) syncPlayback();
@@ -62,16 +62,19 @@ useEvents.subscribe((s, prev) => {
 function visibleStreams(): Set<string> | null {
   const { maximized, selected } = useSession.getState();
   const { shown, mini } = useAppStore.getState();
-  // The opening animation hides the grid while it plays.
-  if (!shown || useEvents.getState().intro) return new Set();
+  // The opening animation and the dialogs hide the grid while they show.
+  if (!shown || useEvents.getState().intro || useAppStore.getState().dialog) return new Set();
   if (mini) return new Set(selected ? [selected] : []);
   return maximized ? new Set([maximized]) : null;
 }
 
 // YouTube allows no playback from a player the user cannot see: players that leave the screen are
 // paused here, and resumed when they come back. A live stream resumes at its live edge.
+let retry: ReturnType<typeof setTimeout> | undefined;
+
 function syncPlayback(): void {
   const visible = visibleStreams();
+  let buffering = false;
   for (const [id, player] of players) {
     const shown = visible === null || visible.has(id);
     try {
@@ -79,6 +82,8 @@ function syncPlayback(): void {
       if (!shown && (state === PLAYING || state === BUFFERING)) {
         player.pauseVideo();
         held.add(id);
+        // A player can ignore a pause while it buffers; ask again until it holds.
+        if (state === BUFFERING) buffering = true;
       } else if (shown && held.has(id)) {
         held.delete(id);
         // For a live stream, getDuration() is the time since the stream began: its live edge.
@@ -89,6 +94,8 @@ function syncPlayback(): void {
       // A player that is being destroyed can throw; it is unregistered right after.
     }
   }
+  clearTimeout(retry);
+  if (buffering) retry = setTimeout(syncPlayback, 1000);
 }
 
 // Starts the streams that have waited since the app opened. A player that is not ready yet starts

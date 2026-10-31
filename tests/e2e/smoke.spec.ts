@@ -101,8 +101,11 @@ test('adds streams, grows the layout, and handles shortcuts', async () => {
   await expect(page.locator(`[data-stream="${VIDEO_B}"]`)).not.toHaveClass(/is-audible/);
   await page.keyboard.press('Shift+?');
   await expect(page.getByRole('dialog')).toBeVisible();
+  // Nothing may cover a player: the grid hides while a dialog shows.
+  await expect(page.locator('.grid')).toBeHidden();
   await page.keyboard.press('Escape');
   await expect(page.getByRole('dialog')).toBeHidden();
+  await expect(page.locator('.grid')).toBeVisible();
 
   // Removing a stream leaves an empty slot that leads back to the input.
   await page.getByRole('button', { name: new RegExp(en.tile.remove.replace('{index}', '1')) }).click();
@@ -161,6 +164,16 @@ test('pauses the streams that leave the screen and resumes them', async () => {
   await expect(tileA).toHaveAttribute('data-state', running);
   await page.keyboard.press('Escape');
   await expect(tileB).toHaveAttribute('data-state', running);
+
+  // A dialog hides the grid. (A player hidden while it still buffers stays buffering, without
+  // playing; this waits until both play.)
+  for (const tile of [tileA, tileB]) await expect(tile).toHaveAttribute('data-state', 'playing');
+  await page.locator('.brand').click();
+  await page.keyboard.press('Shift+?');
+  await expect(page.getByRole('dialog')).toBeVisible();
+  for (const tile of [tileA, tileB]) await expect(tile).not.toHaveAttribute('data-state', running);
+  await page.keyboard.press('Escape');
+  for (const tile of [tileA, tileB]) await expect(tile).toHaveAttribute('data-state', running);
 
   // A minimized window shows nothing.
   await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0]!.minimize());
