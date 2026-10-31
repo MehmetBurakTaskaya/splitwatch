@@ -13,6 +13,7 @@ import { setupNotifications } from './notify';
 import { registerPopoutIpc } from './popouts';
 import { registerPowerIpc } from './power';
 import { setupReminders } from './reminders';
+import { registerTakeoutIpc } from './takeout';
 import { registerThemeFileIpc } from './theme-files';
 import { registerWatchIpc } from './watch';
 import { registerAppScheme, serveApp } from './protocol';
@@ -79,6 +80,7 @@ if (!app.requestSingleInstanceLock()) {
     registerThemeFileIpc();
     registerWatchIpc();
     registerPowerIpc();
+    registerTakeoutIpc();
     registerLoginIpc();
     applyColorScheme();
     registerYouTubeIpc();

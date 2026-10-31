@@ -213,3 +213,30 @@ test('the coming week lists upcoming streams by day, and keeps a reminder', asyn
   ]);
   await app.close();
 });
+
+test('channels to follow come from a Google Takeout subscriptions list', async () => {
+  const csv = path.join(mkdtempSync(path.join(tmpdir(), 'splitwatch-takeout-')), 'subscriptions.csv');
+  const ids = ['UCabcdefghijklmnopqrstuv', 'UC0123456789_-ABCDEFGHIJ', 'UCzyxwvutsrqponmlkjihgfe'];
+  writeFileSync(
+    csv,
+    `Channel Id,Channel Url,Channel Title\r\n${ids[0]},http://www.youtube.com/channel/${ids[0]},Pool TV\r\n${ids[1]},http://www.youtube.com/channel/${ids[1]},"Track, Field"\r\n${ids[2]},http://www.youtube.com/channel/${ids[2]},Rink TV\r\n`,
+  );
+  const { app, page } = await launch(fake, true, {
+    notify: { on: true, sports: [], channels: [{ id: ids[2], name: 'Rink TV' }] },
+  });
+  await app.evaluate(({ dialog }, f) => {
+    dialog.showOpenDialog = (async () => ({ canceled: false, filePaths: [f] })) as never;
+  }, csv);
+  await page.getByRole('button', { name: en.settings.open }).click();
+  await page.getByRole('button', { name: en.follows.open }).click();
+  const picker = page.getByRole('dialog', { name: en.follows.title });
+  await expect(picker.getByRole('checkbox')).toHaveCount(3);
+  await expect(picker.getByLabel('Rink TV')).toBeChecked();
+  await picker.getByLabel(en.follows.filter).fill('track');
+  await picker.getByLabel('Track, Field').check();
+  await picker.getByRole('button', { name: en.follows.save }).click();
+
+  const settings = page.getByRole('dialog', { name: en.settings.title });
+  await expect(settings.locator('.followed li')).toHaveText(['Rink TV', 'Track, Field']);
+  await app.close();
+});

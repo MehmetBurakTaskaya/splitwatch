@@ -48,6 +48,7 @@ export const IPC = {
   watchGet: 'watch:get',
   watchClear: 'watch:clear',
   keepAwake: 'power:keep-awake',
+  subscriptionsImport: 'follows:import',
   mediaKeysState: 'media-keys:state',
   popoutOpen: 'popout:open',
   popoutClose: 'popout:close',
@@ -101,6 +102,9 @@ export interface MediaKeysState {
 // answer (enabled, requires-approval, not-registered, not-found).
 // A theme file the user opened: the theme, or why it cannot be used.
 export type ThemeImport = { theme: Theme } | { error: 'invalid' | 'contrast' };
+
+// A subscriptions list from Google Takeout: its channels, or why it cannot be used.
+export type SubscriptionsImport = { channels: FollowedChannel[] } | { error: 'invalid' };
 
 export interface LoginState {
   supported: boolean;
@@ -209,6 +213,8 @@ export interface SplitwatchApi {
   clearWatch(): Promise<void>;
   // Keeps the display from sleeping (the waiting screen).
   keepAwake(on: boolean): void;
+  // Opens a subscriptions.csv the user picks; null when the user cancels.
+  importSubscriptions(): Promise<SubscriptionsImport | null>;
   getMediaKeysState(): Promise<MediaKeysState>;
   // A stream in a window of its own, and back.
   openPopout(videoId: string, live: boolean): void;

@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import type { AppInfo, UpdateState } from '../../shared/ipc';
+import type { FollowedChannel } from '../../shared/notify';
 import type { SharedLayout } from '../../shared/share';
 import type { Theme } from '../../shared/themes';
 
@@ -14,6 +15,7 @@ export type DialogName =
   | 'shared'
   | 'themeEditor'
   | 'history'
+  | 'importFollows'
   | null;
 
 interface AppState {
@@ -39,6 +41,8 @@ interface AppState {
   sync: boolean;
   // The waiting screen, in place of the empty grid.
   ambient: boolean;
+  // The channels of a subscriptions list being imported.
+  importedChannels: FollowedChannel[] | null;
   // The theme the theme editor starts from, and whether saving makes a new theme.
   themeDraft: { theme: Theme; isNew: boolean } | null;
 }
@@ -58,6 +62,7 @@ export const useAppStore = create<AppState>(() => ({
   sync: false,
   themeDraft: null,
   ambient: false,
+  importedChannels: null,
 }));
 
 export const openDialog = (dialog: DialogName, stream: string | null = null) =>

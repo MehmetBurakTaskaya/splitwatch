@@ -6,6 +6,7 @@ import { ClipboardSuggestion } from './components/ClipboardSuggestion';
 import { EmptyState } from './components/EmptyState';
 import { EndedSuggestion } from './components/EndedSuggestion';
 import { EventDialog } from './components/EventDialog';
+import { FollowImportDialog } from './components/FollowImportDialog';
 import { Grid } from './components/Grid';
 import { HistoryDialog } from './components/HistoryDialog';
 import { Intro } from './components/Intro';
@@ -66,6 +67,7 @@ export function App() {
       {dialog === 'shared' && <SharedDialog />}
       {dialog === 'themeEditor' && <ThemeEditorDialog />}
       {dialog === 'history' && <HistoryDialog />}
+      {dialog === 'importFollows' && <FollowImportDialog />}
       <Intro />
     </div>
   );

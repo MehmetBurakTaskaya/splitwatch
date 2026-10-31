@@ -462,6 +462,20 @@
     "watchLabel": "Watch {title}",
     "leave": "Leave the waiting screen"
   },
+  "follows": {
+    "open": "Follow channels from your YouTube subscriptions…",
+    "how": "In Google Takeout, export only YouTube subscriptions, then pick subscriptions.csv from the download.",
+    "takeout": "Open Google Takeout",
+    "invalid": "That file holds no YouTube channels. Pick subscriptions.csv from a Google Takeout export.",
+    "fileTitle": "Pick your subscriptions.csv",
+    "fileFilter": "Subscriptions list",
+    "title": "Follow channels from your subscriptions",
+    "intro": "{total, plural, one {# channel} other {# channels}} in the file. Up to {max} channels can be followed in all.",
+    "filter": "Find a channel",
+    "count": "{count} of {max} followed",
+    "cancel": "Cancel",
+    "save": "Follow"
+  },
   "sports": {
     "volleyball": "Volleyball",
     "beach-volleyball": "Beach volleyball",

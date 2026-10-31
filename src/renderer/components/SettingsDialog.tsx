@@ -401,9 +401,43 @@ function NotifySection() {
               ))}
             </ul>
           )}
+          <FollowImport />
         </>
       )}
     </section>
+  );
+}
+
+const TAKEOUT_URL = 'https://takeout.google.com/';
+
+// Following the channels of a YouTube subscriptions list from Google Takeout.
+function FollowImport() {
+  const { t } = useTranslation();
+  const [problem, setProblem] = useState(false);
+  const pick = async () => {
+    setProblem(false);
+    const result = await window.splitwatch.importSubscriptions();
+    if (!result) return;
+    if ('error' in result) setProblem(true);
+    else useAppStore.setState({ importedChannels: result.channels, dialog: 'importFollows' });
+  };
+  return (
+    <div className="follow-tools">
+      <button type="button" className="button button-quiet" onClick={() => void pick()}>
+        {t('follows.open')}
+      </button>
+      <p className="note">
+        {t('follows.how')}{' '}
+        <a href={TAKEOUT_URL} target="_blank" rel="noreferrer">
+          {t('follows.takeout')}
+        </a>
+      </p>
+      {problem && (
+        <p className="dialog-problem" role="alert">
+          {t('follows.invalid')}
+        </p>
+      )}
+    </div>
   );
 }
 

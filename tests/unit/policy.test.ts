@@ -43,6 +43,7 @@ describe('security policy', () => {
     expect(isAllowedExternalUrl('https://www.youtube.com/watch?v=M7lc1UVf-VE')).toBe(true);
     expect(isAllowedExternalUrl('https://github.com/MehmetBurakTaskaya/splitwatch/releases')).toBe(true);
     expect(isAllowedExternalUrl('https://console.cloud.google.com/apis/credentials')).toBe(true);
+    expect(isAllowedExternalUrl('https://takeout.google.com/')).toBe(true);
     expect(isAllowedExternalUrl('http://www.youtube.com/')).toBe(false);
     expect(isAllowedExternalUrl('https://example.com/')).toBe(false);
     expect(isAllowedExternalUrl('file:///C:/Windows')).toBe(false);

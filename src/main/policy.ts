@@ -28,6 +28,7 @@ const EXTERNAL_HOSTS = new Set([
   'youtu.be',
   'github.com',
   'console.cloud.google.com',
+  'takeout.google.com',
   'en.wikipedia.org',
 ]);
 

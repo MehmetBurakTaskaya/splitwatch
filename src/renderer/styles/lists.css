@@ -999,3 +999,50 @@ label.field.field-text {
 .sounds-field .note {
   margin: 0;
 }
+
+/* Following channels from a subscriptions list */
+.follow-tools {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+  margin-block-start: var(--space-3);
+}
+.follow-tools .note {
+  margin: 0;
+}
+.follow-import {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.follow-import .dialog-meta {
+  margin: 0;
+}
+.follow-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: var(--space-1) var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.follow-list label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-inline-size: 0;
+}
+.follow-list span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.follow-list input:disabled + span {
+  opacity: 0.5;
+}
+.follow-count {
+  margin: 0;
+  margin-inline-end: auto;
+  font-variant-numeric: tabular-nums;
+}
