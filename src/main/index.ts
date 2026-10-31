@@ -7,6 +7,7 @@ import { initI18n } from './i18n';
 import { linkFromSecondInstance, listenForLinks, setupLinks } from './links';
 import { registerLoginIpc, startedHidden } from './login';
 import { registerMainWindowIpc, setPageLocale, showMainWindow } from './main-window';
+import { setupMediaKeys } from './media-keys';
 import { medalTable } from './medals';
 import { setupNotifications } from './notify';
 import { setupReminders } from './reminders';
@@ -78,6 +79,7 @@ if (!app.requestSingleInstanceLock()) {
     setupTray();
     setupNotifications();
     setupReminders();
+    setupMediaKeys();
     if (!startedHidden()) showMainWindow();
     setupLinks();
   });

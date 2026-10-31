@@ -1,7 +1,7 @@
 import { type CSSProperties, type FormEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { ColorScheme } from '../../shared/settings';
-import type { LoginState } from '../../shared/ipc';
+import type { LoginState, MediaKeysState } from '../../shared/ipc';
 import type { Palette } from '../../shared/themes';
 import { openDialog, useAppStore } from '../state/app';
 import { setFollowing } from '../state/notify';
@@ -76,6 +76,7 @@ export function SettingsDialog() {
             {t('settings.audioFocusHover')}
           </label>
         </fieldset>
+        <MediaKeysField />
         <label className="field">
           <input
             type="checkbox"
@@ -229,6 +230,32 @@ function useKeyForm() {
   };
 
   return { key, setKey, busy, problem, save, input, focus: () => input.current?.focus() };
+}
+
+function MediaKeysField() {
+  const { t } = useTranslation();
+  const on = usePrefs((s) => s.mediaKeys);
+  const [state, setState] = useState<MediaKeysState | null>(null);
+
+  useEffect(() => {
+    // The main process takes the keys right after the setting is saved.
+    const timer = setTimeout(() => void window.splitwatch.getMediaKeysState().then(setState), 300);
+    return () => clearTimeout(timer);
+  }, [on]);
+
+  return (
+    <>
+      <label className="field field-tight">
+        <input type="checkbox" checked={on} onChange={(e) => setPrefs({ mediaKeys: e.target.checked })} />
+        {t('settings.mediaKeys')}
+      </label>
+      <p className="note field-note">{t('settings.mediaKeysNote')}</p>
+      {on && state?.needsAccessibility && <p className="note field-note">{t('settings.mediaKeysAccessibility')}</p>}
+      {on && state && !state.held && !state.needsAccessibility && (
+        <p className="note field-note">{t('settings.mediaKeysTaken')}</p>
+      )}
+    </>
+  );
 }
 
 function StartupSection() {

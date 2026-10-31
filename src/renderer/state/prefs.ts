@@ -12,6 +12,7 @@ export type Prefs = Pick<
   | 'animate'
   | 'performance'
   | 'spoilers'
+  | 'mediaKeys'
   | 'layouts'
   | 'background'
   | 'startHidden'
@@ -30,6 +31,7 @@ export const usePrefs = create<Prefs>(() => ({
   animate: DEFAULT_SETTINGS.animate,
   performance: DEFAULT_SETTINGS.performance,
   spoilers: DEFAULT_SETTINGS.spoilers,
+  mediaKeys: DEFAULT_SETTINGS.mediaKeys,
   layouts: [],
   background: DEFAULT_SETTINGS.background,
   startHidden: DEFAULT_SETTINGS.startHidden,

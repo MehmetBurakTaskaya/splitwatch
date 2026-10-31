@@ -71,6 +71,11 @@ export function showMainWindow(): BrowserWindow {
   return win;
 }
 
+// Passes an ask to the page only if the window is open and ready (the media keys do not open it).
+export function sendToPage(command: AppCommand): void {
+  if (win && ready) win.webContents.send(IPC.command, command);
+}
+
 // Opens the window if needed and passes the ask to its page once the page is ready.
 export function sendCommand(command: AppCommand): void {
   const target = showMainWindow();

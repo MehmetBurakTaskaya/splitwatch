@@ -39,6 +39,7 @@ export const IPC = {
   eventsList: 'events:list',
   eventMedals: 'events:medals',
   copyText: 'clipboard:copy',
+  mediaKeysState: 'media-keys:state',
   presetsList: 'presets:list',
   historyList: 'history:list',
   historyRemember: 'history:remember',
@@ -64,8 +65,20 @@ export type AppCommand =
   | { type: 'add'; videoId: string; sport?: string }
   | { type: 'toggleMute' }
   | { type: 'mini' }
+  // The media keys.
+  | { type: 'playPause' }
+  | { type: 'selectNext' }
+  | { type: 'selectPrevious' }
   // A splitwatch:// link, checked; the page asks before it opens it.
   | { type: 'sharedLayout'; layout: SharedLayout };
+
+// on: the setting; held: Splitwatch has the keys (another app may hold them); needsAccessibility:
+// macOS has not yet trusted Splitwatch as an accessibility client.
+export interface MediaKeysState {
+  on: boolean;
+  held: boolean;
+  needsAccessibility: boolean;
+}
 
 // Starting with the system works in the installed app on Windows and macOS. status is macOS's
 // answer (enabled, requires-approval, not-registered, not-found).
@@ -166,6 +179,7 @@ export interface SplitwatchApi {
   // null when the event has no medal table page yet, or it could not be read.
   getMedalTable(eventId: string): Promise<MedalTable | null>;
   copyText(text: string): void;
+  getMediaKeysState(): Promise<MediaKeysState>;
   getPresets(): Promise<Preset[]>;
   getHistory(): Promise<StreamItem[]>;
   rememberStream(videoId: string): void;

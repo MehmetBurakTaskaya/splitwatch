@@ -1,4 +1,5 @@
 import { setMini } from '../hooks/useShortcuts';
+import { togglePlay } from '../player/players';
 import { useAppStore } from './app';
 import { useSession } from './session';
 
@@ -18,6 +19,16 @@ export function connectCommands(): void {
         return session.toggleMute();
       case 'mini':
         return setMini(true);
+      case 'playPause':
+        return togglePlay(session.selected);
+      case 'selectNext':
+      case 'selectPrevious': {
+        const { streams, selected } = session;
+        if (!streams.length) return;
+        const step = command.type === 'selectNext' ? 1 : -1;
+        const index = (streams.indexOf(selected ?? '') + step + streams.length) % streams.length;
+        return session.select(streams[index]!, { unmute: true });
+      }
       case 'sharedLayout':
         if (useAppStore.getState().mini) setMini(false);
         return useAppStore.setState({ shared: command.layout, dialog: 'shared', dialogStream: null });

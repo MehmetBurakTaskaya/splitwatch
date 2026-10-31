@@ -61,6 +61,8 @@ export interface Settings {
   performance: boolean;
   // Titles and thumbnails stay blurred until pointed at, and notifications leave titles out.
   spoilers: boolean;
+  // The keyboard's media keys control the grid, also from the background.
+  mediaKeys: boolean;
   layouts: SavedLayout[];
   miniBounds: Bounds | null;
   // Closing the window leaves the app in the tray (the menu bar on macOS).
@@ -85,6 +87,7 @@ export const DEFAULT_SETTINGS: Settings = {
   animate: true,
   performance: false,
   spoilers: false,
+  mediaKeys: false,
   layouts: [],
   miniBounds: null,
   background: false,
@@ -204,6 +207,7 @@ export function sanitizeSettings(raw: unknown): Settings {
     animate: raw.animate !== false,
     performance: raw.performance === true,
     spoilers: raw.spoilers === true,
+    mediaKeys: raw.mediaKeys === true,
     layouts: sanitizeSavedLayouts(raw.layouts),
     miniBounds: sanitizeBounds(raw.miniBounds),
     background: raw.background === true,

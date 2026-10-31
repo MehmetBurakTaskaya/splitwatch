@@ -41,6 +41,7 @@ const api: SplitwatchApi = {
   getEvents: () => ipcRenderer.invoke(IPC.eventsList),
   getMedalTable: (eventId) => ipcRenderer.invoke(IPC.eventMedals, eventId),
   copyText: (text) => ipcRenderer.send(IPC.copyText, text),
+  getMediaKeysState: () => ipcRenderer.invoke(IPC.mediaKeysState),
   getPresets: () => ipcRenderer.invoke(IPC.presetsList),
   getHistory: () => ipcRenderer.invoke(IPC.historyList),
   rememberStream: (videoId) => ipcRenderer.send(IPC.historyRemember, videoId),

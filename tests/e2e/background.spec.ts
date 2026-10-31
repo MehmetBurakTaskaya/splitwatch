@@ -53,6 +53,17 @@ test('with the tray on, closing the window keeps the app, and starting it again 
   );
   await expect(again.locator(`[data-stream="${VIDEO_B}"]`)).toHaveAttribute('data-sport', 'swimming');
   await expect(again.locator(`[data-stream="${VIDEO_B}"]`)).toHaveClass(/is-selected/);
+
+  // The media keys' asks: the next stream (round to the first) and the previous one.
+  const send = (type: string) =>
+    app.evaluate(
+      ({ BrowserWindow }, t) => BrowserWindow.getAllWindows()[0]!.webContents.send('app:command', { type: t }),
+      type,
+    );
+  await send('selectNext');
+  await expect(again.locator(`[data-stream="${VIDEO_A}"]`)).toHaveClass(/is-selected/);
+  await send('selectPrevious');
+  await expect(again.locator(`[data-stream="${VIDEO_B}"]`)).toHaveClass(/is-selected/);
   await app.close();
 });
 
