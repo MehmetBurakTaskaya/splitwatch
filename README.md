@@ -32,6 +32,14 @@ Windows and macOS (Linux, experimental).
 - When a stream ends, Splitwatch offers a live stream of the same sport in its place.
 - Spoiler protection: titles and thumbnails stay blurred until you point at them.
 - The keyboard's media keys can play, pause and switch streams, also from the background.
+- Pop a stream out into a window of its own, for a second screen.
+- Read a stream's live chat beside the grid, or open it in your browser to write.
+- Line up streams that run ahead of one another (experimental): hold one back by seconds.
+- Make your own themes, with a check that all text stays easy to read, and share them as files.
+- Your watching: the time you watched by week, month, sport and channel, kept on this computer only.
+- A waiting screen: a large clock that counts down to the next streams you are waiting for.
+- Quiet theme sounds, off by default.
+- Follow the channels of your YouTube subscriptions, from a Google Takeout export.
 - Summer Games and Winter Games modes (see below).
 
 ## Summer and Winter Games
@@ -65,8 +73,9 @@ cannot see. So when Splitwatch opens, only the stream you picked last starts; **
 bar starts the others. Streams you add start at once, since you asked for them. Streams pause while
 they are out of sight (behind the enlarged stream, behind the mini player, or while the window is
 minimized, or while a dialog such as Settings covers the window, since nothing may cover a player)
-and go on when they come back, live streams at their live edge. Closing the window stops them all,
-also when Splitwatch stays in the notification area.
+and go on when they come back, live streams as far behind live as they were. A stream in a window of
+its own plays there instead of the grid, under the same rules. Closing the window stops them all, also
+when Splitwatch stays in the notification area.
 
 ## Themes
 
@@ -103,6 +112,14 @@ Swell, with seven moving rows of waves, is the busiest background; Pool, Track a
 0.7 to 1.1 % on the start screen. When the players fill the grid, the background is drawn once and
 costs nothing more.
 
+### Your own themes
+
+**Settings → Appearance → New theme** starts from the theme you see. Pick colors for light and dark,
+one of the app's backgrounds and a heading font; the whole app wears the theme while you edit. A
+theme whose text would be hard to read (WCAG 2.1 AA) cannot be saved, and the editor says which
+colors to change. **Export…** saves a theme as a JSON file that follows
+[`themes/schema.json`](themes/schema.json), and **Import…** adds one, so themes can be shared.
+
 ## Your own YouTube API key (optional)
 
 Splitwatch works without a key: you can paste links, and "Live now" shows the newest videos of the
@@ -122,7 +139,6 @@ much is left, and Splitwatch stops before the limit.
 ## What is coming
 
 - Eleven more interface languages.
-- Extras such as spoiler protection, a calendar of upcoming streams and community themes.
 
 ## Keyboard shortcuts
 
@@ -178,7 +194,8 @@ automatic updates on macOS need a paid Apple certificate. More in [docs/signing.
 ## Privacy
 
 No account, no tracking, no analytics. Splitwatch talks only to YouTube (for the streams) and to
-GitHub (for updates). Details in [PRIVACY.md](PRIVACY.md).
+GitHub (for updates). The watch history stays on your computer; you can turn it off or clear it.
+Details in [PRIVACY.md](PRIVACY.md).
 
 ## Build from source
 
@@ -233,6 +250,14 @@ YouTube kuralları gereği açılışta yalnız son seçtiğiniz yayın kendili�
 çubuktaki **Play all** başlatır. Görünmeyen yayınlar (büyütülmüş yayının ya da mini oynatıcının
 arkasında kalanlar, pencere simge durumundayken ya da Ayarlar gibi bir pencere açıkken) duraklar ve
 göründüklerinde devam eder.
+
+0.8 ile gelenler: bir yayını ayrı bir pencereye alabilir (ikinci ekran için), yayının canlı
+sohbetini ızgaranın yanında okuyabilir (yazmak için sohbet tarayıcıda açılır), birbirinden önde
+giden yayınları saniye saniye geri alıp hizalayabilir (deneysel), kendi temalarınızı yapıp dosya
+olarak paylaşabilir, izleme geçmişinizi ve istatistiklerinizi görebilir (yalnız bilgisayarınızda
+tutulur, Ayarlar'dan kapatılıp silinebilir), sıradaki yayınlara geri sayan bir bekleme ekranı
+açabilir, sessiz tema seslerini açabilir (varsayılan kapalı) ve Google Takeout'tan aldığınız
+`subscriptions.csv` ile YouTube aboneliklerinizdeki kanalları takip edebilirsiniz.
 
 İndirmek için [Releases](https://github.com/MehmetBurakTaskaya/splitwatch/releases/latest) sayfasına
 gidin. Uygulama henüz kod imzalı olmadığı için ilk açılışta uyarı çıkar:

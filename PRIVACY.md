@@ -8,6 +8,7 @@ developer. Everything it stores stays on your computer.
 | Service                                     | When                                                                                                                                                                                                  | What is sent                                                                                                                                 |
 | ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | YouTube embedded player (`youtube.com`)     | While streams are in the grid                                                                                                                                                                         | What any embedded YouTube player sends; YouTube may set cookies. The app identifies itself to YouTube as `com.mehmetburaktaskaya.splitwatch` |
+| YouTube live chat (`youtube.com/live_chat`) | While a stream's chat panel is open                                                                                                                                                                   | What YouTube's chat page sends; YouTube may set cookies. The app names itself to the chat as `com.mehmetburaktaskaya.splitwatch`             |
 | YouTube oEmbed (`youtube.com/oembed`)       | When a stream is added, to show its title and channel                                                                                                                                                 | The video ID                                                                                                                                 |
 | YouTube channel feeds (`youtube.com/feeds`) | Every few minutes while the window is visible, for "Live now"; with live notifications or the tray on, also in the background                                                                         | The IDs of the preset channels and of the channels you follow                                                                                |
 | YouTube Data API v3 (`googleapis.com`)      | Only with your own API key: when you search, every few minutes while the window is visible to check which streams are live, and in the background for live notifications and the tray's Live now list | Your search words, video IDs and your API key                                                                                                |
@@ -59,6 +60,12 @@ In Splitwatch's app data folder:
 - `quota.json`: how many API requests and searches were made today, to stay within your quota.
 - `history.json`: video IDs, titles and channels of streams you added, for search suggestions. Entries
   are deleted after 30 days.
+- `watch.json`: your watch history: per stream its video ID, title, channel, sport and how long it
+  played on screen, by day. A stream's entry is deleted 30 days after you last watched it; the total
+  time by sport stays until you clear the history. Turn the history off, or clear it (which also
+  clears `history.json`), in **Settings → Watch history**.
+- Your own themes are kept in `settings.json`. Theme files and a Google Takeout `subscriptions.csv`
+  are read from where you pick them and never sent anywhere.
 - `presets-cache.json`: the latest sport presets from GitHub.
 - `events-cache.json`: the latest Summer and Winter Games calendars from GitHub.
 - `notified.json`: the IDs of the live streams Splitwatch told you about, so it tells only once.

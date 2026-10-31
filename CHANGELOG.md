@@ -5,6 +5,43 @@ and versions follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-10-31
+
+Splitwatch now pops streams out into windows of their own, shows the live chat, lines up streams
+that run ahead of one another and lets you make your own themes.
+
+### Added
+
+- Pop a stream out into a window of its own (the button on a stream), for a second screen. Its sound
+  goes along when it is the one you hear, and **Back to the grid** brings it back.
+- The live chat of a stream beside the grid (the chat button on a stream), to read. **Chat in your
+  browser** opens it in your browser, where you can sign in and write.
+- Line up the streams (experimental; the button in the top bar, with two or more streams): hold back
+  a stream that runs ahead, by seconds, until the streams show the same moment. It works on streams
+  that YouTube lets you rewind.
+- Your own themes (Settings, Appearance, **New theme**): colors for light and dark, a background and a
+  heading font, with the whole app wearing the theme while you edit. A theme whose text would be hard
+  to read cannot be saved. Themes go in and out as files, to share them.
+- Your watching (in Live now, or Settings, Watch history): the time you watched in the last 7 and 30
+  days, by sport and by channel, and the streams you watched lately, kept on this computer only.
+- A waiting screen (on the start screen): a large clock over the theme's background that counts down
+  to your reminders and the coming streams, and keeps the display on.
+- Quiet theme sounds (Settings, Sound; off by default): soft sounds in the theme's style when a stream
+  comes or goes, the layout changes or a reminded stream is about to start.
+- Follow the channels of your YouTube subscriptions (Settings, Live notifications): pick them from the
+  `subscriptions.csv` of a Google Takeout export.
+
+### Changed
+
+- A reminder now stays, marked, until an hour after its start, so the waiting screen and the coming
+  week still show it.
+
+### Fixed
+
+- A live stream that paused out of sight could go on a few seconds behind where it was; it now goes
+  on as far behind live as it was.
+- A reminder that had gone out could come back and go out again after you set another one.
+
 ## [0.7.0] - 2026-10-31
 
 Splitwatch now keeps spoilers out of sight, lists the coming week, shares layouts as links and runs on
@@ -150,7 +187,11 @@ The first version: the app's foundation and its release pipeline, without stream
 - Security baseline: sandboxed, isolated renderer without Node.js, strict Content Security Policy,
   hardened Electron fuses.
 
-[Unreleased]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.7.0...v0.8.0
+[0.7.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.6.0...v0.7.0
+[0.6.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.5.0...v0.6.0
+[0.5.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/MehmetBurakTaskaya/splitwatch/compare/v0.1.1...v0.2.0

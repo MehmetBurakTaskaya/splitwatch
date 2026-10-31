@@ -72,6 +72,9 @@ backgrounds the app can draw (`src/renderer/theme/backdrops/`) and an optional h
   contrast checks; adjust them by eye. `npm test` checks every theme against WCAG 2.1 AA (4.5:1 for
   text, 3:1 for the accent) and checks that each theme's accent stays visible on every other theme.
 - The theme's name goes in `src/renderer/i18n/locales/en.json` under `themes`.
+- A theme made in **Settings → Appearance → New theme** and exported has the same shape, with a
+  `name`. To propose it for the app, give it an `id`, its sports and a name in `en.json`, and leave
+  `name` out.
 - A new background is a TypeScript module next to the others: a `still` part drawn once and cached,
   and an optional `moving` part drawn on each frame. Keep the moving part light (the measurements in
   the README come from `node scripts/measure-cpu.mjs`), skip textures and particles when `low` is set,

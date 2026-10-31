@@ -87,6 +87,18 @@ If a tile shows a message instead of a video, note the message and the error cod
    Splitwatch under **System Settings → Privacy & Security → Accessibility**. Press the play/pause key
    with another app in front.
 
+## Version 0.8 (about 10 more minutes)
+
+1. Add two streams, then click the pop-out button on one: it opens in a window of its own. Minimize
+   that window: the stream pauses; bring it back: it goes on. Click **Back to the grid**.
+2. Add a live stream and click its chat button: the chat shows beside the grid. Click the chat's own
+   sign-in button: the chat opens in your browser.
+3. In **Settings → Appearance**, click **New theme**, change a color and click **Save**. Then
+   **Export…**, **Delete** and **Import…** the file you saved.
+4. On the start screen (no streams), click **Waiting screen**, and leave it open past the time your
+   Mac turns the display off: the display should stay on. Press Escape.
+5. In **Settings → Sound**, tick **Quiet theme sounds** and click **Try**.
+
 Send back: your Mac model, macOS version, and what happened at each step (a screenshot helps:
 **Shift + Cmd + 3**). For 0.4, also whether the background moves smoothly and how busy Activity
 Monitor shows Splitwatch on the start screen.
