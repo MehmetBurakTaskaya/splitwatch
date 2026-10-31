@@ -1,8 +1,8 @@
-import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
-import { tmpdir } from 'node:os';
+import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { type ElectronApplication, type Page, _electron as electron, expect, test } from '@playwright/test';
 import { SUPPORTED_LOCALES } from '../../src/shared/locales';
+import { tempDir } from './temp';
 
 const read = (tag: string) => JSON.parse(readFileSync(`src/renderer/i18n/locales/${tag}.json`, 'utf8'));
 const en = read('en');
@@ -10,7 +10,7 @@ const VIDEO_A = 'M7lc1UVf-VE';
 const VIDEO_B = 'aqz-KE-bpKQ';
 
 function userData(settings: object): string {
-  const dir = mkdtempSync(path.join(tmpdir(), 'splitwatch-lang-'));
+  const dir = tempDir('splitwatch-lang-');
   writeFileSync(
     path.join(dir, 'settings.json'),
     JSON.stringify({ clipboardSuggestions: false, welcomeSeen: true, ...settings }),

@@ -5,7 +5,7 @@
 // cold starts, next to the same for an empty Electron window, which shows what Splitwatch adds. The
 // stream situations play real YouTube videos (the newest uploads of preset channels), so they need the
 // internet; most of their memory is YouTube's players.
-import { mkdtempSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { _electron as electron } from '@playwright/test';
@@ -22,8 +22,11 @@ async function latestVideos(count) {
   return ids.slice(0, count);
 }
 
+// Every folder made here is removed at the end.
+const root = mkdtempSync(path.join(tmpdir(), 'splitwatch-start-'));
+
 async function launch(settings) {
-  const dir = mkdtempSync(path.join(tmpdir(), 'splitwatch-start-'));
+  const dir = mkdtempSync(path.join(root, 'user-'));
   writeFileSync(
     path.join(dir, 'settings.json'),
     JSON.stringify({ clipboardSuggestions: false, welcomeSeen: true, language: 'en', ...settings }),
@@ -40,7 +43,7 @@ async function launch(settings) {
 
 // An Electron app that only opens a sandboxed window with one line of text.
 function emptyApp() {
-  const dir = mkdtempSync(path.join(tmpdir(), 'electron-empty-'));
+  const dir = mkdtempSync(path.join(root, 'empty-'));
   writeFileSync(path.join(dir, 'package.json'), JSON.stringify({ name: 'empty', main: 'main.js' }));
   writeFileSync(
     path.join(dir, 'main.js'),
@@ -86,3 +89,4 @@ for (const [label, count, layout] of [
   console.log(`${label.padEnd(20)} ${Math.round(await memory(app))} MB (playing: ${playing})`);
   await app.close();
 }
+rmSync(root, { recursive: true, force: true, maxRetries: 5 });

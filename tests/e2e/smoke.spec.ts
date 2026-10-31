@@ -1,7 +1,7 @@
-import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
-import { tmpdir } from 'node:os';
+import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { type ElectronApplication, type Page, _electron as electron, expect, test } from '@playwright/test';
+import { tempDir } from './temp';
 
 const en = JSON.parse(readFileSync('src/renderer/i18n/locales/en.json', 'utf8'));
 const VIDEO_A = 'M7lc1UVf-VE'; // the video YouTube's own IFrame API documentation embeds
@@ -10,7 +10,7 @@ const VIDEO_B = 'aqz-KE-bpKQ';
 // Every test gets its own settings folder, with the clipboard suggestion off and English as the
 // language, so that the machine's clipboard and languages cannot change what the test sees.
 function freshUserData(settings: object = {}): string {
-  const dir = mkdtempSync(path.join(tmpdir(), 'splitwatch-test-'));
+  const dir = tempDir('splitwatch-test-');
   writeFileSync(
     path.join(dir, 'settings.json'),
     JSON.stringify({ clipboardSuggestions: false, language: 'en', welcomeSeen: true, ...settings }),

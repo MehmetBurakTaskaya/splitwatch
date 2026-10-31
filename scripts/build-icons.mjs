@@ -2,7 +2,7 @@
 // to PNG with Electron's own Chromium, and packs the Windows .ico and the macOS .icns from them:
 //   node scripts/build-icons.mjs
 // Each size is drawn from the vector, not scaled from a large picture, so small sizes stay sharp.
-import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { _electron as electron } from '@playwright/test';
@@ -103,4 +103,5 @@ for (const size of [16, 32]) {
   writeFileSync(`src/main/assets/tray-template-${size}.png`, await render('build/tray-template.svg', size));
 }
 await app.close();
+rmSync(dir, { recursive: true, force: true, maxRetries: 5 });
 console.log('build/icon.png, build/icon.ico, build/icon.icns and the tray marks are written.');

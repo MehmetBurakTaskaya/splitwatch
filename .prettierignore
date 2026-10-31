@@ -1,5 +1,6 @@
 dist/
 release/
 test-results/
+test-data/
 playwright-report/
 package-lock.json

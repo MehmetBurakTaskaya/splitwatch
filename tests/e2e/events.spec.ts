@@ -1,9 +1,9 @@
-import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import http from 'node:http';
 import type { AddressInfo } from 'node:net';
-import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { _electron as electron, expect, test } from '@playwright/test';
+import { tempDir } from './temp';
 
 const en = JSON.parse(readFileSync('src/renderer/i18n/locales/en.json', 'utf8'));
 
@@ -33,7 +33,7 @@ async function startWikipedia(): Promise<{ base: string; pages: string[]; close(
 
 test('an event mode: its theme, schedule and medal table, and the opening animation of another', async () => {
   const wikipedia = await startWikipedia();
-  const userData = mkdtempSync(path.join(tmpdir(), 'splitwatch-events-'));
+  const userData = tempDir('splitwatch-events-');
   writeFileSync(
     path.join(userData, 'settings.json'),
     JSON.stringify({

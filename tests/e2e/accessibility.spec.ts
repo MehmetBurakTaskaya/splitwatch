@@ -1,8 +1,8 @@
-import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
-import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { type ElectronApplication, type Page, _electron as electron, expect, test } from '@playwright/test';
+import { tempDir } from './temp';
 
 // Every view of the app is checked against WCAG 2.1 A and AA with axe-core, in light and dark. The
 // YouTube players and chat are YouTube's own pages and stay out of the check.
@@ -14,7 +14,7 @@ const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'];
 const AXE = readFileSync(createRequire(import.meta.url).resolve('axe-core/axe.min.js'), 'utf8');
 
 async function launch(settings: object, scheme: 'light' | 'dark', files: Record<string, unknown> = {}) {
-  const dir = mkdtempSync(path.join(tmpdir(), 'splitwatch-a11y-'));
+  const dir = tempDir('splitwatch-a11y-');
   writeFileSync(
     path.join(dir, 'settings.json'),
     JSON.stringify({

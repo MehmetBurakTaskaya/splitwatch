@@ -1,9 +1,9 @@
-import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import http from 'node:http';
 import type { AddressInfo } from 'node:net';
-import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { type ElectronApplication, type Page, _electron as electron, expect, test } from '@playwright/test';
+import { tempDir } from './temp';
 
 // A stand-in for the YouTube Data API and the channel feeds, so these tests spend no real quota
 // and do not depend on what is live today.
@@ -99,7 +99,7 @@ async function launch(
   settings: object = {},
   beforeWindow?: (app: ElectronApplication) => Promise<void>,
 ): Promise<{ app: ElectronApplication; page: Page }> {
-  const userData = mkdtempSync(path.join(tmpdir(), 'splitwatch-api-'));
+  const userData = tempDir('splitwatch-api-');
   writeFileSync(
     path.join(userData, 'settings.json'),
     JSON.stringify({ clipboardSuggestions: false, language: 'en', welcomeSeen: true, ...settings }),
@@ -218,7 +218,7 @@ test('the coming week lists upcoming streams by day, and keeps a reminder', asyn
 });
 
 test('channels to follow come from a Google Takeout subscriptions list', async () => {
-  const csv = path.join(mkdtempSync(path.join(tmpdir(), 'splitwatch-takeout-')), 'subscriptions.csv');
+  const csv = path.join(tempDir('splitwatch-takeout-'), 'subscriptions.csv');
   const ids = ['UCabcdefghijklmnopqrstuv', 'UC0123456789_-ABCDEFGHIJ', 'UCzyxwvutsrqponmlkjihgfe'];
   writeFileSync(
     csv,

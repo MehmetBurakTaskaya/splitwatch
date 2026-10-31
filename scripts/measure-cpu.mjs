@@ -3,7 +3,7 @@
 //   node scripts/measure-cpu.mjs
 // The grid situations play real YouTube videos (the newest uploads of two preset channels), so they
 // need the internet and vary with the videos and the network.
-import { mkdtempSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { _electron as electron } from '@playwright/test';
@@ -42,6 +42,7 @@ async function measure(label, settings) {
   const moving = await page.locator('.backdrop').getAttribute('data-moving');
   const playing = await page.locator('[data-state="playing"]').count();
   await app.close();
+  rmSync(dir, { recursive: true, force: true, maxRetries: 5 });
   const mean = values.reduce((a, b) => a + b, 0) / values.length;
   console.log(
     `${label.padEnd(52)} ${mean.toFixed(1).padStart(6)} %  (backdrop moving: ${moving}, playing: ${playing})`,

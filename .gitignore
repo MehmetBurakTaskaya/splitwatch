@@ -2,5 +2,6 @@ node_modules/
 dist/
 release/
 test-results/
+test-data/
 playwright-report/
 *.log

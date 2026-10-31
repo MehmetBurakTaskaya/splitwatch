@@ -1,7 +1,7 @@
-import { mkdtempSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
-import { tmpdir } from 'node:os';
+import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { type ElectronApplication, type Page, _electron as electron, expect, test } from '@playwright/test';
+import { tempDir } from './temp';
 
 const en = JSON.parse(readFileSync('src/renderer/i18n/locales/en.json', 'utf8'));
 // The themes offered in Settings; the Summer and Winter Games themes come with their event modes.
@@ -15,7 +15,7 @@ const VIDEO_B = 'aqz-KE-bpKQ';
 
 // No network for Live now: the feeds point at a closed port and the presets stay the shipped ones.
 async function launch(settings: object): Promise<{ app: ElectronApplication; page: Page; errors: string[] }> {
-  const dir = mkdtempSync(path.join(tmpdir(), 'splitwatch-test-'));
+  const dir = tempDir('splitwatch-test-');
   writeFileSync(
     path.join(dir, 'settings.json'),
     JSON.stringify({ clipboardSuggestions: false, language: 'en', welcomeSeen: true, ...settings }),
@@ -108,7 +108,7 @@ test('tiles show their sport, mixed sports stay neutral, and the sport can be ch
 
 test('makes a theme of your own, keeps it easy to read, and shares it as a file', async () => {
   const { app, page } = await launch({ colorScheme: 'light' });
-  const file = path.join(mkdtempSync(path.join(tmpdir(), 'splitwatch-theme-')), 'evening.json');
+  const file = path.join(tempDir('splitwatch-theme-'), 'evening.json');
   const cssVar = (name: string) =>
     page.evaluate((n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim(), name);
 

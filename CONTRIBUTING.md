@@ -13,6 +13,8 @@ npm run check          # type check, lint, format check, unit tests
 npm run build && npm run test:e2e   # Electron smoke tests
 ```
 
+The smoke tests keep their settings folders in `test-data/`, which each run empties first.
+
 The code layout and the reasons behind it are in [docs/adr](docs/adr). `src/main` is the Electron main
 process, `src/preload` the bridge, `src/renderer` the React interface and `src/shared` what they share.
 
